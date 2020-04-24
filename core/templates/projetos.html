@@ -1,0 +1,99 @@
+{% load static %}
+
+<div id="projects" class="filter">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">OPERAÇÕES</div>
+                <h2>Operações das quais nos orgulhamos.</h2>
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Filter -->
+                <div class="button-group filters-button-group">
+                    <a class="button is-checked" data-filter="*"><span>TODOS</span></a>
+                    <a class="button" data-filter=".originacao"><span>ORIGINAÇÃO</span></a>
+                    <a class="button" data-filter=".abast"><span>ABASTECIMENTO</span></a>
+                    <a class="button" data-filter=".impexp"><span>IMPORTAÇÃO E EXPORTAÇÃO</span></a>
+                    <a class="button" data-filter=".logistica"><span>LOGÍSTICA</span></a>
+                </div> <!-- end of button group -->
+
+                <div class="grid">
+                    {% for p in projetos|slice:"0:8" %}
+                    <div class="element-item {{p.area}} {{ p.area2 }} {{ p.area3 }} {{ p.area4 }}">
+                        <a class="popup-with-move-anim" href="#{{ p.link }}">
+                            <div class="element-item-overlay"><span>{{ p.titulo }}</span></div><img
+                                src="{{ p.imagem.thumb.url }}" alt="alternative">
+                        </a>
+                    </div>
+                    {% endfor %}
+                    <!-- <div class="element-item design development abast">
+                        <a class="popup-with-move-anim" href="#project-3">
+                            <div class="element-item-overlay"><span>BoomBap Audio</span></div><img
+                                src="{% static 'images/project-3.jpg' %}" alt="alternative">
+                        </a>
+                    </div> -->
+
+                </div> <!-- end of grid -->
+                <!-- end of filter -->
+
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of filter -->
+<!-- end of projects -->
+
+
+<!-- Project Lightboxes -->
+{% for p in projetos|slice:"0:8" %}
+<!-- Lightbox -->
+<div id="{{ p.link }}" class="lightbox-basic zoom-anim-dialog mfp-hide">
+    <div class="row">
+        <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button>
+        <div class="col-lg-8">
+            <img class="img-fluid" src="{{ p.imagem.thumb.url }}" alt="alternative">
+        </div> <!-- end of col -->
+        <div class="col-lg-4">
+            <h3>{{ p.titulo }}</h3>
+            <hr class="line-heading">
+            <h6>{{ p.subtitulo }}</h6>
+            <p>{{ p.descricao}}</p>
+            <p>{{ p.descricao2}}</p>
+
+
+            <br />
+            <a class="btn-outline-reg mfp-close as-button" href="#projects">BACK</a>
+        </div> <!-- end of col -->
+    </div> <!-- end of row -->
+</div> <!-- end of lightbox-basic -->
+{% endfor %}
+<!-- end of lightbox -->
+
+
+<!-- Lightbox -->
+<!-- <div id="project-3" class="lightbox-basic zoom-anim-dialog mfp-hide"> -->
+<!-- <div class="row"> -->
+<!-- <button title="Close (Esc)" type="button" class="mfp-close x-button">×</button> -->
+<!-- <div class="col-lg-8"> -->
+<!-- <img class="img-fluid" src="{% static 'images/project-3.jpg' %}" alt="alternative"> -->
+<!-- </div> end of col -->
+<!-- <div class="col-lg-4"> -->
+<!-- <h3>BoomBap Audio</h3> -->
+<!-- <hr class="line-heading">
+            <h6>Strategy Development</h6>
+            <p>Need a solid foundation for your business growth plans? Aria will help you manage sales and meet your
+                current needs</p>
+            <p>By offering the best professional services and quality products in the market. Don't hesitate and get -->
+<!-- in touch with us.</p>
+            <div class="testimonial-container">
+                <p class="testimonial-text">Need a solid foundation for your business growth plans? Aria will help
+                    you manage sales and meet your current requirements.</p>
+                <p class="testimonial-author">General Manager</p>
+            </div>
+            <a class="btn-solid-reg" href="#your-link">DETAILS</a> <a class="btn-outline-reg mfp-close as-button"
+                href="#projects">BACK</a> -->
+<!-- </div> end of col -->
+<!-- </div> end of row -->
+<!-- </div> end of lightbox-basic -->
+<!-- end of lightbox -->

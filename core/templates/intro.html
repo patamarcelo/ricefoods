@@ -1,0 +1,25 @@
+{% load static %}
+
+{% for s in sobre|slice:"1" %}
+<div id="intro" class="basic-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <div class="text-container">
+                    <div class="section-title">INTRO</div>
+                    <h2>{{ s.titulo }}</h2>
+                    <p>{{ s.texto }}</p>
+                    <!-- <p class="testimonial-text">"Our mission here at Aira is to get you through those tough moments
+                        relying on our team's expertise in starting and growing companies."</p> -->
+                    <div class="testimonial-author">{{ s.pessoa }}</div>
+                </div> <!-- end of text-container -->
+            </div> <!-- end of col -->
+            <div class="col-lg-7">
+                <div class="image-container">
+                    <img class="img-fluid" src="{{  s.imagem.thumb.url }}" alt="alternative">
+                </div> <!-- end of image-container -->
+            </div> <!-- end of col -->
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div> <!-- end of basic-1 -->
+{% endfor %}
