@@ -4,28 +4,39 @@
 <header id="header" class="header">
     <div class="header-content">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="text-container">
-                        <h1>{{ i.inicio }} <span id="js-rotating">{{ i.palavras }}</span></h1>
-                        <p class="p-heading p-large">{{ i.descricao }}
+            <div class="mx-100 p-3">
+                {% if messages %}
+                {% for m in messages %}
 
-                        </p>
-                        <a class="btn-solid-lg page-scroll" href="#intro">Saiba mais</a>
-                    </div>
-                </div> <!-- end of col -->
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </div> <!-- end of header-content -->
-    <div class="container">
-        {% if messages %}
-        {% for m in messages %}
-        <div class="alert alert - {{ m.tags }}">
-            <button type="button" class="close" data-dismiss="alert"></button>
-            <strong> {{ m }} </strong>
-        </div>
-        {% endfor %}
-        {% endif %}
-    </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-container">
+                            <h1>{{ i.inicio }} <span id="js-rotating">{{ i.palavras }}</span></h1>
+                            <p class="p-heading p-large">{{ i.descricao }}
+                            </p>
+                            <div class="alert alert-{{ m.tags }} w-auto">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <strong> {{ m }} </strong>
+                            </div>
+                        </div> <!-- end of col -->
+                    </div> <!-- end of row -->
+                    {% endfor %}
+                    {% else %}
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-container">
+                            <h1>{{ i.inicio }} <span id="js-rotating">{{ i.palavras }}</span></h1>
+                            <p class="p-heading p-large">{{ i.descricao }}
+                            </p>
+                            <a class="btn-solid-lg page-scroll" href="#intro">Saiba mais</a>
+                        </div>
+                    </div> <!-- end of col -->
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+            {% endif %}
+        </div> <!-- end of header-content -->
+
 </header>
 {% endfor %}
