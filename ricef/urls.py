@@ -24,3 +24,7 @@ urlpatterns = [
     path('', include('core.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+
+admin.site.site_header = 'Ricefoods Corretora de Cereais'
+admin.site.site_title = 'Ricefoods'
+admin.site.index_title = 'Ricefoods | Painel de Controle'
