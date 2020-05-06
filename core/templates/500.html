@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% block content %}
+
+
 
 <header id="header" class="header">
     <div class="header-content">
@@ -9,15 +11,17 @@
                 <div class="col-lg-12">
                     <div class="text-container">
                         <h1>500</h1>
-                        <h2>Erro de processamento</h2>
-                        <p class="p-heading p-large">Infelizmente não foi possível processar a requisição.<br />
-                            Volte para a página principal</p>
-                        <a class="btn-solid-lg page-scroll" href="{% url 'index' %}">Voltar</a>
+                        <h2>{% trans 'Erro de processamento' %}</h2>
+                        <p class="p-heading p-large">
+                            {% trans 'Infelizmente não foi possível processar a requisição.' %}<br />
+                            {% trans 'Volte para a página principal' %}</p>
+                        <a class="btn-solid-lg page-scroll" href="{% url 'index' %}">{% trans 'Voltar' %}</a>
                     </div>
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
         </div> <!-- end of container -->
     </div> <!-- end of header-content -->
 </header>
+
 
 {% endblock %}

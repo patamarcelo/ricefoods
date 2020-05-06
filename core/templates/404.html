@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
+
 
 <header id="header" class="header">
     <div class="header-content">
@@ -9,10 +11,11 @@
                 <div class="col-lg-12">
                     <div class="text-container">
                         <h1>404</h1>
-                        <h2>Página não Encontrada</h2>
-                        <p class="p-heading p-large">Infelizmente a página que você procura não está disponível.<br />
-                            Volte para a página principal</p>
-                        <a class="btn-solid-lg page-scroll" href="{% url 'index' %}">Voltar</a>
+                        <h2>{% trans 'Página não Encontrada' %} </h2>
+                        <p class="p-heading p-large">
+                            {% trans 'Infelizmente a página que você procura não está disponível.' %}<br />
+                            {% trans 'Volte para a página principal' %}</p>
+                        <a class="btn-solid-lg page-scroll" href="{% url 'index' %}">{% trans 'Voltar'%}</a>
                     </div>
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
