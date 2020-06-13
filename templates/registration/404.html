@@ -1,0 +1,20 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="container">
+        <img class="mb-4" src="{% static 'img/foguete.png' %}" alt="" width="72" height="72">
+    </div>
+    <h1> Edupata </h1>
+
+    <div class="alert alert-danger" role="alert">
+        Páina não econtrada
+    </div>
+    <hr />
+
+    <a class="btn btn-outline-danger" href="{% url 'login' %}">Voltar para tela de Login</a>
+
+</div>
+
+{% endblock %}

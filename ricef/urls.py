@@ -15,16 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic.base import TemplateView
+from django.contrib.auth.decorators import login_required
 
 from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('painel/', admin.site.urls),
     path('', include('core.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('sistema/', include('django.contrib.auth.urls')),
+    path('sistema/', login_required(TemplateView.as_view(template_name='index2.html')), name='index2'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
 
 
-admin.site.site_header = 'Ricefoods Corretora de Cereais'
-admin.site.site_title = 'Ricefoods'
-admin.site.index_title = 'Ricefoods | Painel de Controle'
+admin.site.site_header = 'Corretora de Cereais'
+admin.site.site_title = 'Corretora de Cereais'
+admin.site.index_title = 'Corretora | Painel de Controle'

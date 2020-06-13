@@ -1,0 +1,32 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="container">
+        <img class="mb-4" src="{% static 'img/foguete.png' %}" alt="" width="72" height="72">
+    </div>
+    <h1> Corretora de Cereais </h1>
+    {% if user.is_anonymous %}
+    <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+    {% else %}
+    <div class="alert alert-primary" role="alert">
+        Seja bem Vindo(a) {{ user.get_full_name }}!!
+    </div>
+    <hr />
+    <div class="container" align=center>
+        <a class="btn btn-outline-danger" href="{% url 'login' %}">Logout</a>
+        <a class="btn btn-outline-warning" target="_blank" href="{% url 'admin:index'  %}">Admin</a>
+    </div>
+    <br />
+    <div class="container" align=center>
+        <div class="inline-flex">
+            <a class="col-3 p-1 m-1 btn btn-primary" href="#">Corretora</a>
+        </div>
+    </div>
+    <br />
+
+    {% endif %}
+</div>
+
+{% endblock %}

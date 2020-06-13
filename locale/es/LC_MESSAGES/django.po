@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-06 14:29-0300\n"
+"POT-Creation-Date: 2020-05-07 09:08-0300\n"
 "PO-Revision-Date: 2020-05-06 14:33-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -298,27 +298,27 @@ msgstr ""
 msgid "Subprojetos"
 msgstr ""
 
-#: core/templates/404.html:13
+#: core/templates/404.html:14
 msgid "Página não Encontrada"
 msgstr "Página no encontrada"
 
-#: core/templates/404.html:15
+#: core/templates/404.html:16
 msgid "Infelizmente a página que você procura não está disponível."
 msgstr ""
 
-#: core/templates/404.html:16 core/templates/500.html:15
+#: core/templates/404.html:17 core/templates/500.html:17
 msgid "Volte para a página principal"
 msgstr ""
 
-#: core/templates/404.html:17 core/templates/500.html:16
+#: core/templates/404.html:18 core/templates/500.html:18
 msgid "Voltar"
 msgstr ""
 
-#: core/templates/500.html:12
+#: core/templates/500.html:14
 msgid "Erro de processamento"
 msgstr ""
 
-#: core/templates/500.html:14
+#: core/templates/500.html:16
 msgid "Infelizmente não foi possível processar a requisição."
 msgstr ""
 
@@ -328,7 +328,7 @@ msgstr "START"
 
 #: core/templates/base.html:95
 msgid "SOBRE"
-msgstr "ACERCA DE"
+msgstr "ACERCA"
 
 #: core/templates/base.html:98
 msgid "SERVIÇOS"
@@ -345,10 +345,6 @@ msgstr "OPERACIONES"
 #: core/templates/base.html:122
 msgid "CONTATO"
 msgstr "CONTACTO"
-
-#: core/templates/header.html:15 core/templates/header.html:31
-msgid "{{ i.inicio }}"
-msgstr ""
 
 #: core/templates/header.html:34
 msgid "Saiba mais"
