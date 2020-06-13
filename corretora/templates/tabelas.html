@@ -1,0 +1,16 @@
+{% load bootstrap4 %}
+{% load humanize %}
+{% block content %}
+
+
+<!--Tabela de pedidos-->
+{% include 'tabelas_pedidos.html'  %}
+
+<!--Tabela das cargas-->
+{% include 'tabelas_cargas.html'  %}
+
+<!--Grafico1-->
+{% include 'charts.html' %}
+
+
+{% endblock %}

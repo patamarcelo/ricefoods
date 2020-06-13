@@ -1,0 +1,95 @@
+{% extends 'basecorretora.html' %}
+{% load bootstrap4 %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="row align-items-center">
+    <div class="col">
+        <h4><span class="badge badge-success"> Adiconar Carga</span></h4>
+    </div>
+    <div class="col" align=right>
+        <a class="btn btn-warning btn-sm" href="{% url 'corretora' %}">Voltar</a>
+    </div>
+</div>
+
+
+<form method="POST" novalidate class="needs-validation">
+    {% csrf_token %}
+
+    <br />
+    <div class="container">
+        <div class="form-row">
+            <div class="col-lg-1 col-md-6 col-sm-2 form-group">
+                {{ form.ordem|as_crispy_field }}
+            </div>
+            <div class="col-lg-1 col-md-6 col-sm-2 form-group">
+                {{ form.tac|as_crispy_field }}
+            </div>
+        </div>
+
+
+
+
+        <div class="form-row form-control-is-valid">
+            <div class="col-lg-2 col-sm-3 form-group">
+                {{ form.pedido|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 col-sm-3  form-group">
+
+
+
+                {{ form.data|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 col-sm-3  form-group">
+                {{ form.situacao|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 col-sm-3 form-group">
+                {{ form.transp|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 col-sm-3 form-group">
+                {{ form.veiculo|as_crispy_field }}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-lg-2 col-sm-3 form-group">
+                {{ form.buonny|as_crispy_field }}
+            </div>
+
+
+
+            <div class="col-lg-2 col-sm-3 form-group">
+                {{ form.placa|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 col-sm-3 form-group">
+                {{ form.motorista|as_crispy_field }}
+            </div>
+
+
+
+            <div class="col-lg-2 col-sm-3 form-group">
+                {{ form.valor_mot|as_crispy_field }}
+            </div>
+
+        </div>
+        <div class="form-row">
+            <div class="col-6 col-md-4 offset-sm form-group">{{ form.obs|as_crispy_field }}</div>
+        </div>
+    </div>
+
+
+
+    {% buttons %}
+
+    <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" />
+    <input type="submit" class="btn btn-success btn-sm" name="save_and_continue" value="Salvar e Continuar" />
+    <button type="button" class="btn btn-warning btn-sm">
+        <a href="{% url 'cargas' %}">Cancelar</a>
+    </button>
+
+
+
+    {% endbuttons %}
+</form>
+
+{% endblock %}

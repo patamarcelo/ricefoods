@@ -21,11 +21,37 @@ from django.contrib.auth.decorators import login_required
 from django.conf.urls.static import static
 from django.conf import settings
 
+from corretora.views import *
+from corretora import views 
+
 urlpatterns = [
     path('painel/', admin.site.urls),
     path('', include('core.urls')),
     path('sistema/', include('django.contrib.auth.urls')),
     path('sistema/', login_required(TemplateView.as_view(template_name='index2.html')), name='index2'),
+
+    path('corretora/', BaseView.as_view(), name='corretora'), 
+    
+
+    path('corretora/pedidos/', PedidosView.as_view(), name='pedidos'), 
+    path('corretora/pedidos/add', CreatePedidosView.as_view(), name='add_pedidos'), 
+    path('corretora/pedidos/<int:pk>/update', UpdatePedidosView.as_view(), name='upd_pedidos'), 
+    path('corretora/pedidos/<int:pk>/delete', DeletePedidosView.as_view(), name='del_pedidos'),
+
+    path('corretora/fornecedores/', FornecedoresView.as_view(), name='fornecedores'), 
+    path('corretora/fornecedores/add', CreateFornecedoresView.as_view(), name='add_fornecedor'),
+    path('corretora/fornecedores/<int:pk>/update', UpdateFornecedoresView.as_view(), name='upd_fornecedores'), 
+    path('corretora/fornecedores/<int:pk>/delete', DeleteFornecedoresView.as_view(), name='del_fornecedores'),
+
+    path('corretora/cargas/', CargasView.as_view(), name='cargas'), 
+    path('corretora/cargas/add', CreateCargasView.as_view(), name='add_cargas'),
+    path('corretora/cargas/add/age', CreateageCargasView.as_view(), name='add_age_cargas'),
+    path('corretora/cargas/<int:pk>/update', UpdateCargasView.as_view(), name='upd_cargas'), 
+    path('corretora/cargas/<int:pk>/detail', DetailCargasView.as_view(), name='detail_cargas'), 
+    path('corretora/cargas/<int:pk>/update/class', UpdateclassCargasView.as_view(), name='upd_class'), 
+    path('corretora/cargas/<int:pk>/delete', DeleteCargasView.as_view(), name='del_cargas'),
+
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
 
 

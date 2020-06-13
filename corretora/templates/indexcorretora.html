@@ -1,0 +1,10 @@
+{% load bootstrap4 %}
+{% block content %}
+<a class="btn btn-primary btn-sm" href="{% url 'pedidos' %}">Pedidos</a>
+<a class="btn btn-primary btn-sm" href="{% url 'cargas' %}">Cargas</a>
+<a class="btn btn-success btn-sm" href="{% url 'add_age_cargas' %}">Agendar</a>
+<a class="btn btn-primary btn-sm" href="{% url 'fornecedores' %}">Fornecedores</a>
+<a class="btn btn-outline-dark btn-sm" target="_blank" href="{% url 'admin:index'  %}">Admin</a>
+
+
+{% endblock %}

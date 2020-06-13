@@ -1,0 +1,182 @@
+{% load bootstrap4 %}
+{% load humanize %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="refresh" content="180">
+    {% bootstrap_css %}
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- MDBootstrap Datatables  -->
+    <link href="{% static 'css/addons/datatables.min.css' %}" rel="stylesheet">
+    <style>
+        .btn-xs {
+            padding: 5px 10px;
+            font-size: 10px;
+            line-height: 1.0;
+
+        }
+
+        .my-table {
+            overflow-x: auto;
+        }
+
+        table.width {
+            width: 100%;
+            margin: 20px auto;
+            table-layout: auto;
+            /* Optional */
+            border-collapse: collapse;
+            white-space: nowrap;
+        }
+
+        td {
+            border: 1px solid #000;
+        }
+
+
+        .tab {
+            position: absolute;
+            right: 250px;
+            margin-top: 10px;
+        }
+
+        body {
+            background-color: #3c3b3d;
+            color: blanchedalmond;
+        }
+
+        .sombra {
+            box-shadow: 5px 5px 5px 5px black;
+        }
+
+        .table-hover>tbody>tr:hover>td,
+        .table-hover>tbody>tr:hover>th {
+            background-color: #a9a9a9;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <br><br>
+    <div class="container sombra" align=center">
+        <br />
+        <div class="row">
+            <div class="col-3">
+                <h3> <strong>Fornecedores</strong></h3>
+            </div>
+            <div class="col-5">
+                {% if messages %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-offset-2">
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert"><span
+                                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                {% for m in messages %}
+                                {{ m }} <br />
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+        <hr />
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-3-sm" style="background-color: black;">
+                    <a class="btn btn-primary btn-sm" href="{% url 'add_fornecedor' %}">Adicionar Fornecedor</a>
+                </div>
+                <div class="col-3-sm" style="background-color: black;">
+                    <a class="btn btn-outline-warning btn-sm" href="{% url 'corretora' %}">Voltar</a>
+                </div>
+            </div>
+        </div>
+
+
+        <hr />
+
+        <div class="my-table container-fluid">
+            <table id="fornecedor"
+                class="width text-center table table-hover table-condensed table-striped table-dark table-bordered table-sm"
+                width=100>
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">CPF/CNPJ</th>
+                        <th scope="col">Insc. Estadual
+                        <th scope="col">Cidade</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fornecedor in fornecedores %}
+                    <tr>
+                        <td>{{ fornecedor.nome|title }}</td>
+                        <td>{{ fornecedor.cnpj_cpf }}</td>
+                        <td>{{ fornecedor.insc_estadual }}</td>
+                        <td>{{ fornecedor.cidade }}</td>
+                        <td>{{ fornecedor.estado }}</td>
+                        <td>
+                            <a class="btn btn-warning btn-xs"
+                                href="{% url 'upd_fornecedores' fornecedor.pk %}">Editar</a>
+                            <a class="btn btn-danger btn-xs"
+                                href="{% url 'del_fornecedores' fornecedor.pk %}">Deletar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% include 'paginacao.html' %}
+            <p><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
+                    {{ page_obj.paginator.count }} Itens </strong></p>
+        </div>
+
+
+    </div>
+
+</body>
+<!-- jQuery -->
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+<!-- Your custom scripts (optional) -->
+<script type="text/javascript"></script>
+<!-- MDBootstrap Datatables  -->
+<script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+        $('.dataTables_length').addClass('bs-select');
+    });
+    window.setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 2000);
+    setTimeout(function () {
+        window.location.reload(1);
+    }, 120000); // 2 minutos
+</script>

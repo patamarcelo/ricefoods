@@ -1,0 +1,146 @@
+{% extends 'basecorretora.html' %}
+{% load bootstrap4 %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+
+
+<div class="row">
+    <div class="col">
+        <h4><Span class="badge badge-primary">Adicionar Pedido</Span></h4>
+
+    </div>
+    <div class="col" align=right>
+        <a class="btn btn-warning btn-sm" href="{% url 'corretora' %}">Voltar</a>
+    </div>
+</div>
+
+
+
+
+<form method="POST" novalidate class="needs-validation">
+    {% csrf_token %}
+    <br />
+    <div class="container">
+        <div class="form-row">
+            <div class="col-lg-2 form-group">
+                {{ form.contrato|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 form-group">
+                {{ form.situacao|as_crispy_field }}
+            </div>
+            <div class="col-lg-2  form-group">
+                {{ form.data|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 form-group">
+                {{ form.fornecedor|as_crispy_field }}
+            </div>
+            <div class="col-lg-2  form-group">
+                {{ form.cliente|as_crispy_field }}
+            </div>
+        </div>
+        <hr>
+        <div class="form-row">
+            <div class="col-lg-2 form-group">
+                {{ form.quantidade_pedido|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2  form-group">
+                {{ form.preco_produto|as_crispy_field }}
+            </div>
+
+            <div class="col-lg-2">
+                {{ form.comissaoc|as_crispy_field }}
+            </div>
+            <div class="col-lg-2">
+                {{ form.comissaof|as_crispy_field }}
+            </div>
+            <div class="col-lg-2">
+                {{ form.preco_frete|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-lg-2 form-group">
+                {{ form.tipo|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 form-group">
+                {{ form.produto|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 form-group">
+                {{ form.variedade|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 form-group">
+                {{ form.prazopgto|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 form-group">
+                {{ form.modalidadepgto|as_crispy_field }}
+            </div>
+        </div>
+        <hr>
+        <div class="form-row">
+            <div class="col-lg-2 col-sm-2  form-group">
+                {{ form.renda|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 col-sm-2  form-group">
+                {{ form.inteiro|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 col-sm-2  form-group">
+                {{ form.impureza|as_crispy_field }}
+
+            </div>
+
+
+            <div class="col-lg-2 col-sm-2  form-group">
+                {{ form.umidade|as_crispy_field }}
+
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-lg-2 col-sm-2 form-group">
+                {{ form.gessado|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 col-sm-2 form-group">
+                {{ form.bbranca|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 col-sm-2 form-group">
+                {{ form.amarelo|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 col-sm-2 form-group">
+                {{ form.manchpic|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 col-sm-2 form-group">
+                {{ form.vermelhos|as_crispy_field }}
+            </div>
+        </div>
+        <hr>
+
+        <div class="form-row">
+            {{ form.obs|as_crispy_field }}
+
+        </div>
+    </div>
+
+    {% buttons %}
+
+    <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" />
+    <input type="submit" class="btn btn-success btn-sm" name="save_and_continue" value="Salvar e Continuar" />
+    <button type="button" class="btn btn-warning btn-sm">
+        <a href="{% url 'fornecedores' %}">Cancelar</a>
+    </button>
+
+
+
+
+    {% endbuttons %}
+</form>
+{% endblock %}

@@ -1,0 +1,452 @@
+{% load bootstrap4 %}
+{% load humanize %}
+{% load static %}
+{% now "Y-m-d" as todays_date %}
+{% load mathfilters %}
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7 shrink-to-fit=no">
+    {% bootstrap_css %}
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- MDBootstrap Datatables  -->
+    <link href="{% static 'css/addons/datatables.min.css' %}" rel="stylesheet">
+    <style>
+        .btn-xs {
+            padding: 5px 10px;
+            font-size: 10px;
+            line-height: 1.0;
+
+        }
+
+        .my-table {
+            overflow-x: auto;
+            zoom: 80%;
+        }
+
+        table.width {
+            width: 85%;
+            margin: 20px auto;
+            table-layout: auto;
+            /* Optional */
+            border-collapse: collapse;
+            white-space: nowrap;
+
+        }
+
+
+        td {
+            border: 1px solid #000;
+        }
+
+
+        .tab {
+            position: absolute;
+            right: 250px;
+            margin-top: 10px;
+        }
+
+        td.border_bottom {
+            border-bottom: 1pt solid black;
+            border-collapse: collapse;
+        }
+    </style>
+    <style>
+        .table-hover>tbody>tr:hover>td,
+        .table-hover>tbody>tr:hover>th {
+            background-color: #a9a9a9;
+            color: black;
+        }
+
+        body {
+            background-color: white;
+        }
+    </style>
+
+</head>
+
+
+<div class="table-responsive table-width my-table">
+
+    <body>
+        <!--------------------------PEdidos---------------------------->
+        <table class="width table table-sm table-borderless align-text-center " width=100>
+            <thead class="thead-dark table-bordered">
+                <tr align="center">
+                    <hr>
+                    <th scope="col"><strong> Contrato</strong></th>
+                    <th scope=" col"><strong> Situação</strong></th>
+                    <th scope="col"><strong> Data</strong></th>
+                    <th scope="col"><strong> Fornecedor</strong></th>
+                    <th scope="col"><strong> Origem </strong></th>
+                    <th scope="col"><strong> Cliente</strong></th>
+                    <th scope="col"><strong> Preço</strong></th>
+                    <th scope="col"><strong> Produto</strong></th>
+                    <th scope="col"><strong> Tipo</strong></th>
+                    <th scope="col"><strong> Frete</strong></th>
+                    <th scope="col"><strong> Quantidade</strong></th>
+                    <th scope="col"><strong> Quantidade Kg </strong></th>
+                    <th scope="col"><strong> Carregado</strong></th>
+                    <th scope="col"><strong> Saldo</strong></th>
+                </tr>
+
+            </thead>
+            <tbody class="table-bordered">
+                {% for pedido in pedidos %}
+
+                <tr align="center">
+                    <td class="border_bottom"> <strong>{{ pedido.contrato }}</strong></td>
+
+                    <td class="border_bottom"><strong>{{ pedido.situacao|title }}</strong></td>
+
+                    <td class="border_bottom"><strong>{{ pedido.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
+                    <td class="border_bottom"><strong>{{ pedido.fornecedor|title|truncatechars:14 }}</strong></td>
+                    <td class="border_bottom"><strong>{{ pedido.fornecedor.cidade|truncatechars:18 }}</strong></td>
+
+                    <td class="border_bottom"><strong>{{ pedido.cliente|upper }}</strong></td>
+
+
+                    <td class="border_bottom"><strong>R$ {{ pedido.preco_produto|intcomma  }}</strong></td>
+                    <td class="border_bottom"><strong> {{ pedido.produto  }} </strong></td>
+                    {% if pedido.produto == 'Arroz em Casca' %}
+                    <td class="border_bottom"><strong> Saco 50Kg </strong></td>
+                    {% else %}
+                    <td class="border_bottom"><strong> Fardo 30Kg </strong></td>
+                    {% endif %}
+                    <td class="border_bottom"><strong> R$ {{ pedido.preco_frete  }} </strong></td>
+                    {% if pedido.produto == "Arroz em Casca" %}
+                    <td class="border_bottom" align=center><strong>{{ pedido.quantidade_pedido|div:50|floatformat:"0"}}
+                            Scs </strong></td>
+                    {% else %}
+                    <td class="border_bottom" align=center><strong>{{ pedido.quantidade_pedido|div:30|floatformat:"0"}}
+                            Fds </strong></td>
+                    {% endif %}
+                    <td class="border_bottom" align=center><strong>{{ pedido.quantidade_pedido|intcomma }} Kg </strong>
+                    </td>
+                    {% if pedido.carregado == 0 %}
+                    <td class="border_bottom" align=center><strong> - </strong></td>
+                    {% else %}
+                    <td class="border_bottom" align=center><strong><strong>{{ pedido.carregado }} Kg</strong></strong>
+                    </td>
+                    {% endif %}
+                    {% if pedido.saldo == 0 %}
+                    <td class="border_bottom" align=center><strong> - </strong></td>
+                    {% else %}
+                    <td class="border_bottom" align=center><strong>{{ pedido.saldo }} Kg</strong></td>
+                    {% endif %}
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+
+
+        <!--------------------------Cargas-------------------------------------------------------------->
+
+        {% if cargas %}
+
+        <div class="container-fluid">
+            <table class=" width table table-sm table-hover" align="center">
+
+                <br>
+
+                <thead align="center" class="table-bordered thead-dark">
+
+                    <tr>
+                        <th scope="col"><strong>Pedido</strong></th>
+                        <th scope="col"><strong>Data</strong></th>
+                        <th scope="col"><strong>Fornecedor</strong></th>
+                        <th scope="col"><strong>Placa</strong></th>
+                        <th scope="col"><strong>Motorista</strong></th>
+                        <th scope="col"><strong>Peso</strong></th>
+                        <th scope="col"><strong>NF</strong></th>
+                        {% if notafiscal2 %}
+                        <th scope="col"><strong>NF 2</strong></th>
+                        {% else %}
+                        {% endif %}
+                        <th scope="col"><strong>Valor NF </strong></th>
+                        <th scope="col"><strong>Renda </strong></th>
+                        <th scope="col"><strong>Inteiro </strong></th>
+                        <th scope="col"><strong>Impureza </strong></th>
+                        <th scope="col"><strong>Umidade </strong></th>
+                        <th scope="col"><strong>Gessado </strong></th>
+                        <th scope="col"><strong>B.Branca </strong></th>
+                        <th scope="col"><strong>Amarelo</strong></th>
+                        <th scope="col"><strong>Manch/Pic </strong></th>
+                        <th scope="col"><strong>Vermelhos </strong></th>
+                    </tr>
+
+
+                </thead>
+
+                <tbody class="align-text-bottom table-borderless">
+                    {% for pedido in pedidos %}
+                    <tr align="center">
+                        <td colspan="1"></td>
+                        <td colspan="1"></td>
+                        <td colspan="1"></td>
+                        <td colspan="1"></td>
+                        <td align="right" colspan="3"></td>
+                        <td class="border_bottom"><strong><i> Contrato</i></strong></td>
+                        {% if pedido.renda == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.renda }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.inteiro == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.inteiro }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.impureza == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.impureza }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.umidade == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.umidade }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.gessado == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.gessado }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.bbranca == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.bbranca }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.amarelo == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.amarelo }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.manchpic == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.manchpic }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.vermelhos == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.vermelhos }}</i></strong>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    {% for carga in cargas %}
+                    {% for pedido in pedidos %}
+                    {% if carga.situacao == 'Carregado' %}
+
+                    <tr align="center">
+
+                        <td><b>{{ carga.pedido }}</b></td>
+                        <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
+                        <td><b>{{ carga.pedido.fornecedor.nome|title|truncatechars:14 }}
+                            </b></td>
+                        <td><b>
+                                {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</b></td>
+                        <td><b>{{ carga.motorista|title }}</b></td>
+                        <td><b>{{ carga.peso|intcomma }} Kg </b></td>
+                        {% if carga.notafiscal == None %}
+                        <td><b>Sem NF</b></td>
+                        {% elif carga.notafiscal|length > 6 %}
+                        <td><b>
+                                {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </b></td>
+                        {% elif carga.notafiscal|length <= 6 %}
+                        <td><b>
+                                {{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </b></td>
+                        {% else %}
+                        <td><b>{{carga.notasfiscal}}</b></td>
+                        {% endif %}
+                        {% if notafiscal2 %}
+                        <td><b>{{carga.notasfiscal2}}</b></td>
+                        {% else %}
+                        {% endif %}
+                        {% if carga.valornf == None %}
+                        <td><b>R$ &nbsp; - </b></td>
+                        {% else %}
+                        <td><b>R$ {{carga.valornf}}</b></td>
+                        {% endif %}
+                        {% if carga.renda == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.renda < pedido.renda %}
+                        <td class="text-danger"> {{carga.renda}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.renda}}</b></td>
+                        {% endif %}
+
+                        {% if carga.inteiro == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.inteiro < pedido.inteiro %}
+                        <td class="text-danger"><b> {{carga.inteiro}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.inteiro}}</b></td>
+                        {% endif %}
+
+                        {% if carga.impureza == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.impureza > pedido.impureza %}
+                        <td class="text-danger"><b> {{carga.impureza}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.impureza}}</b></td>
+                        {% endif %}
+
+                        {% if carga.umidade == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.umidade > pedido.umidade %}
+                        <td class="text-danger"><b> {{carga.umidade}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.umidade}}</b></td>
+                        {% endif %}
+
+                        {% if carga.gessado == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.gessado > pedido.gessado %}
+                        <td class="text-danger"><b> {{carga.gessado}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.gessado}}</b></td>
+                        {% endif %}
+
+                        {% if carga.bbranca == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.bbranca > pedido.bbranca %}
+                        <td class="text-danger"><b> {{carga.bbranca}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.bbranca}}</b></td>
+                        {% endif %}
+
+                        {% if carga.amarelo == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.amarelo > pedido.amarelo %}
+                        <td class="text-danger"><b> {{carga.amarelo}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.amarelo}}</b></td>
+                        {% endif %}
+
+                        {% if carga.manchpic == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.manchpic > pedido.manchpic %}
+                        <td class="text-danger"><b> {{carga.manchpic}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.manchpic}}</b></td>
+                        {% endif %}
+
+                        {% if carga.vermelhos == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.vermelhos > pedido.vermelhos %}
+                        <td class="text-danger"><b> {{carga.vermelhos}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.vermelhos}}</b></td>
+                        {% endif %}
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <br>
+        <br>
+        <br>
+        <div class="d-flex justify-content-center">
+            <h1><span class="badge badge-danger">Pedido ainda sem Cargas!!</span></h1>
+        </div>
+
+
+        {% endif %}
+
+    </body>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+<!-- jQuery -->
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+<!-- Your custom scripts (optional) -->
+<script type="text/javascript"></script>
+<!-- MDBootstrap Datatables  -->
+<script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $('#cargas').DataTable({
+            "order": [[3, "asc"]]
+        });
+        $('.dataTables_length').addClass('bs-select');
+    });
+
+    window.setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 3000);
+</script>

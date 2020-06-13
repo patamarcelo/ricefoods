@@ -1,0 +1,322 @@
+{% load bootstrap4 %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.6, shrink-to-fit=no">
+    <meta http-equiv="refresh" content="180">
+
+    {% bootstrap_css %}
+
+    {% load humanize %}
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- MDBootstrap Datatables  -->
+    <link href="{% static 'css/addons/datatables.min.css' %}" rel="stylesheet">
+    <style>
+        .btn-xs {
+            padding: 5px 10px;
+            font-size: 10px;
+            line-height: 1.0;
+
+        }
+
+
+
+        .my-table {
+            overflow-x: auto;
+        }
+
+        table.width {
+            width: 100%;
+            margin: 20px auto;
+            table-layout: auto;
+            /* Optional */
+            border-collapse: collapse;
+            white-space: nowrap;
+        }
+
+        td {
+            border: 1px solid #000;
+        }
+
+
+        .tab {
+            position: absolute;
+            right: 250px;
+            margin-top: 10px;
+        }
+    </style>
+    <style>
+        .table-hover>tbody>tr:hover>td,
+        .table-hover>tbody>tr:hover>th {
+            background-color: #a9a9a9;
+            color: black;
+        }
+
+        body {
+            background-color: #3c3b3d;
+            color: blanchedalmond;
+        }
+
+        .sombra {
+            box-shadow: 5px 5px 5px 5px black;
+        }
+
+
+
+
+
+        td.selected,
+        td.selected:hover {
+            background-color: #a9a9a9;
+            color: black;
+        }
+    </style>
+
+
+</head>
+<div class="container-fluid sombra" align=center">
+    <br />
+    <div class="row">
+        <div class="col-3">
+            <h3> <strong>Pedidos</strong></h3>
+        </div>
+        <div class="col-5">
+            {% if messages %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert"><span
+                                    aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            {% for m in messages %}
+                            {{ m }} <br />
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+    <hr />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3-sm" style="background-color: black;">
+                <a class="btn btn-primary btn-sm" href="{% url 'add_pedidos' %}">Adicionar Pedido</a>
+            </div>
+            <div class="col-3-sm" style="background-color: black;">
+                <a class="btn btn-outline-warning btn-sm" href="{% url 'corretora' %}">Voltar</a>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 justify-content-end offset-md-7 offset-md-4  ">
+                <input class="form-control input-sm" type="text" id="icms" onclick="AddValor()"
+                    placeholder="Peso em Kg">
+            </div>
+
+
+        </div>
+    </div>
+
+    <hr />
+    <div class="my-table container-fluid" style="zoom:76%;">
+        <table id="pedido" class="width table table-hover table-striped table-dark table-bordered table-sm" width=100>
+            <thead>
+                <tr align=center>
+
+                    <th scope="col">Contrato</th>
+                    <th scope="col">Situação</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Fornecedor</th>
+                    <th scope="col">Origem </th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Produto</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Frete</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Quantidade Kg </th>
+                    <th scope="col">Carregado</th>
+                    <th scope="col"><a class="text-primary fa fa-check"></a></th>
+                    <th scope="col">Saldo Real</th>
+                    <th scope="col"><a class="text-primary fa fa-check"></a></th>
+                    <th scope="col">Previsto</th>
+                    <th scope="col"><a class="text-primary fa fa-check"></a></th>
+                    <th scope="col">Saldo Prev.</th>
+                    <th scope="col">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pedido in pedidos %}
+                <tr align=center>
+
+                    <td align=left><a class="text text-white" href="{% url 'detail_cargas' pedido.pk %}" target="_blank"
+                            style='font-style:italic; text-decoration: underline;'><strong>{{ pedido.contrato }}</strong></a>
+                    </td>
+                    {% if pedido.situacao == 'a' %}
+                    <td class="text-success"><strong>Aberto</strong></td>
+                    {% elif pedido.situacao == 'b' %}
+                    <td class="text-danger"><strong>Fechado</strong></td>
+                    {% elif pedido.situacao == 'c' %}
+                    <td class="text-danger"><strong>Cancelado</strong></td>
+                    {% else %}
+                    {% endif %}
+                    <td>{{ pedido.data|date:"SHORT_DATE_FORMAT" }}</td>
+                    <td>{{ pedido.fornecedor|title|truncatechars:14 }}</td>
+                    <td>{{ pedido.fornecedor.cidade|truncatechars:18 }}</td>
+
+                    {% if 'CDA' in pedido.cliente.nome_fantasia|upper %}
+                    <td class="text-danger"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
+                    {% elif 'USTON' in pedido.cliente.nome_fantasia|upper %}
+                    <td class="text-primary"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
+                    {% elif 'APIT' in pedido.cliente.nome_fantasia|upper %}
+                    <td style="color: orange;"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
+                    {% else %}
+                    <td><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
+                    {% endif %}
+
+                    <td>R$ {{ pedido.preco_produto|intcomma  }}</td>
+                    <td> {{ pedido.produto  }} </td>
+                    {% if pedido.produto == 'Arroz em Casca' %}
+                    <td> Saco 50Kg </td>
+                    {% else %}
+                    <td> Fardo 30Kg </td>
+                    {% endif %}
+                    <td> R$ {{ pedido.preco_frete  }} </td>
+                    {% if pedido.produto == "Arroz em Casca" %}
+                    <td align=center>{{ pedido.quantidade_pedido|div:50|floatformat:"0"}} Scs </td>
+                    {% else %}
+                    <td align=center>{{ pedido.quantidade_pedido|div:30|floatformat:"0"}} Fds </td>
+                    {% endif %}
+                    <td align=center>{{ pedido.quantidade_pedido|intcomma }} Kg </td>
+                    {% if pedido.carregado == 0 %}
+                    <td align=center> - </td>
+                    {% else %}
+                    <td align=center>{{ pedido.carregado }} Kg</td>
+                    {% endif %}
+
+                    <td align=center><input type="checkbox" value="{{ pedido.saldo|stringformat:"i" }}" class="icms"
+                            align="center" style="size: 10px;"></td>
+
+                    {% if pedido.saldo == 0 %}
+                    <td align=center> - </td>
+                    {% elif pedido.saldo < 0 %}
+                    <td align=center class="text-danger"><strong>{{ pedido.saldo }} Kg</strong></td>
+                    {% elif pedido.saldo > 25000 %}
+                    <td align=center class="text-success"><strong>{{ pedido.saldo }} Kg</strong></td>
+                    {% elif pedido.saldo > 0 %}
+                    <td align=center class="text-warning"><strong>{{ pedido.saldo }} Kg</strong></td>
+                    {% else %}
+                    <td align=center>{{ pedido.saldo }} Kg</td>
+                    {% endif %}
+
+                    <td align=center><input type="checkbox" value="{{ pedido.previsto|stringformat:"i" }}" class="icms"
+                            align="center" style="size: 10px;"></td>
+                    {% if pedido.previsto == 0 %}
+                    <td align=center> - </td>
+                    {% elif pedido.previsto == None %}
+                    <td align=center> - </td>
+                    {% else %}
+                    <td align=center class="text-primary"><strong>{{ pedido.previsto }} Kg</strong></td>
+                    {% endif %}
+                    {% if pedido.previsto == 0 %}
+                    <td align=center> - </td>
+                    {% else %}
+                    <td align=center><input type="checkbox" value="{{ pedido.saldoprevisto|stringformat:"i" }}"
+                            class="icms" align="center" style="size: 10px;"></td>
+                    {% endif %}
+                    {% if pedido.saldoprevisto == 0 %}
+                    <td align=center> - </td>
+                    {% elif pedido.saldoprevisto < 0 %}
+                    <td align=center class="text-danger"><strong>{{ pedido.saldoprevisto }} Kg</strong> </td>
+                    {% elif pedido.saldoprevisto < pedido.saldo %}
+                    <td align=center class="text-warning"><strong>{{ pedido.saldoprevisto }} Kg</strong> </td>
+                    {% else %}
+                    <td align=center class="text-success"><strong>{{ pedido.saldoprevisto }} Kg</strong></td>
+                    {% endif %}
+
+                    {% if pedido.carregado %}
+                    <td>
+                        <a class="btn btn-warning btn-xs" href="{% url 'upd_pedidos' pedido.pk %}">Editar</a>
+                    </td>
+                    {% else %}
+                    <td>
+                        <a class="btn btn-warning btn-xs" href="{% url 'upd_pedidos' pedido.pk %}">Editar</a>
+                        <a class="btn btn-danger btn-xs" href="{% url 'del_pedidos' pedido.pk %}">Deletar</a>
+                    </td>
+                    {% endif %}
+
+                </tr>
+
+
+                {% endfor %}
+            </tbody>
+        </table>
+        {% include 'paginacao.html' %}
+
+        <p><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
+                {{ page_obj.paginator.count }} Itens </strong></p>
+    </div>
+</div>
+{% bootstrap_javascript jquery='full' %}
+<!-- jQuery -->
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+<!-- Your custom scripts (optional) -->
+<script type="text/javascript"></script>
+<!-- MDBootstrap Datatables  -->
+<script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable({
+            "order": [[1, "asc"]]
+        });
+        $('.dataTables_length').addClass('bs-select');
+    });
+    window.setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 2000);
+    setTimeout(function () {
+        window.location.reload(1);
+    }, 120000); // 2 minutos
+
+    $("table tbody").on("click", "td", function () {
+        $(this).toggleClass("selected");
+    });
+    var total = 0;
+    //Chama a função com click em qualquer checkbox
+    $(':checkbox').click(function () {
+        //Atribui o valor do input p/ variável 'valor'
+        var valor = parseInt($(this).val());
+        //Se o checkbox for marcado ele soma se não subtrai
+        if ($(this).is(":checked")) {
+            total += valor;
+        } else {
+            total -= valor;
+        }
+        var total1 = (total).toLocaleString('pt-BR');
+        //Atribui o valor ao input
+        $("#icms").val(total1);
+    });
+</script>

@@ -1,0 +1,225 @@
+{% load bootstrap4 %}
+{% load humanize %}
+{% block content %}
+{% now "Y-m-d" as todays_date %}
+
+
+
+<br />
+<div class="container-fluid tabini sombra" align=center>
+    <br />
+    <div class="container flex-wrap justify-content-center align-content-end">
+        <div class="row">
+            <div class="col-6" align=left>
+                <h4><strong>Resumo Cargas</strong></h4>
+            </div>
+            <div class="col-2">
+                <input class="form-control input-sm" type="text" id="icms" onclick="AddValor()">
+            </div>
+
+        </div>
+
+    </div>
+    <hr />
+    <div class="my-table" style="zoom:77%">
+        <table id="dtBasicExample2" class="width table table-hover table-striped table-dark table-bordered table-sm"
+            width=100>
+            <thead align=left>
+                <tr>
+                    <th scope="col">Pedido</th>
+                    <th scope="col">Transp.</th>
+
+                    <th scope="col">Buonny</th>
+                    <th scope="col">Situação</th>
+                    <th scope="col">Ordem</th>
+                    <th scope="col">Data</th>
+
+                    <th scope="col">Placa</th>
+                    <th scope="col">Motorista</th>
+                    <th scope="col">Frete</th>
+                    <th scope="col"><a class="text-primary fa fa-check"></a></th>
+                    <th scope="col">Peso</th>
+
+                    <th scope="col">NF</th>
+                    <th scope="col"><a class="text-primary fa fa-check"></a></th>
+                    <th scope="col">ICMS</th>
+                    <th scope="col">Fornecedor</th>
+                    <th scope="col">Origem</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Class.</th>
+                    <th scope="col">Ação</th>
+                </tr>
+            </thead>
+
+            <tbody class="align-text-bottom">
+                {% for carga in cargas %}
+                <tr>
+                    {% if carga.pedido.situacao == "a" %}
+                    <td class="text-success">{{ carga.pedido }}</td>
+
+                    {% elif 'b' in carga.pedido.situacao %}
+                    <td class="text-danger">{{ carga.pedido }}</td>
+                    {% elif carga.pedido.situacao == 'c' %}
+                    <td class="text-info">{{ carga.pedido }}</td>
+                    {% else %}
+                    {{ carga.pedido }}
+                    {% endif %}
+                    {% if 'GDX' in carga.transp|upper %}
+                    <td>{{ carga.transp|title }}</td>
+                    {% else %}
+                    <td style="background-color: #660066;">{{ carga.transp|title }}</td>
+                    {% endif %}
+                    {% if 'das' in carga.buonny %}
+                    <td class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>
+                    {% elif 'sul' in carga.buonny %}
+                    <td class="text-warning"><strong>{{ carga.buonny|title }}</strong></td>
+                    {% else %}
+                    <td class="text-success"><strong>{{ carga.buonny }}</strong></td>
+                    {% endif %}
+                    {% if carga.situacao == 'Agendado' %}
+                    <td class="text-warning"><strong>{{ carga.situacao }}</strong></td>
+                    {% elif carga.situacao == 'Carregado' %}
+                    <td class="text-success"><strong>{{ carga.situacao }}</strong></td>
+                    {% else %}
+                    <td>{{ carga.situacao }}</td>
+                    {% endif %}
+
+                    {% if carga.ordem %}
+                    <td class="text-success"><em>Enviada</em></td>
+                    {% else %}
+                    <td class="text-danger"><em>Não Env.</em></td>
+                    {% endif %}
+
+                    {% if todays_date == carga.data|date:"Y-m-d" %}
+                    <td class="text-primary"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
+                    {% elif todays_date > carga.data|date:"Y-m-d" and carga.situacao == 'Agendado' %}
+                    <td class="text-danger"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
+                    {% else %}
+                    <td>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</td>
+                    {% endif %}
+
+
+                    <td>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</td>
+
+                    {% if carga.obs and carga.tac %}
+                    <td style="background-color: #7a1b0c; opacity: 0.8;"><abbr class="text-warning"
+                            title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
+                    </td>
+                    {% elif carga.obs %}
+                    <td><abbr class="text-warning" title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
+                    </td>
+                    {% elif carga.tac %}
+                    <td style="background-color: #7a1b0c; opacity: 0.8"><em>{{ carga.motorista|title }}</em></abbr>
+                    </td>
+                    {% else %}
+                    <td>{{ carga.motorista|title }}</td>
+                    {% endif %}
+
+                    <td>R$ {{ carga.valor_mot }}</td>
+                    {% if carga.peso == 0 %}
+                    <td align=center><input type="checkbox" value="{{ carga.veiculo|stringformat:"i" }}" class="peso"
+                            style="size: 10px;"></td>
+                    {% else %}
+                    <td align=center><input type="checkbox" value="{{ carga.peso|stringformat:"i" }} "
+                            text="{{ carga.peso|intcomma }}" class="peso" style="size: 10px;"></td>
+                    {% endif %}
+                    {% if carga.peso == 0 %}
+                    <td class="text-warning" style="  cursor: pointer;"><strong>{{ carga.veiculo|intcomma }} Kg
+                        </strong></td>
+                    {% else %}
+                    <td style="  cursor: pointer;">{{ carga.peso|intcomma }} Kg </td>
+                    {% endif %}
+
+                    {% if carga.notafiscal == None %}
+                    <td class="text-danger"><strong>Sem NF</strong></td>
+                    {% elif carga.notafiscal|length > 6 %}
+                    <td>
+                        {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                    </td>
+                    {% elif carga.notafiscal|length <= 6 %}
+                    <td>
+                        {{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                    </td>
+                    {% else %}
+                    <td>{{carga.notasfiscal}}</td>
+                    {% endif %}
+
+                    <td align=center><input type="checkbox" name="icms" value="{{ carga.icms|stringformat:"i" }}"
+                            class="icms" style="size: 10px;"></td>
+                    <td>R$ {{ carga.icms }} </td>
+                    {% if  'PALMARES' in carga.pedido.fornecedor.nome|upper %}
+                    <td style="background-color: #9400d3;">{{ carga.pedido.fornecedor.nome|title|truncatechars:14 }}
+                    </td>
+                    {% else %}
+                    <td>{{ carga.pedido.fornecedor.nome|title|truncatechars:14 }}</td>
+                    {% endif %}
+                    <td>{{ carga.pedido.fornecedor.cidade|truncatechars:18 }}</td>
+                    {% if 'CDA' in carga.pedido.cliente.nome_fantasia|upper %}
+                    <td class=" text-danger"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
+                    {% elif 'USTON' in carga.pedido.cliente.nome_fantasia|upper %}
+                    <td class="text-primary"><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
+                    {% elif 'APIT' in carga.pedido.cliente.nome_fantasia|upper %}
+                    <td style="color: orange;"><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
+                    {% else %}
+                    <td>{{ carga.pedido.cliente|upper }}</td>
+                    {% endif %}
+                    {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}
+                    <td><a class="text-success fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
+                        {% elif carga.renda or carga.inteiro or carga.impureza or carga.umidade %}
+                    <td><a class="text-warning fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
+                    </td>
+                    {% else %}
+                    <td><a class="text-danger fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
+                        {% endif %}
+
+                        {% if carga.situacao == 'Agendado' and carga.pedido.situacao == 'a' %}
+                    <td>
+                        <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
+                        <a class="btn btn-danger btn-xs" href="{% url 'del_cargas' carga.pk %}">Deletar</a>
+                    </td>
+                    {% elif carga.situacao == 'Carregado' and carga.pedido.situacao == 'a' %}
+                    <td>
+                        <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
+
+                    </td>
+                    {% else %}
+                    <td align=center>-</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<br>
+
+
+<style>
+    .cg-aprox {
+        color: yellow;
+    }
+
+    :checked {
+        background-color: #a9a9a9;
+        color: black;
+    }
+</style>
+<script>
+    var total = 0;
+    //Chama a função com click em qualquer checkbox
+    $(':checkbox').click(function () {
+        //Atribui o valor do input p/ variável 'valor'
+        var valor = parseInt($(this).val());
+        //Se o checkbox for marcado ele soma se não subtrai
+        if ($(this).is(":checked")) {
+            total += valor;
+        } else {
+            total -= valor;
+        }
+        var total1 = (total).toLocaleString('pt-BR');
+        //Atribui o valor ao input
+        $("#icms").val(total1);
+    });
+</script>
+{% endblock %}

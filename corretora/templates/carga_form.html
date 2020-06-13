@@ -1,0 +1,171 @@
+{% extends 'basecorretora.html' %}
+{% load bootstrap4 %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+
+
+<div class="row align-items-center">
+    <div class="col">
+        <div class="row">
+            <div class="container">
+                <h4> <span class="badge badge-primary"> Pedido: {{carga.pedido}}
+                    </span>&nbsp;&nbsp;<span
+                        class="badge badge-dark">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}} -
+                        {{carga.motorista|title}}</span>
+            </div>
+            <div class="container-fluid">
+                <span class="badge badge-success">{{carga.pedido.fornecedor.nome}}</span>
+                &nbsp;&nbsp;<span class="badge badge-success">{{carga.pedido.cliente.nome_fantasia}}</span>
+            </div>
+        </div>
+        </h4>
+    </div>
+    <div class="col" align=right>
+        <a class="btn btn-warning btn-sm" href="javascript:history.back()">Voltar</a>
+
+    </div>
+</div>
+<br />
+
+<form method="POST" novalidate class="needs-validation">
+    {% csrf_token %}
+
+
+    <br />
+    <div class="container">
+        <div class="form-row">
+            <div class="col-lg-1 col-sm-2 form-group">
+                {{ form.ordem|as_crispy_field }}
+            </div>
+            <div class="col-lg-1 col-sm-2 form-group">
+                {{ form.tac|as_crispy_field }}
+            </div>
+        </div>
+
+
+
+
+        <div class="form-row">
+
+
+            <div class="col-lg-2 col-sm-3  form-group">
+                {{ form.pedido|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 col-sm-3  form-group">
+                {{ form.data|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 col-sm-3  form-group">
+                {{ form.situacao|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 col-sm-3 form-group">
+                {{ form.transp|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 col-sm-3 form-group">
+                {{ form.veiculo|as_crispy_field }}
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="col-lg-2 col-sm-3 form-group">
+                {{ form.buonny|as_crispy_field }}
+            </div>
+
+
+
+            <div class="col-lg-2 col-sm-3 form-group">
+                {{ form.placa|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 col-sm-3 form-group">
+                {{ form.motorista|as_crispy_field }}
+            </div>
+
+
+
+            <div class="col-lg-2 col-sm-3 form-group">
+                {{ form.valor_mot|as_crispy_field }}
+            </div>
+
+            <div class="col-lg-2 col-sm-3  form-group">
+                {{ form.peso|as_crispy_field }}
+            </div>
+        </div>
+
+
+        <hr>
+        <div class="form-row">
+            <div class="col-lg-3 col-sm-3  form-group">
+                {{ form.notafiscal|as_crispy_field }}
+            </div>
+            <div class="col-lg-3 col-sm-3  form-group">
+                {{ form.notafiscal2|as_crispy_field }}
+            </div>
+            <div class="col-lg-3 col-sm-3  form-group">
+                {{ form.valornf|as_crispy_field }}
+            </div>
+        </div>
+        <hr>
+        <div class="form-row">
+            <div class="col-lg-2 col-sm-3   form-group">
+                {{ form.renda|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 col-sm-3   form-group">
+                {{ form.inteiro|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 col-sm-3   form-group">
+                {{ form.impureza|as_crispy_field }}
+
+            </div>
+
+
+            <div class="col-lg-2 col-sm-3   form-group">
+                {{ form.umidade|as_crispy_field }}
+
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-lg-2 col-sm-3  form-group">
+                {{ form.gessado|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 col-sm-3  form-group">
+                {{ form.bbranca|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 col-sm-3  form-group">
+                {{ form.amarelo|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 col-sm-3  form-group">
+                {{ form.manchpic|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 col-sm-3  form-group">
+                {{ form.vermelhos|as_crispy_field }}
+            </div>
+        </div>
+        <hr>
+
+        <div class="form-row">
+            <div class="col-9  offset-sm form-group">{{ form.obs|as_crispy_field }}</div>
+        </div>
+    </div>
+
+
+    {% buttons %}
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <button type="button" class="btn btn-outline-warning">
+        <a href="{% url 'cargas' %}">Cancelar</a>
+    </button>
+
+
+
+    {% endbuttons %}
+</form>
+<script>
+
+</script>
+{% endblock %}

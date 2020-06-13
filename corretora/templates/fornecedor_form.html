@@ -1,0 +1,75 @@
+{% extends 'basecorretora.html' %}
+{% load bootstrap4 %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="row align-items-center">
+    <div class="col">
+        <h4><span class="badge badge-primary"> Editar Fornecedor</span></h4>
+    </div>
+    <div class="col" align=right>
+        <a class="btn btn-warning btn-sm" href="javascript:history.back()">Voltar</a>
+    </div>
+</div>
+<br />
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="container">
+        <div class="form-row">
+            <div class="col-lg-6 col-sm-10 form-group">
+                {{ form.nome|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-lg-3 col-sm-5 form-group">
+                {{ form.cnpj_cpf|as_crispy_field }}
+            </div>
+            <div class="col-lg-3 col-sm-5 form-group">
+                {{ form.insc_estadual|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-lg-6 col-sm-10 form-group">
+                {{ form.endereco|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-lg-2 col-sm-5 form-group">
+                {{ form.cidade|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 col-sm-5 form-group">
+                {{ form.estado|as_crispy_field }}
+            </div>
+        </div>
+        <hr>
+        <div class="form-row">
+            <div class="col-lg-2 col-sm-4 form-group">
+                {{ form.banco|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 col-sm-3 form-group">
+                {{ form.agencia|as_crispy_field }}
+            </div>
+            <div class="col-lg-2 col-sm-3 form-group">
+                {{ form.conta|as_crispy_field }}
+            </div>
+        </div>
+        <hr>
+
+        <div class="form-row">
+            <div class="col-lg-6 col-sm-10 col-md-4 offset-sm form-group">{{ form.obs|as_crispy_field }}</div>
+        </div>
+
+
+        {% buttons %}
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="button" class="btn btn-outline-warning">
+            <a href="{% url 'pedidos' %}">Cancelar</a>
+        </button>
+
+
+
+        {% endbuttons %}
+</form>
+{% endblock %}
