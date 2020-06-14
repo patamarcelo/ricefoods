@@ -27,8 +27,8 @@ from corretora import views
 urlpatterns = [
     path('painel/', admin.site.urls),
     path('', include('core.urls')),
-    path('sistema/', include('django.contrib.auth.urls')),
-    path('sistema/', login_required(TemplateView.as_view(template_name='index2.html')), name='index2'),
+    path('contas/', include('django.contrib.auth.urls')),
+    path('sistema/', TemplateView.as_view(template_name='index2.html'), name='index2'),
 
     path('corretora/', BaseView.as_view(), name='corretora'), 
     

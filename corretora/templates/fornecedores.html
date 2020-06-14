@@ -68,6 +68,9 @@
             color: black;
         }
     </style>
+
+    <!--Favicon-->
+    <link rel="icon" href="{% static 'images/favicon.png' %}">
 </head>
 
 <body>
@@ -121,20 +124,44 @@
                     <tr>
                         <th scope="col">Nome</th>
                         <th scope="col">CPF/CNPJ</th>
-                        <th scope="col">Insc. Estadual
+                        <th scope="col">Insc. Estadual</th>
                         <th scope="col">Cidade</th>
                         <th scope="col">Estado</th>
+                        <th scope="col">Banco</th>
+                        <th scope="col">Agencia</th>
+                        <th scope="col">Conta</th>
                         <th scope="col">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for fornecedor in fornecedores %}
                     <tr>
+                        {% if fornecedor.obs %}
+                        <td><abbr class="text-warning"
+                                title="{{ fornecedor.obs }}"><em>{{ fornecedor.nome|title }}</em></abbr></td>
+                        {% else %}
                         <td>{{ fornecedor.nome|title }}</td>
+                        {% endif %}
+
+                        {% if fornecedor.cnpj_cpf|length <= 11 %}
+                        <td>{{ fornecedor.cnpj_cpf|slice:"0:3"}}.{{ fornecedor.cnpj_cpf|slice:"3:6"}}.{{ fornecedor.cnpj_cpf|slice:"6:9"}}-{{ fornecedor.cnpj_cpf|slice:"9:"}}
+                        </td>
+                        {% elif fornecedor.cnpj_cpf|length <= 16 %}
+                        <td>{{ fornecedor.cnpj_cpf|slice:"0:2"}}.{{ fornecedor.cnpj_cpf|slice:"2:5"}}.{{ fornecedor.cnpj_cpf|slice:"5:8"}}/{{ fornecedor.cnpj_cpf|slice:"8:12"}}.{{ fornecedor.cnpj_cpf|slice:"12:"}}
+                        </td>
+                        {% else %}
                         <td>{{ fornecedor.cnpj_cpf }}</td>
-                        <td>{{ fornecedor.insc_estadual }}</td>
+                        {% endif %}
+                        <td>{{ fornecedor.insc_estadual|slice:"0:3" }}/{{ fornecedor.insc_estadual|slice:"3:" }}</td>
                         <td>{{ fornecedor.cidade }}</td>
                         <td>{{ fornecedor.estado }}</td>
+                        <td>{{ fornecedor.banco }}</td>
+                        {% if fornecedor.agencia|length == 5 %}
+                        <td>{{ fornecedor.agencia|slice:"0:4"}}-{{ fornecedor.agencia|slice:"-1:"}}</td>
+                        {% else %}
+                        <td>{{ fornecedor.agencia }}</td>
+                        {% endif %}
+                        <td>{{ fornecedor.conta|slice:":-1"}}-{{ fornecedor.conta|slice:"-1:"}}</td>
                         <td>
                             <a class="btn btn-warning btn-xs"
                                 href="{% url 'upd_fornecedores' fornecedor.pk %}">Editar</a>

@@ -93,6 +93,8 @@
             color: black;
         }
     </style>
+    <!--Favicon-->
+    <link rel="icon" href="{% static 'images/favicon.png' %}">
 </head>
 
 <body>
@@ -105,7 +107,7 @@
                 </h1>
             </div>
             <div class="col">
-                <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'login' %}">Sair</a>
+                <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
                 <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'corretora' %}">Inicio</a>
             </div>
         </div>
