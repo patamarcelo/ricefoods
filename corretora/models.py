@@ -72,10 +72,10 @@ PROD_CHOICES = (
 class Fornecedor(Base):
     nome = models.CharField('Nome', max_length=50)
     cnpj_cpf = models.CharField('CNPJ/CPF', max_length=14, unique=True, null=True, help_text="digite apenas números")
-    insc_estadual = models.CharField('Inscrição Estadual',  unique=True, max_length=10,null=True,help_text="digite apenas números")
+    insc_estadual = models.CharField('Inscrição Estadual',  unique=True, max_length=13,null=True,help_text="digite apenas números")
     banco = models.CharField('Banco', max_length=10, blank=True)
-    agencia = models.CharField('Agencia', max_length=5,blank=True)
-    conta = models.CharField('Conta', max_length=12,blank=True)
+    agencia = models.CharField('Agencia', max_length=5,blank=True, help_text="digite apenas números")
+    conta = models.CharField('Conta', max_length=12,blank=True, help_text="digite apenas números")
     endereco = models.CharField('Endereço', max_length=50)
     cidade = models.ForeignKey(Cidade, on_delete=models.PROTECT)
     estado = models.TextField('Estado', max_length=12, choices=UF_CHOICES)

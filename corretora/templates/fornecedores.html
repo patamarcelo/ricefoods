@@ -159,7 +159,7 @@
                         <td>{{ fornecedor.insc_estadual|slice:"0:3" }}/{{ fornecedor.insc_estadual|slice:"3:" }}</td>
                         <td>{{ fornecedor.cidade }}</td>
                         <td>{{ fornecedor.estado }}</td>
-                        <td>{{ fornecedor.banco }}</td>
+                        <td>{{ fornecedor.banco|title }}</td>
                         {% if fornecedor.agencia|length == 5 %}
                         <td>{{ fornecedor.agencia|slice:"0:4"}}-{{ fornecedor.agencia|slice:"-1:"}}</td>
                         {% else %}

@@ -112,9 +112,14 @@
 
                 <tr align="center">
                     <td class="border_bottom"> <strong>{{ pedido.contrato }}</strong></td>
-
-                    <td class="border_bottom"><strong>{{ pedido.situacao|title }}</strong></td>
-
+                    {% if pedido.situacao == 'a' %}
+                    <td class="border_bottom"><strong>Aberto</strong></td>
+                    {% elif pedido.situacao == 'b' %}
+                    <td class="border_bottom"><strong>Fechado</strong></td>
+                    {% elif pedido.situacao == 'c' %}
+                    <td class="border_bottom"><strong>Cancelado</strong></td>
+                    {% else %}
+                    {% endif %}
                     <td class="border_bottom"><strong>{{ pedido.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
                     <td class="border_bottom"><strong>{{ pedido.fornecedor|title|truncatechars:14 }}</strong></td>
                     <td class="border_bottom"><strong>{{ pedido.fornecedor.cidade|truncatechars:18 }}</strong></td>
