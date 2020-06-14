@@ -4,25 +4,30 @@
 
 <div class="container">
     <div class="container">
-        <img class="mb-4" src="{% static 'img/foguete.png' %}" alt="" width="72" height="72">
+        <svg class="bi bi-bar-chart" width="5em" height="5em" viewBox="0 0 16 16" fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5h-2v12h2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z" />
+        </svg>
     </div>
     <h1> Corretora de Cereais </h1>
     {% if user.is_anonymous %}
     <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
     {% else %}
-    <div class="alert alert-primary" role="alert">
-        Seja bem Vindo(a) {{ user.get_full_name }}!!
-    </div>
-    <hr />
     <div class="container" align=center>
-        <a class="btn btn-outline-danger" href="{% url 'logout' %}">Logout</a>
-        <a class="btn btn-outline-warning" target="_blank" href="{% url 'admin:index'  %}">Admin</a>
+        <div class="col-5 alert alert-primary" role="alert">
+            Seja Bem Vindo(a) {{ user.get_full_name|title }}!!
+        </div>
     </div>
-    <br />
     <div class="container" align=center>
         <div class="inline-flex">
             <a class="col-3 p-1 m-1 btn btn-primary" href="{% url 'corretora' %}">Corretora</a>
         </div>
+    </div>
+    <br />
+    <div class="container" align=center>
+        <a class="btn btn-outline-danger" href="{% url 'logout' %}">Logout</a>
+        <a class="btn btn-outline-warning" target="_blank" href="{% url 'admin:index'  %}">Admin</a>
     </div>
     <br />
 

@@ -122,14 +122,18 @@
         <hr />
         <div class="container-fluid">
             <div class="row">
-                <div class="col-3-sm" style="background-color: black;">
+                <div class="col-3-sm">
                     <a class="btn btn-primary btn-sm" href="{% url 'add_cargas' %}">Adicionar Cargas</a>
                 </div>
-                <div class="col-3-sm" style="background-color: black;">
+                <div class="col-3-sm">
                     <a class="btn btn-outline-success btn-sm" href="{% url 'add_age_cargas' %}">Agendar</a>
                 </div>
-                <div class="col-3-sm" style="background-color: black;">
+                <div class="col-3-sm">
                     <a class="btn btn-outline-warning btn-sm" href="{% url 'corretora' %}">Voltar</a>
+                </div>
+                <div class="col">
+                    <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
+                    <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'corretora' %}">Inicio</a>
                 </div>
             </div>
         </div>
