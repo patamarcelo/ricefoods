@@ -63,7 +63,7 @@
     <style>
         .table-hover>tbody>tr:hover>td,
         .table-hover>tbody>tr:hover>th {
-            background-color: #a9a9a9;
+            background-color: #696969;
             color: black;
         }
 
@@ -82,7 +82,7 @@
 
         td.selected,
         td.selected:hover {
-            background-color: #a9a9a9;
+            background-color: #696969;
             color: black;
         }
     </style>
@@ -181,8 +181,8 @@
                     {% else %}
                     {% endif %}
                     <td>{{ pedido.data|date:"SHORT_DATE_FORMAT" }}</td>
-                    <td>{{ pedido.fornecedor|title|truncatechars:14 }}</td>
-                    <td>{{ pedido.fornecedor.cidade|truncatechars:18 }}</td>
+                    <td>{{ pedido.fornecedor|title|truncatechars:30 }}</td>
+                    <td>{{ pedido.fornecedor.cidade|truncatechars:20 }}</td>
 
                     {% if 'CDA' in pedido.cliente.nome_fantasia|upper %}
                     <td class="text-danger"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>

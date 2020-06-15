@@ -54,8 +54,8 @@
                     {% else %}
                     {% endif %}
                     <td>{{ pedido.data|date:"SHORT_DATE_FORMAT" }}</td>
-                    <td>{{ pedido.fornecedor|title|truncatechars:14 }}</td>
-                    <td>{{ pedido.fornecedor.cidade|truncatechars:18 }}</td>
+                    <td>{{ pedido.fornecedor|title|truncatechars:26 }}</td>
+                    <td>{{ pedido.fornecedor.cidade|truncatechars:20 }}</td>
 
                     {% if 'CDA' in pedido.cliente.nome_fantasia|upper %}
                     <td class="text-danger">

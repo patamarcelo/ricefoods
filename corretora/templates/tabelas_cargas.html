@@ -115,7 +115,12 @@
                     <td>{{ carga.motorista|title }}</td>
                     {% endif %}
 
+                    {% if carga.valor_mot == None %}
+                    <td align=left>R$ &nbsp;&nbsp;&nbsp;&nbsp;- </td>
+                    {% else %}
                     <td>R$ {{ carga.valor_mot }}</td>
+                    {% endif %}
+
                     {% if carga.peso == 0 %}
                     <td align=center><input type="checkbox" value="{{ carga.veiculo|stringformat:"i" }}" class="peso"
                             style="size: 10px;"></td>
@@ -151,9 +156,9 @@
                     <td style="background-color: #9400d3;">{{ carga.pedido.fornecedor.nome|title|truncatechars:14 }}
                     </td>
                     {% else %}
-                    <td>{{ carga.pedido.fornecedor.nome|title|truncatechars:14 }}</td>
+                    <td>{{ carga.pedido.fornecedor.nome|title|truncatechars:26 }}</td>
                     {% endif %}
-                    <td>{{ carga.pedido.fornecedor.cidade|truncatechars:18 }}</td>
+                    <td>{{ carga.pedido.fornecedor.cidade|truncatechars:20 }}</td>
                     {% if 'CDA' in carga.pedido.cliente.nome_fantasia|upper %}
                     <td class=" text-danger"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
                     {% elif 'USTON' in carga.pedido.cliente.nome_fantasia|upper %}
