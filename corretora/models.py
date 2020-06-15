@@ -281,7 +281,7 @@ class Carga(Base):
     transp = models.ForeignKey(Transportadora, on_delete=models.PROTECT, default='GDX Log')
     
     situacao = models.CharField('Situação', max_length=12, choices=STATUS_CHOICES, default='Agendado')
-    placa = models.CharField('Placa', max_length=7)
+    placa = NameField('Placa', max_length=7)
     motorista = models.CharField('Motorista', max_length=20)
     peso = models.PositiveIntegerField('Peso', default=0 ,blank=True, null=True)
     veiculo = models.IntegerField('Veículo', choices=VEICULO_CHOICES)
