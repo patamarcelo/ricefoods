@@ -248,13 +248,26 @@
 
                         {% if carga.notafiscal == None %}
                         <td class="text-danger"><strong>Sem NF</strong></td>
-                        {% elif carga.notafiscal|length > 6 %}
+                        {% elif carga.notafiscal|length <= 4 %}
                         <td>
-                            {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            {{ carga.notafiscal }}
                         </td>
                         {% elif carga.notafiscal|length <= 6 %}
                         <td>
                             {{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                        </td>
+                        {% elif carga.notafiscal|length > 6 and carga.notafiscal|length < 8 %}
+                        <td>
+                            {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                        </td>
+
+                        {% elif carga.notafiscal|length == 8 %}
+                        <td>
+                            0{{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                        </td>
+                        {% elif carga.notafiscal|length > 8 %}
+                        <td>
+                            {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
                         </td>
                         {% else %}
                         <td>{{carga.notasfiscal}}</td>
@@ -273,9 +286,9 @@
                         <td style="background-color: #9400d3;">{{ carga.pedido.fornecedor.nome|title|truncatechars:14 }}
                         </td>
                         {% else %}
-                        <td>{{ carga.pedido.fornecedor.nome|title|truncatechars:14 }}</td>
+                        <td>{{ carga.pedido.fornecedor.nome|title|truncatechars:26 }}</td>
                         {% endif %}
-                        <td>{{ carga.pedido.fornecedor.cidade|truncatechars:18 }}</td>
+                        <td>{{ carga.pedido.fornecedor.cidade|truncatechars:20 }}</td>
                         {% if 'CDA' in carga.pedido.cliente.nome_fantasia|upper %}
                         <td class="text-danger"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
                         {% elif 'USTON' in carga.pedido.cliente.nome_fantasia|upper %}

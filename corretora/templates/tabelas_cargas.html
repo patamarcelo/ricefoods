@@ -137,18 +137,30 @@
 
                     {% if carga.notafiscal == None %}
                     <td class="text-danger"><strong>Sem NF</strong></td>
-                    {% elif carga.notafiscal|length > 6 %}
+                    {% elif carga.notafiscal|length <= 4 %}
                     <td>
-                        {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                        {{ carga.notafiscal }}
                     </td>
                     {% elif carga.notafiscal|length <= 6 %}
                     <td>
                         {{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
                     </td>
+                    {% elif carga.notafiscal|length > 6 and carga.notafiscal|length < 8 %}
+                    <td>
+                        {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                    </td>
+
+                    {% elif carga.notafiscal|length == 8 %}
+                    <td>
+                        0{{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                    </td>
+                    {% elif carga.notafiscal|length > 8 %}
+                    <td>
+                        {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                    </td>
                     {% else %}
                     <td>{{carga.notasfiscal}}</td>
                     {% endif %}
-
                     <td align=center><input type="checkbox" name="icms" value="{{ carga.icms|stringformat:"i" }}"
                             class="icms" style="size: 10px;"></td>
                     <td>R$ {{ carga.icms }} </td>
