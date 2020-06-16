@@ -26,6 +26,7 @@
             width=100>
             <thead align=left>
                 <tr>
+                    <th scope="col"><a class="text-info fa fa-sort-down"></a></th>
                     <th scope="col">Pedido</th>
                     <th scope="col">Transp.</th>
 
@@ -54,6 +55,7 @@
             <tbody class="align-text-bottom">
                 {% for carga in cargas %}
                 <tr>
+                    <td>{{ forloop.counter }}</td>
                     {% if carga.pedido.situacao == "a" %}
                     <td class="text-success">{{ carga.pedido }}</td>
 

@@ -121,8 +121,8 @@
                     {% else %}
                     {% endif %}
                     <td class="border_bottom"><strong>{{ pedido.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
-                    <td class="border_bottom"><strong>{{ pedido.fornecedor|title|truncatechars:14 }}</strong></td>
-                    <td class="border_bottom"><strong>{{ pedido.fornecedor.cidade|truncatechars:18 }}</strong></td>
+                    <td class="border_bottom"><strong>{{ pedido.fornecedor|title|truncatechars:35 }}</strong></td>
+                    <td class="border_bottom"><strong>{{ pedido.fornecedor.cidade|truncatechars:25 }}</strong></td>
 
                     <td class="border_bottom"><strong>{{ pedido.cliente|upper }}</strong></td>
 
@@ -291,21 +291,34 @@
 
                         <td><b>{{ carga.pedido }}</b></td>
                         <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
-                        <td><b>{{ carga.pedido.fornecedor.nome|title|truncatechars:14 }}
+                        <td><b>{{ carga.pedido.fornecedor.nome|title|truncatechars:28 }}
                             </b></td>
                         <td><b>
                                 {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</b></td>
                         <td><b>{{ carga.motorista|title }}</b></td>
                         <td><b>{{ carga.peso|intcomma }} Kg </b></td>
                         {% if carga.notafiscal == None %}
-                        <td><b>Sem NF</b></td>
-                        {% elif carga.notafiscal|length > 6 %}
+                        <td class="text-danger"><strong>Sem NF</strong></td>
+                        {% elif carga.notafiscal|length <= 4 %}
                         <td><b>
-                                {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                                {{ carga.notafiscal }}
                             </b></td>
                         {% elif carga.notafiscal|length <= 6 %}
                         <td><b>
                                 {{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </b></td>
+                        {% elif carga.notafiscal|length > 6 and carga.notafiscal|length < 8 %}
+                        <td><b>
+                                {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </b></td>
+
+                        {% elif carga.notafiscal|length == 8 %}
+                        <td><b>
+                                0{{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </b></td>
+                        {% elif carga.notafiscal|length > 8 %}
+                        <td><b>
+                                {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
                             </b></td>
                         {% else %}
                         <td><b>{{carga.notasfiscal}}</b></td>

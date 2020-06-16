@@ -150,6 +150,7 @@
                 width=100>
                 <thead>
                     <tr>
+                        <th scope="col"><a class="text-info fa fa-sort-desc"></a></th>
                         <th scope="col">Pedido</th>
                         <th scope="col">Transp.</th>
                         <th scope="col">Buonny</th>
@@ -173,6 +174,7 @@
                 <tbody>
                     {% for carga in cargas %}
                     <tr>
+                        <td>{{ forloop.counter }}</td>
                         {% if carga.pedido.situacao == "a" %}
                         <td class="text-success">{{ carga.pedido }}</td>
 
@@ -192,6 +194,8 @@
                         <td class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>
                         {% elif 'sul' in carga.buonny %}
                         <td class="text-warning"><strong>{{ carga.buonny|title }}</strong></td>
+                        {% elif 'nviado' in carga.buonny or 'nviada' in carga.buonny %}
+                        <td class="text-info"><strong>{{ carga.buonny|title }}</strong></td>
                         {% else %}
                         <td class="text-success"><strong>{{ carga.buonny }}</strong></td>
                         {% endif %}
