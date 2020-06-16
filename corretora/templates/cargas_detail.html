@@ -175,6 +175,7 @@
                 <thead align="center" class="table-bordered thead-dark">
 
                     <tr>
+                        <th scope="col"><a class="text-white fa fa-sort-desc"></a></th>
                         <th scope="col"><strong>Pedido</strong></th>
                         <th scope="col"><strong>Data</strong></th>
                         <th scope="col"><strong>Fornecedor</strong></th>
@@ -204,12 +205,13 @@
                 <tbody class="align-text-bottom table-borderless">
                     {% for pedido in pedidos %}
                     <tr align="center">
-                        <td colspan="1"></td>
-                        <td colspan="1"></td>
-                        <td colspan="1"></td>
-                        <td colspan="1"></td>
-                        <td align="right" colspan="3"></td>
-                        <td colspan="1"></td>
+                        <td colspan="1" class="border_bottom"></td>
+                        <td colspan="1" class="border_bottom"></td>
+                        <td colspan="1" class="border_bottom"></td>
+                        <td colspan="1" class="border_bottom"></td>
+                        <td colspan="1" class="border_bottom"></td>
+                        <td align="right" colspan="3" class="border_bottom"></td>
+                        <td colspan="1" class="border_bottom"></td>
                         {% if pedido.renda == None %}
                         <td class="border_bottom">-</td>
                         {% else %}
@@ -288,7 +290,7 @@
                     {% if carga.situacao == 'Carregado' %}
 
                     <tr align="center">
-
+                        <td>{{ forloop.parentloop.counter }}</td>
                         <td><b>{{ carga.pedido }}</b></td>
                         <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
                         <td><b>{{ carga.pedido.fornecedor.nome|title|truncatechars:28 }}
@@ -403,10 +405,31 @@
                         {% else %}
                         <td><b> {{carga.vermelhos}}</b></td>
                         {% endif %}
+
+                        {% endif %}
+                        {% endfor %}
+                        {% endfor %}
                     </tr>
-                    {% endif %}
-                    {% endfor %}
-                    {% endfor %}
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td align="right" colspan="1" class="border-top border-dark"></td>
+                    <td align="center" colspan="1" class="border-top border-dark"><strong><i>TOTAL</i></strong></td>
+
+                    <td align="center" class="border-top border-dark"><i><strong>{{ total.peso__sum|intcomma }}
+                                Kg</i><strong></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
 
                 </tbody>
             </table>

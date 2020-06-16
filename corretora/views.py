@@ -152,6 +152,7 @@ class DetailCargasView(LoginRequiredMixin, ListView):
         context = super(DetailCargasView, self).get_context_data(**kwargs)
         context['pedidos'] = Pedido.objects.filter(pk=self.kwargs.get('pk'))
         context['cargas'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk'))
+        context['total'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk')).values('peso').aggregate(Sum('peso'))
         return context
 
 
