@@ -287,8 +287,8 @@ class Carga(Base):
     veiculo = models.IntegerField('Veículo', choices=VEICULO_CHOICES)
     valor_mot = models.DecimalField('Frete', max_digits=5, decimal_places=2, null=True, blank=True)
     
-    notafiscal = models.CharField('NF', max_length=10, unique=True,  null=True, blank=True)
-    notafiscal2 = models.CharField('NF 2', max_length=10, unique=True,  null=True, blank=True)
+    notafiscal = models.CharField('NF', max_length=8, unique=True,  null=True, blank=True)
+    notafiscal2 = models.CharField('NF 2', max_length=8, unique=True,  null=True, blank=True)
     valornf = models.DecimalField('Valor NF', max_digits=8, decimal_places=2,  null=True, blank=True)
 
     renda = models.DecimalField('Renda', max_digits=4, decimal_places=2, null=True, blank=True)
