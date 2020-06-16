@@ -49,22 +49,22 @@
     Chart.defaults.global.defaultFontColor = 'black';
     var ctx = document.getElementById('cda').getContext('2d');
 
-    var labelcd = [{% for p in pedidos %} {% if 'CDA' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto %} "{{ p.data|safe }}", {% endif %} {% endfor %}];
+    var labelcd = [{% for p in chart %} {% if 'CDA' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto  and 'Palmaresa' not in p.fornecedor.nome %} "{{ p.data|safe }}", {% endif %} {% endfor %}];
     var labelcda = labelcd.slice(-15);
 
-    var labelru = [{% for p in pedidos %} {% if 'RUS' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto %} "{{ p.data|safe }}", {% endif %} {% endfor %}];
+    var labelru = [{% for p in chart %} {% if 'RUS' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto and 'Palmaresa' not in p.fornecedor.nome %} "{{ p.data|safe }}", {% endif %} {% endfor %}];
     var labelrus = labelru.slice(-15);
 
-    var labelcap = [{% for p in pedidos %} {% if 'CAP' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto %} "{{ p.data|safe }}", {% endif %} {% endfor %}];
+    var labelcap = [{% for p in chart %} {% if 'CAP' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto and 'Palmaresa' not in p.fornecedor.nome %} "{{ p.data|safe }}", {% endif %} {% endfor %}];
 
 
-    var data1cd = [{% for p in pedidos %} {% if 'CDA' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto %} "{{ p.preco_produto|safe }}", {% endif %}{% endfor %}];
+    var data1cd = [{% for p in chart %} {% if 'CDA' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto and 'Palmaresa' not in p.fornecedor.nome %} "{{ p.preco_produto|safe }}", {% endif %}{% endfor %}];
     var data1cda = data1cd.slice(-15);
 
-    var data1ru = [{% for p in pedidos %} {% if 'UST' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto %} "{{ p.preco_produto|safe }}", {% endif %}{% endfor %}];
+    var data1ru = [{% for p in chart %} {% if 'UST' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto and 'Palmaresa' not in p.fornecedor.nome %} "{{ p.preco_produto|safe }}", {% endif %}{% endfor %}];
     var data1rus = data1ru.slice(-15);
 
-    var data1cap = [{% for p in pedidos %} {% if 'CAP' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto %} "{{ p.preco_produto|safe }}", {% endif %}{% endfor %}];
+    var data1cap = [{% for p in chart %} {% if 'CAP' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto and 'Palmaresa' not in p.fornecedor.nome %} "{{ p.preco_produto|safe }}", {% endif %}{% endfor %}];
 
 
     var chart = new Chart(ctx, {
@@ -103,8 +103,8 @@
 
     Chart.defaults.global.defaultFontColor = 'black';
     var ctx = document.getElementById('ruston').getContext('2d');
-    var labelrus = [{% for p in pedidos %} {% if 'RUS' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto %} "{{ p.data|safe }}", {% endif %} {% endfor and 'Arroz em Casca' in p.produto %}];
-    var data1rus = [{% for p in pedidos %} {% if 'RUS' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto %} "{{ p.preco_produto|safe }}", {% endif %}{% endfor %}];
+    var labelrus = [{% for p in chart %} {% if 'RUS' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto and 'Palmaresa' not in p.fornecedor.nome %} "{{ p.data|safe }}", {% endif %} {% endfor and 'Arroz em Casca' in p.produto %}];
+    var data1rus = [{% for p in chart %} {% if 'RUS' in p.cliente.nome_fantasia|upper and 'Arroz em Casca' in p.produto and 'Palmaresa' not in p.fornecedor.nome %} "{{ p.preco_produto|safe }}", {% endif %}{% endfor %}];
 
 
 

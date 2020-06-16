@@ -28,6 +28,7 @@ class BaseView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(BaseView, self).get_context_data(**kwargs)
         context['pedidos'] = Pedido.objects.order_by('situacao','cliente','-data',).all
+        context['chart'] = Pedido.objects.order_by('data').all
         context['fornecedores'] = Fornecedor.objects.order_by('nome').all
         context['cargas'] = Carga.objects.order_by('situacao','-data').all
         return context
