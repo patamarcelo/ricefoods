@@ -6,22 +6,25 @@
 
 
 
-<div class="row">
-    <div class="col">
-        <h4><Span class="badge badge-primary">Adicionar Pedido</Span></h4>
-
-    </div>
-    <div class="col" align=right>
-        <a class="btn btn-warning btn-sm" href="{% url 'corretora' %}">Voltar</a>
-    </div>
-</div>
-
 
 
 
 <form method="POST" novalidate class="needs-validation">
     {% csrf_token %}
+
+    <div class="row">
+        <div class="col">
+            <h4><Span class="badge badge-primary">Adicionar Pedido</Span></h4>
+
+        </div>
+        <div class="col" align=right>
+            <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" />
+            <a class="btn btn-warning btn-sm" href="{% url 'corretora' %}">Voltar</a>
+        </div>
+    </div>
+
     <br />
+    <hr>
     <div class="container">
         <div class="form-row">
             <div class="col-lg-2 form-group">

@@ -3,17 +3,20 @@
 {% block content %}
 {% load crispy_forms_tags %}
 
-<div class="row align-items-center">
-    <div class="col">
-        <h4><span class="badge badge-primary"> Editar Fornecedor</span></h4>
-    </div>
-    <div class="col" align=right>
-        <a class="btn btn-warning btn-sm" href="javascript:history.back()">Voltar</a>
-    </div>
-</div>
-<br />
 
 <form method="POST">
+
+    <div class="row align-items-center">
+        <div class="col">
+            <h4><span class="badge badge-primary"> Editar Fornecedor</span></h4>
+        </div>
+        <div class="col" align=right>
+            <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+            <a class="btn btn-warning btn-sm" href="javascript:history.back()">Voltar</a>
+        </div>
+    </div>
+    <br />
+    <hr>
     {% csrf_token %}
     <div class="container">
         <div class="form-row">

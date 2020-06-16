@@ -5,30 +5,31 @@
 
 
 
-<div class="row align-items-center">
-    <div class="col">
-        <div class="row">
-            <div class="container">
-                <h4> <span class="badge badge-primary"> Pedido: {{carga.pedido}}
-                    </span>&nbsp;&nbsp;<span
-                        class="badge badge-dark">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}} -
-                        {{carga.motorista|title}}</span>
-            </div>
-            <div class="container-fluid">
-                <span class="badge badge-success">{{carga.pedido.fornecedor.nome}}</span>
-                &nbsp;&nbsp;<span class="badge badge-success">{{carga.pedido.cliente.nome_fantasia}}</span>
-            </div>
-        </div>
-        </h4>
-    </div>
-    <div class="col" align=right>
-        <a class="btn btn-warning btn-sm" href="javascript:history.back()">Voltar</a>
-
-    </div>
-</div>
-<br />
 
 <form method="POST">
+    <div class="row align-items-center">
+        <div class="col">
+            <div class="row">
+                <div class="container">
+                    <h4> <span class="badge badge-primary"> Pedido: {{carga.pedido}}
+                        </span>&nbsp;&nbsp;<span
+                            class="badge badge-dark">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
+                            -
+                            {{carga.motorista|title}}</span>
+                </div>
+                <div class="container-fluid">
+                    <span class="badge badge-success">{{carga.pedido.fornecedor.nome}}</span>
+                    &nbsp;&nbsp;<span class="badge badge-success">{{carga.pedido.cliente.nome_fantasia}}</span>
+                </div>
+            </div>
+            </h4>
+        </div>
+        <div class="col" align=right>
+            <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+            <a class="btn btn-warning btn-sm" href="javascript:history.back()">Voltar</a>
+        </div>
+    </div>
+
     {% csrf_token %}
     <hr>
     <div class="form-row">
@@ -79,8 +80,8 @@
     </div>
     {% buttons %}
 
-    <button type="submit" class="btn btn-primary">Salvar</button>
-    <button type="button" class="btn btn-outline-warning">
+    <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+    <button type="button" class="btn btn-outline-warning btn-sm">
         <a href="{% url 'cargas' %}">Cancelar</a>
     </button>
 

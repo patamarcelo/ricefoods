@@ -155,6 +155,7 @@
                     <th scope="col">Frete</th>
                     <th scope="col">Quantidade</th>
                     <th scope="col">Quantidade Kg </th>
+                    <th scope="col"><a class="text-primary fa fa-check"></a></th>
                     <th scope="col">Carregado</th>
                     <th scope="col"><a class="text-primary fa fa-check"></a></th>
                     <th scope="col">Saldo Real</th>
@@ -207,8 +208,13 @@
                     {% else %}
                     <td align=center>{{ pedido.quantidade_pedido|div:30|floatformat:"0"}} Fds </td>
                     {% endif %}
+
                     <td align=center>{{ pedido.quantidade_pedido|intcomma }} Kg </td>
+                    <td align=center><input type="checkbox" value="{{ pedido.carregado|stringformat:"i" }}" class="icms"
+                            align="center" style="size: 10px;"></td>
                     {% if pedido.carregado == 0 %}
+                    <td align=center> - </td>
+                    {% elif pedido.carregado == None %}
                     <td align=center> - </td>
                     {% else %}
                     <td align=center>{{ pedido.carregado }} Kg</td>
