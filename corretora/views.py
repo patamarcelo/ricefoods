@@ -8,6 +8,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.urls import reverse
 
+import datetime
 # Graficos
 import json
 # Graficos
@@ -30,7 +31,15 @@ class BaseView(LoginRequiredMixin, TemplateView):
         context['pedidos'] = Pedido.objects.order_by('situacao','cliente','-data','-contrato').all
         context['chart'] = Pedido.objects.order_by('data').all
         context['fornecedores'] = Fornecedor.objects.order_by('nome').all
-        context['cargas'] = Carga.objects.order_by('situacao','-data').all
+        context['cargas'] = Carga.objects.order_by('situacao','-data','ordem','buonny','pedido_id').all
+        
+        today = datetime.date.today()
+        monday = today - datetime.timedelta(days=today.weekday())
+        sunday = today - datetime.timedelta(days=today.weekday()) + datetime.timedelta(days=6)
+        context['carga_ok_rus_sem'] = Carga.objects.filter(data__gte=monday).filter(data__lte=sunday).filter(pedido__cliente__nome='Ruston').filter(situacao='Carregado').values('peso').aggregate(Sum('peso'))
+        context['carga_rus_sem'] = Carga.objects.filter(data__gte=monday).filter(data__lte=sunday).filter(pedido__cliente__nome='Ruston').filter(situacao='Agendado').values('veiculo').aggregate(Sum('veiculo'))
+        context['carga_ok_cda_sem'] = Carga.objects.filter(data__gte=monday).filter(data__lte=sunday).filter(pedido__cliente__nome='CDA').filter(situacao='Carregado').values('peso').aggregate(Sum('peso'))
+        context['carga_cda_sem'] = Carga.objects.filter(data__gte=monday).filter(data__lte=sunday).filter(pedido__cliente__nome='CDA').filter(situacao='Agendado').values('veiculo').aggregate(Sum('veiculo'))
         return context
     
 

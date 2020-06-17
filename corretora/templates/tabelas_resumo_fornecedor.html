@@ -1,0 +1,114 @@
+{% load bootstrap4 %}
+{% load humanize %}
+{% load mathfilters %}
+{% block content %}
+{% now "Y-m-d" as todays_date %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-4 ">
+        </div>
+        <div class="col-4 tabini sombra">
+            <br>
+            <h5 align=left><strong><i>Semana Atual</i></strong></h5>
+            <div class="d-flex align-items-center">
+
+                <table class="table table-dark table-striped table-sm" style="color: antiquewhite;">
+                    <thead>
+                        <tr align="center">
+                            <th style="width:100px"></th>
+                            <th scope=" col" class="text-primary"><strong>RUSTON</strong></th>
+                            <th scope="col" class="text-danger"><strong>CDA</strong></th>
+
+                        </tr>
+                    </thead>
+                    <tbody align="center">
+                        <tr align="center">
+                            <td class="text-success text-right">Carregado</td>
+                            {% if carga_ok_rus_sem.peso__sum == 0 or carga_ok_rus_sem.peso__sum == None %}
+                            <td>-</td>
+                            {% else %}
+                            <td>{{ carga_ok_rus_sem.peso__sum|intcomma }} Kg</td>
+                            {% endif %}
+                            {% if carga_ok_cda_sem.peso__sum == 0 or carga_ok_cda_sem.peso__sum == None %}
+                            <td>-</td>
+                            {% else %}
+                            <td>{{ carga_ok_cda_sem.peso__sum|intcomma }} Kg</td>
+                            {% endif %}
+
+                        </tr>
+                        <tr>
+                            <td class="text-warning text-right">Previsto</td>
+                            {% if  carga_rus_sem.veiculo__sum == None or carga_rus_sem.veiculo__sum == 0 %}
+                            <td>-</td>
+                            {% else %}
+                            <td>{{ carga_rus_sem.veiculo__sum|intcomma }} Kg</td>
+                            {% endif %}
+
+                            {% if  carga_cda_sem.veiculo__sum == None or carga_cda_sem.veiculo__sum == 0 %}
+                            <td>-</td>
+                            {% else %}
+                            <td>{{ carga_cda_sem.veiculo__sum|intcomma }} Kg</td>
+                            {% endif %}
+
+
+
+
+
+                        </tr>
+                        <tr>
+                            <td class="text-info text-right">Total</td>
+                            {% if  carga_rus_sem.veiculo__sum != None and carga_rus_sem.veiculo__sum != 0 and carga_ok_rus_sem.peso__sum != None and carga_ok_rus_sem.peso__sum != 0 %}
+                            <td class="text-info">{{ carga_rus_sem.veiculo__sum | addition:carga_ok_rus_sem.peso__sum }}
+                                Kg</td>
+                            {% elif  carga_rus_sem.veiculo__sum == None or carga_rus_sem.veiculo__sum == 0 and carga_ok_rus_sem.peso__sum == None or carga_ok_rus_sem.peso__sum == 0 %}
+                            <td>-</td>
+                            {% elif carga_rus_sem.veiculo__sum == None or carga_rus_sem.veiculo__sum == 0 %}
+                            <td class="text-info">{{ carga_ok_rus_sem.peso__sum|intcomma }} Kg</td>
+                            {% elif carga_ok_rus_sem.peso__sum == None or carga_ok_rus_sem.peso__sum == 0 %}
+                            <td class="text-info">{{ carga_rus_sem.veiculo__sum|intcomma }} Kg</td>
+                            {% else %}
+                            {% endif %}
+
+                            {% if  carga_cda_sem.veiculo__sum != None and carga_cda_sem.veiculo__sum != 0 and carga_ok_cda_sem.peso__sum != None and carga_ok_cda_sem.peso__sum != 0 %}
+                            <td class="text-info">{{ carga_cda_sem.veiculo__sum | addition:carga_ok_cda_sem.peso__sum }}
+                                Kg</td>
+                            {% elif  carga_cda_sem.veiculo__sum == None or carga_cda_sem.veiculo__sum == 0 and carga_ok_cda_sem.peso__sum == None or carga_ok_cda_sem.peso__sum == 0 %}
+                            <td>-</td>
+                            {% elif carga_cda_sem.veiculo__sum == None or carga_cda_sem.veiculo__sum == 0 %}
+                            <td class="text-info">{{ carga_ok_cda_sem.peso__sum|intcomma }} Kg</td>
+                            {% elif carga_ok_cda_sem.peso__sum == None or carga_ok_cda_sem.peso__sum == 0 %}
+                            <td class="text-info">{{ carga_cda_sem.veiculo__sum|intcomma }} Kg</td>
+                            {% else %}
+                            {% endif %}
+
+
+
+
+                            <!-- {% if carga_rus_sem.veiculo__sum != 0 or carga_rus_sem.veiculo__sum != None and carga_ok_rus_sem.peso__sum != 0 or carga_ok_rus_sem.peso__sum != None %}
+                            <td class="text-info">{{ carga_cda_sem.veiculo__sum | addition:carga_ok_cda_sem.peso__sum }} Kg<td>
+                            {% elif carga_rus_sem.veiculo__sum == 0 or carga_rus_sem.veiculo__sum == None and carga_ok_rus_sem.peso__sum == 0 or carga_ok_rus_sem.peso__sum == None %}
+                            <td class="text-info">-</td>
+                            {% elif carga_rus_sem.veiculo__sum == 0 or carga_rus_sem.veiculo__sum == None %}
+                            <td class="text-info">{{ carga_ok_rus_sem.peso__sum }} Kg 
+                             {% elif carga_ok_rus_sem.peso__sum == 0 or carga_ok_rus_sem.peso__sum == None %}   
+                            <td class="text-info">{{ carga_rus_sem.veiculo__sum  }} Kg
+                            {% else %}
+                            {% endif %}
+                            <td class="text-info">
+                                {{ carga_rus_sem.veiculo__sum | addition:carga_ok_rus_sem.peso__sum | addition:carga_ok_cda_sem.peso__sum | addition:carga_cda_sem.veiculo__sum }}
+                                Kg -->
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-4">
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

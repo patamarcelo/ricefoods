@@ -2,6 +2,10 @@
 {% load humanize %}
 {% block content %}
 
+<!--Resumo Fornecedores-->
+
+{% include 'tabelas_resumo_fornecedor.html' %}
+
 
 <!--Tabela de pedidos-->
 {% include 'tabelas_pedidos.html'  %}
@@ -11,6 +15,7 @@
 
 <!--Grafico1-->
 {% include 'charts.html' %}
+
 
 
 {% endblock %}
