@@ -39,7 +39,22 @@
 
                         </tr>
                         <tr>
-                            <td class="text-warning text-right">Previsto</td>
+                            <td class="text-primary text-right">Carregando</td>
+                            {% if  carga_rus_sem_ordem.veiculo__sum == None or carga_rus_sem_ordem.veiculo__sum == 0 %}
+                            <td>-</td>
+                            {% else %}
+                            <td>{{ carga_rus_sem_ordem.veiculo__sum|intcomma }} Kg</td>
+                            {% endif %}
+
+                            {% if  carga_cda_sem_ordem.veiculo__sum == None or carga_cda_sem_ordem.veiculo__sum == 0 %}
+                            <td>-</td>
+                            {% else %}
+                            <td>{{ carga_cda_sem_ordem.veiculo__sum|intcomma }} Kg</td>
+                            {% endif %}
+
+                        </tr>
+                        <tr>
+                            <td class="text-warning text-right">Agendado</td>
                             {% if  carga_rus_sem.veiculo__sum == None or carga_rus_sem.veiculo__sum == 0 %}
                             <td>-</td>
                             {% else %}
@@ -59,27 +74,75 @@
                         </tr>
                         <tr>
                             <td class="text-info text-right">Total</td>
-                            {% if  carga_rus_sem.veiculo__sum != None and carga_rus_sem.veiculo__sum != 0 and carga_ok_rus_sem.peso__sum != None and carga_ok_rus_sem.peso__sum != 0 %}
-                            <td class="text-info">{{ carga_rus_sem.veiculo__sum | addition:carga_ok_rus_sem.peso__sum }}
+                            {% if  carga_rus_sem.veiculo__sum != None and carga_ok_rus_sem.peso__sum != None and carga_rus_sem_ordem.veiculo__sum != None %}
+                            <td class="text-info">
+                                {{ carga_rus_sem.veiculo__sum | addition:carga_ok_rus_sem.peso__sum | addition:carga_rus_sem_ordem.veiculo__sum }}
                                 Kg</td>
-                            {% elif  carga_rus_sem.veiculo__sum == None or carga_rus_sem.veiculo__sum == 0 and carga_ok_rus_sem.peso__sum == None or carga_ok_rus_sem.peso__sum == 0 %}
-                            <td>-</td>
-                            {% elif carga_rus_sem.veiculo__sum == None or carga_rus_sem.veiculo__sum == 0 %}
+
+                            {% elif  carga_rus_sem.veiculo__sum == None and carga_ok_rus_sem.peso__sum == None and carga_rus_sem_ordem.veiculo__sum == None %}
+                            <td class="text-info">-</td>
+
+                            {% elif carga_rus_sem.veiculo__sum == None and carga_rus_sem_ordem.veiculo__sum == None %}
                             <td class="text-info">{{ carga_ok_rus_sem.peso__sum|intcomma }} Kg</td>
-                            {% elif carga_ok_rus_sem.peso__sum == None or carga_ok_rus_sem.peso__sum == 0 %}
+
+                            {% elif carga_ok_rus_sem.peso__sum == None and carga_rus_sem_ordem.veiculo__sum == None %}
                             <td class="text-info">{{ carga_rus_sem.veiculo__sum|intcomma }} Kg</td>
+
+                            {% elif carga_ok_rus_sem.peso__sum == None and carga_rus_sem.veiculo__sum == None %}
+                            <td class="text-info">{{ carga_rus_sem_ordem.veiculo__sum|intcomma }} Kg</td>
+
+                            {% elif carga_rus_sem.veiculo__sum == None %}
+                            <td class="text-info">
+                                {{ carga_ok_rus_sem.peso__sum | addition:carga_rus_sem_ordem.veiculo__sum }}
+                                Kg</td>
+
+                            {% elif carga_rus_sem_ordem.veiculo__sum == None %}
+                            <td class="text-info">{{ carga_ok_rus_sem.peso__sum | addition:carga_rus_sem.veiculo__sum }}
+                                Kg</td>
+
+                            {% elif carga_ok_rus_sem.peso__sum == None %}
+                            <td class="text-info">
+                                {{ carga_rus_sem_ordem.veiculo__sum | addition:carga_rus_sem.veiculo__sum }}
+                                Kg</td>
+
+
                             {% else %}
                             {% endif %}
 
-                            {% if  carga_cda_sem.veiculo__sum != None and carga_cda_sem.veiculo__sum != 0 and carga_ok_cda_sem.peso__sum != None and carga_ok_cda_sem.peso__sum != 0 %}
-                            <td class="text-info">{{ carga_cda_sem.veiculo__sum | addition:carga_ok_cda_sem.peso__sum }}
+
+
+                            {% if  carga_cda_sem.veiculo__sum != None and carga_ok_cda_sem.peso__sum != None and carga_cda_sem_ordem.veiculo__sum != None %}
+                            <td class="text-info">
+                                {{ carga_cda_sem.veiculo__sum | addition:carga_ok_cda_sem.peso__sum | addition:carga_cda_sem_ordem.veiculo__sum }}
                                 Kg</td>
-                            {% elif  carga_cda_sem.veiculo__sum == None or carga_cda_sem.veiculo__sum == 0 and carga_ok_cda_sem.peso__sum == None or carga_ok_cda_sem.peso__sum == 0 %}
-                            <td>-</td>
-                            {% elif carga_cda_sem.veiculo__sum == None or carga_cda_sem.veiculo__sum == 0 %}
+
+                            {% elif  carga_cda_sem.veiculo__sum == None and carga_ok_cda_sem.peso__sum == None and carga_cda_sem_ordem.veiculo__sum == None %}
+                            <td class="text-info">-</td>
+
+                            {% elif carga_cda_sem.veiculo__sum == None and carga_cda_sem_ordem.veiculo__sum == None %}
                             <td class="text-info">{{ carga_ok_cda_sem.peso__sum|intcomma }} Kg</td>
-                            {% elif carga_ok_cda_sem.peso__sum == None or carga_ok_cda_sem.peso__sum == 0 %}
+
+                            {% elif carga_ok_cda_sem.peso__sum == None and carga_cda_sem_ordem.veiculo__sum == None %}
                             <td class="text-info">{{ carga_cda_sem.veiculo__sum|intcomma }} Kg</td>
+
+                            {% elif carga_ok_cda_sem.peso__sum == None and carga_cda_sem.veiculo__sum == None %}
+                            <td class="text-info">{{ carga_cda_sem_ordem.veiculo__sum|intcomma }} Kg</td>
+
+                            {% elif carga_cda_sem.veiculo__sum == None %}
+                            <td class="text-info">
+                                {{ carga_ok_cda_sem.peso__sum | addition:carga_cda_sem_ordem.veiculo__sum }}
+                                Kg</td>
+
+                            {% elif carga_cda_sem_ordem.veiculo__sum == None %}
+                            <td class="text-info">{{ carga_ok_cda_sem.peso__sum | addition:carga_cda_sem.veiculo__sum }}
+                                Kg</td>
+
+                            {% elif carga_ok_cda_sem.peso__sum == None %}
+                            <td class="text-info">
+                                {{ carga_cda_sem_ordem.veiculo__sum | addition:carga_cda_sem.veiculo__sum }}
+                                Kg</td>
+
+
                             {% else %}
                             {% endif %}
 
