@@ -21,7 +21,7 @@
 
     </div>
     <hr />
-    <div class="my-table" style="zoom:77%">
+    <div class="my-table" style="zoom:73%">
         <table id="dtBasicExample2" class="width table table-hover table-striped table-dark table-bordered table-sm"
             width=100>
             <thead align=left>
@@ -96,7 +96,7 @@
 
                     {% if todays_date == carga.data|date:"Y-m-d" %}
                     <td class="text-primary"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
-                    {% elif todays_date > carga.data|date:"Y-m-d" and carga.situacao == 'Agendado' %}
+                    {% elif todays_date > carga.data|date:"Y-m-d" and carga.situacao == 'Agendado' and carga.ordem == False %}
                     <td class="text-danger"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
                     {% else %}
                     <td>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</td>
@@ -185,12 +185,12 @@
                     <td>{{ carga.pedido.cliente|upper }}</td>
                     {% endif %}
                     {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}
-                    <td><a class="text-success fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
+                    <td align="center"><a class="text-success fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
                         {% elif carga.renda or carga.inteiro or carga.impureza or carga.umidade %}
-                    <td><a class="text-warning fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
+                    <td align="center"><a class="text-warning fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
                     </td>
                     {% else %}
-                    <td><a class="text-danger fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
+                    <td align="center"><a class="text-danger fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
                         {% endif %}
 
                         {% if carga.situacao == 'Agendado' and carga.pedido.situacao == 'a' %}

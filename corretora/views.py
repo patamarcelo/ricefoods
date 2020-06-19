@@ -14,6 +14,7 @@ import json
 # Graficos
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from braces.views import SuperuserRequiredMixin
 
 
 
@@ -152,6 +153,7 @@ class DeleteFornecedoresView(LoginRequiredMixin, DeleteView):
 
 ##Cargas <---------------->
 
+# ------------------------------------relatorio_classificacao-----------------------------------
 class DetailCargasView(LoginRequiredMixin, ListView):
     model = Carga
     template_name = 'cargas_detail.html'
@@ -164,6 +166,22 @@ class DetailCargasView(LoginRequiredMixin, ListView):
         context['pedidos'] = Pedido.objects.filter(pk=self.kwargs.get('pk'))
         context['cargas'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk'))
         context['total'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk')).values('peso').aggregate(Sum('peso'))
+        return context
+
+# ------------------------------------comissoes-----------------------------------
+class ComissCargasView(LoginRequiredMixin, SuperuserRequiredMixin, ListView):
+    model = Carga
+    template_name = 'cargas_detail_comiss.html'
+    context_object_name = 'cargas' 
+
+
+
+    def get_context_data(self, **kwargs):
+        context = super(ComissCargasView, self).get_context_data(**kwargs)
+        context['pedidos'] = Pedido.objects.filter(pk=self.kwargs.get('pk'))
+        context['cargas'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk'))
+        context['totalpeso'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk')).values('peso').aggregate(Sum('peso'))
+        context['totalnf'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk')).values('valornf').aggregate(Sum('valornf'))
         return context
 
 
@@ -199,7 +217,7 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     redirect_field_name = 'index2'
     model = Carga
     template_name = 'carga_age_form.html'
-    success_message = "%(placa)s - %(motorista)s inseridos com sucesso!!"
+    success_message = "%(placa)s - %(motorista)s agendado com sucesso!!"
     fields = ('ordem','tac','pedido','situacao','data','buonny','transp','placa','motorista','valor_mot',
                 'veiculo','obs')
 

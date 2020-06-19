@@ -48,6 +48,7 @@ urlpatterns = [
     path('corretora/cargas/add/age', CreateageCargasView.as_view(), name='add_age_cargas'),
     path('corretora/cargas/<int:pk>/update', UpdateCargasView.as_view(), name='upd_cargas'), 
     path('corretora/cargas/<int:pk>/detail', DetailCargasView.as_view(), name='detail_cargas'), 
+    path('corretora/cargas/<int:pk>/comissao', ComissCargasView.as_view(), name='detail_cargas_comiss'), 
     path('corretora/cargas/<int:pk>/update/class', UpdateclassCargasView.as_view(), name='upd_class'), 
     path('corretora/cargas/<int:pk>/delete', DeleteCargasView.as_view(), name='del_cargas'),
 

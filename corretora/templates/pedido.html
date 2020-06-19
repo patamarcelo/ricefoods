@@ -38,6 +38,7 @@
 
         .my-table {
             overflow-x: auto;
+
         }
 
         table.width {
@@ -100,7 +101,7 @@
             {% if messages %}
             <div class="container">
                 <div class="row">
-                    <div class="col-8 col-sm-8 col-sm-offset-2">
+                    <div class="col-12 col-sm-12 col-sm-offset-2">
                         <div class="alert alert-success alert-dismissible" role="alert">
                             <button type="button" class="close" data-dismiss="alert"><span
                                     aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -138,7 +139,7 @@
     </div>
 
     <hr />
-    <div class="my-table container-fluid" style="zoom:76%;">
+    <div class="my-table container-fluid" style="zoom:72%;">
         <table id="pedido" class="width table table-hover table-striped table-dark table-bordered table-sm" width=100>
             <thead>
                 <tr align=center>
@@ -163,6 +164,10 @@
                     <th scope="col">Previsto</th>
                     <th scope="col"><a class="text-primary fa fa-check"></a></th>
                     <th scope="col">Saldo Prev.</th>
+                    <th scope="col"><a class="text-primary fa fa-check"></a></th>
+                    {% if user.is_superuser%}
+                    <th scope="col">$$</th>
+                    {% endif %}
                     <th scope="col">Ação</th>
                 </tr>
             </thead>
@@ -182,7 +187,7 @@
                     {% else %}
                     {% endif %}
                     <td>{{ pedido.data|date:"SHORT_DATE_FORMAT" }}</td>
-                    <td>{{ pedido.fornecedor|title|truncatechars:30 }}</td>
+                    <td>{{ pedido.fornecedor|title|truncatechars:20 }}</td>
                     <td>{{ pedido.fornecedor.cidade|truncatechars:20 }}</td>
 
                     {% if 'CDA' in pedido.cliente.nome_fantasia|upper %}
@@ -259,13 +264,24 @@
                     {% else %}
                     <td align=center class="text-success"><strong>{{ pedido.saldoprevisto }} Kg</strong></td>
                     {% endif %}
-
+                    <td align=center><input type="checkbox" value="{{ pedido.totalcomissaocasca|stringformat:"i" }}"
+                            class="icms" align="center" style="size: 10px;"></td>
+                    {% if user.is_superuser %}
+                    {% if pedido.produto == 'Arroz em Casca' and pedido.totalcomissaocasca != None %}
+                    <td class="text-center"><a href="{% url 'detail_cargas_comiss' pedido.pk %}" target="_blank"
+                            style='font-style:italic;  color:whitesmoke;'>R$
+                            {{ pedido.totalcomissaocasca }}
+                        </a></td>
+                    {% else %}
+                    <td class="text-center">-</td>
+                    {% endif %}
+                    {% endif %}
                     {% if pedido.carregado %}
-                    <td>
+                    <td class="text-left">
                         <a class="btn btn-warning btn-xs" href="{% url 'upd_pedidos' pedido.pk %}">Editar</a>
                     </td>
                     {% else %}
-                    <td>
+                    <td class="text-left">
                         <a class="btn btn-warning btn-xs" href="{% url 'upd_pedidos' pedido.pk %}">Editar</a>
                         <a class="btn btn-danger btn-xs" href="{% url 'del_pedidos' pedido.pk %}">Deletar</a>
                     </td>

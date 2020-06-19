@@ -188,7 +188,19 @@ class Pedido(Base):
     
 
     obs = models.TextField('Observação', max_length=125, blank=True)    
-                
+    
+    def totalcomissaocasca(self):
+        filt = self.contrato
+        totalcomissaocasca = Carga.objects.filter(pedido__contrato=filt).filter(peso__gt=1).values('pedido').aggregate(pesot=Sum('peso'))['pesot']
+        self.totalcomissaocasca = totalcomissaocasca
+        if self.totalcomissaocasca != None:
+            if self.produto == 'Arroz em Casca':
+                self.totalcomissaocasca =  (round((((self.totalcomissaocasca / 50 ) * float(self.preco_produto)) * float(self.comissaoc / 100)),2))
+                return self.totalcomissaocasca
+            else:
+                return 0
+        else:
+            pass
 
     
     
@@ -303,6 +315,18 @@ class Carga(Base):
     vermelhos = models.DecimalField('Vermelhos', max_digits=4, decimal_places=2,null=True, blank=True)
 
     obs = models.TextField('Observação', max_length=125, blank=True) 
+
+    def comissaocasca(self):
+        if self.peso:
+            if self.pedido.produto == 'Arroz em Casca':
+                return (round((((self.peso / 50 ) * float(self.pedido.preco_produto)) * float(self.pedido.comissaoc / 100)),2))
+            else:
+                return 0
+        else:
+            pass
+    
+    
+
 
     def icms(self):
         if self.pedido.cliente.estado == 'SP':

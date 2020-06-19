@@ -14,7 +14,7 @@
     <br />
     <h4 class="container" align=left> <strong>Resumo Pedidos</strong></h4>
     <hr />
-    <div class="my-table" style="zoom:73%">
+    <div class="my-table" style="zoom:67%">
         <table id="dtBasicExample"
             class="width table table-condensed table-striped table-hover table-dark table-bordered table-sm" width=100>
             <thead>
@@ -35,6 +35,9 @@
                     <th scope="col">Saldo Real</th>
                     <th scope="col">Previsto</th>
                     <th scope="col">Saldo Prev.</th>
+                    {% if user.is_superuser%}
+                    <th scope="col">$$</th>
+                    {% endif %}
                     <th scope="col">Ação</th>
                 </tr>
             </thead>
@@ -46,13 +49,14 @@
                             style='font-style:italic; text-decoration: underline;'><strong>{{ pedido.contrato }}</strong></a>
                     </td>
                     {% if pedido.situacao == 'a' %}
-                    <td class="text-success"><strong>Aberto</strong></td>
+                    <td class="text-success text-center"><strong>Aberto</strong></td>
                     {% elif pedido.situacao == 'b' %}
-                    <td class="text-danger"><strong>Fechado</strong></td>
+                    <td class="text-danger text-center"><strong>Fechado</strong></td>
                     {% elif pedido.situacao == 'c' %}
-                    <td class="text-danger"><strong>Cancelado</strong></td>
+                    <td class="text-danger text-center"><strong>Cancelado</strong></td>
                     {% else %}
                     {% endif %}
+
                     <td>{{ pedido.data|date:"SHORT_DATE_FORMAT" }}</td>
                     <td>{{ pedido.fornecedor|title|truncatechars:26 }}</td>
                     <td>{{ pedido.fornecedor.cidade|truncatechars:20 }}</td>
@@ -87,10 +91,14 @@
                     <td align=center>{{ pedido.quantidade_pedido|intcomma }} Kg </td>
                     {% if pedido.carregado == 0 %}
                     <td align=center> - </td>
+                    {% elif pedido.carregado == None %}
+                    <td align=center> - </td>
                     {% else %}
                     <td align=center>{{ pedido.carregado }} Kg</td>
                     {% endif %}
                     {% if pedido.saldo == 0 %}
+                    <td align=center> - </td>
+                    {% elif pedido.saldo == None %}
                     <td align=center> - </td>
                     {% elif pedido.saldo < 0 %}
                     <td align=center class="text-danger"><strong>{{ pedido.saldo }} Kg</strong></td>
@@ -104,10 +112,14 @@
                     {% endif %}
                     {% if pedido.previsto == 0 %}
                     <td align=center> - </td>
+                    {% elif pedido.previsto == None %}
+                    <td align=center> - </td>
                     {% else %}
                     <td align=center class="text-primary"><strong>{{ pedido.previsto }} Kg</strong></td>
                     {% endif %}
                     {% if pedido.saldoprevisto == 0 %}
+                    <td align=center> - </td>
+                    {% elif pedido.saldoprevisto == None %}
                     <td align=center> - </td>
                     {% elif pedido.saldoprevisto < 0 %}
                     <td align=center class="text-danger"><strong>{{ pedido.saldoprevisto }} Kg</strong> </td>
@@ -116,6 +128,16 @@
 
                     {% else %}
                     <td align=center class="text-success"><strong>{{ pedido.saldoprevisto }} Kg</strong></td>
+                    {% endif %}
+                    {% if user.is_superuser %}
+                    {% if pedido.produto == 'Arroz em Casca' and pedido.totalcomissaocasca != None %}
+                    <td class="text-center"><a href="{% url 'detail_cargas_comiss' pedido.pk %}" target="_blank"
+                            style='font-style:italic;  color:whitesmoke;'>R$
+                            {{ pedido.totalcomissaocasca }}
+                        </a></td>
+                    {% else %}
+                    <td class="text-center">-</td>
+                    {% endif %}
                     {% endif %}
                     {% if pedido.carregado %}
                     <td>

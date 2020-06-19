@@ -7,9 +7,9 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-4 ">
+        <div class="col-lg-4 col-md-3 col-sm-2 ">
         </div>
-        <div class="col-4 tabini sombra">
+        <div class="col-lg-4 col-md-6 col-sm-8 tabini sombra">
             <br>
             <h5 align=left><strong><i>Semana Atual</i></strong></h5>
             <div class="d-flex align-items-center">
@@ -18,14 +18,14 @@
                     <thead>
                         <tr align="center">
                             <th style="width:100px"></th>
-                            <th scope=" col" class="text-primary"><strong>RUSTON</strong></th>
+                            <th scope="col" class="text-primary"><strong>RUSTON</strong></th>
                             <th scope="col" class="text-danger"><strong>CDA</strong></th>
 
                         </tr>
                     </thead>
                     <tbody align="center">
                         <tr align="center">
-                            <td class="text-success text-right">Carregado</td>
+                            <td class="text-success text-right"><strong>Carregado</strong></td>
                             {% if carga_ok_rus_sem.peso__sum == 0 or carga_ok_rus_sem.peso__sum == None %}
                             <td>-</td>
                             {% else %}
@@ -39,7 +39,7 @@
 
                         </tr>
                         <tr>
-                            <td class="text-primary text-right">Carregando</td>
+                            <td class="text-primary text-right"><strong>Carregando</strong></td>
                             {% if  carga_rus_sem_ordem.veiculo__sum == None or carga_rus_sem_ordem.veiculo__sum == 0 %}
                             <td>-</td>
                             {% else %}
@@ -73,37 +73,39 @@
 
                         </tr>
                         <tr>
-                            <td class="text-info text-right">Total</td>
+                            <td class="text-info text-right"><strong>Total</strong></td>
                             {% if  carga_rus_sem.veiculo__sum != None and carga_ok_rus_sem.peso__sum != None and carga_rus_sem_ordem.veiculo__sum != None %}
-                            <td class="text-info">
-                                {{ carga_rus_sem.veiculo__sum | addition:carga_ok_rus_sem.peso__sum | addition:carga_rus_sem_ordem.veiculo__sum }}
-                                Kg</td>
+                            <td class="text-info"><strong>
+                                    {{ carga_rus_sem.veiculo__sum | addition:carga_ok_rus_sem.peso__sum | addition:carga_rus_sem_ordem.veiculo__sum }}
+                                    Kg</strong></td>
 
                             {% elif  carga_rus_sem.veiculo__sum == None and carga_ok_rus_sem.peso__sum == None and carga_rus_sem_ordem.veiculo__sum == None %}
-                            <td class="text-info">-</td>
+                            <td class="text-info"><strong>-</strong></td>
 
                             {% elif carga_rus_sem.veiculo__sum == None and carga_rus_sem_ordem.veiculo__sum == None %}
-                            <td class="text-info">{{ carga_ok_rus_sem.peso__sum|intcomma }} Kg</td>
+                            <td class="text-info"><strong>{{ carga_ok_rus_sem.peso__sum|intcomma }} Kg</strong></td>
 
                             {% elif carga_ok_rus_sem.peso__sum == None and carga_rus_sem_ordem.veiculo__sum == None %}
-                            <td class="text-info">{{ carga_rus_sem.veiculo__sum|intcomma }} Kg</td>
+                            <td class="text-info"><strong>{{ carga_rus_sem.veiculo__sum|intcomma }} Kg</strong></td>
 
                             {% elif carga_ok_rus_sem.peso__sum == None and carga_rus_sem.veiculo__sum == None %}
-                            <td class="text-info">{{ carga_rus_sem_ordem.veiculo__sum|intcomma }} Kg</td>
+                            <td class="text-info"><strong>{{ carga_rus_sem_ordem.veiculo__sum|intcomma }} Kg</strong>
+                            </td>
 
                             {% elif carga_rus_sem.veiculo__sum == None %}
-                            <td class="text-info">
-                                {{ carga_ok_rus_sem.peso__sum | addition:carga_rus_sem_ordem.veiculo__sum }}
-                                Kg</td>
+                            <td class="text-info"><strong>
+                                    {{ carga_ok_rus_sem.peso__sum | addition:carga_rus_sem_ordem.veiculo__sum }}
+                                    Kg</strong></td>
 
                             {% elif carga_rus_sem_ordem.veiculo__sum == None %}
-                            <td class="text-info">{{ carga_ok_rus_sem.peso__sum | addition:carga_rus_sem.veiculo__sum }}
-                                Kg</td>
+                            <td class="text-info">
+                                <strong>{{ carga_ok_rus_sem.peso__sum | addition:carga_rus_sem.veiculo__sum }}
+                                    Kg</strong></td>
 
                             {% elif carga_ok_rus_sem.peso__sum == None %}
-                            <td class="text-info">
-                                {{ carga_rus_sem_ordem.veiculo__sum | addition:carga_rus_sem.veiculo__sum }}
-                                Kg</td>
+                            <td class="text-info"><strong>
+                                    {{ carga_rus_sem_ordem.veiculo__sum | addition:carga_rus_sem.veiculo__sum }}
+                                    Kg</strong></td>
 
 
                             {% else %}
@@ -167,7 +169,7 @@
                 </table>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-lg-4 col-md-3 col-sm-2">
         </div>
     </div>
 

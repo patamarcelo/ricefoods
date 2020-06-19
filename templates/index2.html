@@ -15,7 +15,7 @@
     <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
     {% else %}
     <div class="container" align=center>
-        <div class="col-5 alert alert-primary" role="alert">
+        <div class="col-lg-5 col-md-5 col-sm-5 alert alert-primary" role="alert">
             Seja Bem Vindo(a) {{ user.get_full_name|title }}!!
         </div>
     </div>
