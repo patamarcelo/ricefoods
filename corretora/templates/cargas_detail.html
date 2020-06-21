@@ -206,12 +206,13 @@
                         <th scope="col"><strong>Placa</strong></th>
                         <th scope="col"><strong>Motorista</strong></th>
                         <th scope="col"><strong>Peso</strong></th>
+                        <th scope="col"><strong>Valor NF </strong></th>
                         <th scope="col"><strong>NF</strong></th>
                         {% if notafiscal2 %}
                         <th scope="col"><strong>NF 2</strong></th>
                         {% else %}
                         {% endif %}
-                        <th scope="col"><strong>Valor NF </strong></th>
+
                         <th scope="col"><strong>Renda </strong></th>
                         <th scope="col"><strong>Inteiro </strong></th>
                         <th scope="col"><strong>Impureza </strong></th>
@@ -323,6 +324,11 @@
                                 {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</b></td>
                         <td><b>{{ carga.motorista|title }}</b></td>
                         <td><b>{{ carga.peso|intcomma }} Kg </b></td>
+                        {% if carga.valornf == None %}
+                        <td><b>R$ &nbsp; - </b></td>
+                        {% else %}
+                        <td><b>R$ {{carga.valornf}}</b></td>
+                        {% endif %}
                         {% if carga.notafiscal == None %}
                         <td class="text-danger"><strong>Sem NF</strong></td>
                         {% elif carga.notafiscal|length <= 4 %}
@@ -353,11 +359,7 @@
                         <td><b>{{carga.notasfiscal2}}</b></td>
                         {% else %}
                         {% endif %}
-                        {% if carga.valornf == None %}
-                        <td><b>R$ &nbsp; - </b></td>
-                        {% else %}
-                        <td><b>R$ {{carga.valornf}}</b></td>
-                        {% endif %}
+
                         {% if carga.renda == None %}
                         <td><b>-</b></td>
                         {% elif carga.renda < pedido.renda %}
@@ -439,22 +441,90 @@
                     <td colspan="1" class="border-top border-dark"></td>
                     <td colspan="1" class="border-top border-dark"></td>
                     <td align="right" colspan="1" class="border-top border-dark"></td>
-                    <td align="center" colspan="1" class="border-top border-dark"><strong><i>TOTAL</i></strong></td>
+                    <td align="center" colspan="1" class="border-top border-dark"><strong><i>TOTAIS</i></strong></td>
 
-                    <td align="center" class="border-top border-dark"><i><strong>{{ total.peso__sum|intcomma }}
-                                Kg</i><strong></td>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="1" class="border-top border-dark"></td>
+                    <td align="center" class="border-top border-dark"><i>{{ total.peso__sum|intcomma }}
+                            Kg</i></td>
+                    {% if totalnf.valornf__sum == None %}
+                    <td align="center" class="border-top border-dark"><b>R$ &nbsp; - </b></td>
+                    {% else %}
+                    <td align="center" class="border-top border-dark"><i>R$ {{ totalnf.valornf__sum|intcomma }}
+                        </i></td>
+                    {% endif %}
+                    {% for p in pedidos %}
+                    <td align="center" class="border-top border-dark"><i><strong>Média</strong></i></td>
+                    {% if mrenda.w_avg < p.renda %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger">
+                        {{ mrenda.w_avg|floatformat:2 }}</td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark">{{ mrenda.w_avg|floatformat:2 }}</td>
+                    {% endif %}
 
+                    {% if minteiro.w_avg < p.inteiro %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger">
+                        {{ minteiro.w_avg|floatformat:2 }}</td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark">{{ minteiro.w_avg|floatformat:2 }}
+                    </td>
+                    {% endif %}
+
+                    {% if mimpureza.w_avg > p.impureza %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger">
+                        {{ mimpureza.w_avg|floatformat:2 }}</td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark">{{ mimpureza.w_avg|floatformat:2 }}
+                    </td>
+                    {% endif %}
+
+
+                    {% if mumidade.w_avg > p.umidade %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger">
+                        {{ mumidade.w_avg|floatformat:2 }}</td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark">{{ mumidade.w_avg|floatformat:2 }}
+                    </td>
+                    {% endif %}
+
+                    {% if mgessado.w_avg > p.gessado %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger">
+                        {{ mgessado.w_avg|floatformat:2 }}</td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark">{{ mgessado.w_avg|floatformat:2 }}
+                    </td>
+                    {% endif %}
+
+                    {% if mbbranca.w_avg > p.bbranca %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger">
+                        {{ mbbranca.w_avg|floatformat:2 }}</td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark">{{ mbbranca.w_avg|floatformat:2 }}
+                    </td>
+                    {% endif %}
+
+                    {% if mamarelo.w_avg > p.amarelo %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger">
+                        {{ mamarelo.w_avg|floatformat:2 }}</td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark">{{ mamarelo.w_avg|floatformat:2 }}
+                    </td>
+                    {% endif %}
+
+                    {% if mmanchpic.w_avg > p.manchpic %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger">
+                        {{ mmanchpic.w_avg|floatformat:2 }}</td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark">{{ mmanchpic.w_avg|floatformat:2 }}
+                    </td>
+                    {% endif %}
+
+                    {% if mvermelhos.w_avg > p.vermelhos %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger">
+                        {{ mvermelhos.w_avg|floatformat:2 }}</td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark">{{ mvermelhos.w_avg|floatformat:2 }}
+                    </td>
+                    {% endif %}
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
