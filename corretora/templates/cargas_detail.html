@@ -315,7 +315,7 @@
                     {% if carga.situacao == 'Carregado' %}
 
                     <tr align="center">
-                        <td>{{ forloop.parentloop.counter }}</td>
+                        <td>{{ forloop.parentloop.counter }}</b></td>
                         <td><b>{{ carga.pedido }}</b></td>
                         <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
                         <td><b>{{ carga.pedido.fornecedor.nome|title|truncatechars:28 }}
@@ -363,7 +363,7 @@
                         {% if carga.renda == None %}
                         <td><b>-</b></td>
                         {% elif carga.renda < pedido.renda %}
-                        <td class="text-danger"> {{carga.renda}}</b></td>
+                        <td class="text-danger"><b> {{carga.renda}}</b></td>
                         {% else %}
                         <td><b> {{carga.renda}}</b></td>
                         {% endif %}
@@ -441,88 +441,90 @@
                     <td colspan="1" class="border-top border-dark"></td>
                     <td colspan="1" class="border-top border-dark"></td>
                     <td align="right" colspan="1" class="border-top border-dark"></td>
-                    <td align="center" colspan="1" class="border-top border-dark"><strong><i>TOTAIS</i></strong></td>
+                    <td align="center" colspan="1" class="border-top border-dark"><strong><i>Totais</i></strong></td>
 
-                    <td align="center" class="border-top border-dark"><i>{{ total.peso__sum|intcomma }}
-                            Kg</i></td>
+                    <td align="center" class="border-top border-dark"><b><i>{{ total.peso__sum|intcomma }}
+                                Kg</i></b></td>
                     {% if totalnf.valornf__sum == None %}
                     <td align="center" class="border-top border-dark"><b>R$ &nbsp; - </b></td>
                     {% else %}
-                    <td align="center" class="border-top border-dark"><i>R$ {{ totalnf.valornf__sum|intcomma }}
-                        </i></td>
+                    <td align="center" class="border-top border-dark"><b><i>R$ {{ totalnf.valornf__sum|intcomma }}
+                            </i></b></td>
                     {% endif %}
                     {% for p in pedidos %}
-                    <td align="center" class="border-top border-dark"><i><strong>Média</strong></i></td>
+                    <td align="center" class="border-top border-dark"><b><i><strong>Média</strong></i></td>
                     {% if mrenda.w_avg < p.renda %}
-                    <td align="center" colspan="1" class="border-top border-dark text-danger">
-                        {{ mrenda.w_avg|floatformat:2 }}</td>
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mrenda.w_avg|floatformat:2 }}</b></td>
                     {% else %}
-                    <td align="center" colspan="1" class="border-top border-dark">{{ mrenda.w_avg|floatformat:2 }}</td>
+                    <td align="center" colspan="1" class="border-top border-dark">
+                        <b>{{ mrenda.w_avg|floatformat:2 }}</b></td>
                     {% endif %}
 
                     {% if minteiro.w_avg < p.inteiro %}
-                    <td align="center" colspan="1" class="border-top border-dark text-danger">
-                        {{ minteiro.w_avg|floatformat:2 }}</td>
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ minteiro.w_avg|floatformat:2 }}</b></td>
                     {% else %}
-                    <td align="center" colspan="1" class="border-top border-dark">{{ minteiro.w_avg|floatformat:2 }}
-                    </td>
+                    <td align="center" colspan="1" class="border-top border-dark"><b>{{ minteiro.w_avg|floatformat:2 }}
+                        </b></td>
                     {% endif %}
 
                     {% if mimpureza.w_avg > p.impureza %}
-                    <td align="center" colspan="1" class="border-top border-dark text-danger">
-                        {{ mimpureza.w_avg|floatformat:2 }}</td>
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mimpureza.w_avg|floatformat:2 }}</b></td>
                     {% else %}
-                    <td align="center" colspan="1" class="border-top border-dark">{{ mimpureza.w_avg|floatformat:2 }}
-                    </td>
+                    <td align="center" colspan="1" class="border-top border-dark"><b>{{ mimpureza.w_avg|floatformat:2 }}
+                        </b></td>
                     {% endif %}
 
 
                     {% if mumidade.w_avg > p.umidade %}
-                    <td align="center" colspan="1" class="border-top border-dark text-danger">
-                        {{ mumidade.w_avg|floatformat:2 }}</td>
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mumidade.w_avg|floatformat:2 }}</b></td>
                     {% else %}
-                    <td align="center" colspan="1" class="border-top border-dark">{{ mumidade.w_avg|floatformat:2 }}
-                    </td>
+                    <td align="center" colspan="1" class="border-top border-dark"><b>{{ mumidade.w_avg|floatformat:2 }}
+                        </b></td>
                     {% endif %}
 
                     {% if mgessado.w_avg > p.gessado %}
-                    <td align="center" colspan="1" class="border-top border-dark text-danger">
-                        {{ mgessado.w_avg|floatformat:2 }}</td>
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mgessado.w_avg|floatformat:2 }}</b></td>
                     {% else %}
-                    <td align="center" colspan="1" class="border-top border-dark">{{ mgessado.w_avg|floatformat:2 }}
-                    </td>
+                    <td align="center" colspan="1" class="border-top border-dark"><b>{{ mgessado.w_avg|floatformat:2 }}
+                        </b></td>
                     {% endif %}
 
                     {% if mbbranca.w_avg > p.bbranca %}
-                    <td align="center" colspan="1" class="border-top border-dark text-danger">
-                        {{ mbbranca.w_avg|floatformat:2 }}</td>
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mbbranca.w_avg|floatformat:2 }}</b></td>
                     {% else %}
-                    <td align="center" colspan="1" class="border-top border-dark">{{ mbbranca.w_avg|floatformat:2 }}
-                    </td>
+                    <td align="center" colspan="1" class="border-top border-dark"><b>{{ mbbranca.w_avg|floatformat:2 }}
+                        </b></td>
                     {% endif %}
 
                     {% if mamarelo.w_avg > p.amarelo %}
-                    <td align="center" colspan="1" class="border-top border-dark text-danger">
-                        {{ mamarelo.w_avg|floatformat:2 }}</td>
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mamarelo.w_avg|floatformat:2 }}</b></td>
                     {% else %}
-                    <td align="center" colspan="1" class="border-top border-dark">{{ mamarelo.w_avg|floatformat:2 }}
-                    </td>
+                    <td align="center" colspan="1" class="border-top border-dark"><b>{{ mamarelo.w_avg|floatformat:2 }}
+                        </b></td>
                     {% endif %}
 
                     {% if mmanchpic.w_avg > p.manchpic %}
-                    <td align="center" colspan="1" class="border-top border-dark text-danger">
-                        {{ mmanchpic.w_avg|floatformat:2 }}</td>
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mmanchpic.w_avg|floatformat:2 }}</b></td>
                     {% else %}
-                    <td align="center" colspan="1" class="border-top border-dark">{{ mmanchpic.w_avg|floatformat:2 }}
-                    </td>
+                    <td align="center" colspan="1" class="border-top border-dark"><b>{{ mmanchpic.w_avg|floatformat:2 }}
+                        </b></td>
                     {% endif %}
 
                     {% if mvermelhos.w_avg > p.vermelhos %}
-                    <td align="center" colspan="1" class="border-top border-dark text-danger">
-                        {{ mvermelhos.w_avg|floatformat:2 }}</td>
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mvermelhos.w_avg|floatformat:2 }}</b></td>
                     {% else %}
-                    <td align="center" colspan="1" class="border-top border-dark">{{ mvermelhos.w_avg|floatformat:2 }}
-                    </td>
+                    <td align="center" colspan="1" class="border-top border-dark">
+                        <b>{{ mvermelhos.w_avg|floatformat:2 }}
+                        </b></td>
                     {% endif %}
                     {% endfor %}
                 </tbody>

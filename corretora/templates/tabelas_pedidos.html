@@ -45,9 +45,15 @@
                 {% for pedido in pedidos %}
 
                 <tr>
-                    <td><a class="text text-white" href="{% url 'detail_cargas' pedido.pk %}" target="_blank"
-                            style='font-style:italic; text-decoration: underline;'><strong>{{ pedido.contrato }}</strong></a>
+                    {% if pedido.carregado %}
+                    <td><a class="text" href="{% url 'detail_cargas' pedido.pk %}" target="_blank"
+                            style='font-style:italic; color: blanchedalmond; text-decoration: underline;'><strong>{{ pedido.contrato }}</strong></a>
                     </td>
+                    {% else %}
+                    <td><a class="text text-white"
+                            style='font-style:italic; '><strong>{{ pedido.contrato }}</strong></a>
+                    </td>
+                    {% endif %}
                     {% if pedido.situacao == 'a' %}
                     <td class="text-success text-center"><strong>Aberto</strong></td>
                     {% elif pedido.situacao == 'b' %}
@@ -133,7 +139,7 @@
                     {% if pedido.produto == 'Arroz em Casca' and pedido.totalcomissaocasca != None %}
                     <td class="text-center"><a href="{% url 'detail_cargas_comiss' pedido.pk %}" target="_blank"
                             style='font-style:italic;  color:whitesmoke;'>R$
-                            {{ pedido.totalcomissaocasca }}
+                            {{ pedido.totalcomissaocasca|floatformat:2 }}
                         </a></td>
                     {% else %}
                     <td class="text-center">-</td>

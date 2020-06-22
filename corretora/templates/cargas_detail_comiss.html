@@ -279,7 +279,7 @@
                         {% else %}
                         <td><b>R$ {{ carga.valornf }}</b></td>
                         {% endif %}
-                        <td class="border-right"><b>R$ {{ carga.comissaocasca }}</b></td>
+                        <td class="border-right"><b>R$ {{ carga.comissaocasca|floatformat:2 }}</b></td>
 
 
                         {% endif %}

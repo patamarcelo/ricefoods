@@ -167,7 +167,7 @@
                     {% endif %}
                     <td align=center><input type="checkbox" name="icms" value="{{ carga.icms|stringformat:"i" }}"
                             class="icms" style="size: 10px;"></td>
-                    <td>R$ {{ carga.icms }} </td>
+                    <td>R$ {{ carga.icms|floatformat:2 }} </td>
                     {% if  'PALMARES' in carga.pedido.fornecedor.nome|upper %}
                     <td style="background-color: #9400d3;">{{ carga.pedido.fornecedor.nome|title|truncatechars:14 }}
                     </td>

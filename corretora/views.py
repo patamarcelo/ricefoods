@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.urls import reverse
 
 from django.db.models import F, FloatField, Sum, Avg, ExpressionWrapper
+from easy_pdf.views import PDFTemplateResponseMixin
 
 import datetime
 # Graficos

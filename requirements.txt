@@ -13,6 +13,7 @@ django-bootstrap4==2.0.1
 django-braces==1.14.0
 django-chartjs==2.1.0
 django-crispy-forms==1.9.1
+django-easy-pdf==0.1.1
 django-humanize==0.1.2
 django-mathfilters==1.0.0
 django-session-timeout==0.1.0
@@ -20,6 +21,7 @@ django-stdimage==5.1.1
 django-storages==1.9.1
 docutils==0.15.2
 gunicorn==20.0.4
+html5lib==1.0.1
 humanize==2.4.0
 idna==2.9
 jmespath==0.9.5
@@ -29,10 +31,12 @@ nltk==3.5
 Pillow==7.1.1
 progressbar2==3.50.1
 psycopg2-binary==2.8.5
+PyPDF2==1.26.0
 python-dateutil==2.8.1
 python-utils==2.4.0
 pytz==2019.3
 regex==2020.4.4
+reportlab==3.5.42
 requests==2.23.0
 s3transfer==0.3.3
 six==1.14.0
@@ -42,3 +46,5 @@ static3==0.7.0
 textblob==0.15.3
 tqdm==4.46.0
 urllib3==1.25.9
+webencodings==0.5.1
+xhtml2pdf==0.2.4
