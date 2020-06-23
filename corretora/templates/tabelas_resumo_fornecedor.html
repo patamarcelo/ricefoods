@@ -53,29 +53,67 @@
                         </tr>
                         <tr>
                             <td class="text-primary text-right"><strong>Saldo Prev.</strong></td>
-                            {% if total_agen_rus.veiculo__sum == None  %}
+                            {% if total_agen_rus.veiculo__sum == None and total_agen_rus2.veiculo__sum == None  %}
                             <td>-</td>
-                            {% elif total_abert_rus.quantidade_pedido__sum > 0 and total_carr_rus.peso__sum == None and total_agen_rus.veiculo__sum == None %}
-                            <td>{{ total_abert_rus.quantidade_pedido__sum }} Kg</td>
-                            {% elif total_abert_rus.quantidade_pedido__sum > 0 and total_carr_rus.peso__sum != None and total_agen_rus.veiculo__sum == None %}
-                            <td>{{ total_abert_rus.quantidade_pedido__sum|sub:total_carr_rus.peso__sum }} Kg</td>
-                            {% elif total_abert_rus.quantidade_pedido__sum > 0 and total_carr_rus.peso__sum != None and total_agen_rus.veiculo__sum != None %}
-                            <td>{{ total_abert_rus.quantidade_pedido__sum|sub:total_carr_rus.peso__sum|sub:total_agen_rus.veiculo__sum}}
-                                Kg
-                                {% else %}
+
+                            {% elif total_abert_rus.quantidade_pedido__sum > 0 and total_carr_rus.peso__sum == None and total_agen_rus.veiculo__sum != None and total_agen_rus2.veiculo__sum == None %}
+                            <td>{{ total_abert_rus.quantidade_pedido__sum|sub:total_agen_rus.veiculo__sum }}
+                                Kg</td>
+
+                            {% elif total_abert_rus.quantidade_pedido__sum > 0 and total_carr_rus.peso__sum != None and total_agen_rus.veiculo__sum == None and total_agen_rus2.veiculo__sum != None %}
+                            <td>{{ total_abert_rus.quantidade_pedido__sum|sub:total_carr_rus.peso__sum|sub:total_agen_rus2.veiculo__sum }}
+                                Kg</td>
+
+                            {% elif total_abert_rus.quantidade_pedido__sum > 0 and total_carr_rus.peso__sum != None and total_agen_rus.veiculo__sum != None and total_agen_rus2.veiculo__sum == None %}
+                            <td>{{ total_abert_rus.quantidade_pedido__sum|sub:total_carr_rus.peso__sum|sub:total_agen_rus.veiculo__sum }}
+                                Kg</td>
+
+                            {% elif total_abert_rus.quantidade_pedido__sum > 0 and total_carr_rus.peso__sum == None and total_agen_rus.veiculo__sum == None and total_agen_rus2.veiculo__sum != None %}
+                            <td>{{ total_abert_rus.quantidade_pedido__sum|sub:total_agen_rus2.veiculo__sum }}
+                                Kg</td>
+
+                            {% elif total_abert_rus.quantidade_pedido__sum > 0 and total_carr_rus.peso__sum == None and total_agen_rus.veiculo__sum != None and total_agen_rus2.veiculo__sum != None %}
+                            <td>{{ total_abert_rus.quantidade_pedido__sum|sub:total_agen_rus2.veiculo__sum|sub:total_agen_rus.veiculo__sum }}
+                                Kg</td>
+
+                            {% elif total_abert_rus.quantidade_pedido__sum > 0 and total_carr_rus.peso__sum != None and total_agen_rus.veiculo__sum != None and total_agen_rus2.veiculo__sum != None %}
+                            <td>{{ total_abert_rus.quantidade_pedido__sum|sub:total_carr_rus.peso__sum|sub:total_agen_rus.veiculo__sum|sub:total_agen_rus2.veiculo__sum }}
+                                Kg</td>
+
+
+                            {% else %}
                             <td>-</td>
                             {% endif %}
 
-                            {% if total_agen_cda.veiculo__sum == None  %}
+                            {% if total_agen_cda.veiculo__sum == None and total_agen_cda2.veiculo__sum == None  %}
                             <td>-</td>
-                            {% elif total_abert_cda.quantidade_pedido__sum > 0 and total_carr_cda.peso__sum == None and total_agen_cda.veiculo__sum == None %}
-                            <td>{{ total_abert_cda.quantidade_pedido__sum }} Kg</td>
-                            {% elif total_abert_cda.quantidade_pedido__sum > 0 and total_carr_cda.peso__sum != None and total_agen_cda.veiculo__sum == None %}
-                            <td>{{ total_abert_cda.quantidade_pedido__sum|sub:total_carr_cda.peso__sum }} Kg</td>
-                            {% elif total_abert_cda.quantidade_pedido__sum > 0 and total_carr_cda.peso__sum != None and total_agen_cda.veiculo__sum != None %}
-                            <td>{{ total_abert_cda.quantidade_pedido__sum|sub:total_carr_cda.peso__sum|sub:total_agen_cda.veiculo__sum}}
-                                Kg
-                                {% else %}
+
+                            {% elif total_abert_cda.quantidade_pedido__sum > 0 and total_carr_cda.peso__sum == None and total_agen_cda.veiculo__sum != None and total_agen_cda2.veiculo__sum == None %}
+                            <td>{{ total_abert_cda.quantidade_pedido__sum|sub:total_agen_cda.veiculo__sum }}
+                                Kg</td>
+
+                            {% elif total_abert_cda.quantidade_pedido__sum > 0 and total_carr_cda.peso__sum != None and total_agen_cda.veiculo__sum == None and total_agen_cda2.veiculo__sum != None %}
+                            <td>{{ total_abert_cda.quantidade_pedido__sum|sub:total_carr_cda.peso__sum|sub:total_agen_cda2.veiculo__sum }}
+                                Kg</td>
+
+                            {% elif total_abert_cda.quantidade_pedido__sum > 0 and total_carr_cda.peso__sum != None and total_agen_cda.veiculo__sum != None and total_agen_cda2.veiculo__sum == None %}
+                            <td>{{ total_abert_cda.quantidade_pedido__sum|sub:total_carr_cda.peso__sum|sub:total_agen_cda.veiculo__sum }}
+                                Kg</td>
+
+                            {% elif total_abert_cda.quantidade_pedido__sum > 0 and total_carr_cda.peso__sum == None and total_agen_cda.veiculo__sum == None and total_agen_cda2.veiculo__sum != None %}
+                            <td>{{ total_abert_cda.quantidade_pedido__sum|sub:total_agen_cda2.veiculo__sum }}
+                                Kg</td>
+
+                            {% elif total_abert_cda.quantidade_pedido__sum > 0 and total_carr_cda.peso__sum == None and total_agen_cda.veiculo__sum != None and total_agen_cda2.veiculo__sum != None %}
+                            <td>{{ total_abert_cda.quantidade_pedido__sum|sub:total_agen_cda2.veiculo__sum|sub:total_agen_cda.veiculo__sum }}
+                                Kg</td>
+
+                            {% elif total_abert_cda.quantidade_pedido__sum > 0 and total_carr_cda.peso__sum != None and total_agen_cda.veiculo__sum != None and total_agen_cda2.veiculo__sum != None %}
+                            <td>{{ total_abert_cda.quantidade_pedido__sum|sub:total_carr_cda.peso__sum|sub:total_agen_cda.veiculo__sum|sub:total_agen_cda2.veiculo__sum }}
+                                Kg</td>
+
+
+                            {% else %}
                             <td>-</td>
                             {% endif %}
                         </tr>
