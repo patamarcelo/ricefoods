@@ -193,10 +193,18 @@ class Pedido(Base):
         filt = self.contrato
         totalcomissaocasca = Carga.objects.filter(pedido__contrato=filt).filter(peso__gt=1).values('pedido').aggregate(pesot=Sum('peso'))['pesot']
         self.totalcomissaocasca = totalcomissaocasca
-        if self.totalcomissaocasca != None:
+        
+        totalcomissaocascacda = Carga.objects.filter(pedido__contrato=filt).filter(peso__gt=1).values('pedido').aggregate(valorcom=Sum('valornf'))['valorcom']
+        self.totalcomissaocascacda = totalcomissaocascacda
+
+        if self.totalcomissaocasca != None or self.totalcomissaocascacda != None:
             if self.produto == 'Arroz em Casca':
-                self.totalcomissaocasca =  (round((((self.totalcomissaocasca / 50 ) * float(self.preco_produto)) * float(self.comissaoc / 100)),2))
-                return self.totalcomissaocasca
+                if 'CDA' in self.cliente.nome:
+                    self.totalcomissaocasca =  (round(((float(self.totalcomissaocascacda) - (float(self.totalcomissaocascacda) * 0.07)) * float(self.comissaoc / 100)),2))
+                    return self.totalcomissaocasca
+                else:
+                    self.totalcomissaocasca =  (round((((self.totalcomissaocasca / 50 ) * float(self.preco_produto)) * float(self.comissaoc / 100)),2))
+                    return self.totalcomissaocasca
             else:
                 return 0
         else:
@@ -216,7 +224,7 @@ class Pedido(Base):
     def saldo(self):
         if self.situacao != 'a':
             return 0
-        if self.carregado == None:
+        elif self.carregado == None:
             return self.quantidade_pedido
         else:
             return self.quantidade_pedido - self.carregado
@@ -319,7 +327,13 @@ class Carga(Base):
     def comissaocasca(self):
         if self.peso:
             if self.pedido.produto == 'Arroz em Casca':
-                return (round((((self.peso / 50 ) * float(self.pedido.preco_produto)) * float(self.pedido.comissaoc / 100)),2))
+                if 'CDA' in self.pedido.cliente.nome:
+                    if self.valornf != None:
+                        return (round((((float(self.valornf) - (float(self.valornf) * 0.07)) * float(self.pedido.comissaoc / 100))),2))
+                    else:
+                        return 0
+                else:
+                    return (round((((self.peso / 50 ) * float(self.pedido.preco_produto)) * float(self.pedido.comissaoc / 100)),2))
             else:
                 return 0
         else:

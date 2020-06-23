@@ -306,7 +306,7 @@
 
                     {% for pedido in pedidos %}
                     <td align="center" class="border-top border-dark"><i><strong>R$
-                                {{ pedido.totalcomissaocasca|intcomma }}
+                                {{ pedido.totalcomissaocasca|floatformat:2 }}
                         </i><strong></td>
                     {% endfor %}
 
