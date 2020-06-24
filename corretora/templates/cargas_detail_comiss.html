@@ -217,6 +217,8 @@
                         {% endif %}
                         <th scope="col"><strong>Valor NF </strong></th>
                         <th scope="col"><strong>Comissao </strong></th>
+                        <th scope="col"><strong>Pago </strong></th>
+                        <th scope="col"><strong>A Receber </strong></th>
 
                     </tr>
 
@@ -279,8 +281,28 @@
                         {% else %}
                         <td><b>R$ {{ carga.valornf }}</b></td>
                         {% endif %}
-                        <td class="border-right"><b>R$ {{ carga.comissaocasca|floatformat:2 }}</b></td>
+                        <td><b>R$ {{ carga.comissaocasca|floatformat:2 }}</b></td>
+                        {% if carga.vpcomissaoc == 0 and carga.pgcomissao == True %}
+                        <td align="center"><b>R$ 0,00 </b></td>
+                        {% elif carga.vpcomissaoc == 0 and carga.pgcomissao == False %}
+                        <td align="center"><i>R$ &nbsp; - </i> </td>
 
+                        {% elif carga.vpcomissaoc == None %}
+                        <td align="center"><b> - </b></td>
+                        {% elif carga.vpcomissaoc|floatformat:2 != carga.comissaocasca|floatformat:2 %}
+                        <td class="text text-warning"><b>R$ {{ carga.vpcomissaoc|floatformat:2 }}</b></td>
+                        {% else %}
+                        <td><b>R$ {{ carga.vpcomissaoc|floatformat:2 }}</b></td>
+                        {% endif %}
+                        {% if carga.pgcomissao == True %}
+                        <td align="center" class="border-right"><b> R$ 0,00</b></td>
+                        {% elif carga.vpcomissaoc == 0 and carga.pgcomissao == True %}
+                        <td align="center" class="border-right"><b> R$ 0,00</b></td>
+                        {% elif carga.vpcomissaoc == 0 and carga.pgcomissao == False %}
+                        <td class="border-right"><b> R$ {{ carga.comissaocasca|floatformat:2 }}</b></td>
+                        {% else %}
+                        <td align="center"><b> - </b></td>
+                        {% endif %}
 
                         {% endif %}
                         {% endfor %}
@@ -309,8 +331,23 @@
                                 {{ pedido.totalcomissaocasca|floatformat:2 }}
                         </i><strong></td>
                     {% endfor %}
+                    {% if totalpago.vpcomissaoc__sum == 0 or totalpago.vpcomissaoc__sum == None %}
+                    <td align="center" class="border-top border-dark"><b> - </b></td>
+                    {% else %}
+                    <td align="center" class="border-top border-dark"><i><strong>R$
+                                {{ totalpago.vpcomissaoc__sum|floatformat:2 }}
+                        </i><strong></td>
+                    {% endif %}
+                    {% for pedido in pedidos %}
+                    {% if totalaberto.vpcomissaoc__count == 0 %}
+                    <td align="center" class="border-top border-dark"><b> R$ 0,00 </b></td>
+                    {% else %}
+                    <td align="center" class="border-top border-dark"><i><strong>R$
+                                {{ pedido.saldototalcomissaocasca|floatformat:2 }}
+                        </i><strong></td>
 
-
+                    {% endif %}
+                    {% endfor %}
 
 
 

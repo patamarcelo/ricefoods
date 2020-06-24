@@ -208,7 +208,30 @@ class Pedido(Base):
             else:
                 return 0
         else:
-            pass
+            return 0
+
+    def saldototalcomissaocasca(self):
+        filt = self.contrato
+        saldototalcomissaocasca = Carga.objects.filter(pedido__contrato=filt).filter(pgcomissao=False).exclude(vpcomissaoc=None).exclude(peso=None).filter(vpcomissaoc__isnull=False).filter(peso__gt=1).values('pedido').aggregate(pesot=Sum('peso'))['pesot']
+        self.saldototalcomissaocasca = saldototalcomissaocasca
+        
+        saldototalcomissaocascacda = Carga.objects.filter(pedido__contrato=filt).filter(pgcomissao=False).exclude(vpcomissaoc=None).exclude(valornf=None).filter(vpcomissaoc__isnull=False).filter(peso__gt=1).values('pedido').aggregate(valorcom=Sum('valornf'))['valorcom']
+        self.saldototalcomissaocascacda = saldototalcomissaocascacda
+
+        if self.saldototalcomissaocascacda != None:
+            if self.produto == 'Arroz em Casca':
+                if 'CDA' in self.cliente.nome:
+                    self.saldototalcomissaocasca =  (round(((float(self.saldototalcomissaocascacda) - (float(self.saldototalcomissaocascacda) * 0.07)) * float(self.comissaoc / 100)),2))
+                    return self.saldototalcomissaocasca
+                elif self.saldototalcomissaocasca != None:
+                    self.saldototalcomissaocasca =  (round((((self.saldototalcomissaocasca / 50 ) * float(self.preco_produto)) * float(self.comissaoc / 100)),2))
+                    return self.saldototalcomissaocasca
+                else:
+                    return 0
+            else:
+                return 0
+        else:
+            return 0
 
     
     
@@ -310,6 +333,10 @@ class Carga(Base):
     notafiscal = models.CharField('NF', max_length=8, unique=True,  null=True, blank=True)
     notafiscal2 = models.CharField('NF 2', max_length=8, unique=True,  null=True, blank=True)
     valornf = models.DecimalField('Valor NF', max_digits=8, decimal_places=2,  null=True, blank=True)
+
+    pgcomissao = models.BooleanField('Pago', default=False)
+    vpcomissaoc = models.DecimalField('Valor Comissao', max_digits=7, decimal_places=2, null=True, blank=True, default=0 )
+    vpcomissaof = models.DecimalField('Valor Comissao F', max_digits=7, decimal_places=2, null=True, blank=True, default=0 )
 
     renda = models.DecimalField('Renda', max_digits=4, decimal_places=2, null=True, blank=True)
     inteiro = models.DecimalField('Inteiro', max_digits=4, decimal_places=2, null=True, blank=True)

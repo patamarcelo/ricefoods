@@ -168,6 +168,9 @@
                         <th scope="col">Origem</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Class.</th>
+                        {% if user.is_superuser%}
+                        <th scope="col">Comiss.</th>
+                        {% endif %}
                         <th scope="col">Ação</th>
                     </tr>
                 </thead>
@@ -315,7 +318,29 @@
                                 href="{% url 'upd_class' carga.pk %}"></a>
                             {% endif %}
 
-                            {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %}
+                            {% if user.is_superuser%}
+                            {% if carga.comissaocasca > 1 %}
+
+                            {% if carga.pgcomissao == True %}
+
+                        <td><a class="text text-success" style='font-style:italic'
+                                href="{% url 'upd_comiss' carga.pk %}"><b>R$
+                                    {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
+                        {% else %}
+                        <td><a class="text text-warning" style='font-style:italic'
+                                href="{% url 'upd_comiss' carga.pk %}"><b>R$
+                                    {{ carga.comissaocasca|floatformat:2 }}</b></a></td>
+                        {% endif %}
+                        {% else %}
+                        <td align=center>- </td>
+
+
+                        {% endif %}
+
+                        {% else %}
+                        {% endif %}
+
+                        {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %}
                         <td>
                             <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
                             <a class="btn btn-danger btn-xs" href="{% url 'del_cargas' carga.pk %}">Deletar</a>
@@ -370,10 +395,11 @@
 
     setTimeout(function () {
         window.location.reload(1);
-    }, 120000); // 2 minutos
+    }, 240000); // 4 minutos
 
     $("table tbody").on("click", "td", function () {
         $(this).toggleClass("selected");
     });
+
 
 </script>

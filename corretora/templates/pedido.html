@@ -166,7 +166,7 @@
                     <th scope="col">Saldo Prev.</th>
                     <th scope="col"><a class="text-primary fa fa-check"></a></th>
                     {% if user.is_superuser%}
-                    <th scope="col">$$</th>
+                    <th scope="col">Comiss</th>
                     {% endif %}
                     <th scope="col">Ação</th>
                 </tr>
@@ -284,7 +284,7 @@
                     <td align=center><input type="checkbox" value="{{ pedido.totalcomissaocasca|stringformat:"i" }}"
                             class="icms" align="center" style="size: 10px;"></td>
                     {% if user.is_superuser %}
-                    {% if pedido.produto == 'Arroz em Casca' and pedido.totalcomissaocasca != None %}
+                    {% if pedido.produto == 'Arroz em Casca' and pedido.totalcomissaocasca != None and pedido.carregado %}
                     <td class="text-center"><a href="{% url 'detail_cargas_comiss' pedido.pk %}" target="_blank"
                             style='font-style:italic;  color:whitesmoke;'>R$
                             {{ pedido.totalcomissaocasca|floatformat:2 }}

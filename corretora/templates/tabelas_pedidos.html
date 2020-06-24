@@ -36,7 +36,7 @@
                     <th scope="col">Previsto</th>
                     <th scope="col">Saldo Prev.</th>
                     {% if user.is_superuser%}
-                    <th scope="col">$$</th>
+                    <th scope="col">Comiss</th>
                     {% endif %}
                     <th scope="col">Ação</th>
                 </tr>
@@ -153,7 +153,7 @@
                     <td align=center class="text-success"><strong>{{ pedido.saldoprevisto }} Kg</strong></td>
                     {% endif %}
                     {% if user.is_superuser %}
-                    {% if pedido.produto == 'Arroz em Casca' and pedido.totalcomissaocasca != None %}
+                    {% if pedido.produto == 'Arroz em Casca' and pedido.totalcomissaocasca != None and pedido.carregado %}
                     <td class="text-center"><a href="{% url 'detail_cargas_comiss' pedido.pk %}" target="_blank"
                             style='font-style:italic;  color:whitesmoke;'>R$
                             {{ pedido.totalcomissaocasca|floatformat:2 }}

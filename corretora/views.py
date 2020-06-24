@@ -209,6 +209,8 @@ class ComissCargasView(LoginRequiredMixin, SuperuserRequiredMixin, ListView):
         context['cargas'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk'))
         context['totalpeso'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk')).values('peso').aggregate(Sum('peso'))
         context['totalnf'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk')).values('valornf').aggregate(Sum('valornf'))
+        context['totalpago'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pgcomissao=True).filter(pedido_id=self.kwargs.get('pk')).values('vpcomissaoc').aggregate(Sum('vpcomissaoc'))
+        context['totalaberto'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pgcomissao=False).filter(pedido_id=self.kwargs.get('pk')).values('vpcomissaoc').aggregate(Count('vpcomissaoc'))
         return context
 
 
@@ -280,6 +282,20 @@ class UpdateclassCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView)
                 'umidade','gessado','bbranca','amarelo','manchpic','vermelhos',
                 'obs')
     success_url = reverse_lazy('cargas')
+
+
+
+class UpdatecomissCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    login_url = 'login'
+    redirect_field_name = 'index2'
+    model = Carga
+    template_name = 'carga_comiss.html'
+    success_message = 'Comissão atualizada com sucesso!!'
+    fields = ('pgcomissao', 'vpcomissaoc', 'vpcomissaof')
+    success_url = reverse_lazy('cargas')
+
+     
+
 
 class DeleteCargasView(LoginRequiredMixin, DeleteView):
     login_url = 'login'
