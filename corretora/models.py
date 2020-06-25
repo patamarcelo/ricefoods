@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.utils import timezone
 
 
@@ -188,7 +188,14 @@ class Pedido(Base):
     
 
     obs = models.TextField('Observação', max_length=125, blank=True)    
-    
+
+
+    def comissaorecebida(self):
+        filt = self.contrato
+        comissaorecebida = Carga.objects.filter(pedido__contrato=filt).filter(pgcomissao=False).values('pedido').aggregate(receb=Count('pgcomissao'))['receb']
+        self.comissaorecebida = comissaorecebida
+        return self.comissaorecebida
+
     def totalcomissaocasca(self):
         filt = self.contrato
         totalcomissaocasca = Carga.objects.filter(pedido__contrato=filt).filter(peso__gt=1).values('pedido').aggregate(pesot=Sum('peso'))['pesot']

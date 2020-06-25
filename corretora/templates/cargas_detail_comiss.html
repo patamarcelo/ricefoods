@@ -332,7 +332,7 @@
                         </i><strong></td>
                     {% endfor %}
                     {% if totalpago.vpcomissaoc__sum == 0 or totalpago.vpcomissaoc__sum == None %}
-                    <td align="center" class="border-top border-dark"><b> - </b></td>
+                    <td align="center" class="border-top border-dark"><i>R$ &nbsp; - </i> </td>
                     {% else %}
                     <td align="center" class="border-top border-dark"><i><strong>R$
                                 {{ totalpago.vpcomissaoc__sum|floatformat:2 }}

@@ -154,10 +154,17 @@
                     {% endif %}
                     {% if user.is_superuser %}
                     {% if pedido.produto == 'Arroz em Casca' and pedido.totalcomissaocasca != None and pedido.carregado %}
+                    {% if pedido.comissaorecebida > 0 %}
                     <td class="text-center"><a href="{% url 'detail_cargas_comiss' pedido.pk %}" target="_blank"
-                            style='font-style:italic;  color:whitesmoke;'>R$
-                            {{ pedido.totalcomissaocasca|floatformat:2 }}
+                            style='font-style:italic;  color:#f0ad4e;'><b>R$
+                                {{ pedido.totalcomissaocasca|floatformat:2 }}</b>
                         </a></td>
+                    {% else %}
+                    <td class="text-center"><a href="{% url 'detail_cargas_comiss' pedido.pk %}" target="_blank"
+                            style='font-style:italic;  color:#5cb85c;'><b>R$
+                                {{ pedido.totalcomissaocasca|floatformat:2 }}</b>
+                        </a></td>
+                    {% endif %}
                     {% else %}
                     <td class="text-center">-</td>
                     {% endif %}
