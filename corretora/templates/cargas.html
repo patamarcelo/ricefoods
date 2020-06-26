@@ -182,7 +182,7 @@
                         <td class="text-success">{{ carga.pedido }}</td>
 
                         {% elif 'b' in carga.pedido.situacao %}
-                        <td class="text-danger">{{ carga.pedido }}</td>
+                        <td class="text-danger"><strong>{{ carga.pedido }}</strong></td>
                         {% elif carga.pedido.situacao == 'c' %}
                         <td class="text-info">{{ carga.pedido }}</td>
                         {% else %}
