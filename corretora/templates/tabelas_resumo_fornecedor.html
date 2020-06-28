@@ -9,18 +9,26 @@
         caption-side: top;
 
     }
+
+    .nowrap {
+        white-space: nowrap;
+    }
+
+    .inherit {
+        height: inherit;
+    }
 </style>
 <div class="container">
-    <div class="d-flex justify-content-center p-2 m-2">
+    <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-between p-1 m-1">
 
-        <div class="col-1 flex-column"></div>
-        <div
-            class="col-lg-4 flex-column col-md-4 col-sm-8 mr-auto tabini sombra col-lg-offset-1 col-md-offset-1 col-sm-offset-1">
-            <br>
+
+        <div class="col-lg-4 flex-column col-md-5 col-sm-4  tabini sombra col-lg-offset-1 col-md-offset-1 col-sm-offset-1 flex-md-wrap flex-sm-wrap justify-content-between p-3 m-1"
+            style="zoom:90%">
+
             <h5 align=left><strong><i>Contratos</i></strong></h5>
             <div class="d-flex align-items-center">
 
-                <table class="table table-striped table-dark  table-sm" style="color: antiquewhite;">
+                <table class="table table-striped table-dark  nowrap table-sm" style="color: antiquewhite;">
                     <caption>Contratos Ativos</caption>
                     <thead>
                         <tr align="center">
@@ -118,7 +126,7 @@
                             {% endif %}
                         </tr>
                         <tr>
-                            <td class="text-warning text-right">Locais</td>
+                            <td class="text-warning text-right"><strong>Locais</strong></td>
                             {% if total_ped_abert_rus.contrato__count == 0 %}
                             <td>-</td>
                             {% elif total_ped_abert_rus.contrato__count > 1 %}
@@ -173,13 +181,13 @@
         </div>
 
 
-        <div
-            class="col-lg-4 col-md-4 col-sm-8 mr-auto flex-column tabini sombra col-lg-offset-1 col-md-offset-1 col-sm-offset-1">
-            <br>
+        <div class="col-lg-3 col-md-5 col-sm-4  flex-column tabini sombra col-lg-offset-1 col-md-offset-1 col-sm-offset-1 flex-md-wrap flex-sm-wrap justify-content-between p-3 m-1"
+            style="zoom:90%">
+
             <h5 align=left><strong><i>Carregamentos</i></strong></h5>
             <div class="d-flex align-items-center">
 
-                <table class="table table-striped table-dark  table-sm" style="color: antiquewhite;">
+                <table class="table table-striped table-dark nowrap table-sm" style="color: antiquewhite;">
                     <caption>Semana Atual</caption>
                     <thead>
                         <tr align="center">
@@ -220,7 +228,7 @@
 
                         </tr>
                         <tr>
-                            <td class="text-warning text-right">Agendado</td>
+                            <td class="text-warning text-right"><strong>Agendado</strong></td>
                             {% if  carga_rus_sem.veiculo__sum == None or carga_rus_sem.veiculo__sum == 0 %}
                             <td>-</td>
                             {% else %}
@@ -338,6 +346,96 @@
                 </table>
             </div>
         </div>
+
+        <div class="col-lg-4 col-md-5 col-sm-4 flex-column tabini sombra col-lg-offset-1 col-md-offset-1 col-sm-offset-1 flex-md-wrap flex-sm-wrap justify-content-between p-3 m-1"
+            style="zoom:90%">
+
+            <h5 align=left><strong><i>Comissões</i></strong></h5>
+            <div class="d-flex align-items-center">
+
+                <table class="table table-striped table-dark nowrap table-sm" style="color: antiquewhite;">
+                    <caption> .</caption>
+                    <thead>
+                        <tr align="center">
+                            <th style="width:100px"></th>
+                            <th scope="col" class="text-primary"><strong>RUSTON</strong></th>
+                            <th scope="col" class="text-danger"><strong>CDA</strong></th>
+
+                        </tr>
+                    </thead>
+                    <tbody align="center">
+                        <tr align="center">
+                            <td class="text-success text-right"><strong>Semana</strong></td>
+                            {% if comisemrus.somacomi == 0 or comisemrus.somacomi == None %}
+                            <td class="text"><strong>-</strong></td>
+                            {% else %}
+                            <td>R$ {{ comisemrus.somacomi|floatformat:"2" }}</td>
+                            {% endif %}
+
+                            {% if comisemcda.somacomi == 0 or comisemcda.somacomi == None %}
+                            <td class="text"><strong>-</strong></td>
+                            {% else %}
+                            <td>R$ {{ comisemcda.somacomi|floatformat:"2" }}</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td class="text-primary text-right"><strong>Mês</strong></td>
+                            {% if comimesrus.somacomi == 0 or comimesrus.somacomi == None %}
+                            <td class="text"><strong>-</strong></td>
+                            {% else %}
+                            <td>R$ {{ comimesrus.somacomi|floatformat:"2" }}</td>
+                            {% endif %}
+
+                            {% if comimescda.somacomi == 0 or comimescda.somacomi == None %}
+                            <td class="text"><strong>-</strong></td>
+                            {% else %}
+                            <td>R$ {{ comimescda.somacomi|floatformat:"2" }}</td>
+                            {% endif %}
+
+                        </tr>
+                        <tr>
+                            <td class="text-warning text-right"><strong>Aberto</strong></td>
+                            {% if comiaberus.somacomi == 0 or comiaberus.somacomi == None %}
+                            <td class="text"><strong>-</strong></td>
+                            {% else %}
+                            <td>R$ {{ comiaberus.somacomi|floatformat:"2" }}</td>
+                            {% endif %}
+
+                            {% if comiabecda.somacomi == 0 or comiabecda.somacomi == None %}
+                            <td class="text"><strong>-</strong></td>
+                            {% else %}
+                            <td>R$ {{ comiabecda.somacomi|floatformat:"2" }}</td>
+                            {% endif %}
+
+
+
+
+
+                        </tr>
+                        <tr>
+                            <td class="text-warning text-right"><strong>Total</strong></td>
+                            {% if comiabecda.somacomi == None and comiaberus.somacomi == None %}
+                            <td colspan="2" class="text"><strong>-</strong></td>
+                            {% elif comiabecda.somacomi == 0 or comiabecda.somacomi ==  None %}
+                            <td colspan="2">R$
+                                {{ comiaberus.somacomi|floatformat:"2" }}</td>
+
+                            {% elif comiaberus.somacomi == 0 or comiaberus.somacomi ==  None %}
+                            <td colspan="2">R$
+                                {{ comiabecda.somacomi|floatformat:"2" }}</td>
+
+                            {% else %}
+                            <td colspan="2">R$
+                                {{ comiabecda.somacomi|addition:comiaberus.somacomi|floatformat:"2" }}</td>
+                            {% endif %}
+
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
 
 
     </div>

@@ -4,18 +4,21 @@
 
 <!--Resumo Fornecedores-->
 
+{% if user.is_superuser%}
+
 {% include 'tabelas_resumo_fornecedor.html' %}
 
-
+{% endif %}
 <!--Tabela de pedidos-->
 {% include 'tabelas_pedidos.html'  %}
 
 <!--Tabela das cargas-->
 {% include 'tabelas_cargas.html'  %}
 
+{% if user.is_superuser %}
 <!--Grafico1-->
 {% include 'charts.html' %}
 
-
+{% endif %}
 
 {% endblock %}
