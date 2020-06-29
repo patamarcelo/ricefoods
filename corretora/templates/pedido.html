@@ -301,11 +301,11 @@
                     {% endif %}
                     {% endif %}
                     {% if pedido.carregado %}
-                    <td class="text-left">
+                    <td class="text-center">
                         <a class="btn btn-warning btn-xs" href="{% url 'upd_pedidos' pedido.pk %}">Editar</a>
                     </td>
                     {% else %}
-                    <td class="text-left">
+                    <td class="text-center">
                         <a class="btn btn-warning btn-xs" href="{% url 'upd_pedidos' pedido.pk %}">Editar</a>
                         <a class="btn btn-danger btn-xs" href="{% url 'del_pedidos' pedido.pk %}">Deletar</a>
                     </td>

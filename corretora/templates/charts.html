@@ -3,35 +3,42 @@
 {% block content %}
 {% load mathfilters %}
 
+<style>
+    
+</style>
 <div class="container">
     <div class="row">
         <div class="col" align=center>
             <h2><strong><a class="badge badge-primary badge-pill"> Acompanhamento Preço Casca</a></strong></h2>
         </div>
     </div>
+    <br>
 </div>
-<br>
-<div class="row">
-    <div class="col-6 sm">
-        <div class="container-fluid sombra">
-            <canvas id="cda" style="max-height: 400px; width: auto; position: relative;"></canvas>
+
+
+
+
+
+
+   
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 p-1 mt-1">
+            <div class="container-fluid sombra chartss">
+                <canvas id="cda" style="max-height: 400px; width: auto; position: relative;"></canvas>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 p-1 mt-1">
+            <div class="container-fluid sombra chartss">
+                <canvas id="ruston" style="max-height: 400px; width: auto; position: relative;"></canvas>
+            </div>
         </div>
     </div>
-    <div class="col-6 sm">
-        <div class="container-fluid sombra">
-            <canvas id="ruston" style="max-height: 400px; width: auto; position: relative;"></canvas>
-        </div>
-    </div>
 </div>
-<br />
-<!-- <div>
-    <div class="col sm">
-        <div class="container-fluid sombra">
-            <canvas id="teste" style="max-height: 400px; width: auto; position: relative;"></canvas>
-        </div>
-    </div>
-</div>
-<br /> -->
+    <br>
+
+
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>

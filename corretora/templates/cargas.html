@@ -345,12 +345,12 @@
                         {% endif %}
 
                         {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %}
-                        <td>
+                        <td align=center>
                             <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
                             <a class="btn btn-danger btn-xs" href="{% url 'del_cargas' carga.pk %}">Deletar</a>
                         </td>
                         {% elif carga.situacao == 'Carregado'  and carga.pedido.situacao == 'a' %}
-                        <td>
+                        <td align=center>
                             <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
                         </td>
                         {% else %}
