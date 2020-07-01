@@ -18,7 +18,7 @@
         height: inherit;
     }
 </style>
-<div class="container">
+<div class="container-fluid" style="zoom: 90%;">
     <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-between p-1 m-1">
 
 
@@ -32,14 +32,15 @@
                     <caption>Contratos Ativos</caption>
                     <thead>
                         <tr align="center">
-                            <th style="width:100px"></th>
+                            <th style=" width:100px">
+                            </th>
                             <th scope="col" class="text-primary"><strong>RUSTON</strong></th>
                             <th scope="col" class="text-danger"><strong>CDA</strong></th>
 
                         </tr>
                     </thead>
                     <tbody align="center">
-                        <tr align="center">
+                        <tr align=" center">
                             <td class="text-success text-right"><strong>Saldo Real</strong></td>
                             {% if total_abert_rus.quantidade_pedido__sum > 0 and total_carr_rus.peso__sum == None %}
                             <td>{{ total_abert_rus.quantidade_pedido__sum }} Kg</td>
