@@ -358,6 +358,16 @@ class Carga(Base):
 
     obs = models.TextField('Observação', max_length=125, blank=True) 
 
+
+    def valorcarga(self):
+        if self.peso:
+            if self.pedido.produto == 'Arroz em Casca':
+                return ((self.peso / 50) * float(self.pedido.preco_produto))
+            else:
+                return ((self.peso / 30) * float(self.pedido.preco_produto))
+        else:
+            return 0
+
     def comissaocasca(self):
         if self.peso:
             if self.pedido.produto == 'Arroz em Casca':

@@ -206,7 +206,7 @@
                         <th scope="col"><strong>Placa</strong></th>
                         <th scope="col"><strong>Motorista</strong></th>
                         <th scope="col"><strong>Peso</strong></th>
-                        <th scope="col"><strong>Valor NF </strong></th>
+                        <th scope="col"><strong>Valor Produto</strong></th>
                         <th scope="col"><strong>NF</strong></th>
                         {% if notafiscal2 %}
                         <th scope="col"><strong>NF 2</strong></th>
@@ -324,10 +324,10 @@
                                 {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</b></td>
                         <td><b>{{ carga.motorista|title }}</b></td>
                         <td><b>{{ carga.peso|intcomma }} Kg </b></td>
-                        {% if carga.valornf == None %}
+                        {% if carga.valorcarga == None %}
                         <td><b>R$ &nbsp; - </b></td>
                         {% else %}
-                        <td><b>R$ {{carga.valornf}}</b></td>
+                        <td><b>R$ {{carga.valorcarga|floatformat:"2"}}</b></td>
                         {% endif %}
                         {% if carga.notafiscal == None %}
                         <td class="text-danger"><strong>Sem NF</strong></td>
@@ -442,16 +442,21 @@
                     <td colspan="1" class="border-top border-dark"></td>
                     <td align="right" colspan="1" class="border-top border-dark"></td>
                     <td align="center" colspan="1" class="border-top border-dark"><strong><i>Totais</i></strong></td>
-
+                    {% for p in pedidos %}
                     <td align="center" class="border-top border-dark"><b><i>{{ total.peso__sum|intcomma }}
                                 Kg</i></b></td>
-                    {% if totalnf.valornf__sum == None %}
+                    {% if total.peso__sum == None %}
                     <td align="center" class="border-top border-dark"><b>R$ &nbsp; - </b></td>
+                    {% elif p.produto == 'Arroz em Casca' %}
+                    <td align="center" class="border-top border-dark"><b><i>R$
+                                {{ total.peso__sum|div:50|mul:p.preco_produto|floatformat:"2" }}
+                            </i></b></td>
                     {% else %}
-                    <td align="center" class="border-top border-dark"><b><i>R$ {{ totalnf.valornf__sum|intcomma }}
+                    <td align="center" class="border-top border-dark"><b><i>R$
+                                {{ total.peso__sum|div:30|mul:p.preco_produto|floatformat:"2" }}
                             </i></b></td>
                     {% endif %}
-                    {% for p in pedidos %}
+
                     <td align="center" class="border-top border-dark"><b><i><strong>Média</strong></i></td>
                     {% if mrenda.w_avg < p.renda %}
                     <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
