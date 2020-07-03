@@ -198,10 +198,10 @@ class Pedido(Base):
 
     def totalcomissaocasca(self):
         filt = self.contrato
-        totalcomissaocasca = Carga.objects.filter(pedido__contrato=filt).filter(peso__gt=1).values('pedido').aggregate(pesot=Sum('peso'))['pesot']
+        totalcomissaocasca = Carga.objects.filter(pedido__contrato=filt).filter(situacao='Carregado').filter(peso__gt=1).values('pedido').aggregate(pesot=Sum('peso'))['pesot']
         self.totalcomissaocasca = totalcomissaocasca
         
-        totalcomissaocascacda = Carga.objects.filter(pedido__contrato=filt).filter(peso__gt=1).values('pedido').aggregate(valorcom=Sum('valornf'))['valorcom']
+        totalcomissaocascacda = Carga.objects.filter(pedido__contrato=filt).filter(situacao='Carregado').filter(peso__gt=1).values('pedido').aggregate(valorcom=Sum('valornf'))['valorcom']
         self.totalcomissaocascacda = totalcomissaocascacda
 
         if self.totalcomissaocasca != None or self.totalcomissaocascacda != None:

@@ -78,7 +78,12 @@
             background-color: white;
         }
     </style>
+    <!--Favicon-->
+    <link rel="icon" href="{% static 'images/favicon.png' %}">
 
+    {% for pedido in pedidos %}
+    <title>{{ pedido.contrato }} | {{ pedido.fornecedor.nome }} | Carregamento</title>
+    {% endfor %}
 </head>
 
 
@@ -90,7 +95,7 @@
             <div class="row">
 
                 <div class="col" align="center">
-                    <h2><span class="badge badge-info badge-pill">
+                    <h2><span class="badge badge-success badge-pill">
                             Contrato </span></h2>
                 </div>
 
@@ -183,7 +188,7 @@
             <div class="row">
 
                 <div class="col" align="center">
-                    <h2><span class="badge badge-info badge-pill">
+                    <h2><span class="badge badge-success badge-pill">
                             Relatório Carregamento
                         </span></h2>
                 </div>

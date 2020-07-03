@@ -78,7 +78,11 @@
             background-color: white;
         }
     </style>
-
+    <!--Favicon-->
+    <link rel="icon" href="{% static 'images/favicon.png' %}">
+    {% for pedido in pedidos %}
+    <title>{{ pedido.contrato }} | {{ pedido.fornecedor.nome }} | Comissão</title>
+    {% endfor %}
 </head>
 
 
