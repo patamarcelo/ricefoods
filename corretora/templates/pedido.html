@@ -233,8 +233,13 @@
                     {% endif %}
                     {% endif %}
                     <td align=center>{{ pedido.quantidade_pedido|intcomma }} Kg </td>
+                    {% if pedido.carregado == None or pedido.carregado == 0 %}
+                    <td align=center><input type="checkbox" value="0" class="icms" align="center" style="size: 10px;">
+                    </td>
+                    {% else %}
                     <td align=center><input type="checkbox" value="{{ pedido.carregado|stringformat:"i" }}" class="icms"
                             align="center" style="size: 10px;"></td>
+                    {% endif %}
                     {% if pedido.carregado == 0 %}
                     <td align=center> - </td>
                     {% elif pedido.carregado == None %}
