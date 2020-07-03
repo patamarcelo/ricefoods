@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
-    <meta http-equiv="refresh" content="180">
+    <meta http-equiv="refresh" content="1200">
 
     {% bootstrap_css %}
 
@@ -105,19 +105,17 @@
             <div class="col-8">
                 <h1> <strong>Painel de controle | Corretora</strong>
                 </h1>
-
             </div>
             <div class="col">
                 <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
                 <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'corretora' %}">Inicio</a>
             </div>
         </div>
-        <small style="float: right;">Olá {{ user.first_name|title }}, {% now "SHORT_DATETIME_FORMAT" %}</small>
-        <br>
+        <hr>
         <div class="container-fluid">
             <div class="col-12">
                 {% if messages %}
-                <div class="container">
+                <div class="container" align=center>
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-8 col-sm-offset-2">
                             <div class="alert alert-success alert-dismissible" role="alert">
@@ -134,7 +132,7 @@
 
             </div>
         </div>
-        <hr />
+
         {% block content %}
         {% include 'indexcorretora.html' %}
     </header>
@@ -185,15 +183,6 @@
             });
             $('.dataTables_length').addClass('bs-select');
         });
-        window.setTimeout(function () {
-            $(".alert").fadeTo(500, 0).slideUp(500, function () {
-                $(this).remove();
-            });
-        }, 2000);
-
-        setTimeout(function () {
-            window.location.reload(1);
-        }, 1200000); // 20 minutos
 
 
         $("table tbody").on("click", "td", function () {

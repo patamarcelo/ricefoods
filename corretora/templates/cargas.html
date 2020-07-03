@@ -105,17 +105,19 @@
                 <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
                 <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'corretora' %}">Inicio</a>
             </div>
-            <div class="col-7">
-                {% if messages %}
-                <div class="container">
-                    <div class="row">
-                        <div class="col-10 col-sm-qw col-sm-offset-2">
-                            <div class="alert alert-success alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert"><span
-                                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                {% for m in messages %}
-                                {{ m }} <br />
-                                {% endfor %}
+            <div class="container" align="center">
+                <div class="col-7">
+                    {% if messages %}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-10 col-sm-qw col-sm-offset-2">
+                                <div class="alert alert-success alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert"><span
+                                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                    {% for m in messages %}
+                                    {{ m }} <br />
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -383,7 +385,8 @@
             </table>
             {% include 'paginacao.html' %}
             <p><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
-                    {{ page_obj.paginator.count }} Itens </strong></p>
+                    {{ page_obj.paginator.count }} Itens <span style="float: right;">{% now "SHORT_DATETIME_FORMAT" %}
+                    </span></strong></p>
         </div>
     </div>
 </body>

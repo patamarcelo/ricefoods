@@ -1,5 +1,8 @@
 {% load bootstrap4 %}
 {% block content %}
+
+<small style="float: right;">Olá {{ user.first_name|title }}, {% now "SHORT_DATETIME_FORMAT" %}</small>
+<br />
 <a class="btn btn-primary btn-sm" href="{% url 'pedidos' %}" target="_blank">Pedidos</a>
 <a class="btn btn-outline-success btn-sm" href="{% url 'add_pedidos' %}" target="_blank">Add Pedido</a>
 <a class="btn btn-primary btn-sm" href="{% url 'cargas' %}" target="_blank">Cargas</a>
