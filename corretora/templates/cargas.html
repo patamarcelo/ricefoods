@@ -101,6 +101,10 @@
             <div class="col-3">
                 <h3> <strong>Cargas</strong></h3>
             </div>
+            <div class="col-9">
+                <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
+                <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'corretora' %}">Inicio</a>
+            </div>
             <div class="col-7">
                 {% if messages %}
                 <div class="container">
@@ -132,10 +136,7 @@
                 <div class="col-3-sm">
                     <a class="btn btn-outline-warning btn-sm" href="{% url 'corretora' %}">Voltar</a>
                 </div>
-                <div class="col">
-                    <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
-                    <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'corretora' %}">Inicio</a>
-                </div>
+
             </div>
         </div>
 
@@ -225,7 +226,26 @@
                         {% else %}
                         <td>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</td>
                         {% endif %}
+
+                        {% if carga.situacao == 'Agendado' and carga.ordem == False %}
+                        {% if carga.situacao == 'Agendado' and carga.chegada == True %}
+
+                        <td><a class="text text-success" style='font-style:italic'
+                                href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
+                                </strong></a></td>
+                        {% else %}
+                        <td><a class="text text-warning" style='font-style:italic'
+                                href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</strong></a>
+                        </td>
+                        {% endif %}
+                        {% else %}
                         <td>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</td>
+                        {% endif %}
+
+
+
+
+
 
                         {% if carga.obs and carga.tac %}
                         <td style="background-color: #7a1b0c; opacity: 0.8;"><abbr class="text-warning"

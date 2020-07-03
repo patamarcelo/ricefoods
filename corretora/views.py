@@ -258,7 +258,7 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Carga
     template_name = 'carga_age_form.html'
     success_message = "%(placa)s - %(motorista)s agendado com sucesso!!"
-    fields = ('ordem','tac','pedido','situacao','data','buonny','transp','placa','motorista','valor_mot',
+    fields = ('ordem','tac','chegada','pedido','situacao','data','buonny','transp','placa','motorista','valor_mot',
                 'veiculo','obs')
 
     def get_success_url(self):
@@ -275,7 +275,7 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Carga
     template_name = 'carga_form.html'
     success_message = 'Dados atualizados com sucesso!!'
-    fields = ('ordem','tac','pedido','situacao','data','buonny','transp','placa','motorista','valor_mot','peso',
+    fields = ('ordem','tac','chegada','pedido','situacao','data','buonny','transp','placa','motorista','valor_mot','peso',
                 'veiculo','notafiscal','notafiscal2','valornf','renda','inteiro','impureza',
                 'umidade','gessado','bbranca','amarelo','manchpic','vermelhos',
                 'obs')
@@ -292,6 +292,16 @@ class UpdateclassCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView)
     fields = ('renda','inteiro','impureza',
                 'umidade','gessado','bbranca','amarelo','manchpic','vermelhos',
                 'obs')
+    success_url = reverse_lazy('cargas')
+
+class UpdatechegadaCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    login_url = 'login'
+    redirect_field_name = 'index2'
+    model = Carga
+    template_name = 'carga_chegada_form.html'
+    success_message = 'Dados atualizados com sucesso!!'
+    # fields = '__all__'
+    fields = ('chegada',)
     success_url = reverse_lazy('cargas')
 
 

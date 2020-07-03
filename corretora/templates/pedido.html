@@ -98,6 +98,10 @@
         <div class="col-3">
             <h3> <strong>Pedidos</strong></h3>
         </div>
+        <div class="col-9">
+            <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
+            <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'corretora' %}">Inicio</a>
+        </div>
         <div class="col-5">
             {% if messages %}
             <div class="container">
@@ -130,12 +134,6 @@
                 <input class="form-control input-sm" type="text" id="icms" onclick="AddValor()"
                     placeholder="Peso em Kg">
             </div>
-            <div class="col">
-                <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
-                <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'corretora' %}">Inicio</a>
-            </div>
-
-
         </div>
     </div>
 

@@ -1,10 +1,10 @@
 {% load bootstrap4 %}
 {% block content %}
-<a class="btn btn-primary btn-sm" href="{% url 'pedidos' %}">Pedidos</a>
-<a class="btn btn-outline-success btn-sm" href="{% url 'add_pedidos' %}">Add Pedido</a>
-<a class="btn btn-primary btn-sm" href="{% url 'cargas' %}">Cargas</a>
-<a class="btn btn-outline-success btn-sm" href="{% url 'add_age_cargas' %}">Agendar</a>
-<a class="btn btn-primary btn-sm" href="{% url 'fornecedores' %}">Fornecedores</a>
+<a class="btn btn-primary btn-sm" href="{% url 'pedidos' %}" target="_blank">Pedidos</a>
+<a class="btn btn-outline-success btn-sm" href="{% url 'add_pedidos' %}" target="_blank">Add Pedido</a>
+<a class="btn btn-primary btn-sm" href="{% url 'cargas' %}" target="_blank">Cargas</a>
+<a class="btn btn-outline-success btn-sm" href="{% url 'add_age_cargas' %}" target="_blank">Agendar</a>
+<a class="btn btn-primary btn-sm" href="{% url 'fornecedores' %}" target="_blank">Fornecedores</a>
 <a class="btn btn-outline-info btn-sm" target="_blank" href="{% url 'admin:index'  %}">Admin</a>
 <hr>
 

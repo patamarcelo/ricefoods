@@ -105,7 +105,20 @@
                     {% endif %}
 
 
+                    {% if carga.situacao == 'Agendado' and carga.ordem == False %}
+                    {% if carga.situacao == 'Agendado' and carga.chegada == True %}
+
+                    <td><a class="text text-success" style='font-style:italic' target="_blank"
+                            href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
+                            </strong></a></td>
+                    {% else %}
+                    <td><a class="text text-warning" style='font-style:italic' target="_blank"
+                            href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</strong></a>
+                    </td>
+                    {% endif %}
+                    {% else %}
                     <td>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</td>
+                    {% endif %}
 
                     {% if carga.obs and carga.tac %}
                     <td style="background-color: #7a1b0c; opacity: 0.8;"><abbr class="text-warning"

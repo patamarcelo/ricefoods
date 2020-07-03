@@ -322,7 +322,7 @@ class Carga(Base):
     )
 
     
-
+    chegada = models.BooleanField('Chegou', default=False)
     ordem = models.BooleanField('Ordem', default=False)
     tac = models.BooleanField('TAC', default=False)
     pedido = models.ForeignKey(Pedido, on_delete=models.PROTECT, limit_choices_to = {'situacao': 'a'})
