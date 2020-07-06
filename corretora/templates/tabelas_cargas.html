@@ -200,12 +200,15 @@
                     <td>{{ carga.pedido.cliente|upper }}</td>
                     {% endif %}
                     {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}
-                    <td align="center"><a class="text-success fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
+                    <td align="center"><a class="text-success fa fa-list-alt" target="_blank"
+                            href="{% url 'upd_class' carga.pk %}"></a>
                         {% elif carga.renda or carga.inteiro or carga.impureza or carga.umidade %}
-                    <td align="center"><a class="text-warning fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
+                    <td align="center"><a class="text-warning fa fa-list-alt" target="_blank"
+                            href="{% url 'upd_class' carga.pk %}"></a>
                     </td>
                     {% else %}
-                    <td align="center"><a class="text-danger fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
+                    <td align="center"><a class="text-danger fa fa-list-alt" target="_blank"
+                            href="{% url 'upd_class' carga.pk %}"></a>
                         {% endif %}
 
                         {% if user.is_superuser%}
@@ -213,17 +216,17 @@
 
                         {% if carga.pgcomissao == True %}
 
-                    <td><a class="text text-success" style='font-style:italic'
+                    <td><a class="text text-success" target="_blank" style='font-style:italic'
                             href="{% url 'upd_comiss' carga.pk %}"><b>R$
                                 {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
 
                     {% elif carga.pgcomissao == False and carga.vpcomissaoc > 0 %}
-                    <td><a class="text text-danger" style='font-style:italic'
+                    <td><a class="text text-danger" target="_blank" style='font-style:italic'
                             href="{% url 'upd_comiss' carga.pk %}"><b>R$
                                 {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
 
                     {% else %}
-                    <td><a class="text text-warning" style='font-style:italic'
+                    <td><a class="text text-warning" target="_blank" style='font-style:italic'
                             href="{% url 'upd_comiss' carga.pk %}"><b>R$
                                 {{ carga.comissaocasca|floatformat:2 }}</b></a></td>
                     {% endif %}
@@ -238,12 +241,15 @@
 
                     {% if carga.situacao == 'Agendado' and carga.pedido.situacao == 'a' %}
                     <td>
-                        <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
-                        <a class="btn btn-danger btn-xs" href="{% url 'del_cargas' carga.pk %}">Deletar</a>
+                        <a class="btn btn-warning btn-xs" target="_blank"
+                            href="{% url 'upd_cargas' carga.pk %}">Editar</a>
+                        <a class="btn btn-danger btn-xs" target="_blank"
+                            href="{% url 'del_cargas' carga.pk %}">Deletar</a>
                     </td>
                     {% elif carga.situacao == 'Carregado' and carga.pedido.situacao == 'a' %}
                     <td>
-                        <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
+                        <a class="btn btn-warning btn-xs" target="_blank"
+                            href="{% url 'upd_cargas' carga.pk %}">Editar</a>
 
                     </td>
                     {% else %}

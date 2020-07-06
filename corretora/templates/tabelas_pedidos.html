@@ -171,12 +171,15 @@
                     {% endif %}
                     {% if pedido.carregado %}
                     <td>
-                        <a class="btn btn-warning btn-xs" href="{% url 'upd_pedidos' pedido.pk %}">Editar</a>
+                        <a class="btn btn-warning btn-xs" target="_blank"
+                            href="{% url 'upd_pedidos' pedido.pk %}">Editar</a>
                     </td>
                     {% else %}
                     <td>
-                        <a class="btn btn-warning btn-xs" href="{% url 'upd_pedidos' pedido.pk %}">Editar</a>
-                        <a class="btn btn-danger btn-xs" href="{% url 'del_pedidos' pedido.pk %}">Deletar</a>
+                        <a class="btn btn-warning btn-xs" target="_blank"
+                            href="{% url 'upd_pedidos' pedido.pk %}">Editar</a>
+                        <a class="btn btn-danger btn-xs" target="_blank"
+                            href="{% url 'del_pedidos' pedido.pk %}">Deletar</a>
                     </td>
                     {% endif %}
 

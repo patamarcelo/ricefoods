@@ -15,13 +15,22 @@
     <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
     {% else %}
     <div class="container" align=center>
-        <div class="col-lg-4 col-md-5 col-sm-5 alert alert-primary" role="alert">
+        <div class="col-lg-4 col-md-6 col-sm-8 col-xs-4 alert alert-primary" role="alert">
             Seja Bem Vindo(a) {{ user.get_full_name|title }}!!
         </div>
     </div>
     <div class="container" align=center>
         <div class="inline-flex">
-            <a class="col-3 p-1 m-1 btn btn-primary" href="{% url 'corretora' %}">Corretora</a>
+            <a class="col-lg-3 col-md-5 col-sm-7 p-1 m-1 btn btn-primary" href="{% url 'corretora' %}">Corretora</a>
+        </div>
+    </div>
+    <div class="container" align=center>
+        <div class="inline-flex justify-content-between">
+            <a class="col-lg-1 col-md-2 col-sm-3 p-1 ml-2 btn btn-outline-primary" target="_blank"
+                href="{% url 'pedidos' %}">Pedidos</a>
+
+            <a class="col-lg-1 col-md-2 col-sm-3 p-1 m-1 btn btn-outline-primary" target="_blank"
+                href="{% url 'cargas' %}">Cargas</a>
         </div>
     </div>
     <br />
