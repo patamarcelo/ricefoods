@@ -161,7 +161,7 @@
                         </a></td>
                     {% else %}
                     <td class="text-center"><a href="{% url 'detail_cargas_comiss' pedido.pk %}" target="_blank"
-                            style='font-style:italic;  color:#5cb85c;'><b>R$
+                            style='font-style:italic;' class="text text-success"><b>R$
                                 {{ pedido.totalcomissaocasca|floatformat:2 }}</b>
                         </a></td>
                     {% endif %}

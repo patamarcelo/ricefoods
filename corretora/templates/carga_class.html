@@ -33,50 +33,50 @@
     {% csrf_token %}
     <hr>
     <div class="form-row">
-        <div class="col-lg-2 col-sm-2  form-group">
+        <div class="col-lg-2 col-md-3 col-sm-3 col-3  form-group">
             {{ form.renda|as_crispy_field }}
 
         </div>
-        <div class="col-lg-2 col-sm-2  form-group">
+        <div class="col-lg-2 col-md-3 col-sm-3 col-3  form-group">
             {{ form.inteiro|as_crispy_field }}
 
         </div>
-        <div class="col-lg-2 col-sm-2  form-group">
+        <div class="col-lg-2 col-md-3 col-sm-3 col-3  form-group">
             {{ form.impureza|as_crispy_field }}
 
         </div>
 
 
-        <div class="col-lg-2 col-sm-2  form-group">
+        <div class="col-lg-2 col-md-3 col-sm-3 col-3  form-group">
             {{ form.umidade|as_crispy_field }}
 
         </div>
     </div>
     <div class="form-row">
-        <div class="col-lg-2 col-sm-2 form-group">
+        <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
             {{ form.gessado|as_crispy_field }}
 
         </div>
-        <div class="col-lg-2 col-sm-2 form-group">
+        <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
             {{ form.bbranca|as_crispy_field }}
 
         </div>
-        <div class="col-lg-2 col-sm-2 form-group">
+        <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
             {{ form.amarelo|as_crispy_field }}
 
         </div>
-        <div class="col-lg-2 col-sm-2 form-group">
+        <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
             {{ form.manchpic|as_crispy_field }}
 
         </div>
-        <div class="col-lg-2 col-sm-2 form-group">
+        <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
             {{ form.vermelhos|as_crispy_field }}
         </div>
     </div>
     <hr>
 
     <div class="form-row">
-        <div class="col-6 col-md-4 offset-sm form-group">{{ form.obs|as_crispy_field }}</div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-8 offset-sm form-group">{{ form.obs|as_crispy_field }}</div>
     </div>
     {% buttons %}
 

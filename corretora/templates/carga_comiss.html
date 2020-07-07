@@ -34,14 +34,13 @@
     {% csrf_token %}
     <hr>
     <div class="form-group">
-        <div class="col-lg-2 col-sm-2  form-group">
+        <div class="col-lg-5 col-md-5 col-sm-5 col-6  form-group">
             {{ form.pgcomissao|as_crispy_field }}
         </div>
-
     </div>
     <br>
-    <div class="form-group col-lg-2 col-md-2 col-sm-3">
-        <label for="id_vpcomissaoc" class="active">Comissao Cliente</label>
+    <div class="form-group col-lg-5 col-md-5 col-sm-5 col-6">
+        <label for="id_vpcomissaoc" class="active">Comissao Cliente</label><br>
         <input type="number" class="form-control-sm" name="vpcomissaoc" id="id_vpcomissaoc"
             placeholder="{{ carga.comissaocasca|floatformat:2 }}" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" required>
 
@@ -49,11 +48,13 @@
 
     {% if carga.vpcomissaoc %}
     <br>
-    <h5 class="badge badge-warning h5">Valor Atual - R$ {{ carga.vpcomissaoc }}</h5>
+    <div class="container">
+        <h5 class="badge badge-warning h5"><strong><b>Valor Atual - R$ {{ carga.vpcomissaoc }}</b></strong></h5>
 
-    {% else %}
-    {% endif %}
+        {% else %}
+        {% endif %}
 
+    </div>
     <hr>
 
 
