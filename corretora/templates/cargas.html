@@ -171,11 +171,11 @@
                         <th scope="col">Fornecedor</th>
                         <th scope="col">Origem</th>
                         <th scope="col">Cliente</th>
-                        <th scope="col">Class.</th>
+                        <th scope="col" class="text text-center">Class.</th>
                         {% if user.is_superuser%}
-                        <th scope="col">Comiss.</th>
+                        <th scope="col" class="text text-center">Comiss.</th>
                         {% endif %}
-                        <th scope="col">Ação</th>
+                        <th scope="col" class="text text-center">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -352,15 +352,15 @@
 
                         {% if carga.pgcomissao == True %}
 
-                        <td><a class="text text-success" style='font-style:italic'
+                        <td align=center><a class="text text-success" style='font-style:italic'
                                 href="{% url 'upd_comiss' carga.pk %}"><b>R$
                                     {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
                         {% elif carga.pgcomissao == False and carga.vpcomissaoc > 0 %}
-                        <td><a class="text text-danger" style='font-style:italic'
+                        <td align=center><a class="text text-danger" style='font-style:italic'
                                 href="{% url 'upd_comiss' carga.pk %}"><b>R$
                                     {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
                         {% else %}
-                        <td><a class="text text-warning" style='font-style:italic'
+                        <td align=center><a class="text text-warning" style='font-style:italic'
                                 href="{% url 'upd_comiss' carga.pk %}"><b>R$
                                     {{ carga.comissaocasca|floatformat:2 }}</b></a></td>
                         {% endif %}
