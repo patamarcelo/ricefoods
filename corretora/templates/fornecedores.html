@@ -133,7 +133,7 @@
                         <th scope="col">Banco</th>
                         <th scope="col">Agencia</th>
                         <th scope="col">Conta</th>
-                        <th scope="col">Ação</th>
+                        <th scope="col" class="text text-center">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -165,7 +165,7 @@
                         <td>{{ fornecedor.agencia }}</td>
                         {% endif %}
                         <td>{{ fornecedor.conta|slice:":-1"}}-{{ fornecedor.conta|slice:"-1:"}}</td>
-                        <td>
+                        <td align=center>
                             <a class="btn btn-warning btn-xs"
                                 href="{% url 'upd_fornecedores' fornecedor.pk %}">Editar</a>
                             <a class="btn btn-danger btn-xs"

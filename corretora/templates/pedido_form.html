@@ -13,9 +13,13 @@
     {% csrf_token %}
     <div class="row">
         <div class="col">
-            <h4><span class="badge badge-primary"> Pedido&nbsp;
+            <h4><span class="badge badge-primary p-1 m-1"> Pedido&nbsp;
                     {{ pedido.contrato }}</span>
             </h4>
+
+            <h5><span class="badge badge-warning p-1 m-1">{{ pedido.fornecedor.nome }}</span>
+                &nbsp;&nbsp;<span class="badge badge-warning p-1 m-1">{{ pedido.cliente.nome_fantasia }}</span></h5>
+
         </div>
 
         <div class="col" align=right>

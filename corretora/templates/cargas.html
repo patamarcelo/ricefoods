@@ -328,7 +328,7 @@
                         {% else %}
                         <td>{{ carga.pedido.cliente|upper }}</td>
                         {% endif %}
-
+                        {% if carga.pedido.produto == "Arroz em Casca" %}
                         {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}
                         <td align="center"><a class="text-success fa fa-list-alt"
                                 href="{% url 'upd_class' carga.pk %}"></a>
@@ -340,11 +340,17 @@
                         <td align="center"><a class="text-danger fa fa-list-alt"
                                 href="{% url 'upd_class' carga.pk %}"></a>
                             {% endif %}
+                            {% else %}
+                        <td align="center"><b> - </b></td>
+                        {% endif %}
 
-                            {% if user.is_superuser%}
-                            {% if carga.comissaocasca > 1 %}
 
-                            {% if carga.pgcomissao == True %}
+
+
+                        {% if user.is_superuser%}
+                        {% if carga.comissaocasca > 1 %}
+
+                        {% if carga.pgcomissao == True %}
 
                         <td><a class="text text-success" style='font-style:italic'
                                 href="{% url 'upd_comiss' carga.pk %}"><b>R$

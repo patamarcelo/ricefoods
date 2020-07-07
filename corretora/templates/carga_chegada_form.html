@@ -12,13 +12,14 @@
             <div class="row">
                 <div class="container">
                     <h4><span
-                            class="badge badge-dark">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
+                            class="badge badge-dark p-1 m-1">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
                             -
                             {{carga.motorista|title}}</span>
                 </div>
                 <div class="container-fluid">
-                    <span class="badge badge-success">{{carga.pedido.fornecedor.nome}}</span>
-                    &nbsp;&nbsp;<span class="badge badge-success">{{carga.pedido.cliente.nome_fantasia}}</span>
+                    <h5><span class="badge badge-warning p-1 m-1">{{carga.pedido.fornecedor.nome}}</span>
+                        &nbsp;&nbsp;<span
+                            class="badge badge-warning p-1 m-1">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
                 </div>
             </div>
             </h4>
