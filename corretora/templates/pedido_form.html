@@ -39,107 +39,106 @@
         <div class="form-row">
 
 
-            <div class="col-lg-2 col-sm-3 form-group">
+            <div class="col-lg-2 col-md-6 col-sm-6 col-6  form-group">
                 {{ form.situacao|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-3 form-group">
+            <div class="col-lg-2 col-md-6 col-sm-6 col-6  form-group">
                 {{ form.data|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-3 form-group">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-6  form-group">
                 {{ form.fornecedor|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-3 form-group">
+            <div class="col-lg-2 col-md-6 col-sm-6 col-6  form-group">
                 {{ form.cliente|as_crispy_field }}
             </div>
         </div>
         <hr>
         <div class="form-row">
-            <div class="col-lg-2 col-sm-3 form-group">
+            <div class="col-lg-2 col-md-3 col-sm-6 col-6 form-group">
                 {{ form.quantidade_pedido|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-sm-3  form-group">
+            <div class="col-lg-2 col-md-3 col-sm-6 col-6  form-group">
                 {{ form.preco_produto|as_crispy_field }}
             </div>
 
 
-            <div class="col-lg-2 col-sm-3">
+            <div class="col-lg-2 col-md-3 col-sm-6 col-6">
                 {{ form.comissaoc|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-3">
+            <div class="col-lg-2 col-md-3 col-sm-6 col-6">
                 {{ form.comissaof|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-3">
-                {{ form.preco_frete|as_crispy_field }}
+            <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                {{ form.produto|as_crispy_field }}
             </div>
-        </div>
-        <div class="form-row">
-            <div class="col-lg-2 col-sm-3 form-group">
+
+            <div class="col-lg-2 col-md-3 col-sm-6 col-6 form-group">
                 {{ form.tipo|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-sm-3 form-group">
-                {{ form.produto|as_crispy_field }}
+            <div class="col-lg-2 col-md-3 col-sm-6 col-6 form-group">
+                {{ form.preco_frete|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-sm-3 form-group">
+            <div class="col-lg-2 col-md-3 col-sm-6 col-6 form-group">
                 {{ form.variedade|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-sm-3 form-group">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-6 form-group">
                 {{ form.prazopgto|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-3 form-group">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-6 form-group">
                 {{ form.modalidadepgto|as_crispy_field }}
             </div>
         </div>
         <hr>
         <div class="form-row">
-            <div class="col-lg-2 col-sm-3   form-group">
+            <div class="col-lg-2 col-md-2 col-sm-3  col-3   form-group">
                 {{ form.renda|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-sm-3   form-group">
+            <div class="col-lg-2 col-md-2 col-sm-3  col-3   form-group">
                 {{ form.inteiro|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-sm-3   form-group">
+            <div class="col-lg-2 col-md-2 col-sm-3  col-3   form-group">
                 {{ form.impureza|as_crispy_field }}
 
             </div>
 
 
-            <div class="col-lg-2 col-sm-3   form-group">
+            <div class="col-lg-2 col-md-2 col-sm-3  col-3   form-group">
                 {{ form.umidade|as_crispy_field }}
 
             </div>
         </div>
         <div class="form-row">
-            <div class="col-lg-2 col-sm-3  form-group">
+            <div class="col-lg-2 col-md-2 col-sm-3  col-3  form-group">
                 {{ form.gessado|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-sm-3 form-group">
+            <div class="col-lg-2 col-md-2 col-sm-3  col-3 form-group">
                 {{ form.bbranca|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-sm-3 form-group">
+            <div class="col-lg-2 col-md-2 col-sm-3  col-3 form-group">
                 {{ form.amarelo|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-sm-3 form-group">
+            <div class="col-lg-2 col-md-2 col-sm-3  col-3 form-group">
                 {{ form.manchpic|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-sm-3 form-group">
+            <div class="col-lg-2 col-md-2 col-sm-3  col-3 form-group">
                 {{ form.vermelhos|as_crispy_field }}
             </div>
         </div>
         <hr>
-
         <div class="form-row">
-            {{ form.obs|as_crispy_field }}
-
+            <div class="col-lg-10 col-md-10 col-sm-12 col-12">
+                {{ form.obs|as_crispy_field }}
+            </div>
         </div>
     </div>
 

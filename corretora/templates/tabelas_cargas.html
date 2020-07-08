@@ -59,15 +59,19 @@
                 <tr>
 
                     {% if carga.pedido.situacao == "a" %}
-                    <td class="text-success">{{ carga.pedido }}</td>
+                    <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
+                            class="text-success">{{ carga.pedido }}</a></td>
 
                     {% elif 'b' in carga.pedido.situacao %}
-                    <td class="text-danger"><strong>{{ carga.pedido }}</strong></td>
+                    <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
+                            class="text-danger"><strong>{{ carga.pedido }}</strong></a></td>
                     {% elif carga.pedido.situacao == 'c' %}
-                    <td class="text-info">{{ carga.pedido }}</td>
+                    <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
+                            class="text-info">{{ carga.pedido }}</a></td>
                     {% else %}
-                    {{ carga.pedido }}
+                    <td>{{ carga.pedido }}</td>
                     {% endif %}
+
                     {% if 'GDX' in carga.transp|upper %}
                     <td>{{ carga.transp|title }}</td>
                     {% else %}
