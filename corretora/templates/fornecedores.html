@@ -128,11 +128,11 @@
                     <tr>
                         <th scope="col">Nome</th>
                         <th scope="col">CPF/CNPJ</th>
-                        <th scope="col">Insc. Estadual</th>
+                        <th scope="col">Insc. Estadual&nbsp;&nbsp;</th>
                         <th scope="col">Cidade</th>
-                        <th scope="col">Estado</th>
+                        <th scope="col">Estado&nbsp;&nbsp;</th>
                         <th scope="col">Banco</th>
-                        <th scope="col">Agencia</th>
+                        <th scope="col">Agencia&nbsp;&nbsp;</th>
                         <th scope="col">Conta</th>
                         <th scope="col" class="text text-center">Ação</th>
                     </tr>
@@ -176,9 +176,9 @@
                     {% endfor %}
                 </tbody>
             </table>
-            {% include 'paginacao.html' %}
             <p><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
-                    {{ page_obj.paginator.count }} Itens </strong></p>
+                    {{ page_obj.paginator.count }} Itens <span
+                        style="float: right;">{% now "SHORT_DATETIME_FORMAT" %}</span></strong></p>
         </div>
 
 

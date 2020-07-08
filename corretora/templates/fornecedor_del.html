@@ -6,8 +6,8 @@
     {% csrf_token %}
     <p> Tem certeza que deseja deletar o Fornecedores "{{ object }}"</p>
     {% buttons %}
-    <button type="submit" class="btn btn-danger">Confirmar</button>
-    <button type="button" class="btn btn-warning">
+    <button type="submit" class="btn btn-danger btn-sm">Confirmar</button>
+    <button type="button" class="btn btn-warning btn-sm">
         <a href="javascript:history.back()">Cancelar</a>
     </button>
     {% endbuttons %}
