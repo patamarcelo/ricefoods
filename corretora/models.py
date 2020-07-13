@@ -332,7 +332,7 @@ class Carga(Base):
     
     situacao = models.CharField('Situação', max_length=12, choices=STATUS_CHOICES, default='Agendado')
     placa = NameField('Placa', max_length=7)
-    motorista = models.CharField('Motorista', max_length=20)
+    motorista = models.CharField('Motorista', max_length=25)
     peso = models.PositiveIntegerField('Peso', default=0 ,blank=True, null=True)
     veiculo = models.IntegerField('Veículo', choices=VEICULO_CHOICES)
     valor_mot = models.DecimalField('Frete', max_digits=5, decimal_places=2, null=True, blank=True)

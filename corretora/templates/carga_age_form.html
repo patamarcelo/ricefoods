@@ -21,7 +21,9 @@
     <br />
     <hr>
     <div class="container">
+
         <div class="form-row">
+
             <div class="col-lg-2 col-md-3 col-sm-4 col-4 form-group">
                 {{ form.ordem|as_crispy_field }}
             </div>
@@ -38,50 +40,55 @@
 
 
         <div class="form-row form-control-is-valid">
-            <div class="col-lg-2 col-sm-4 col-6   form-group">
+
+            <div class="col-lg-3 col-sm-4 col-6   form-group">
                 {{ form.pedido|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-4 col-6   form-group">
-
-
-
+            <div class="col-lg-3 col-sm-4 col-6   form-group">
                 {{ form.data|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-4 col-4   form-group">
+            <div class="col-lg-3 col-sm-4 col-6   form-group">
                 {{ form.situacao|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-4 col-4  form-group">
+        </div>
+        <div class="form-row">
+
+            <div class="col-lg-3 col-sm-4 col-6  form-group">
                 {{ form.transp|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-4 col-4  form-group">
+            <div class="col-lg-3 col-sm-4 col-6  form-group">
                 {{ form.veiculo|as_crispy_field }}
+            </div>
+            <div class="col-lg-3 col-sm-4 col-6 form-group">
+                {{ form.buonny|as_crispy_field }}
             </div>
         </div>
 
 
+
         <div class="form-row">
-            <div class="col-lg-2 col-sm-3 col-3 form-group">
-                {{ form.buonny|as_crispy_field }}
-            </div>
 
 
 
-            <div class="col-lg-2 col-sm-3 col-4 form-group">
+
+            <div class="col-lg-3 col-sm-4 col-3 form-group">
                 {{ form.placa|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-3 col-5 form-group">
+            <div class="col-lg-3 col-sm-4 col-6 form-group">
                 {{ form.motorista|as_crispy_field }}
             </div>
 
 
 
-            <div class="col-lg-2 col-sm-3 col-6 form-group">
+            <div class="col-lg-3 col-sm-4 col-3 form-group">
                 {{ form.valor_mot|as_crispy_field }}
             </div>
 
         </div>
         <div class="form-row">
-            <div class="col-lg-6 col-md-8 col-sm-8 col-10  offset-sm form-group">{{ form.obs|as_crispy_field }}</div>
+            <div class="col-lg-9 col-md-12 col-sm-12 col-12  offset-sm form-group">
+                {{ form.obs|as_crispy_field }}
+            </div>
         </div>
     </div>
 

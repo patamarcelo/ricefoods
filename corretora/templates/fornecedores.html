@@ -165,7 +165,11 @@
                         {% else %}
                         <td>{{ fornecedor.agencia }}</td>
                         {% endif %}
+                        {% if fornecedor.conta %}
                         <td>{{ fornecedor.conta|slice:":-1"}}-{{ fornecedor.conta|slice:"-1:"}}</td>
+                        {% else %}
+                        <td></td>
+                        {% endif %}
                         <td align=center>
                             <a class="btn btn-warning btn-xs"
                                 href="{% url 'upd_fornecedores' fornecedor.pk %}">Editar</a>
