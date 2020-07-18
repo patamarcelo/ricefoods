@@ -24,13 +24,13 @@
 
         <div class="form-row">
 
-            <div class="col-lg-2 col-md-3 col-sm-4 col-4 form-group">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-4 form-group" data-toggle="tooltip" title="Ordem Enviada?" data-placement="bottom">
                 {{ form.ordem|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-4 col-4 form-group">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-4 form-group" data-toggle="tooltip" title="CPF?" data-placement="bottom">
                 {{ form.tac|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-4 col-4 form-group">
+            <div class="col-lg-2 col-md-3 col-sm-4 col-4 form-group" data-toggle="tooltip" title="Chegou?" data-placement="bottom">
                 {{ form.chegada|as_crispy_field }}
             </div>
         </div>
@@ -41,25 +41,25 @@
 
         <div class="form-row form-control-is-valid">
 
-            <div class="col-lg-3 col-sm-4 col-6   form-group">
+            <div class="col-lg-3 col-sm-4 col-6   form-group" data-toggle="tooltip" title="Pedido" data-placement="bottom">
                 {{ form.pedido|as_crispy_field }}
             </div>
-            <div class="col-lg-3 col-sm-4 col-6   form-group">
+            <div class="col-lg-3 col-sm-4 col-6   form-group" data-toggle="tooltip" title="Data" data-placement="bottom">
                 {{ form.data|as_crispy_field }}
             </div>
-            <div class="col-lg-3 col-sm-4 col-6   form-group">
+            <div class="col-lg-3 col-sm-4 col-6   form-group" data-toggle="tooltip" title="Situação" data-placement="bottom">
                 {{ form.situacao|as_crispy_field }}
             </div>
         </div>
         <div class="form-row">
 
-            <div class="col-lg-3 col-sm-4 col-6  form-group">
+            <div class="col-lg-3 col-sm-4 col-6  form-group" data-toggle="tooltip" title="Transportadora" data-placement="bottom">
                 {{ form.transp|as_crispy_field }}
             </div>
-            <div class="col-lg-3 col-sm-4 col-6  form-group">
+            <div class="col-lg-3 col-sm-4 col-6  form-group" data-toggle="tooltip" title="Veículo" data-placement="bottom">
                 {{ form.veiculo|as_crispy_field }}
             </div>
-            <div class="col-lg-3 col-sm-4 col-6 form-group">
+            <div class="col-lg-3 col-sm-4 col-6 form-group" data-toggle="tooltip" title="Buonny" data-placement="bottom">
                 {{ form.buonny|as_crispy_field }}
             </div>
         </div>
@@ -71,22 +71,22 @@
 
 
 
-            <div class="col-lg-3 col-sm-4 col-6 form-group">
+            <div class="col-lg-3 col-sm-4 col-6 form-group" data-toggle="tooltip" title="Placa" data-placement="bottom">
                 {{ form.placa|as_crispy_field }}
             </div>
-            <div class="col-lg-3 col-sm-4 col-6 form-group">
+            <div class="col-lg-3 col-sm-4 col-6 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom">
                 {{ form.motorista|as_crispy_field }}
             </div>
 
 
 
-            <div class="col-lg-3 col-sm-4 col-6 form-group">
+            <div class="col-lg-3 col-sm-4 col-6 form-group" data-toggle="tooltip" title="Valor frete" data-placement="bottom">
                 {{ form.valor_mot|as_crispy_field }}
             </div>
 
         </div>
         <div class="form-row">
-            <div class="col-lg-9 col-md-12 col-sm-12 col-12  offset-sm form-group">
+            <div class="col-lg-9 col-md-12 col-sm-12 col-12  offset-sm form-group" data-toggle="tooltip" title="Observações" data-placement="top">
                 {{ form.obs|as_crispy_field }}
             </div>
         </div>
@@ -96,10 +96,10 @@
 
     {% buttons %}
 
-    <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" />
-    <input type="submit" class="btn btn-success btn-sm" name="save_and_continue" value="Salvar e Continuar" />
+    <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" data-toggle="tooltip" title="Salvar" data-placement="top"/>
+    <input type="submit" class="btn btn-success btn-sm" name="save_and_continue" value="Salvar e Continuar" data-toggle="tooltip" title="Salvar e Continuar" data-placement="top" />
     <button type="button" class="btn btn-warning btn-sm">
-        <a href="{% url 'cargas' %}">Cancelar</a>
+        <a href="{% url 'cargas' %}" data-toggle="tooltip" title="Cancelar" data-placement="top">Cancelar</a>
     </button>
 
 
@@ -107,4 +107,9 @@
     {% endbuttons %}
 </form>
 
+<script>
+    $(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
 {% endblock %}

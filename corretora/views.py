@@ -230,7 +230,7 @@ class CargasView(LoginRequiredMixin, ListView):
     redirect_field_name = 'index2'
     models = Carga
     paginate_by = 23
-    ordering = ['situacao','-data','ordem','buonny','pedido_id'] 
+    ordering = ['situacao','-data','pedido__cliente','ordem','buonny','pedido_id'] 
     template_name = 'cargas.html'
     queryset = Carga.objects.all()
     context_object_name = 'cargas' 
