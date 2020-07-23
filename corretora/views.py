@@ -32,8 +32,8 @@ class BaseView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(BaseView, self).get_context_data(**kwargs)
-        context['pedidos'] = Pedido.objects.order_by('situacao','cliente','-data','-contrato').all
-        context['chart'] = Pedido.objects.order_by('data').all
+        context['pedidos'] = Pedido.objects.order_by('situacao','cliente','-data','-id').all
+        context['chart'] = Pedido.objects.order_by('data','id').all
         context['fornecedores'] = Fornecedor.objects.order_by('nome').all
         context['cargas'] = Carga.objects.order_by('situacao','-data','pedido__cliente','ordem','buonny','pedido_id').all
         
@@ -77,7 +77,7 @@ class PedidosView(LoginRequiredMixin, ListView):
     redirect_field_name = 'index2'
     models = Pedido
     paginate_by = 23
-    ordering = ['situacao', 'cliente','-data','-contrato']
+    ordering = ['situacao', 'cliente','-data','-id']
     template_name = 'pedido.html'
     queryset = Pedido.objects.all()
     context_object_name = 'pedidos'
