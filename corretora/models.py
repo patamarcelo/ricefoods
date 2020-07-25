@@ -184,7 +184,7 @@ class Pedido(Base):
     variedade = models.CharField('Variedade', max_length=12)
     produto = models.CharField('Produto', max_length=17, choices=PROD_CHOICES,default='Arroz em Casca')
     tipo = models.CharField('Tipo', max_length=12, choices=TIPO_CHOICES, default='Saco 50Kg')
-    quantidade_pedido = models.PositiveIntegerField('Quantidade Pedido', help_text="Peso em Tonelada")
+    quantidade_pedido = models.PositiveIntegerField('Quantidade Pedido', help_text="Peso em Kg")
     
 
     obs = models.TextField('Observação', max_length=125, blank=True)    
