@@ -266,7 +266,7 @@ class Cliente(Base):
         nexttoday = datetime.date.today() + datetime.timedelta(days=7)
         nextmonday = nexttoday - datetime.timedelta(days=nexttoday.weekday())
         nextsunday = nexttoday - datetime.timedelta(days=nexttoday.weekday()) + datetime.timedelta(days=6)
-        nextagendado = Carga.objects.filter(data__gte=nextmonday).filter(data__lte=nextsunday).filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Agendado').filter(ordem="False").values('veiculo').aggregate(pesot=Sum('veiculo'))['pesot']
+        nextagendado = Carga.objects.filter(data__gte=nextmonday).filter(data__lte=nextsunday).filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Agendado').values('veiculo').aggregate(pesot=Sum('veiculo'))['pesot']
         self.agendadosemanaseguinte = nextagendado
         if self.agendadosemanaseguinte == None:
             self.agendadosemanaseguinte = 0

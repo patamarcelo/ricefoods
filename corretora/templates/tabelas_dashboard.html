@@ -21,14 +21,14 @@
 </style>
 
 <div class="container-fluid">
-    <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-center">
+    <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-around m-1 p-2">
 
 
-        <div class="col-lg-4  col-md-5 col-sm-3  tabini sombra justify-content-between p-2 m-1 marcelopata2"
+        <div class="col-lg-4  col-md-6 col-sm-12 tabini sombra  justify-content-between p-2 m-1 marcelopata2"
             style="zoom:90%">
 
             <h5 align=left><strong><i>Contratos</i></strong></h5>
-            <div class="d-flex align-items-center marcelopata">
+            <div class="d-flex align-items-center marcelopata flex-fill">
 
                 <table class="table table-striped table-borderless table-dark  nowrap table-sm"
                     style="color: antiquewhite;">
@@ -79,11 +79,12 @@
             </div>
 
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-4  tabini sombra justify-content-between p-2 m-1 marcelopata2"
+        {% if user.is_superuser %}
+        <div class="col-lg-5 col-md-6 col-sm-12  tabini sombra  justify-content-between p-2 m-1 marcelopata2"
             style="zoom:90%">
 
             <h5 align=left><strong><i>Comissões</i></strong></h5>
-            <div class="d-flex align-items-center marcelopata">
+            <div class="d-flex align-items-center marcelopata flex-fill">
 
                 <table class="table table-striped table-borderless table-dark nowrap table-sm"
                     style="color: antiquewhite;">
@@ -142,11 +143,13 @@
                 </table>
             </div>
         </div>
-        <div class="col-lg-5 col-md-8 col-sm-4   tabini sombra justify-content-between p-2 m-1 marcelopata2"
+        {% endif %}
+
+        <div class="col-lg-6 col-md-8 col-sm-12  tabini sombra  justify-content-between p-2 m-1 marcelopata2"
             style="zoom:90%">
 
             <h5 align=left><strong><i>Carregamentos</i></strong></h5>
-            <div class="d-flex align-items-center marcelopata">
+            <div class="d-flex align-items-center marcelopata flex-fill">
 
                 <table class="table table-striped table-borderless table-dark nowrap table-sm"
                     style="color: antiquewhite;">
