@@ -1,6 +1,9 @@
 from django.db import models
 from django.db.models import Sum, Count
 from django.utils import timezone
+from django.db.models import F, FloatField, Sum, Avg, Count
+
+import datetime
 
 
 class NameField(models.CharField):
@@ -105,6 +108,227 @@ class Cliente(Base):
     estado = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
     obs = models.TextField('Observação', max_length=125, blank=True)
 
+    def mesanterior(self):
+        lastm = today.month - 1 if today.month > 1 else 12
+        lastmy = today.year if today.month > lastm else today.year -1
+        pass
+    
+    def comissaosemanacasca(self):
+        filt = self.nome_fantasia
+        today = datetime.date.today()
+        monday = today - datetime.timedelta(days=today.weekday())
+        sunday = today - datetime.timedelta(days=today.weekday()) + datetime.timedelta(days=6)
+        comisemanacda = Carga.objects.filter(data__gte=monday).filter(data__lte=sunday).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+        comisemana = Carga.objects.filter(data__gte=monday).filter(data__lte=sunday).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+        
+            
+        if 'CDA' in filt:
+            if comisemanacda == None:
+                self.comissaosemanacasca = 0
+                return self.comissaosemanacasca            
+            else:
+                self.comissaosemanacasca = comisemanacda
+                return self.comissaosemanacasca
+        else:
+            if comisemana == None:
+                self.comissaosemanacasca = 0
+                return self.comissaosemanacasca
+            else:
+                self.comissaosemanacasca = comisemana
+                return self.comissaosemanacasca
+    
+    def comissaomescasca(self):
+        filt = self.nome_fantasia
+        today = datetime.date.today()        
+        comimescascacda = Carga.objects.filter(data__year=today.year, data__month=today.month).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+        comimescasca = Carga.objects.filter(data__year=today.year, data__month=today.month).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+            
+        if 'CDA' in filt:
+            if comimescascacda == None:
+                self.comissaomescasca = 0
+                return self.comissaomescasca            
+            else:
+                self.comissaomescasca = comimescascacda
+                return self.comissaomescasca
+        else:
+            if comimescasca == None:
+                self.comissaomescasca = 0
+                return self.comissaomescasca
+            else:
+                self.comissaomescasca = comimescasca
+                return self.comissaomescasca
+            
+    
+    
+    def comissaoabertocasca(self):
+        filt = self.nome_fantasia               
+        comiabertocda = Carga.objects.filter(pgcomissao=False).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+        comiaberto = Carga.objects.filter(pgcomissao=False).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+            
+        if 'CDA' in filt:
+            if comiabertocda == None:
+                self.comissaoabertocasca = 0
+                return self.comissaoabertocasca            
+            else:
+                self.comissaoabertocasca = comiabertocda
+                return self.comissaoabertocasca
+        else:
+            if comiaberto == None:
+                self.comissaoabertocasca = 0
+                return self.comissaoabertocasca
+            else:
+                self.comissaoabertocasca = comiaberto
+                return self.comissaoabertocasca
+                
+    def comissaoabertocascatotal(self):
+        filt = self.nome_fantasia
+        comiabertototalcda = Carga.objects.filter(pedido__cliente__nome='CDA').filter(pgcomissao=False).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+        comiabertototal = Carga.objects.exclude(pedido__cliente__nome='CDA').filter(pgcomissao=False).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+        
+        if comiabertototalcda == None and comiabertototal == None:
+                self.comissaoabertocascatotal = 0
+                return self.comissaoabertocascatotal            
+        elif comiabertototalcda == None and comiabertototal > 0:
+            self.comissaoabertocascatotal = comiabertototal
+            return self.comissaoabertocascatotal 
+        elif  comiabertototalcda > 0 and comiabertototal == None:
+            self.comissaoabertocascatotal = comiabertototalcda
+            return self.comissaoabertocascatotal 
+        else:
+            self.comissaoabertocascatotal = comiabertototal + comiabertototalcda
+            return self.comissaoabertocascatotal 
+
+
+
+    def carregadosemana(self):
+        filt = self.nome_fantasia
+        today = datetime.date.today()
+        monday = today - datetime.timedelta(days=today.weekday())
+        sunday = today - datetime.timedelta(days=today.weekday()) + datetime.timedelta(days=6)
+        carregado = Carga.objects.filter(data__gte=monday).filter(data__lte=sunday).filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+        self.carregadosemana = carregado
+        if self.carregadosemana == None:
+            self.carregadosemana = 0
+            return self.carregadosemana
+        else:
+            return self.carregadosemana
+    
+    def carregadosemanatotal(self):
+        today = datetime.date.today()
+        monday = today - datetime.timedelta(days=today.weekday())
+        sunday = today - datetime.timedelta(days=today.weekday()) + datetime.timedelta(days=6)
+        carregado = Carga.objects.filter(data__gte=monday).filter(data__lte=sunday).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+        agendado = Carga.objects.filter(data__gte=monday).filter(data__lte=sunday).filter(situacao='Agendado').values('veiculo').aggregate(pesov=Sum('veiculo'))['pesov']
+        
+        if carregado == None and agendado == None:
+            self.carregadosemanatotal = 0
+            return self.carregadosemanatotal
+        elif carregado == None and agendado > 0:
+            self.carregadosemanatotal = agendado
+            return self.carregadosemanatotal
+        elif carregado > 0 and agendado == None:
+            self.carregadosemanatotal = carregado
+            return self.carregadosemanatotal
+        else:
+            self.carregadosemanatotal = carregado + agendado
+            return self.carregadosemanatotal
+        
+
+    def agendadoordemsemana(self):
+        filt = self.nome_fantasia
+        today = datetime.date.today()
+        monday = today - datetime.timedelta(days=today.weekday())
+        sunday = today - datetime.timedelta(days=today.weekday()) + datetime.timedelta(days=6)
+        agendadoordem = Carga.objects.filter(data__gte=monday).filter(data__lte=sunday).filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Agendado').filter(ordem="True").values('veiculo').aggregate(pesot=Sum('veiculo'))['pesot']
+        self.agendadoordemsemana = agendadoordem
+        if self.agendadoordemsemana == None:
+            self.agendadoordemsemana = 0
+            return self.agendadoordemsemana
+        else:
+            return self.agendadoordemsemana
+    
+    def agendadosemana(self):
+        filt = self.nome_fantasia
+        today = datetime.date.today()
+        monday = today - datetime.timedelta(days=today.weekday())
+        sunday = today - datetime.timedelta(days=today.weekday()) + datetime.timedelta(days=6)
+        agendado = Carga.objects.filter(data__gte=monday).filter(data__lte=sunday).filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Agendado').filter(ordem="False").values('veiculo').aggregate(pesot=Sum('veiculo'))['pesot']
+        self.agendadosemana = agendado
+        if self.agendadosemana == None:
+            self.agendadosemana = 0
+            return self.agendadosemana
+        else:
+            return self.agendadosemana
+    
+    
+    def agendadosemanaseguinte(self):
+        filt = self.nome_fantasia
+        nexttoday = datetime.date.today() + datetime.timedelta(days=7)
+        nextmonday = nexttoday - datetime.timedelta(days=nexttoday.weekday())
+        nextsunday = nexttoday - datetime.timedelta(days=nexttoday.weekday()) + datetime.timedelta(days=6)
+        nextagendado = Carga.objects.filter(data__gte=nextmonday).filter(data__lte=nextsunday).filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Agendado').filter(ordem="False").values('veiculo').aggregate(pesot=Sum('veiculo'))['pesot']
+        self.agendadosemanaseguinte = nextagendado
+        if self.agendadosemanaseguinte == None:
+            self.agendadosemanaseguinte = 0
+            return self.agendadosemanaseguinte
+        else:
+            return self.agendadosemanaseguinte
+
+    def totalsemana(self):        
+        return self.agendadosemana + self.agendadoordemsemana + self.carregadosemana
+
+
+    def saldopedido(self):
+        filt = self.nome_fantasia
+        totalped = Pedido.objects.filter(cliente__nome_fantasia=filt).filter(situacao='a').filter(ativo=True).values('quantidade_pedido').aggregate(pesototal=Sum('quantidade_pedido'))['pesototal']
+        self.totalped = totalped
+        carregado = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(pedido__situacao='a').filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']            
+        self.carregado = carregado
+
+        if self.totalped == None:
+            self.saldopedido = 0
+            return self.saldopedido
+        elif self.carregado == None or self.carregado == 0:
+            self.saldoprevisto = self.totalped
+            return self.saldopedido
+        else:
+            saldoreal = self.totalped - self.carregado
+            self.saldopedido = saldoreal
+            return self.saldopedido
+
+    
+
+    def saldoprevisto(self):
+        filt = self.nome_fantasia
+        totalped = Pedido.objects.filter(cliente__nome_fantasia=filt).filter(situacao='a').filter(ativo=True).values('quantidade_pedido').aggregate(pesototal=Sum('quantidade_pedido'))['pesototal']
+        self.totalped = totalped
+        carregado = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(pedido__situacao='a').filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']            
+        self.carregado = carregado
+        previsto = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Agendado').values('pedido').aggregate(veiculot=Sum('veiculo'))['veiculot']
+        self.previsto = previsto
+
+        if self.totalped == None:
+            self.totalped = 0
+            return self.totalped
+        elif self.carregado == None or self.carregado == 0:            
+            self.saldoprevisto = totalped
+            return self.saldoprevisto
+        elif self.previsto == None or self.previsto == 0:
+            saldoreal = self.totalped - self.carregado
+            self.saldoprevisto = saldoreal
+            return self.saldoprevisto        
+        else:
+            saldoprevisto = self.totalped - self.carregado - self.previsto
+            self.saldoprevisto = saldoprevisto
+            return self.saldoprevisto
+    
+    def locaiscarrega(self):
+        filt = self.nome_fantasia
+        locais = Pedido.objects.filter(cliente__nome_fantasia=filt).filter(situacao='a').filter(ativo=True).values('contrato').aggregate(quanti=Count('contrato'))['quanti']
+        self.locaiscarrega = locais
+        return self.locaiscarrega 
+    
+
     class Meta:
         ordering = ['nome']
         verbose_name = 'Cliente'
@@ -187,7 +411,7 @@ class Pedido(Base):
     quantidade_pedido = models.PositiveIntegerField('Quantidade Pedido', help_text="Peso em Kg")
     
 
-    obs = models.TextField('Observação', max_length=125, blank=True)    
+    obs = models.TextField('Observação', max_length=500, blank=True)    
 
 
     def comissaorecebida(self):
@@ -368,6 +592,7 @@ class Carga(Base):
         else:
             return 0
 
+    @property
     def comissaocasca(self):
         if self.peso:
             if self.pedido.produto == 'Arroz em Casca':

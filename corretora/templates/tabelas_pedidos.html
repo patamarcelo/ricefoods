@@ -64,7 +64,18 @@
                     {% endif %}
 
                     <td>{{ pedido.data|date:"SHORT_DATE_FORMAT" }}</td>
+
+
+                    {% if  'PALMARES' in pedido.fornecedor.nome|upper %}
+                    <td style="background-color: #9400d3;">{{ pedido.fornecedor.nome|title }}
+                    </td>
+                    {% elif pedido.obs %}
+                    <td><abbr class="text-warning"
+                            title="{{ pedido.obs }}"><em>{{ pedido.fornecedor|title|truncatechars:26 }}</em></abbr>
+                        {% else %}
                     <td>{{ pedido.fornecedor|title|truncatechars:26 }}</td>
+                    {% endif %}
+
                     <td>{{ pedido.fornecedor.cidade|truncatechars:20 }}</td>
 
                     {% if 'CDA' in pedido.cliente.nome_fantasia|upper %}
@@ -72,10 +83,10 @@
                         <em><strong>{{ pedido.cliente|upper|truncatechars:10 }}</strong></em></td>
                     {% elif 'USTON' in pedido.cliente.nome_fantasia|upper %}
                     <td class="text-primary text-truncate">
-                        <em><strong>{{ pedido.cliente|upper|truncatechars:10 }}</strong></em></td>
+                        <em><strong>{{ pedido.cliente|upper|truncatechars:12 }}</strong></em></td>
                     {% elif 'APIT' in pedido.cliente.nome_fantasia|upper %}
                     <td class="text-truncate" style="color: orange;">
-                        <em><strong>{{ pedido.cliente|upper|truncatechars:10 }}</strong></em>
+                        <em><strong>{{ pedido.cliente|upper|truncatechars:12 }}</strong></em>
                     </td>
                     {% else %}
                     <td>{{ pedido.cliente|upper }}</td>

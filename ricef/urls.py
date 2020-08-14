@@ -31,6 +31,7 @@ urlpatterns = [
     path('sistema/', TemplateView.as_view(template_name='index2.html'), name='index2'),
 
     path('corretora/', BaseView.as_view(), name='corretora'), 
+    path('corretora/dashboard', BasetwoView.as_view(), name='dashboard'), 
     
 
     path('corretora/pedidos/', PedidosView.as_view(), name='pedidos'), 

@@ -1,0 +1,227 @@
+{% load bootstrap4 %}
+{% load humanize %}
+{% load mathfilters %}
+{% block content %}
+{% now "Y-m-d" as todays_date %}
+{% load  corretora_extras %}
+{% load static %}
+<style>
+    caption {
+        caption-side: top;
+
+    }
+
+    .nowrap {
+        white-space: nowrap;
+    }
+
+    .inherit {
+        height: inherit;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-center">
+
+
+        <div class="col-lg-4  col-md-5 col-sm-3  tabini sombra justify-content-between p-2 m-1 marcelopata2"
+            style="zoom:90%">
+
+            <h5 align=left><strong><i>Contratos</i></strong></h5>
+            <div class="d-flex align-items-center marcelopata">
+
+                <table class="table table-striped table-borderless table-dark  nowrap table-sm"
+                    style="color: antiquewhite;">
+                    <caption><strong>Contratos Ativos</strong></caption>
+                    <thead>
+                        <tr align="center">
+                            <th scope="col" class="text text-center"><strong>Clientes</strong></th>
+                            <th scope="col" class="text-success text-center"><strong>Saldo Real</strong></th>
+                            <th scope="col" class="text-primary text-center"><strong>Saldo Prev.</strong></th>
+                            <th scope="col" class="text-warning text-center"><strong>Locais</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody align="center">
+                        {% for cliente in clientes %}
+                        <tr align=" center">
+                            {% if cliente.saldopedido > 0 %}
+                            {% if 'uston' in cliente.nome|lower %}
+                            <td scope="col" class="text-primary"><strong>{{ cliente.nome_fantasia}}</strong></td>
+                            {% elif 'cda' in cliente.nome|lower %}
+                            <td scope="col" class="text-danger"><strong>{{ cliente.nome_fantasia}}</strong></td>
+                            {% elif 'apit' in cliente.nome|lower %}
+                            <td scope="col" style="color: orange;"><strong>{{ cliente.nome_fantasia}}</strong></td>
+                            {% else %}
+                            <td scope="col"><strong>{{ cliente.nome_fantasia}}</strong></td>
+                            {% endif %}
+                            {% else %}
+                            {% endif %}
+                            {% if cliente.saldopedido > 0 %}
+                            <td>{{ cliente.saldopedido }} Kg</td>
+                            {% else %}
+                            {% endif %}
+                            {% if cliente.saldoprevisto > 0 %}
+                            {% if cliente.saldoprevisto == cliente.saldopedido %}
+                            <td>-</td>
+                            {% else %}
+                            <td>{{ cliente.saldoprevisto }} Kg</td>
+                            {% endif %}
+                            {% else %}
+                            {% endif %}
+                            {% if cliente.saldopedido > 0 %}
+                            <td>{{ cliente.locaiscarrega }} Loca{{ cliente.locaiscarrega|pluralize:"l,is" }} </td>
+                            {% else %}
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-4  tabini sombra justify-content-between p-2 m-1 marcelopata2"
+            style="zoom:90%">
+
+            <h5 align=left><strong><i>Comissões</i></strong></h5>
+            <div class="d-flex align-items-center marcelopata">
+
+                <table class="table table-striped table-borderless table-dark nowrap table-sm"
+                    style="color: antiquewhite;">
+                    <caption><strong>Total Aberto - {% for cliente in clientes %}{% if 'ust' in cliente.nome|lower %}
+                            R$ {{ cliente.comissaoabertocascatotal|slice:"1"|floatformat:'2'}}
+                            {% else %}
+                            {% endif %}{% endfor %}</strong></caption>
+                    <thead>
+                        <tr align="center">
+                            <th scope="col" class="text text-center"><strong>Clientes</strong></th>
+                            <th scope="col" class="text-success text-center"><strong>Semana</strong></th>
+                            <th scope="col" class="text-primary text-center"><strong>Mês</strong></th>
+                            <th scope="col" class="text-warning text-center"><strong>Aberto</strong></th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody align="center">
+                        {% for cliente in clientes %}
+                        <tr align="center">
+                            {% if cliente.comissaoabertocasca > 0 or cliente.comissaosemanacasca > 0 or cliente.comissaomescasca > 0%}
+                            {% if 'uston' in cliente.nome|lower %}
+                            <td scope="col" class="text-primary"><strong>{{ cliente.nome_fantasia}}</strong></td>
+                            {% elif 'cda' in cliente.nome|lower %}
+                            <td scope="col" class="text-danger"><strong>{{ cliente.nome_fantasia}}</strong></td>
+                            {% elif 'apit' in cliente.nome|lower %}
+                            <td scope="col" style="color: orange;"><strong>{{ cliente.nome_fantasia}}</strong></td>
+                            {% else %}
+                            <td scope="col"><strong>{{ cliente.nome_fantasia}}</strong></td>
+                            {% endif %}
+                            {% if cliente.comissaosemanacasca == 0 %}
+                            <td align="center">R$ 0,00 </td>
+                            {% else %}
+                            <td>R$ {{ cliente.comissaosemanacasca|floatformat:"2" }}</td>
+                            {% endif %}
+
+                            {% if cliente.comissaomescasca == 0 %}
+                            <td align="center">R$ 0,00 </td>
+                            {% else %}
+                            <td>R$ {{ cliente.comissaomescasca|floatformat:"2" }}</td>
+                            {% endif %}
+
+                            {% if cliente.comissaoabertocasca == 0 %}
+                            <td align="center">R$ 0,00 </td>
+                            {% else %}
+                            <td>R$ {{ cliente.comissaoabertocasca|floatformat:"2" }}</td>
+                            {% endif %}
+
+
+                            {% endif %}
+                            {% endfor %}
+
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-5 col-md-8 col-sm-4   tabini sombra justify-content-between p-2 m-1 marcelopata2"
+            style="zoom:90%">
+
+            <h5 align=left><strong><i>Carregamentos</i></strong></h5>
+            <div class="d-flex align-items-center marcelopata">
+
+                <table class="table table-striped table-borderless table-dark nowrap table-sm"
+                    style="color: antiquewhite;">
+                    <caption><strong>Semana Atual - {% for cliente in clientes %}{% if 'ust' in cliente.nome|lower %}
+                            {{ cliente.carregadosemanatotal|intcomma }} Kg
+                            {% else %}
+                            {% endif %}{% endfor %}</strong></caption>
+                    <thead>
+                        <tr align="center">
+                            <th scope="col" class="text text-center"><strong>Clientes</strong></th>
+                            <th scope="col" class="text-success text-center"><strong>Carregado</strong></th>
+                            <th scope="col" class="text-primary text-center"><strong>Carregando</strong></th>
+                            <th scope="col" class="text-warning text-center"><strong>Agendado</strong></th>
+                            <th scope="col" class="text-info text-center"><strong>Total</strong></th>
+                            <th scope="col" class="text-warning text-center"><strong>Semana Seguinte</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody align="center">
+                        {% for cliente in clientes %}
+                        <tr align=" center">
+                            {% if cliente.agendadosemana > 0 or cliente.carregadosemana > 0 or cliente.agendadoordemsemana > 0 or cliente.agendadosemanaseguinte > 0 %}
+                            {% if 'uston' in cliente.nome|lower %}
+                            <td scope="col" class="text-primary"><strong>{{ cliente.nome_fantasia}}</strong></td>
+                            {% elif 'cda' in cliente.nome|lower %}
+                            <td scope="col" class="text-danger"><strong>{{ cliente.nome_fantasia}}</strong></td>
+                            {% elif 'apit' in cliente.nome|lower %}
+                            <td scope="col" style="color: orange;"><strong>{{ cliente.nome_fantasia}}</strong></td>
+                            {% else %}
+                            <td scope="col"><strong>{{ cliente.nome_fantasia}}</strong></td>
+                            {% endif %}
+                            {% if cliente.carregadosemana == 0 %}
+                            <td>-</td>
+                            {% else %}
+                            <td>{{ cliente.carregadosemana }} Kg</td>
+                            {% endif %}
+
+                            {% if cliente.agendadoordemsemana == 0 %}
+                            <td>-</td>
+                            {% else %}
+                            <td>{{ cliente.agendadoordemsemana }} Kg</td>
+                            {% endif %}
+
+                            {% if cliente.agendadosemana == 0 %}
+                            <td>-</td>
+                            {% else %}
+                            <td>{{ cliente.agendadosemana }} Kg</td>
+                            {% endif %}
+                            {% if cliente.totalsemana == 0 %}
+                            <td>-</td>
+                            {% else %}
+                            <td class="text-info"><strong>{{ cliente.totalsemana }} Kg</strong></td>
+                            {% endif %}
+                            {% if cliente.agendadosemanaseguinte == 0 %}
+                            <td>-</td>
+                            {% else %}
+                            <td>{{ cliente.agendadosemanaseguinte }} Kg</td>
+                            {% endif %}
+                            {% else %}
+                            {% endif %}
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+{% endblock %}

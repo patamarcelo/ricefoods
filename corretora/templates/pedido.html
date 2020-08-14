@@ -194,7 +194,17 @@
                     {% else %}
                     {% endif %}
                     <td>{{ pedido.data|date:"SHORT_DATE_FORMAT" }}</td>
-                    <td>{{ pedido.fornecedor|title|truncatechars:20 }}</td>
+
+                    {% if  'PALMARES' in pedido.fornecedor.nome|upper %}
+                    <td style="background-color: #9400d3;">{{ pedido.fornecedor.nome|title }}
+                    </td>
+                    {% elif pedido.obs %}
+                    <td><abbr class="text-warning"
+                            title="{{ pedido.obs }}"><em>{{ pedido.fornecedor|title|truncatechars:26 }}</em></abbr>
+                        {% else %}
+                    <td>{{ pedido.fornecedor|title|truncatechars:26 }}</td>
+                    {% endif %}
+
                     <td>{{ pedido.fornecedor.cidade|truncatechars:20 }}</td>
 
                     {% if 'CDA' in pedido.cliente.nome_fantasia|upper %}
