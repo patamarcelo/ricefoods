@@ -247,6 +247,8 @@ class CargaAdmin(admin.ModelAdmin):
     def get_cliente(self,obj):
         return obj.pedido.cliente.nome_fantasia
     get_cliente.short_description = 'Cliente'
+     
 
+    
     
     

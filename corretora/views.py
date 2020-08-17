@@ -281,6 +281,12 @@ class CargasView(LoginRequiredMixin, ListView):
     queryset = Carga.objects.all()
     context_object_name = 'cargas' 
 
+    def get_context_data(self, **kwargs):
+        context = super(CargasView, self).get_context_data(**kwargs)
+        context['clientes'] = Cliente.objects.order_by('-nome').all
+        return context
+
+
 class CreateCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     login_url = 'login'
     redirect_field_name = 'index2'

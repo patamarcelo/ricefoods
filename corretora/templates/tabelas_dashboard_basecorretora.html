@@ -21,10 +21,10 @@
 </style>
 
 <div class="container-fluid">
-    <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-start m-1 p-2">
+    <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-center m-1 p-2 topo">
 
 
-        <div class="col-lg-5  col-md-6 col-sm-12 tabini sombra  justify-content-between p-2 m-1 marcelopata2"
+        <div class="col-lg-5  col-md-8 col-sm-12 tabini sombra  justify-content-between p-2 m-1 marcelopata2"
             style="zoom:90%">
 
             <h5 align=left><strong><i>Contratos</i></strong></h5>
@@ -79,11 +79,9 @@
             </div>
 
         </div>
-    </div>
-
-    {% if user.is_superuser %}
-    <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-start m-1 p-2">
-        <div class="col-lg-5 col-md-6 col-sm-12  tabini sombra  justify-content-between p-2 m-1 marcelopata2"
+        {% if user.is_superuser %}
+        <div class="col-lg-1"></div>
+        <div class="col-lg-5 col-md-8 col-sm-12  tabini sombra  justify-content-between p-2 m-1 marcelopata2"
             style="zoom:90%">
 
             <h5 align=left><strong><i>Comissões</i></strong></h5>
@@ -146,11 +144,11 @@
                 </table>
             </div>
         </div>
-    </div>
-    <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-start m-1 p-2">
         {% endif %}
+    </div>
+    <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-center m-1 p-2 topo">
 
-        <div class="col-lg-11 col-md-12 col-sm-12  tabini sombra  justify-content-between p-2 m-1 marcelopata2"
+        <div class="col-lg-8 col-md-10 col-sm-12  tabini sombra  justify-content-between p-2 m-1 marcelopata2"
             style="zoom:90%">
 
             <h5 align=left><strong><i>Carregamentos</i></strong></h5>
@@ -171,18 +169,12 @@
                             <th scope="col" class="text-warning text-center"><strong>Agendado</strong></th>
                             <th scope="col" class="text-info text-center"><strong>Total</strong></th>
                             <th scope="col" class="text-warning text-center"><strong>Semana Seguinte</strong></th>
-                            <th scope="col" class="text-secondary text-center">
-                                <strong>{{0|nome_mes_anteanterior}}</strong>
-                            </th>
-                            <th scope="col" class="text-secondary text-center"><strong>{{0|nome_mes_anterior}}</strong>
-                            </th>
-                            <th scope="col" class="text-success text-center"><strong>{{0|nome_mes}}</strong></th>
                         </tr>
                     </thead>
                     <tbody align="center">
                         {% for cliente in clientes %}
                         <tr align=" center">
-                            {% if cliente.agendadosemana > 0 or cliente.carregadosemana > 0 or cliente.agendadoordemsemana > 0 or cliente.agendadosemanaseguinte > 0 or cliente.carregadomes > 0 or cliente.carregadomesanterior > 0  or cliente.carregadomesanteanterior > 0 %}
+                            {% if cliente.agendadosemana > 0 or cliente.carregadosemana > 0 or cliente.agendadoordemsemana > 0 or cliente.agendadosemanaseguinte > 0 %}
                             {% if 'uston' in cliente.nome|lower %}
                             <td scope="col" class="text-primary"><strong>{{ cliente.nome_fantasia}}</strong></td>
                             {% elif 'cda' in cliente.nome|lower %}
@@ -219,24 +211,6 @@
                             {% else %}
                             <td>{{ cliente.agendadosemanaseguinte }} Kg</td>
                             {% endif %}
-
-                            {% if cliente.carregadomesanteanterior == 0 %}
-                            <td>-</td>
-                            {% else %}
-                            <td>{{ cliente.carregadomesanteanterior }} Kg</td>
-                            {% endif %}
-
-                            {% if cliente.carregadomesanterior == 0 %}
-                            <td>-</td>
-                            {% else %}
-                            <td>{{ cliente.carregadomesanterior }} Kg</td>
-                            {% endif %}
-
-                            {% if cliente.carregadomes == 0 %}
-                            <td>-</td>
-                            {% else %}
-                            <td>{{ cliente.carregadomes }} Kg</td>
-                            {% endif %}
                             {% else %}
                             {% endif %}
 
@@ -249,11 +223,9 @@
 
 
 
+
     </div>
-
-
 </div>
-
 
 
 

@@ -200,6 +200,53 @@ class Cliente(Base):
 
 
 
+    def carregadomes(self):
+        filt = self.nome_fantasia
+        today = datetime.date.today()
+        carregadomes = Carga.objects.filter(data__year=today.year, data__month=today.month).filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+        self.carregadomes = carregadomes
+        if self.carregadomes == None:
+            self.carregadomes = 0
+            return self.carregadomes
+        else:
+            return self.carregadomes
+    
+    def carregadomestotal(self):        
+        today = datetime.date.today()
+        carregadomestotal = Carga.objects.filter(data__year=today.year, data__month=today.month).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+        self.carregadomestotal = carregadomestotal
+        if self.carregadomestotal == None:
+            self.carregadomestotal = 0
+            return self.carregadomestotal
+        else:
+            return self.carregadomestotal
+    
+    def carregadomesanterior(self):
+        filt = self.nome_fantasia
+        today = datetime.date.today()
+        lastm = today.month - 1 if today.month > 1 else 12
+        lastmy = today.year if today.month > lastm else today.year -1
+        carregadomesanterior = Carga.objects.filter(data__year=lastmy, data__month=lastm).filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+        self.carregadomesanterior = carregadomesanterior
+        if self.carregadomesanterior == None:
+            self.carregadomesanterior = 0
+            return self.carregadomesanterior
+        else:
+            return self.carregadomesanterior
+
+    def carregadomesanteanterior(self):
+        filt = self.nome_fantasia
+        today = datetime.date.today()
+        lastm = today.month - 2 if today.month > 2 else 12
+        lastmy = today.year if today.month > lastm else today.year -1
+        carregadomesanteanterior = Carga.objects.filter(data__year=lastmy, data__month=lastm).filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+        self.carregadomesanteanterior = carregadomesanteanterior
+        if self.carregadomesanteanterior == None:
+            self.carregadomesanteanterior = 0
+            return self.carregadomesanteanterior
+        else:
+            return self.carregadomesanteanterior
+    
     def carregadosemana(self):
         filt = self.nome_fantasia
         today = datetime.date.today()
