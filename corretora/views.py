@@ -80,7 +80,7 @@ class BaseView(LoginRequiredMixin, TemplateView):
         context['pedidos'] = Pedido.objects.order_by('situacao','cliente','-data','-id').all
         context['chart'] = Pedido.objects.order_by('data','id').all
         context['fornecedores'] = Fornecedor.objects.order_by('nome').all
-        context['cargas'] = Carga.objects.order_by('situacao','-data','pedido__cliente','ordem','buonny','pedido_id').all
+        context['cargas'] = Carga.objects.order_by('situacao','-data','ordem','chegada','buonny','pedido__cliente').all
         context['clientes'] = Cliente.objects.order_by('-nome').all
         
         today = datetime.date.today()
@@ -276,7 +276,7 @@ class CargasView(LoginRequiredMixin, ListView):
     redirect_field_name = 'index2'
     models = Carga
     paginate_by = 23
-    ordering = ['situacao','-data','pedido__cliente','ordem','buonny','pedido_id'] 
+    ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
     template_name = 'cargas.html'
     queryset = Carga.objects.all()
     context_object_name = 'cargas' 

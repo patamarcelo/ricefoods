@@ -157,6 +157,54 @@ class Cliente(Base):
             else:
                 self.comissaomescasca = comimescasca
                 return self.comissaomescasca
+    
+    
+    def comissaomescascaanterior(self):
+        filt = self.nome_fantasia
+        today = datetime.date.today()
+        lastm = today.month - 1 if today.month > 1 else 12
+        lastmy = today.year if today.month > lastm else today.year -1
+        comimesanteriorcascacda = Carga.objects.filter(data__year=lastmy, data__month=lastm).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+        comimesanteriorcasca = Carga.objects.filter(data__year=lastmy, data__month=lastm).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+            
+        if 'CDA' in filt:
+            if comimesanteriorcascacda == None:
+                self.comissaomescascaanterior = 0
+                return self.comissaomescascaanterior            
+            else:
+                self.comissaomescascaanterior = comimesanteriorcascacda
+                return self.comissaomescascaanterior
+        else:
+            if comimesanteriorcasca == None:
+                self.comissaomescascaanterior = 0
+                return self.comissaomescascaanterior
+            else:
+                self.comissaomescascaanterior = comimesanteriorcasca
+                return self.comissaomescascaanterior
+    
+    
+    def comissaomescascaanteanterior(self):
+        filt = self.nome_fantasia
+        today = datetime.date.today()
+        lastmm = today.month - 2 if today.month > 2 else 12
+        lastmmy = today.year if today.month > lastmm else today.year -1
+        comimesanteanteriorcascacda = Carga.objects.filter(data__year=lastmmy, data__month=lastmm).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+        comimesanteanteriorcasca = Carga.objects.filter(data__year=lastmmy, data__month=lastmm).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+            
+        if 'CDA' in filt:
+            if comimesanteanteriorcascacda == None:
+                self.comissaomescascaanteanterior = 0
+                return self.comissaomescascaanteanterior            
+            else:
+                self.comissaomescascaanteanterior = comimesanteanteriorcascacda
+                return self.comissaomescascaanteanterior
+        else:
+            if comimesanteanteriorcasca == None:
+                self.comissaomescascaanteanterior = 0
+                return self.comissaomescascaanteanterior
+            else:
+                self.comissaomescascaanteanterior = comimesanteanteriorcasca
+                return self.comissaomescascaanteanterior
             
     
     
@@ -237,9 +285,9 @@ class Cliente(Base):
     def carregadomesanteanterior(self):
         filt = self.nome_fantasia
         today = datetime.date.today()
-        lastm = today.month - 2 if today.month > 2 else 12
-        lastmy = today.year if today.month > lastm else today.year -1
-        carregadomesanteanterior = Carga.objects.filter(data__year=lastmy, data__month=lastm).filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+        lastmm = today.month - 2 if today.month > 2 else 12
+        lastmmy = today.year if today.month > lastmm else today.year -1
+        carregadomesanteanterior = Carga.objects.filter(data__year=lastmmy, data__month=lastmm).filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
         self.carregadomesanteanterior = carregadomesanteanterior
         if self.carregadomesanteanterior == None:
             self.carregadomesanteanterior = 0
@@ -279,7 +327,6 @@ class Cliente(Base):
         else:
             self.carregadosemanatotal = carregado + agendado
             return self.carregadosemanatotal
-        
 
     def agendadoordemsemana(self):
         filt = self.nome_fantasia
