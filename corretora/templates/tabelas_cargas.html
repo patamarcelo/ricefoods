@@ -77,11 +77,11 @@
                     {% else %}
                     <td style="background-color: #660066;">{{ carga.transp|title }}</td>
                     {% endif %}
-                    {% if 'das' in carga.buonny %}
+                    {% if 'das' in carga.buonny|lower %}
                     <td class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>
-                    {% elif 'sul' in carga.buonny %}
+                    {% elif 'sul' in carga.buonny|lower %}
                     <td class="text-warning"><strong>{{ carga.buonny|title }}</strong></td>
-                    {% elif 'nviado' in carga.buonny or 'nviada' in carga.buonny %}
+                    {% elif 'nviado' in carga.buonny|lower or 'nviada' in carga.buonny|lower %}
                     <td class="text-info"><strong>{{ carga.buonny|title }}</strong></td>
                     {% else %}
                     <td class="text-success"><strong>{{ carga.buonny }}</strong></td>
@@ -286,6 +286,7 @@
         background-color: #a9a9a9;
         color: black;
     }
+
 </style>
 <script>
     var total = 0;

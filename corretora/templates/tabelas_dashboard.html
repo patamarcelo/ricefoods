@@ -136,7 +136,7 @@
                             <td align="center">- </td>
                             {% else %}
                             <td>R$ {{ cliente.comissaomescascaanterior|floatformat:"2" }}</td>
-                            {% endif %}
+                {% endif %}
 
                             {% if cliente.comissaosemanacasca == 0 %}
                             <td align="center">- </td>
