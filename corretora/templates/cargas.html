@@ -211,7 +211,7 @@
                         {% elif 'nviado' in carga.buonny|lower or 'nviada' in carga.buonny|lower %}
                         <td class="text-info"><strong>{{ carga.buonny|title }}</strong></td>
                         {% else %}
-                        <td class="text-success"><strong>{{ carga.buonny }}</strong></td>
+                        <td class="text-success"><strong>{{ carga.buonny|title }}</strong></td>
                         {% endif %}
                         {% if carga.situacao == 'Agendado' %}
                         <td class="text-warning"><strong>{{ carga.situacao }}</strong></td>
