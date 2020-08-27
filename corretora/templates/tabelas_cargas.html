@@ -152,10 +152,12 @@
                             text="{{ carga.peso|intcomma }}" class="peso" style="size: 10px;"></td>
                     {% endif %}
                     {% if carga.peso == 0 %}
-                    <td class="text-warning" style="  cursor: pointer;"><strong>{{ carga.veiculo|intcomma }} Kg
+                    <td class="text-warning"><strong>{{ carga.veiculo|intcomma }} Kg
                         </strong></td>
+                    {% elif carga.peso < 18000 and carga.peso > 0  %}
+                    <td style="color:darkorange"><i>{{ carga.peso|intcomma }} Kg </i></td>
                     {% else %}
-                    <td style="  cursor: pointer;">{{ carga.peso|intcomma }} Kg </td>
+                    <td>{{ carga.peso|intcomma }} Kg </td>
                     {% endif %}
 
                     {% if carga.notafiscal == None %}

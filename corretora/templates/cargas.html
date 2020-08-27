@@ -279,6 +279,8 @@
 
                         {% if carga.peso == 0 %}
                         <td class="text-warning"><strong>{{ carga.veiculo|intcomma }} Kg </strong></td>
+                        {% elif carga.peso < 18000 and carga.peso > 0  %}
+                        <td style="color:darkorange"><i>{{ carga.peso|intcomma }} Kg </i></td>
                         {% else %}
                         <td>{{ carga.peso|intcomma }} Kg </td>
                         {% endif %}

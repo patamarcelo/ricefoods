@@ -61,6 +61,7 @@
             right: 250px;
             margin-top: 10px;
         }
+
     </style>
     <style>
         .table-hover>tbody>tr:hover>td,
@@ -87,6 +88,7 @@
             background-color: #696969;
             color: black;
         }
+
     </style>
     <!--Favicon-->
     <link rel="icon" href="{% static 'images/favicon.png' %}">
@@ -377,6 +379,9 @@
     $("table tbody").on("click", "td", function () {
         $(this).toggleClass("selected");
     });
+
+
+
     var total = 0;
     //Chama a função com click em qualquer checkbox
     $(':checkbox').click(function () {

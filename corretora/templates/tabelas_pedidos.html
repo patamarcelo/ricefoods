@@ -8,6 +8,7 @@
         width: 15%;
         white-space: normal;
     }
+
 </style>
 <br />
 <div class="container-fluid tabini sombra" align=center>
@@ -86,10 +87,10 @@
                         <em><strong>{{ pedido.cliente|upper|truncatechars:12 }}</strong></em></td>
                     {% elif 'APIT' in pedido.cliente.nome_fantasia|upper %}
                     <td class="text-truncate" style="color: orange;">
-                        <em><strong>{{ pedido.cliente|upper|truncatechars:12 }}</strong></em>
+                        <em><strong>{{ pedido.cliente|upper|truncatechars:14 }}</strong></em>
                     </td>
                     {% else %}
-                    <td>{{ pedido.cliente|upper }}</td>
+                    <td><strong>{{ pedido.cliente|upper|truncatechars:14 }}</strong></td>
                     {% endif %}
 
                     <td>R$ {{ pedido.preco_produto|intcomma  }}</td>
