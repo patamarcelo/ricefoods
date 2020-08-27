@@ -23,7 +23,7 @@
     <!-- Material Design Bootstrap -->
     <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
     <!-- Your custom styles (optional) -->
-    <link href="{% static 'images/style.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- MDBootstrap Datatables  -->
     <link href="{% static 'css/addons/datatables.min.css' %}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -65,14 +65,19 @@
         }
 
         body {
-            background-color: #3c3b3d;
+            background-color: #363639;
             color: blanchedalmond;
         }
 
         .tabini {
-            background-color: #323133;
+            background-color: #1c1c1c;
             color: blanchedalmond;
 
+        }
+
+        caption {
+            color: #dcdcdc;
+            font-style: italic;
         }
 
         .sombra {
@@ -93,6 +98,7 @@
             background-color: #696969;
             color: black;
         }
+
     </style>
     <!--Favicon-->
     <link rel="icon" href="{% static 'images/favicon.png' %}">

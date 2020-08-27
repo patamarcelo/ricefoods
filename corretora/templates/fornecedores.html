@@ -19,7 +19,7 @@
     <!-- Material Design Bootstrap -->
     <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
     <!-- Your custom styles (optional) -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
     <!-- MDBootstrap Datatables  -->
     <link href="{% static 'css/addons/datatables.min.css' %}" rel="stylesheet">
     <style>
@@ -55,9 +55,16 @@
         }
 
         body {
-            background-color: #3c3b3d;
+            background-color: #363639;
             color: blanchedalmond;
         }
+
+        .tabini {
+            background-color: #1c1c1c;
+            color: blanchedalmond;
+
+        }
+
 
         .sombra {
             box-shadow: 5px 5px 5px 5px black;
@@ -68,6 +75,7 @@
             background-color: #696969;
             color: black;
         }
+
     </style>
 
     <!--Favicon-->
@@ -76,11 +84,14 @@
 
 <body>
     <br><br>
-    <div class="container-fluid sombra" align=center">
-        <br />
+    <div class="container-fluid" align=center">
         <div class="row">
             <div class="col-3">
-                <h3> <strong>Fornecedores</strong></h3>
+                <h3> <u><strong>Fornecedores</strong></u></h3>
+            </div>
+            <div class="col-9">
+                <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
+                <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'corretora' %}">Inicio</a>
             </div>
             <div class="col-5">
                 {% if messages %}
@@ -101,7 +112,7 @@
 
             </div>
         </div>
-        <hr />
+        <br>
 
         <div class="container-fluid">
             <div class="row">
@@ -111,10 +122,6 @@
                 <div class="col-3-sm">
                     <a class="btn btn-outline-warning btn-sm" href="{% url 'corretora' %}">Voltar</a>
                 </div>
-                <div class="col">
-                    <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
-                    <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'corretora' %}">Inicio</a>
-                </div>
             </div>
         </div>
 
@@ -122,9 +129,10 @@
         <hr />
 
         <div class="my-table container-fluid">
-            <table id="fornecedor" class="width table table-hover table-striped table-dark table-bordered table-sm"
+            <table id="fornecedor"
+                class="width table-round-corner  table table-hover table-striped table-dark table-bordered table-sm"
                 width=100>
-                <thead>
+                <thead class="borderless">
                     <tr>
                         <th scope="col">Nome</th>
                         <th scope="col">CPF/CNPJ</th>

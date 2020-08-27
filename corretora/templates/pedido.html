@@ -71,12 +71,23 @@
         }
 
         body {
-            background-color: #3c3b3d;
+            background-color: #363639;
             color: blanchedalmond;
         }
 
+        .tabini {
+            background-color: #1c1c1c;
+            color: blanchedalmond;
+
+        }
+
+
         .sombra {
             box-shadow: 5px 5px 5px 5px black;
+        }
+
+        thead {
+            background-color: #111111;
         }
 
 
@@ -98,7 +109,7 @@
     <br />
     <div class="row">
         <div class="col-3">
-            <h3> <strong>Pedidos</strong></h3>
+            <h3><u> <strong>Pedidos</strong></u></h3>
         </div>
         <div class="col-9">
             <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
@@ -125,7 +136,7 @@
             </div>
         </div>
     </div>
-    <hr />
+    <br>
     <div class="container-fluid">
         <div class="row">
             <div class="col-3-sm">
@@ -141,10 +152,10 @@
         </div>
     </div>
 
-    <hr />
+
     <div class="my-table container-fluid" style="zoom:72%;">
         <table id="pedido" class="width table table-hover table-striped table-dark table-bordered table-sm" width=100>
-            <thead>
+            <thead class="borderless">
                 <tr align=center>
 
                     <th scope="col">Contrato</th>

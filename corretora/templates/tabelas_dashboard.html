@@ -31,7 +31,8 @@
             <h5 align=left><strong><i>Contratos</i></strong></h5>
             <div class="d-flex align-items-center marcelopata flex-fill">
 
-                <table class="table table-striped table-borderless table-dark  nowrap table-sm"
+                <table
+                    class="table tabledash table-round-corner table-dark table-striped table-borderless  nowrap table-sm cabecalho"
                     style="color: antiquewhite;">
                     <caption><strong>Contratos Ativos</strong></caption>
                     <thead>
@@ -45,7 +46,7 @@
                     <tbody align="center">
                         {% for cliente in clientes %}
                         <tr align=" center">
-                            {% if cliente.saldopedido > 0 %}
+                            {% if cliente.locaiscarrega > 0 %}
                             {% if 'uston' in cliente.nome|lower %}
                             <td scope="col" class="text-primary"><strong>{{ cliente.nome_fantasia}}</strong></td>
                             {% elif 'cda' in cliente.nome|lower %}
@@ -57,19 +58,28 @@
                             {% endif %}
                             {% else %}
                             {% endif %}
-                            {% if cliente.saldopedido > 0 %}
+                            {% if cliente.locaiscarrega > 0 %}
+                            {% if cliente.saldopedido < 0 %}
+                            <td class="text text-danger"><b>{{ cliente.saldopedido }} Kg</b></td>
+                            {% elif cliente.saldopedido > 0 %}
                             <td>{{ cliente.saldopedido }} Kg</td>
+                            {% elif cliente.saldopedido == 0 %}
+                            <td>-</td>
                             {% else %}
                             {% endif %}
-                            {% if cliente.saldoprevisto > 0 %}
+                            {% else %}
+                            {% endif %}
+                            {% if cliente.locaiscarrega > 0 %}
                             {% if cliente.saldoprevisto == cliente.saldopedido %}
                             <td>-</td>
+                            {% elif cliente.saldoprevisto < cliente.saldopedido and cliente.saldoprevisto < 0 %}
+                            <td class="text text-danger"><b>{{ cliente.saldoprevisto }} Kg</b></td>
                             {% else %}
                             <td>{{ cliente.saldoprevisto }} Kg</td>
                             {% endif %}
                             {% else %}
                             {% endif %}
-                            {% if cliente.saldopedido > 0 %}
+                            {% if cliente.locaiscarrega > 0 %}
                             <td>{{ cliente.locaiscarrega }} Loca{{ cliente.locaiscarrega|pluralize:"l,is" }} </td>
                             {% else %}
                             {% endif %}
@@ -90,8 +100,9 @@
             <h5 align=left><strong><i>Comissões</i></strong></h5>
             <div class="d-flex align-items-center marcelopata flex-fill">
 
-                <table class="table table-striped table-borderless table-dark nowrap table-sm"
-                    style="color: antiquewhite;">
+                <table
+                    class="table tabledash table-round-corner table-striped table-borderless table-dark nowrap table-sm cabecalho"
+                    style="color: antiquewhite; ">
                     <caption><strong>Total Aberto - {% for cliente in clientes %}{% if 'ust' in cliente.nome|lower %}
                             R$ {{ cliente.comissaoabertocascatotal|slice:"1"|floatformat:'2'}}
                             {% else %}
@@ -136,7 +147,7 @@
                             <td align="center">- </td>
                             {% else %}
                             <td>R$ {{ cliente.comissaomescascaanterior|floatformat:"2" }}</td>
-                {% endif %}
+                            {% endif %}
 
                             {% if cliente.comissaosemanacasca == 0 %}
                             <td align="center">- </td>
@@ -172,8 +183,8 @@
             </div>
         </div>
     </div>
+    {% endif %}
     <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-start m-1 p-2">
-        {% endif %}
 
         <div class="col-lg-11 col-md-12 col-sm-12 col-12  tabini sombra  justify-content-between p-2 m-1 marcelopata2"
             style="zoom:90%">
@@ -181,7 +192,7 @@
             <h5 align=left><strong><i>Carregamentos</i></strong></h5>
             <div class="d-flex align-items-center marcelopata flex-fill">
 
-                <table class="table table-striped table-borderless table-dark nowrap table-sm"
+                <table class="table tabledash table-striped table-borderless table-dark nowrap table-sm cabecalho"
                     style="color: antiquewhite;">
                     <caption><strong>Semana Atual - {% for cliente in clientes %}{% if 'ust' in cliente.nome|lower %}
                             {{ cliente.carregadosemanatotal|intcomma }} Kg &ensp;&ensp; / &ensp;&ensp;Mês Atual -
@@ -271,9 +282,6 @@
                 </table>
             </div>
         </div>
-
-
-
     </div>
 
 

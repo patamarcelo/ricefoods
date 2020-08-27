@@ -63,6 +63,10 @@
             margin-top: 10px;
         }
 
+        thead {
+            background-color: #111111;
+        }
+
     </style>
     <style>
         .table-hover>tbody>tr:hover>td,
@@ -72,8 +76,14 @@
         }
 
         body {
-            background-color: #3c3b3d;
+            background-color: #363639;
             color: blanchedalmond;
+        }
+
+        .tabini {
+            background-color: #1c1c1c;
+            color: blanchedalmond;
+
         }
 
         .sombra {
@@ -101,7 +111,7 @@
         <br />
         <div class="row">
             <div class="col-3">
-                <h3> <strong>Cargas</strong></h3>
+                <h3><u> <strong>Cargas</strong></u></h3>
             </div>
             <div class="col-9">
                 <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
@@ -128,7 +138,7 @@
 
             </div>
         </div>
-        <hr />
+        <br>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-3-sm">
@@ -153,9 +163,10 @@
 
 
         <div class="my-table container-fluid" style="zoom: 79%;">
-            <table id="cargas2" class="width table table-hover table-striped table-dark table-bordered table-sm"
+            <table id="cargas2"
+                class="width table-round-corner  table table-hover table-striped table-dark table-bordered table-sm"
                 width=100>
-                <thead>
+                <thead class="borderless">
                     <tr>
                         <th scope="col"><a class="text-info fa fa-sort-desc"></a></th>
                         <th scope="col">Pedido</th>
