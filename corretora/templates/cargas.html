@@ -215,7 +215,7 @@
                         {% else %}
                         <td style="background-color: #660066;">{{ carga.transp|title }}</td>
                         {% endif %}
-                        {% if 'das' in carga.buonny|lower %}
+                        {% if 'dast' in carga.buonny|lower %}
                         <td class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>
                         {% elif 'sul' in carga.buonny|lower %}
                         <td class="text-warning"><strong>{{ carga.buonny|title }}</strong></td>
@@ -333,7 +333,7 @@
                         {% endif %}
 
                         {% if  'PALMARES' in carga.pedido.fornecedor.nome|upper %}
-                        <td style="background-color: #9400d3;">{{ carga.pedido.fornecedor.nome|title|truncatechars:14 }}
+                        <td style="background-color: #9400d3;">Palmares
                         </td>
                         {% else %}
                         <td>{{ carga.pedido.fornecedor.nome|title|truncatechars:26 }}</td>

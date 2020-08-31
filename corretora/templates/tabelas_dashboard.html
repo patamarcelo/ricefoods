@@ -118,9 +118,6 @@
                             <th scope="col" class="text-success text-center"><strong>Semana</strong></th>
                             <th scope="col" class="text-primary text-center"><strong>Mês</strong></th>
                             <th scope="col" class="text-warning text-center"><strong>Aberto</strong></th>
-
-
-
                         </tr>
                     </thead>
                     <tbody align="center">
@@ -167,17 +164,9 @@
                             <td class="text text-warning"><strong><i>R$
                                         {{ cliente.comissaoabertocasca|floatformat:"2" }}</strong></i></td>
                             {% endif %}
-
-
-
-
-
-
                             {% endif %}
-                            {% endfor %}
-
-
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

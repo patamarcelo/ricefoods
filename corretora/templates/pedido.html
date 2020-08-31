@@ -117,7 +117,7 @@
         </div>
 
         <div class="container" align=center>
-            <div class="col-lg-8 col-md-8 col-sm-12 col-12">
+            <div class="col-lg-10 col-md-10 col-sm-12 col-12">
                 {% if messages %}
                 <div class="container">
                     <div class="row">
@@ -154,7 +154,9 @@
 
 
     <div class="my-table container-fluid" style="zoom:72%;">
-        <table id="pedido" class="width table table-hover table-striped table-dark table-bordered table-sm" width=100>
+        <table id="pedido"
+            class="width table-round-corner table table-hover table-striped table-dark table-bordered table-sm"
+            width=100>
             <thead class="borderless">
                 <tr align=center>
 
@@ -209,7 +211,7 @@
                     <td>{{ pedido.data|date:"SHORT_DATE_FORMAT" }}</td>
 
                     {% if  'PALMARES' in pedido.fornecedor.nome|upper %}
-                    <td style="background-color: #9400d3;">{{ pedido.fornecedor.nome|title }}
+                    <td style="background-color: #9400d3;">Palmares
                     </td>
                     {% elif pedido.obs %}
                     <td><abbr class="text-warning"
