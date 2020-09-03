@@ -19,13 +19,17 @@
         height: inherit;
     }
 
+    .marginbox1 {
+        margin-bottom: 20px !important;
+    }
+
 </style>
 
 <div class="container-fluid">
     <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-center m-1 p-2 topo">
 
 
-        <div class="col-lg-5  col-md-8 col-sm-12 tabini sombra  justify-content-between p-2 m-1 marcelopata2"
+        <div class="col-lg-5  col-md-8 col-sm-12 tabini sombra  marginbox1 justify-content-between p-2 m-1 marcelopata2"
             style="zoom:90%">
 
             <h5 align=left><strong><i>Contratos</i></strong></h5>
@@ -40,7 +44,7 @@
                             <th scope="col" class="text text-center"><strong>Clientes</strong></th>
                             <th scope="col" class="text-success text-center"><strong>Saldo Real</strong></th>
                             <th scope="col" class="text-primary text-center"><strong>Saldo Prev.</strong></th>
-                            <th scope="col" class="text-warning text-center"><strong>Locais</strong></th>
+                            <th scope="col" class="text-warning text-center"><strong>Pedido</strong></th>
                         </tr>
                     </thead>
                     <tbody align="center">
@@ -80,7 +84,7 @@
                             {% else %}
                             {% endif %}
                             {% if cliente.locaiscarrega > 0 %}
-                            <td>{{ cliente.locaiscarrega }} Loca{{ cliente.locaiscarrega|pluralize:"l,is" }} </td>
+                            <td>{{ cliente.locaiscarrega }} Pedido{{ cliente.locaiscarrega|pluralize }} </td>
                             {% else %}
                             {% endif %}
                         </tr>

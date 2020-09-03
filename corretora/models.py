@@ -205,6 +205,29 @@ class Cliente(Base):
             else:
                 self.comissaomescascaanteanterior = comimesanteanteriorcasca
                 return self.comissaomescascaanteanterior
+    
+    def comissaomescascatresanterior(self):
+        filt = self.nome_fantasia
+        today = datetime.date.today()
+        lastmm3 = today.month - 3 if today.month > 3 else 12
+        lastmmy3 = today.year if today.month > lastmm3 else today.year -1
+        comimescascatresanteriorcda = Carga.objects.filter(data__year=lastmmy3, data__month=lastmm3).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+        comimestresanteriorcasca = Carga.objects.filter(data__year=lastmmy3, data__month=lastmm3).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+            
+        if 'CDA' in filt:
+            if comimescascatresanteriorcda == None:
+                self.comissaomescascatresanterior = 0
+                return self.comissaomescascatresanterior            
+            else:
+                self.comissaomescascatresanterior = comimescascatresanteriorcda
+                return self.comissaomescascatresanterior
+        else:
+            if comimestresanteriorcasca == None:
+                self.comissaomescascatresanterior = 0
+                return self.comissaomescascatresanterior
+            else:
+                self.comissaomescascatresanterior = comimestresanteriorcasca
+                return self.comissaomescascatresanterior
             
     
     
@@ -294,6 +317,19 @@ class Cliente(Base):
             return self.carregadomesanteanterior
         else:
             return self.carregadomesanteanterior
+
+    def carregadomestresanterior(self):
+        filt = self.nome_fantasia
+        today = datetime.date.today()
+        lastmm3 = today.month - 3 if today.month > 3 else 12
+        lastmmy3 = today.year if today.month > lastmm3 else today.year -1
+        carregadomestresanterior = Carga.objects.filter(data__year=lastmmy3, data__month=lastmm3).filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+        self.carregadomestresanterior = carregadomestresanterior
+        if self.carregadomestresanterior == None:
+            self.carregadomestresanterior = 0
+            return self.carregadomestresanterior
+        else:
+            return self.carregadomestresanterior
     
     def carregadosemana(self):
         filt = self.nome_fantasia
@@ -383,7 +419,7 @@ class Cliente(Base):
             self.saldopedido = 0
             return self.saldopedido
         elif self.carregado == None or self.carregado == 0:
-            self.saldoprevisto = self.totalped
+            self.saldopedido = self.totalped
             return self.saldopedido
         else:
             saldoreal = self.totalped - self.carregado
@@ -402,10 +438,10 @@ class Cliente(Base):
         self.previsto = previsto
 
         if self.totalped == None:
-            self.totalped = 0
-            return self.totalped
+            self.saldoprevisto = 0
+            return self.saldoprevisto
         elif self.carregado == None or self.carregado == 0:            
-            self.saldoprevisto = totalped
+            self.saldoprevisto = self.totalped
             return self.saldoprevisto
         elif self.previsto == None or self.previsto == 0:
             saldoreal = self.totalped - self.carregado

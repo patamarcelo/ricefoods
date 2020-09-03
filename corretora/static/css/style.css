@@ -18,7 +18,7 @@
         border-radius: 10px; /* 5px rounded corners */
         margin-left: 20px;
         margin-right: 20px;
-        margin-bottom: 20px;        
+        margin-bottom: 10px !important;        
            
     }
 

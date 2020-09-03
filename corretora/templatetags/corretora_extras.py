@@ -40,3 +40,15 @@ def nome_mes_anteanterior(datemont):
         mesanterior = numeromes - 2
         return calendar.month_name[mesanterior]
 
+
+@register.filter
+def nome_mes_tresanterior(datemont):
+
+    numeromes = datetime.now().month
+    if numeromes == 1:
+        mestresanterior == 10
+        return calendar.month_name[mestresanterior]
+    else:
+        mestresanterior = numeromes - 3
+        return calendar.month_name[mestresanterior]
+

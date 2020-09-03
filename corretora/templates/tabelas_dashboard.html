@@ -40,7 +40,7 @@
                             <th scope="col" class="text text-center"><strong>Clientes</strong></th>
                             <th scope="col" class="text-success text-center"><strong>Saldo Real</strong></th>
                             <th scope="col" class="text-primary text-center"><strong>Saldo Prev.</strong></th>
-                            <th scope="col" class="text-warning text-center"><strong>Locais</strong></th>
+                            <th scope="col" class="text-warning text-center"><strong>Pedido</strong></th>
                         </tr>
                     </thead>
                     <tbody align="center">
@@ -56,9 +56,10 @@
                             {% else %}
                             <td scope="col"><strong>{{ cliente.nome_fantasia}}</strong></td>
                             {% endif %}
-                            {% else %}
-                            {% endif %}
-                            {% if cliente.locaiscarrega > 0 %}
+
+
+
+
                             {% if cliente.saldopedido < 0 %}
                             <td class="text text-danger"><b>{{ cliente.saldopedido }} Kg</b></td>
                             {% elif cliente.saldopedido > 0 %}
@@ -67,20 +68,22 @@
                             <td>-</td>
                             {% else %}
                             {% endif %}
-                            {% else %}
-                            {% endif %}
-                            {% if cliente.locaiscarrega > 0 %}
-                            {% if cliente.saldoprevisto == cliente.saldopedido %}
-                            <td>-</td>
+
+
+
+
+                            {% if cliente.saldoprevisto == cliente.saldopedido  %}
+                            <td align="center">-</td>
                             {% elif cliente.saldoprevisto < cliente.saldopedido and cliente.saldoprevisto < 0 %}
                             <td class="text text-danger"><b>{{ cliente.saldoprevisto }} Kg</b></td>
                             {% else %}
                             <td>{{ cliente.saldoprevisto }} Kg</td>
                             {% endif %}
-                            {% else %}
-                            {% endif %}
-                            {% if cliente.locaiscarrega > 0 %}
-                            <td>{{ cliente.locaiscarrega }} Loca{{ cliente.locaiscarrega|pluralize:"l,is" }} </td>
+
+
+
+
+                            <td>{{ cliente.locaiscarrega }} Pedido{{ cliente.locaiscarrega|pluralize }} </td>
                             {% else %}
                             {% endif %}
                         </tr>
@@ -94,7 +97,7 @@
 
     {% if user.is_superuser %}
     <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-start m-1 p-2">
-        <div class="col-lg-7 col-md-10 col-sm-12 col-12  tabini sombra  justify-content-between p-2 m-1 marcelopata2"
+        <div class="col-lg-8 col-md-10 col-sm-12 col-12  tabini sombra  justify-content-between p-2 m-1 marcelopata2"
             style="zoom:90%">
 
             <h5 align=left><strong><i>Comissões</i></strong></h5>
@@ -110,6 +113,9 @@
                     <thead>
                         <tr align="center">
                             <th scope="col" class="text text-center"><strong>Clientes</strong></th>
+                            <th scope="col" class="text-secondary text-center">
+                                <strong>{{0|nome_mes_tresanterior}}</strong>
+                            </th>
                             <th scope="col" class="text-secondary text-center">
                                 <strong>{{0|nome_mes_anteanterior}}</strong>
                             </th>
@@ -132,6 +138,12 @@
                             <td scope="col" style="color: orange;"><strong>{{ cliente.nome_fantasia}}</strong></td>
                             {% else %}
                             <td scope="col"><strong>{{ cliente.nome_fantasia}}</strong></td>
+                            {% endif %}
+
+                            {% if cliente.comissaomescascatresanterior == 0 %}
+                            <td align="center">- </td>
+                            {% else %}
+                            <td>R$ {{ cliente.comissaomescascatresanterior|floatformat:"2" }}</td>
                             {% endif %}
 
                             {% if cliente.comissaomescascaanteanterior == 0 %}
@@ -175,7 +187,7 @@
     {% endif %}
     <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-start m-1 p-2">
 
-        <div class="col-lg-11 col-md-12 col-sm-12 col-12  tabini sombra  justify-content-between p-2 m-1 marcelopata2"
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12  tabini sombra  justify-content-between p-2 m-1 marcelopata2"
             style="zoom:90%">
 
             <h5 align=left><strong><i>Carregamentos</i></strong></h5>
@@ -196,6 +208,9 @@
                             <th scope="col" class="text-warning text-center"><strong>Agendado</strong></th>
                             <th scope="col" class="text-info text-center"><strong>Total</strong></th>
                             <th scope="col" class="text-warning text-center"><strong>Semana Seguinte</strong></th>
+                            <th scope="col" class="text-secondary text-center">
+                                <strong>{{0|nome_mes_tresanterior}}</strong>
+                            </th>
                             <th scope="col" class="text-secondary text-center">
                                 <strong>{{0|nome_mes_anteanterior}}</strong>
                             </th>
@@ -239,10 +254,17 @@
                             {% else %}
                             <td class="text-info"><strong>{{ cliente.totalsemana }} Kg</strong></td>
                             {% endif %}
+
                             {% if cliente.agendadosemanaseguinte == 0 %}
                             <td>-</td>
                             {% else %}
                             <td>{{ cliente.agendadosemanaseguinte }} Kg</td>
+                            {% endif %}
+
+                            {% if cliente.carregadomestresanterior == 0 %}
+                            <td>-</td>
+                            {% else %}
+                            <td>{{ cliente.carregadomestresanterior }} Kg</td>
                             {% endif %}
 
                             {% if cliente.carregadomesanteanterior == 0 %}
