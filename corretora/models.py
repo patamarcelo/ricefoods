@@ -441,8 +441,12 @@ class Cliente(Base):
             self.saldoprevisto = 0
             return self.saldoprevisto
         elif self.carregado == None or self.carregado == 0:            
-            self.saldoprevisto = self.totalped
-            return self.saldoprevisto
+            if self.previsto != None and self.previsto != 0:
+                self.saldoprevisto = self.totalped - self.previsto
+                return self.saldoprevisto
+            else:
+                self.saldoprevisto = self.totalped
+                return self.saldoprevisto
         elif self.previsto == None or self.previsto == 0:
             saldoreal = self.totalped - self.carregado
             self.saldoprevisto = saldoreal
