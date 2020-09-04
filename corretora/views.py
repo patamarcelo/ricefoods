@@ -286,6 +286,20 @@ class CargasView(LoginRequiredMixin, ListView):
         context['clientes'] = Cliente.objects.order_by('-nome').all
         return context
 
+class CargasViewTerceiros(LoginRequiredMixin, ListView):
+    login_url = 'login'
+    redirect_field_name = 'index2'
+    models = Carga
+    ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
+    template_name = 'cargasterceiros.html'
+    queryset = Carga.objects.all()
+    context_object_name = 'cargas' 
+
+    def get_context_data(self, **kwargs):
+        context = super(CargasViewTerceiros, self).get_context_data(**kwargs)
+        context['clientes'] = Cliente.objects.order_by('-nome').all
+        return context
+
 
 class CreateCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     login_url = 'login'
