@@ -130,14 +130,14 @@
                 </div>
             </div>
         </div>
-
+        <br>
 
 
 
         <div class="my-table container-fluid">
-            <table id="fornecedor"
+            <table id="fornecedores"
                 class="width table-round-corner  table table-hover table-striped table-dark table-bordered table-sm"
-                width=100>
+                width="100%">
                 <thead class="borderless">
                     <tr>
                         <th scope="col">Nome</th>
@@ -194,11 +194,6 @@
                     {% endfor %}
                 </tbody>
             </table>
-            {% include 'paginacao.html' %}
-
-            <p><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
-                    {{ page_obj.paginator.count }} Itens <span
-                        style="float: right;">{% now "SHORT_DATETIME_FORMAT" %}</span></strong></p>
         </div>
 
 
@@ -219,7 +214,7 @@
 <script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
 <script>
     $(document).ready(function () {
-        $('#dtBasicExample').DataTable();
+        $('#fornecedores').DataTable();
         $('.dataTables_length').addClass('bs-select');
     });
     window.setTimeout(function () {
