@@ -177,7 +177,6 @@ class FornecedoresView(LoginRequiredMixin, ListView):
     login_url = 'login'
     redirect_field_name = 'index2'
     models = Fornecedor
-    paginate_by = 23
     ordering = ['nome']
     template_name = 'fornecedores.html'
     queryset = Fornecedor.objects.all()
