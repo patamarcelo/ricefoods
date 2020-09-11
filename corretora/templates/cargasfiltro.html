@@ -1,0 +1,679 @@
+{% load bootstrap4 %}
+{% load bootstrap %}
+{% load humanize %}
+{% load static %}
+{% now "Y-m-d" as todays_date %}
+{% load crispy_forms_tags %}
+{% load  corretora_extras %}
+{% load widget_tweaks %}
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.6 shrink-to-fit=no">
+    <title>Corretora | Cargas Filtro</title>
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"> -->
+    {% bootstrap_css %}
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- MDBootstrap Datatables  -->
+    <link href="{% static 'css/addons/datatables.min.css' %}" rel="stylesheet">
+    <style>
+        .btn-xs {
+            padding: 5px 10px;
+            font-size: 10px;
+            line-height: 1.0;
+
+        }
+
+        .my-table {
+            overflow-x: auto;
+            zoom: 80%;
+        }
+
+        table.width {
+            width: 100%;
+            margin: 20px auto;
+            table-layout: auto;
+            /* Optional */
+            border-collapse: collapse;
+            white-space: nowrap;
+            margin-top: 5px;
+        }
+
+        td {
+            border: 1px solid #000;
+        }
+
+
+        .tab {
+            position: absolute;
+            right: 250px;
+            margin-top: 10px;
+        }
+
+        thead {
+            background-color: #111111;
+        }
+
+    </style>
+    <style>
+        .table-hover>tbody>tr:hover>td,
+        .table-hover>tbody>tr:hover>th {
+            background-color: #111111;
+            color: whitesmoke;
+        }
+
+        td.selected,
+        td.selected:hover {
+            background-color: #111111;
+            color: whitesmoke;
+        }
+
+        body {
+            background-color: #363639;
+            color: blanchedalmond;
+        }
+
+        .tabini {
+            background-color: #1c1c1c;
+            color: blanchedalmond;
+            margin-bottom: 40px;
+
+        }
+
+        .sombra {
+            box-shadow: 5px 5px 5px 5px black;
+        }
+
+        table {
+            width: 50%
+        }
+
+
+
+        .caixatexto label:not(.skip) {
+
+            display: inline-block;
+            margin-top: 2px;
+            margin-bottom: 2px;
+            font-size: .700rem;
+
+        }
+
+        .check2 input:not(.skip) {
+            margin: 0px;
+            padding: 0px;
+            width: 20px
+        }
+
+        .checkbox-inline {
+            font-size: .890rem;
+
+        }
+
+        input[type=text],
+        .numberinput {
+            border-radius: 4px;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            box-shadow: 1px 1px 2px #333333;
+            -moz-box-shadow: 1px 1px 2px #333333;
+            -webkit-box-shadow: 1px 1px 2px #333333;
+            background: #cccccc;
+            border: 1px solid #000000;
+            width: 150px;
+            font-size: .700rem;
+            height: 23px;
+            width: 100px;
+            margin-bottom: 0px;
+            padding: 4px;
+
+        }
+
+        .select,
+        .select-all {
+            height: 23px;
+            width: 100px;
+            font-size: .800rem;
+
+        }
+
+        input[type=text]:hover,
+        textarea:hover {
+            background: #ffffff;
+            border: 2px solid #0275d8;
+        }
+
+        .form-row {
+            margin-bottom: 0px;
+            margin-top: 0px;
+
+        }
+
+        .form-group {
+            margin-top: 3px;
+            margin: 0px;
+            padding: 1px
+        }
+
+
+
+        .btnfiltrar {
+
+            margin-top: 0px;
+            margin-bottom: 10px;
+
+        }
+
+        label {
+            margin-bottom: 0px;
+        }
+
+        .checkcheck {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+
+
+        .custom-select-sm {
+            height: 26px;
+
+        }
+
+        .dataTables_info,
+        .bs-select {
+            text-align: left;
+            color: whitesmoke;
+            font-size: .990rem;
+            text-align: bottom;
+        }
+
+    </style>
+    <!--Favicon-->
+    <link rel="icon" href="{% static 'images/favicon.png' %}">
+
+</head>
+
+<body>
+    <div class="container-fluid" align="center">
+        <br />
+        <div class="row">
+            <div class="col-3">
+                <h3><u> <strong>Cargas | Filtro</strong></u></h3>
+            </div>
+            <div class="col-9">
+                <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
+                <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'corretora' %}">Inicio</a>
+
+            </div>
+            <div class="container" align="center">
+                <div class="col-7">
+                    {% if messages %}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-10 col-sm-qw col-sm-offset-2">
+                                <div class="alert alert-success alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert"><span
+                                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                    {% for m in messages %}
+                                    {{ m }} <br />
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+        <br>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-3-sm">
+                    <a class="btn btn-primary btn-sm" href="{% url 'add_cargas' %}">Adicionar Cargas</a>
+                </div>
+                <div class="col-3-sm">
+                    <a class="btn btn-outline-success btn-sm" href="{% url 'add_age_cargas' %}">Agendar</a>
+                </div>
+
+                <a class="btn btn-outline-warning btn-sm" href="{% url 'corretora' %}">Voltar</a>
+                <div class="col-3-sm">
+                    <button type="button" class="btn btn-outline-info btn-sm"
+                        onclick="Mudarestado('filtro')">Filtros</button>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+
+
+
+    <hr />
+
+    <div class="container tabini sombra" id="filtro">
+
+        <form method="get" id="myform">
+            <div class="form-group">
+                <div class="form-row caixatexto">
+                    <div class="col-2 form-group form-control-sm" data-toggle="tooltip" title="Motorista"
+                        data-placement="bottom" placeholder="Motorista">
+                        {{ filter.form.motorista__icontains|as_crispy_field }}
+                    </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Placa">
+
+                        {{ filter.form.placa__icontains|as_crispy_field }}
+                    </div>
+
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Data">
+                        {{ filter.form.notafiscal__icontains|as_crispy_field }}
+                    </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Data">
+                        {{ filter.form.data|as_crispy_field }}
+                    </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Data">
+                        {{ filter.form.data__gte|as_crispy_field }}
+
+                    </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Data">
+                        {{ filter.form.data__lte|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="form-row caixatexto">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Contrato">
+                        {{ filter.form.pedido__contrato__icontains|as_crispy_field }}
+                    </div>
+
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Data">
+                        {{ filter.form.pedido__fornecedor__nome__icontains|as_crispy_field }}
+                    </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Data">
+                        {{ filter.form.pedido__cliente__nome_fantasia__icontains|as_crispy_field }}
+                    </div>
+
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Contrato">
+                        {{ filter.form.peso__icontains|as_crispy_field }}
+                    </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Contrato">
+                        {{ filter.form.peso__gte|as_crispy_field }}
+                    </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Contrato">
+                        {{ filter.form.peso__lte|as_crispy_field }}
+                    </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Data">
+                        {{ filter.form.ordering|as_crispy_field }}
+                    </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Contrato">
+                        {{ filter.form.situacao__icontains|as_crispy_field }}
+                    </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Contrato">
+                        {{ filter.form.pedido__fornecedor__cidade__cidade__icontains|as_crispy_field }}
+                    </div>
+
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Data">
+                        {{ filter.form.valornf__icontains|as_crispy_field }}
+                    </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Data">
+                        {{ filter.form.valornf__gte|as_crispy_field }}
+
+                    </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                        placeholder="Data">
+                        {{ filter.form.valornf__lte|as_crispy_field }}
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-1">
+                        <div class="d-flex justify-content-start checkcheck check2">
+                            <input type="checkbox" id="select-all" class="select-all"><a
+                                class="text-primary fa fa-check"></a>
+                            <label class="checkbox-inline"></label>
+                        </div>
+                    </div>
+                    <div class="col-10">
+
+                        <div class="d-flex justify-content-between checkcheck">
+                            {% for choice in filter.form.transp %}
+                            <label class="checkbox-inline">
+                                {{ choice.tag }} {{ choice.choice_label }} &nbsp;&nbsp;&nbsp;
+                            </label>{% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center align-items-start">
+                <button type="submit" class="btn btn-primary btn-xs btnfiltrar">Filtar</button>
+            </div>
+
+        </form>
+    </div>
+
+
+    <div class="my-table container-fluid">
+        <table id="cargas4"
+            class="width table-round-corner  table table-hover table-striped table-dark table-bordered table-sm"
+            width="100%">
+            <thead class="borderless">
+                <tr>
+
+                    <th scope="col"><a class="text-info fa fa-sort-desc"></a></th>
+                    <th scope="col">Pedido</th>
+                    <th scope="col">Transp.</th>
+                    <th scope="col">Buonny</th>
+                    <th scope="col">Situação</th>
+                    <th scope="col">Ordem</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Placa</th>
+                    <th scope="col">Motorista</th>
+
+
+                    <th scope="col">Peso</th>
+                    <th scope="col">NF</th>
+                    <th scope="col">Valor NF</th>
+                    <th scope="col">Fornecedor</th>
+                    <th scope="col">Origem</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col" class="text text-center">Class.</th>
+                    {% if user.is_superuser%}
+                    <th scope="col" class="text text-center">Comiss.</th>
+                    {% endif %}
+                    <th scope="col" class="text text-center">Ação</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for carga in filter.qs %}
+
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    {% if carga.pedido.situacao == "a" %}
+                    <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
+                            class="text-success">{{ carga.pedido }}</a></td>
+
+                    {% elif 'b' in carga.pedido.situacao %}
+                    <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
+                            class="text-danger"><strong>{{ carga.pedido }}</strong></a></td>
+                    {% elif carga.pedido.situacao == 'c' %}
+                    <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
+                            class="text-info">{{ carga.pedido }}</a></td>
+                    {% else %}
+                    <td>{{ carga.pedido }}</td>
+                    {% endif %}
+
+
+                    <td>{{ carga.transp|title }}</td>
+
+                    {% if 'dast' in carga.buonny|lower %}
+                    <td class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>
+                    {% elif 'sul' in carga.buonny|lower %}
+                    <td class="text-warning"><strong>{{ carga.buonny|title }}</strong></td>
+                    {% elif 'nviado' in carga.buonny|lower or 'nviada' in carga.buonny|lower %}
+                    <td class="text-info"><strong>{{ carga.buonny|title }}</strong></td>
+                    {% else %}
+                    <td class="text-success"><strong>{{ carga.buonny|title }}</strong></td>
+                    {% endif %}
+                    {% if carga.situacao == 'Agendado' %}
+                    <td class="text-warning"><strong>{{ carga.situacao }}</strong></td>
+                    {% elif carga.situacao == 'Carregado' %}
+                    <td class="text-success"><strong>{{ carga.situacao }}</strong></td>
+                    {% else %}
+                    <td>{{ carga.situacao }}</td>
+                    {% endif %}
+
+
+                    {% if carga.ordem %}
+                    <td class="text-success"><em>Enviada</em></td>
+                    {% else %}
+                    <td class="text-danger"><em>Não Env.</em></td>
+                    {% endif %}
+
+                    {% if todays_date == carga.data|date:"Y-m-d" %}
+                    <td class="text-primary"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
+                    {% elif todays_date > carga.data|date:"Y-m-d" and carga.situacao == 'Agendado' and carga.ordem == False %}
+                    <td class="text-danger"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
+                    {% else %}
+                    <td>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</td>
+                    {% endif %}
+
+                    {% if carga.situacao == 'Agendado' and carga.ordem == False %}
+                    {% if carga.situacao == 'Agendado' and carga.chegada == True %}
+
+                    <td><a class="text text-success" style='font-style:italic'
+                            href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
+                            </strong></a></td>
+                    {% else %}
+                    <td><a class="text text-warning" style='font-style:italic'
+                            href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</strong></a>
+                    </td>
+                    {% endif %}
+                    {% else %}
+                    <td>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</td>
+                    {% endif %}
+
+
+
+
+
+
+                    {% if carga.obs and carga.tac %}
+                    <td style="background-color: #7a1b0c; opacity: 0.8;"><abbr class="text-warning"
+                            title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
+                    </td>
+                    {% elif carga.obs %}
+                    <td><abbr class="text-warning" title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
+                    </td>
+                    {% elif carga.tac %}
+                    <td style="background-color: #7a1b0c; opacity: 0.8"><em>{{ carga.motorista|title }}</em></abbr>
+                    </td>
+                    {% else %}
+                    <td>{{ carga.motorista|title }}</td>
+                    {% endif %}
+
+
+                    {% if carga.peso == 0 %}
+                    <td class="text-warning"><strong>{{ carga.veiculo|intcomma }} Kg </strong></td>
+                    {% elif carga.peso < 18000 and carga.peso > 0  %}
+                    <td style="color:darkorange"><i>{{ carga.peso|intcomma }} Kg </i></td>
+                    {% else %}
+                    <td>{{ carga.peso|intcomma }} Kg </td>
+                    {% endif %}
+
+                    {% if carga.notafiscal == None %}
+                    <td class="text-danger"><strong>Sem NF</strong></td>
+                    {% elif carga.notafiscal|length <= 4 %}
+                    <td>
+                        {{ carga.notafiscal }}
+                    </td>
+                    {% elif carga.notafiscal|length <= 6 %}
+                    <td>
+                        {{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                    </td>
+                    {% elif carga.notafiscal|length > 6 and carga.notafiscal|length < 8 %}
+                    <td>
+                        {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                    </td>
+
+                    {% elif carga.notafiscal|length == 8 %}
+                    <td>
+                        0{{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                    </td>
+                    {% elif carga.notafiscal|length > 8 %}
+                    <td>
+                        {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                    </td>
+                    {% else %}
+                    <td>{{carga.notasfiscal}}</td>
+                    {% endif %}
+
+                    {% if carga.valornf == None %}
+                    <td align=left>R$ &nbsp;&nbsp;&nbsp;&nbsp;- </td>
+                    {% else %}
+
+                    <td>R$
+                        {{ carga.valornf }}
+                    </td>
+                    {% endif %}
+
+                    {% if  'PALMARES' in carga.pedido.fornecedor.nome|upper %}
+                    <td style="background-color: #9400d3;">Palmares
+                    </td>
+                    {% else %}
+                    <td>{{ carga.pedido.fornecedor.nome|title|truncatechars:32 }}</td>
+                    {% endif %}
+                    <td>{{ carga.pedido.fornecedor.cidade|truncatechars:32 }}</td>
+                    {% if 'CDA' in carga.pedido.cliente.nome_fantasia|upper %}
+                    <td class="text-danger"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
+                    {% elif 'USTON' in carga.pedido.cliente.nome_fantasia|upper %}
+                    <td class="text-primary"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
+                    {% elif 'APIT' in carga.pedido.cliente.nome_fantasia|upper %}
+                    <td style="color: orange;"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
+                    {% else %}
+                    <td>{{ carga.pedido.cliente|upper }}</td>
+                    {% endif %}
+                    {% if carga.pedido.produto == "Arroz em Casca" %}
+                    {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}
+                    <td align="center"><a class="text-success fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
+                        {% elif carga.renda or carga.inteiro or carga.impureza or carga.umidade %}
+                    <td align="center"><a class="text-warning fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
+                    </td>
+                    {% else %}
+                    <td align="center"><a class="text-danger fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
+                        {% endif %}
+                        {% else %}
+                    <td align="center"><b> - </b></td>
+                    {% endif %}
+
+
+
+
+                    {% if user.is_superuser%}
+                    {% if carga.comissaocasca > 1 %}
+
+                    {% if carga.pgcomissao == True %}
+
+                    <td align=center><a class="text text-success" style='font-style:italic'
+                            href="{% url 'upd_comiss' carga.pk %}"><b>R$
+                                {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
+                    {% elif carga.pgcomissao == False and carga.vpcomissaoc > 0 %}
+                    <td align=center><a class="text text-danger" style='font-style:italic'
+                            href="{% url 'upd_comiss' carga.pk %}"><b>R$
+                                {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
+                    {% else %}
+                    <td align=center><a class="text text-warning" style='font-style:italic'
+                            href="{% url 'upd_comiss' carga.pk %}"><b>R$
+                                {{ carga.comissaocasca|floatformat:2 }}</b></a></td>
+                    {% endif %}
+                    {% else %}
+                    <td align=center>- </td>
+
+                    {% endif %}
+                    {% else %}
+                    {% endif %}
+                    {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %}
+                    <td align=center>
+                        <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
+                        <a class="btn btn-danger btn-xs" href="{% url 'del_cargas' carga.pk %}">Deletar</a>
+                    </td>
+                    {% elif carga.situacao == 'Carregado'  and carga.pedido.situacao == 'a' %}
+                    <td align=center>
+                        <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
+                    </td>
+                    {% else %}
+                    <td align=center>-</td>
+                    {% endif %}
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+</body>
+<br>
+<script>
+
+
+</script>
+<!-- jQuery -->
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+<!-- Your custom scripts (optional) -->
+<script type="text/javascript"></script>
+<!-- MDBootstrap Datatables  -->
+<script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
+<script>
+    $(document).ready(function () {
+        $('#cargas4').DataTable({
+            "searching": false
+        });
+        $('.dataTables_length').addClass('bs-select');
+    });
+
+    window.setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 3000);
+
+    setTimeout(function () {
+        window.location.reload(1);
+    }, 240000); // 4 minutos
+
+    $("table tbody").on("click", "td", function () {
+        $(this).toggleClass("selected");
+    });
+
+    document.getElementById('select-all').onclick = function () {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }
+    }
+
+    function Mudarestado(el) {
+        var display = document.getElementById(el).style.display;
+        if (display == "none")
+            document.getElementById(el).style.display = 'block';
+        else
+            document.getElementById(el).style.display = 'none';
+    }
+
+</script>

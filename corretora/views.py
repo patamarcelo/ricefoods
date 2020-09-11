@@ -1,4 +1,4 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
@@ -18,10 +18,38 @@ import json
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from braces.views import SuperuserRequiredMixin
+from django.views.generic.list import MultipleObjectMixin
 
 
 
 from .models import *
+
+from .filters import CargasFilter
+from django_filters.views import FilterView
+from . import filters
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render
+
+
+
+
+
+class CargasFiltradasView(LoginRequiredMixin, FilterView):
+    model = Carga
+    template_name = 'cargasfiltro.html'  
+    paginate_by = 30
+    ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
+    
+    
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = CargasFilter(self.request.GET, queryset=self.get_queryset())
+        
+        return context
+               
+    
 
 
 class BasetwoView(LoginRequiredMixin, SuperuserRequiredMixin, TemplateView):
