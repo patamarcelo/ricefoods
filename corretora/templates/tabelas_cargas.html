@@ -6,7 +6,7 @@
 
 
 <br />
-<div class="container-fluid tabini sombra" align=center>
+<div class="container-fluid tabini sombra" align=center id="resumocargas">
     <br />
     <div class="container flex-wrap justify-content-center align-content-end">
         <div class="row">
@@ -55,7 +55,7 @@
             </thead>
 
             <tbody class="align-text-bottom">
-                {% for carga in cargas|slice:":75" %}
+                {% for carga in cargas|slice:":100" %}
                 <tr>
 
                     {% if carga.pedido.situacao == "a" %}

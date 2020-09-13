@@ -204,6 +204,10 @@
             text-align: bottom;
         }
 
+        #cargasfiltro {
+            display: none
+        }
+
     </style>
     <!--Favicon-->
     <link rel="icon" href="{% static 'images/favicon.png' %}">
@@ -382,7 +386,7 @@
     </div>
 
 
-    <div class="my-table container-fluid">
+    <div class="my-table container-fluid" id="cargasfiltro">
         <table id="cargas4"
             class="width table-round-corner  table table-hover table-striped table-dark table-bordered table-sm"
             width="100%">
@@ -676,4 +680,7 @@
             document.getElementById(el).style.display = 'none';
     }
 
+    setTimeout(function () {
+        document.getElementById("cargasfiltro").style.display = "block";
+    }, 200);
 </script>

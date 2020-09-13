@@ -113,6 +113,13 @@
             font-size: .990rem;
         }
 
+        #resumopedidos,
+        #resumocargas,
+        #resumos,
+        #graficos {
+            display: none;
+        }
+
     </style>
     <!--Favicon-->
     <link rel="icon" href="{% static 'images/favicon.png' %}">
@@ -216,6 +223,14 @@
                 $(this).remove();
             });
         }, 3000);
+
+
+        setTimeout(function () {
+            document.getElementById("resumopedidos").style.display = "block";
+            document.getElementById("resumocargas").style.display = "block";
+            document.getElementById("resumos").style.display = "block";
+            document.getElementById("graficos").style.display = "block";
+        }, 200);
     </script>
 
 </body>

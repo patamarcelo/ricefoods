@@ -11,7 +11,7 @@
 
 </style>
 <br />
-<div class="container-fluid tabini sombra" align=center>
+<div class="container-fluid tabini sombra" align=center id="resumopedidos">
     <br />
     <h4 class="container" align=left> <strong>Resumo Pedidos</strong></h4>
     <hr />
@@ -43,7 +43,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for pedido in pedidos|slice:":75" %}
+                {% for pedido in pedidos|slice:":100" %}
 
                 <tr>
                     {% if pedido.carregado %}
