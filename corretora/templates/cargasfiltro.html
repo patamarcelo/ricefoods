@@ -551,9 +551,9 @@
                     <td style="background-color: #9400d3;">Palmares
                     </td>
                     {% else %}
-                    <td>{{ carga.pedido.fornecedor.nome|title|truncatechars:32 }}</td>
+                    <td>{{ carga.pedido.fornecedor.nome|title|truncatechars:20 }}</td>
                     {% endif %}
-                    <td>{{ carga.pedido.fornecedor.cidade|truncatechars:32 }}</td>
+                    <td>{{ carga.pedido.fornecedor.cidade.cidade|truncatechars:18 }}</td>
                     {% if 'CDA' in carga.pedido.cliente.nome_fantasia|upper %}
                     <td class="text-danger"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
                     {% elif 'USTON' in carga.pedido.cliente.nome_fantasia|upper %}

@@ -27,6 +27,24 @@
         overflow-x: auto;
     }
 
+    #myDIV {
+        overflow: hidden;
+        max-height: 900px;
+        transition: max-height 0.5s ease-in-out;
+
+
+    }
+
+    #myDIV.hide {
+        max-height: 0;
+        pointer-events: none;
+    }
+
+    .fa-eye-slash,
+    .fa-eye {
+        font-size: 12px;
+    }
+
 </style>
 
 <div class="container-fluid">
@@ -103,8 +121,11 @@
         <div class="col-lg-5 col-md-8 col-sm-12  tabini sombra  justify-content-between p-2 m-1 marcelopata2"
             style="zoom:90%">
 
-            <h5 align=left><strong><i>Comissões</i></strong></h5>
-            <div class="d-flex align-items-center marcelopata flex-fill">
+            <h5 align=left><strong><i>Comissões</i></strong>&nbsp;<a><i class="fas fa-eye-slash" id="ocultar"
+                        onclick="ocultar()"></i></a>
+                <a><i class="fas fa-eye" id="mostrar" onclick="mostrar()"></i></a>
+            </h5>
+            <div class="d-flex align-items-center marcelopata flex-fill" id="myDIV">
 
                 <table
                     class="table tabledash table-round-corner table-striped table-borderless table-dark nowrap table-sm"
@@ -245,5 +266,15 @@
 </div>
 
 
+<script>
+    function ocultar() {
+        var element = document.getElementById("myDIV");
+        element.classList.add("hide");
+    }
 
+    function mostrar() {
+        var element = document.getElementById("myDIV");
+        element.classList.remove("hide");
+    }
+</script>
 {% endblock %}

@@ -55,7 +55,7 @@
             </thead>
 
             <tbody class="align-text-bottom">
-                {% for carga in cargas %}
+                {% for carga in cargas|slice:":75" %}
                 <tr>
 
                     {% if carga.pedido.situacao == "a" %}
