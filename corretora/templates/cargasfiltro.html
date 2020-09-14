@@ -623,12 +623,56 @@
                 {% endfor %}
             </tbody>
         </table>
-        {% include 'paginacao.html' %}
-        <p style="text-align:left"><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
-                {{ page_obj.paginator.count }} Itens <span style="float: right;">{% now "SHORT_DATETIME_FORMAT" %}
-                </span></strong></p>
+
+        <!--aisuhdioashiduhasihdiuashaiosudh-->
+        {% if is_paginated %}
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-md">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" style="color: blanchedalmond" href="?{% param_replace page=1 %}"
+                        aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">begin</span>
+                    </a>
+
+                    {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+                </li> {% endif %}
+
+                {% for n in page_obj.paginator.page_range %}
+                {% if page_obj.number == n %}
+                <li class="page-item active">
+                    <span class="page-link" style="color: blanchedalmond">{{ n }}<span
+                            class="sr-only">(current)</span></span>
+                </li>
+                {% elif n > page_obj.number|add:'-5' and n < page_obj.number|add:'5' %}
+                <li style="color: blanchedalmond" class="page-item"><a style="color: blanchedalmond" class="page-link"
+                        href="?{% param_replace page=n %}">{{ n }}</a></li>
+                {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a style="color: blanchedalmond" class="page-link"
+                        href="?{% param_replace page=paginator.num_pages %}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">end</span>
+                    </a>
+                    {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+                </li>
+            </ul>
+            {% endif %}
+        </nav>
+        {% endif %}
+        <p style="float: left;"><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
+                {{ page_obj.paginator.count }} Itens </strong></p>
+
+        <span style="float: right;"><strong>{% now "SHORT_DATETIME_FORMAT" %}
         </span></strong></p>
-    </div>
+
     </div>
 </body>
 <br>
