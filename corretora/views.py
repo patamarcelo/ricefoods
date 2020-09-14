@@ -38,16 +38,14 @@ from django.shortcuts import render
 class CargasFiltradasView(LoginRequiredMixin, FilterView):
     model = Carga
     template_name = 'cargasfiltro.html'  
-    paginate_by = 30
+    paginate_by = 50
+    filterset_class = CargasFilter
     ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
     
     
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['filter'] = CargasFilter(self.request.GET, queryset=self.get_queryset())
-        
-        return context
+
+  
                
     
 

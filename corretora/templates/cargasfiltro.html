@@ -204,10 +204,6 @@
             text-align: bottom;
         }
 
-        #cargasfiltro {
-            display: none
-        }
-
     </style>
     <!--Favicon-->
     <link rel="icon" href="{% static 'images/favicon.png' %}">
@@ -379,7 +375,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center align-items-start">
-                <button type="submit" class="btn btn-primary btn-xs btnfiltrar">Filtar</button>
+                <button type="submit" class="btn btn-primary btn-xs btnfiltrar" id="btnfiltrar">Filtar</button>
             </div>
 
         </form>
@@ -419,7 +415,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for carga in filter.qs %}
+                {% for carga in object_list %}
 
                 <tr>
                     <td>{{ forloop.counter }}</td>
@@ -438,7 +434,11 @@
                     {% endif %}
 
 
+                    {% if 'GDX' in carga.transp|upper %}
                     <td>{{ carga.transp|title }}</td>
+                    {% else %}
+                    <td style="background-color: #660066;">{{ carga.transp|title }}</td>
+                    {% endif %}
 
                     {% if 'dast' in carga.buonny|lower %}
                     <td class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>
@@ -623,6 +623,11 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% include 'paginacao.html' %}
+        <p style="text-align:left"><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
+                {{ page_obj.paginator.count }} Itens <span style="float: right;">{% now "SHORT_DATETIME_FORMAT" %}
+                </span></strong></p>
+        </span></strong></p>
     </div>
     </div>
 </body>
@@ -645,7 +650,7 @@
 <script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
 <script>
     $(document).ready(function () {
-        $('#cargas4').DataTable({
+        $('#cargas5').DataTable({
             "searching": false
         });
         $('.dataTables_length').addClass('bs-select');
@@ -657,9 +662,7 @@
         });
     }, 3000);
 
-    setTimeout(function () {
-        window.location.reload(1);
-    }, 240000); // 4 minutos
+
 
     $("table tbody").on("click", "td", function () {
         $(this).toggleClass("selected");
@@ -680,7 +683,5 @@
             document.getElementById(el).style.display = 'none';
     }
 
-    setTimeout(function () {
-        document.getElementById("cargasfiltro").style.display = "block";
-    }, 200);
+
 </script>
