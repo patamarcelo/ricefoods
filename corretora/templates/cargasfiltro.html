@@ -381,10 +381,9 @@
         </form>
     </div>
 
-
+    {% if request.get_full_path ==  "/corretora/cargasfiltro" %}
     <div class="my-table container-fluid" id="cargasfiltro">
-        <table id="cargas4"
-            class="width table-round-corner  table table-hover table-striped table-dark table-bordered table-sm"
+        <table id="cargas4" class="width table-round-corner  table  table-striped table-dark table-bordered table-sm"
             width="100%">
             <thead class="borderless">
                 <tr>
@@ -415,265 +414,317 @@
                 </tr>
             </thead>
             <tbody>
-                {% for carga in object_list %}
-
+                {% if user.is_superuser%}
                 <tr>
-                    <td>{{ forloop.counter }}</td>
-                    {% if carga.pedido.situacao == "a" %}
-                    <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
-                            class="text-success">{{ carga.pedido }}</a></td>
-
-                    {% elif 'b' in carga.pedido.situacao %}
-                    <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
-                            class="text-danger"><strong>{{ carga.pedido }}</strong></a></td>
-                    {% elif carga.pedido.situacao == 'c' %}
-                    <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
-                            class="text-info">{{ carga.pedido }}</a></td>
-                    {% else %}
-                    <td>{{ carga.pedido }}</td>
-                    {% endif %}
-
-
-                    {% if 'GDX' in carga.transp|upper %}
-                    <td>{{ carga.transp|title }}</td>
-                    {% else %}
-                    <td style="background-color: #660066;">{{ carga.transp|title }}</td>
-                    {% endif %}
-
-                    {% if 'dast' in carga.buonny|lower %}
-                    <td class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>
-                    {% elif 'sul' in carga.buonny|lower %}
-                    <td class="text-warning"><strong>{{ carga.buonny|title }}</strong></td>
-                    {% elif 'nviado' in carga.buonny|lower or 'nviada' in carga.buonny|lower %}
-                    <td class="text-info"><strong>{{ carga.buonny|title }}</strong></td>
-                    {% else %}
-                    <td class="text-success"><strong>{{ carga.buonny|title }}</strong></td>
-                    {% endif %}
-                    {% if carga.situacao == 'Agendado' %}
-                    <td class="text-warning"><strong>{{ carga.situacao }}</strong></td>
-                    {% elif carga.situacao == 'Carregado' %}
-                    <td class="text-success"><strong>{{ carga.situacao }}</strong></td>
-                    {% else %}
-                    <td>{{ carga.situacao }}</td>
-                    {% endif %}
-
-
-                    {% if carga.ordem %}
-                    <td class="text-success"><em>Enviada</em></td>
-                    {% else %}
-                    <td class="text-danger"><em>Não Env.</em></td>
-                    {% endif %}
-
-                    {% if todays_date == carga.data|date:"Y-m-d" %}
-                    <td class="text-primary"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
-                    {% elif todays_date > carga.data|date:"Y-m-d" and carga.situacao == 'Agendado' and carga.ordem == False %}
-                    <td class="text-danger"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
-                    {% else %}
-                    <td>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</td>
-                    {% endif %}
-
-                    {% if carga.situacao == 'Agendado' and carga.ordem == False %}
-                    {% if carga.situacao == 'Agendado' and carga.chegada == True %}
-
-                    <td><a class="text text-success" style='font-style:italic'
-                            href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
-                            </strong></a></td>
-                    {% else %}
-                    <td><a class="text text-warning" style='font-style:italic'
-                            href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</strong></a>
-                    </td>
-                    {% endif %}
-                    {% else %}
-                    <td>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</td>
-                    {% endif %}
-
-
-
-
-
-
-                    {% if carga.obs and carga.tac %}
-                    <td style="background-color: #7a1b0c; opacity: 0.8;"><abbr class="text-warning"
-                            title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
-                    </td>
-                    {% elif carga.obs %}
-                    <td><abbr class="text-warning" title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
-                    </td>
-                    {% elif carga.tac %}
-                    <td style="background-color: #7a1b0c; opacity: 0.8"><em>{{ carga.motorista|title }}</em></abbr>
-                    </td>
-                    {% else %}
-                    <td>{{ carga.motorista|title }}</td>
-                    {% endif %}
-
-
-                    {% if carga.peso == 0 %}
-                    <td class="text-warning"><strong>{{ carga.veiculo|intcomma }} Kg </strong></td>
-                    {% elif carga.peso < 18000 and carga.peso > 0  %}
-                    <td style="color:darkorange"><i>{{ carga.peso|intcomma }} Kg </i></td>
-                    {% else %}
-                    <td>{{ carga.peso|intcomma }} Kg </td>
-                    {% endif %}
-
-                    {% if carga.notafiscal == None %}
-                    <td class="text-danger"><strong>Sem NF</strong></td>
-                    {% elif carga.notafiscal|length <= 4 %}
-                    <td>
-                        {{ carga.notafiscal }}
-                    </td>
-                    {% elif carga.notafiscal|length <= 6 %}
-                    <td>
-                        {{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
-                    </td>
-                    {% elif carga.notafiscal|length > 6 and carga.notafiscal|length < 8 %}
-                    <td>
-                        {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
-                    </td>
-
-                    {% elif carga.notafiscal|length == 8 %}
-                    <td>
-                        0{{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
-                    </td>
-                    {% elif carga.notafiscal|length > 8 %}
-                    <td>
-                        {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
-                    </td>
-                    {% else %}
-                    <td>{{carga.notasfiscal}}</td>
-                    {% endif %}
-
-                    {% if carga.valornf == None %}
-                    <td align=left>R$ &nbsp;&nbsp;&nbsp;&nbsp;- </td>
-                    {% else %}
-
-                    <td>R$
-                        {{ carga.valornf }}
-                    </td>
-                    {% endif %}
-
-                    {% if  'PALMARES' in carga.pedido.fornecedor.nome|upper %}
-                    <td style="background-color: #9400d3;">Palmares
-                    </td>
-                    {% else %}
-                    <td>{{ carga.pedido.fornecedor.nome|title|truncatechars:20 }}</td>
-                    {% endif %}
-                    <td>{{ carga.pedido.fornecedor.cidade.cidade|truncatechars:18 }}</td>
-                    {% if 'CDA' in carga.pedido.cliente.nome_fantasia|upper %}
-                    <td class="text-danger"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
-                    {% elif 'USTON' in carga.pedido.cliente.nome_fantasia|upper %}
-                    <td class="text-primary"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
-                    {% elif 'APIT' in carga.pedido.cliente.nome_fantasia|upper %}
-                    <td style="color: orange;"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
-                    {% else %}
-                    <td>{{ carga.pedido.cliente|upper }}</td>
-                    {% endif %}
-                    {% if carga.pedido.produto == "Arroz em Casca" %}
-                    {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}
-                    <td align="center"><a class="text-success fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
-                        {% elif carga.renda or carga.inteiro or carga.impureza or carga.umidade %}
-                    <td align="center"><a class="text-warning fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
-                    </td>
-                    {% else %}
-                    <td align="center"><a class="text-danger fa fa-list-alt" href="{% url 'upd_class' carga.pk %}"></a>
-                        {% endif %}
-                        {% else %}
-                    <td align="center"><b> - </b></td>
-                    {% endif %}
-
-
-
-
-                    {% if user.is_superuser%}
-                    {% if carga.comissaocasca > 1 %}
-
-                    {% if carga.pgcomissao == True %}
-
-                    <td align=center><a class="text text-success" style='font-style:italic'
-                            href="{% url 'upd_comiss' carga.pk %}"><b>R$
-                                {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
-                    {% elif carga.pgcomissao == False and carga.vpcomissaoc > 0 %}
-                    <td align=center><a class="text text-danger" style='font-style:italic'
-                            href="{% url 'upd_comiss' carga.pk %}"><b>R$
-                                {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
-                    {% else %}
-                    <td align=center><a class="text text-warning" style='font-style:italic'
-                            href="{% url 'upd_comiss' carga.pk %}"><b>R$
-                                {{ carga.comissaocasca|floatformat:2 }}</b></a></td>
-                    {% endif %}
-                    {% else %}
-                    <td align=center>- </td>
-
-                    {% endif %}
-                    {% else %}
-                    {% endif %}
-                    {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %}
-                    <td align=center>
-                        <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
-                        <a class="btn btn-danger btn-xs" href="{% url 'del_cargas' carga.pk %}">Deletar</a>
-                    </td>
-                    {% elif carga.situacao == 'Carregado'  and carga.pedido.situacao == 'a' %}
-                    <td align=center>
-                        <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
-                    </td>
-                    {% else %}
-                    <td align=center>-</td>
-                    {% endif %}
+                    <th scope="row" colspan="18" style="font-size: 18px;">Filtre os dados!!</th>
                 </tr>
-
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <!--aisuhdioashiduhasihdiuashaiosudh-->
-        {% if is_paginated %}
-
-        <nav aria-label="Page navigation">
-            <ul class="pagination pagination-md">
-                {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" style="color: blanchedalmond" href="?{% param_replace page=1 %}"
-                        aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">begin</span>
-                    </a>
-
-                    {% else %}
-                <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
-                </li> {% endif %}
-
-                {% for n in page_obj.paginator.page_range %}
-                {% if page_obj.number == n %}
-                <li class="page-item active">
-                    <span class="page-link" style="color: blanchedalmond">{{ n }}<span
-                            class="sr-only">(current)</span></span>
-                </li>
-                {% elif n > page_obj.number|add:'-5' and n < page_obj.number|add:'5' %}
-                <li style="color: blanchedalmond" class="page-item"><a style="color: blanchedalmond" class="page-link"
-                        href="?{% param_replace page=n %}">{{ n }}</a></li>
+                {% else %}
+                <tr>
+                    <th scope="row" colspan="17" style="font-size: 18px;">Filtre os dados!!</th>
+                </tr>
                 {% endif %}
-                {% endfor %}
+            </tbody>
+            {% else %}
 
-                {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a style="color: blanchedalmond" class="page-link"
-                        href="?{% param_replace page=paginator.num_pages %}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">end</span>
-                    </a>
-                    {% else %}
-                <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
-                </li>
-            </ul>
+            <div class="my-table container-fluid" id="cargasfiltro">
+                <table id="cargas4"
+                    class="width table-round-corner  table table-hover table-striped table-dark table-bordered table-sm"
+                    width="100%">
+                    <thead class="borderless">
+                        <tr>
+
+                            <th scope="col"><a class="text-info fa fa-sort-desc"></a></th>
+                            <th scope="col">Pedido</th>
+                            <th scope="col">Transp.</th>
+                            <th scope="col">Buonny</th>
+                            <th scope="col">Situação</th>
+                            <th scope="col">Ordem</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Placa</th>
+                            <th scope="col">Motorista</th>
+
+
+                            <th scope="col">Peso</th>
+                            <th scope="col">NF</th>
+                            <th scope="col">Valor NF</th>
+                            <th scope="col">Fornecedor</th>
+                            <th scope="col">Origem</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col" class="text text-center">Class.</th>
+                            {% if user.is_superuser%}
+                            <th scope="col" class="text text-center">Comiss.</th>
+                            {% endif %}
+                            <th scope="col" class="text text-center">Ação</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for carga in object_list %}
+
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            {% if carga.pedido.situacao == "a" %}
+                            <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
+                                    class="text-success">{{ carga.pedido }}</a></td>
+
+                            {% elif 'b' in carga.pedido.situacao %}
+                            <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
+                                    class="text-danger"><strong>{{ carga.pedido }}</strong></a></td>
+                            {% elif carga.pedido.situacao == 'c' %}
+                            <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
+                                    class="text-info">{{ carga.pedido }}</a></td>
+                            {% else %}
+                            <td>{{ carga.pedido }}</td>
+                            {% endif %}
+
+
+                            {% if 'GDX' in carga.transp|upper %}
+                            <td>{{ carga.transp|title }}</td>
+                            {% else %}
+                            <td style="background-color: #660066;">{{ carga.transp|title }}</td>
+                            {% endif %}
+
+                            {% if 'dast' in carga.buonny|lower %}
+                            <td class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>
+                            {% elif 'sul' in carga.buonny|lower %}
+                            <td class="text-warning"><strong>{{ carga.buonny|title }}</strong></td>
+                            {% elif 'nviado' in carga.buonny|lower or 'nviada' in carga.buonny|lower %}
+                            <td class="text-info"><strong>{{ carga.buonny|title }}</strong></td>
+                            {% else %}
+                            <td class="text-success"><strong>{{ carga.buonny|title }}</strong></td>
+                            {% endif %}
+                            {% if carga.situacao == 'Agendado' %}
+                            <td class="text-warning"><strong>{{ carga.situacao }}</strong></td>
+                            {% elif carga.situacao == 'Carregado' %}
+                            <td class="text-success"><strong>{{ carga.situacao }}</strong></td>
+                            {% else %}
+                            <td>{{ carga.situacao }}</td>
+                            {% endif %}
+
+
+                            {% if carga.ordem %}
+                            <td class="text-success"><em>Enviada</em></td>
+                            {% else %}
+                            <td class="text-danger"><em>Não Env.</em></td>
+                            {% endif %}
+
+                            {% if todays_date == carga.data|date:"Y-m-d" %}
+                            <td class="text-primary"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
+                            {% elif todays_date > carga.data|date:"Y-m-d" and carga.situacao == 'Agendado' and carga.ordem == False %}
+                            <td class="text-danger"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
+                            {% else %}
+                            <td>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</td>
+                            {% endif %}
+
+                            {% if carga.situacao == 'Agendado' and carga.ordem == False %}
+                            {% if carga.situacao == 'Agendado' and carga.chegada == True %}
+
+                            <td><a class="text text-success" style='font-style:italic'
+                                    href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
+                                    </strong></a></td>
+                            {% else %}
+                            <td><a class="text text-warning" style='font-style:italic'
+                                    href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</strong></a>
+                            </td>
+                            {% endif %}
+                            {% else %}
+                            <td>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</td>
+                            {% endif %}
+
+
+
+
+
+
+                            {% if carga.obs and carga.tac %}
+                            <td style="background-color: #7a1b0c; opacity: 0.8;"><abbr class="text-warning"
+                                    title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
+                            </td>
+                            {% elif carga.obs %}
+                            <td><abbr class="text-warning"
+                                    title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
+                            </td>
+                            {% elif carga.tac %}
+                            <td style="background-color: #7a1b0c; opacity: 0.8">
+                                <em>{{ carga.motorista|title }}</em></abbr>
+                            </td>
+                            {% else %}
+                            <td>{{ carga.motorista|title }}</td>
+                            {% endif %}
+
+
+                            {% if carga.peso == 0 %}
+                            <td class="text-warning"><strong>{{ carga.veiculo|intcomma }} Kg </strong></td>
+                            {% elif carga.peso < 18000 and carga.peso > 0  %}
+                            <td style="color:darkorange"><i>{{ carga.peso|intcomma }} Kg </i></td>
+                            {% else %}
+                            <td>{{ carga.peso|intcomma }} Kg </td>
+                            {% endif %}
+
+                            {% if carga.notafiscal == None %}
+                            <td class="text-danger"><strong>Sem NF</strong></td>
+                            {% elif carga.notafiscal|length <= 4 %}
+                            <td>
+                                {{ carga.notafiscal }}
+                            </td>
+                            {% elif carga.notafiscal|length <= 6 %}
+                            <td>
+                                {{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </td>
+                            {% elif carga.notafiscal|length > 6 and carga.notafiscal|length < 8 %}
+                            <td>
+                                {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </td>
+
+                            {% elif carga.notafiscal|length == 8 %}
+                            <td>
+                                0{{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </td>
+                            {% elif carga.notafiscal|length > 8 %}
+                            <td>
+                                {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </td>
+                            {% else %}
+                            <td>{{carga.notasfiscal}}</td>
+                            {% endif %}
+
+                            {% if carga.valornf == None %}
+                            <td align=left>R$ &nbsp;&nbsp;&nbsp;&nbsp;- </td>
+                            {% else %}
+
+                            <td>R$
+                                {{ carga.valornf }}
+                            </td>
+                            {% endif %}
+
+                            {% if  'PALMARES' in carga.pedido.fornecedor.nome|upper %}
+                            <td style="background-color: #9400d3;">Palmares
+                            </td>
+                            {% else %}
+                            <td>{{ carga.pedido.fornecedor.nome|title|truncatechars:20 }}</td>
+                            {% endif %}
+                            <td>{{ carga.pedido.fornecedor.cidade.cidade|truncatechars:18 }}</td>
+                            {% if 'CDA' in carga.pedido.cliente.nome_fantasia|upper %}
+                            <td class="text-danger"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
+                            {% elif 'USTON' in carga.pedido.cliente.nome_fantasia|upper %}
+                            <td class="text-primary"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
+                            {% elif 'APIT' in carga.pedido.cliente.nome_fantasia|upper %}
+                            <td style="color: orange;"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em>
+                            </td>
+                            {% else %}
+                            <td>{{ carga.pedido.cliente|upper }}</td>
+                            {% endif %}
+                            {% if carga.pedido.produto == "Arroz em Casca" %}
+                            {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}
+                            <td align="center"><a class="text-success fa fa-list-alt"
+                                    href="{% url 'upd_class' carga.pk %}"></a>
+                                {% elif carga.renda or carga.inteiro or carga.impureza or carga.umidade %}
+                            <td align="center"><a class="text-warning fa fa-list-alt"
+                                    href="{% url 'upd_class' carga.pk %}"></a>
+                            </td>
+                            {% else %}
+                            <td align="center"><a class="text-danger fa fa-list-alt"
+                                    href="{% url 'upd_class' carga.pk %}"></a>
+                                {% endif %}
+                                {% else %}
+                            <td align="center"><b> - </b></td>
+                            {% endif %}
+
+
+
+
+                            {% if user.is_superuser%}
+                            {% if carga.comissaocasca > 1 %}
+
+                            {% if carga.pgcomissao == True %}
+
+                            <td align=center><a class="text text-success" style='font-style:italic'
+                                    href="{% url 'upd_comiss' carga.pk %}"><b>R$
+                                        {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
+                            {% elif carga.pgcomissao == False and carga.vpcomissaoc > 0 %}
+                            <td align=center><a class="text text-danger" style='font-style:italic'
+                                    href="{% url 'upd_comiss' carga.pk %}"><b>R$
+                                        {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
+                            {% else %}
+                            <td align=center><a class="text text-warning" style='font-style:italic'
+                                    href="{% url 'upd_comiss' carga.pk %}"><b>R$
+                                        {{ carga.comissaocasca|floatformat:2 }}</b></a></td>
+                            {% endif %}
+                            {% else %}
+                            <td align=center>- </td>
+
+                            {% endif %}
+                            {% else %}
+                            {% endif %}
+                            {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %}
+                            <td align=center>
+                                <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
+                                <a class="btn btn-danger btn-xs" href="{% url 'del_cargas' carga.pk %}">Deletar</a>
+                            </td>
+                            {% elif carga.situacao == 'Carregado'  and carga.pedido.situacao == 'a' %}
+                            <td align=center>
+                                <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
+                            </td>
+                            {% else %}
+                            <td align=center>-</td>
+                            {% endif %}
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <!--aisuhdioashiduhasihdiuashaiosudh-->
+                {% if is_paginated %}
+
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-md">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" style="color: blanchedalmond" href="?{% param_replace page=1 %}"
+                                aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">begin</span>
+                            </a>
+
+                            {% else %}
+                        <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+                        </li> {% endif %}
+
+                        {% for n in page_obj.paginator.page_range %}
+                        {% if page_obj.number == n %}
+                        <li class="page-item active">
+                            <span class="page-link" style="color: blanchedalmond">{{ n }}<span
+                                    class="sr-only">(current)</span></span>
+                        </li>
+                        {% elif n > page_obj.number|add:'-5' and n < page_obj.number|add:'5' %}
+                        <li style="color: blanchedalmond" class="page-item"><a style="color: blanchedalmond"
+                                class="page-link" href="?{% param_replace page=n %}">{{ n }}</a></li>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a style="color: blanchedalmond" class="page-link"
+                                href="?{% param_replace page=paginator.num_pages %}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">end</span>
+                            </a>
+                            {% else %}
+                        <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </nav>
+                {% endif %}
+                <p style="float: left;"><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
+                        {{ page_obj.paginator.count }} Itens </strong></p>
+
+                <span style="float: right;"><strong>{% now "SHORT_DATETIME_FORMAT" %}
+                </span></strong></p>
+
+            </div>
             {% endif %}
-        </nav>
-        {% endif %}
-        <p style="float: left;"><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
-                {{ page_obj.paginator.count }} Itens </strong></p>
-
-        <span style="float: right;"><strong>{% now "SHORT_DATETIME_FORMAT" %}
-        </span></strong></p>
-
-    </div>
 </body>
 <br>
 <script>
