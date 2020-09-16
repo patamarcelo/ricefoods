@@ -244,13 +244,14 @@
             </div>
         </div>
         <br>
-        <div class="container-fluid">
+        <div class="container-fluid" style="margin-left: 20px;">
             <div class="row">
                 <div class="col-3-sm">
                     <a class="btn btn-primary btn-sm" href="{% url 'add_cargas' %}">Adicionar Cargas</a>
                 </div>
                 <div class="col-3-sm">
-                    <a class="btn btn-outline-success btn-sm" href="{% url 'add_age_cargas' %}">Agendar</a>
+                    <a class="btn btn-outline-success btn-sm" href="{% url 'add_age_cargas' %}"
+                        target="_blank">Agendar</a>
                 </div>
 
                 <a class="btn btn-outline-warning btn-sm" href="{% url 'corretora' %}">Voltar</a>
@@ -375,7 +376,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center align-items-start">
-                <button type="submit" class="btn btn-primary btn-xs btnfiltrar" id="btnfiltrar">Filtar</button>
+                <button type="submit" class="btn btn-primary btn-xs btnfiltrar" id="btnfiltrar">Filtrar</button>
             </div>
 
         </form>
