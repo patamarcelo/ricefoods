@@ -259,6 +259,7 @@
                     <button type="button" class="btn btn-outline-info btn-sm"
                         onclick="Mudarestado('filtro')">Filtros</button>
                 </div>
+
             </div>
         </div>
         <br>
@@ -377,6 +378,10 @@
             </div>
             <div class="d-flex justify-content-center align-items-start">
                 <button type="submit" class="btn btn-primary btn-xs btnfiltrar" id="btnfiltrar">Filtrar</button>
+                {% if request.get_full_path ==  "/corretora/cargasfiltro" %}
+                {% else %}
+                <button type="submit" class="btn btn-success btn-xs btnfiltrar" id="btnExport">Excel</button>
+                {% endif %}
             </div>
 
         </form>
@@ -780,4 +785,21 @@
     }
 
 
+    $(document).ready(function () {
+        $("#btnExport").click(function (e) {
+            e.preventDefault();
+            var table_div = document.getElementById('cargasfiltro');
+            // esse "\ufeff" é importante para manter os acentos         
+            var blobData = new Blob(['\ufeff' + table_div.outerHTML], { type: 'application/vnd.ms-excel' });
+            var url = window.URL.createObjectURL(blobData);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'Cargas'
+            a.click();
+        });
+    });
+
+
+
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

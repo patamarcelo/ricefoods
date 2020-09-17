@@ -8,6 +8,17 @@
     .marginleft1 {
         margin-left: 1px !important;
     }
+
+    .chartrow div {
+        margin: 4px;        
+    }
+
+    @media (min-width:980px) {
+            .chartrow {
+                display: flex;
+                flex-wrap: nowrap;
+            }
+        }
     
 </style>
 <div class="container">
@@ -26,13 +37,13 @@
 
    
 <div class="container-fluid" id="graficos">
-    <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 p-1 mt-1">
+    <div class="row chartrow d-flex flex-row justify-content-around">
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-11 p-1 mt-1">
             <div class="container-fluid sombra chartss">
                 <canvas id="cda" style="max-height: 400px; width: auto; position: relative;"></canvas>
             </div>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 p-1 mt-1 ">
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-11 p-1 mt-1 ">
             <div class="container-fluid sombra chartss">
                 <canvas id="ruston" style="max-height: 400px; width: auto; position: relative;"></canvas>
             </div>

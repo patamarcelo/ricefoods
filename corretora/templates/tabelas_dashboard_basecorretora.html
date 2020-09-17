@@ -19,8 +19,12 @@
         height: inherit;
     }
 
-    .marginbox1 {
-        margin-bottom: 20px !important;
+
+
+    @media (max-width:980px) {
+        .marginbox1 {
+            margin-bottom: 20px !important;
+        }
     }
 
     .marcelopata {
@@ -69,7 +73,7 @@
 </style>
 
 <div class="container-fluid" id="resumos">
-    <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-center m-1 p-2 topo">
+    <div class="d-flex flex-row flex-wrap flex-md-wrap flex-sm-wrap justify-content-around m-1 p-2 topo">
 
 
         <div class="col-lg-5  col-md-8 col-sm-12 tabini sombra  marginbox1 justify-content-between p-2 m-1 marcelopata2"
@@ -138,7 +142,6 @@
 
         </div>
         {% if user.is_superuser %}
-        <div class="col-lg-1"></div>
         <div class="col-lg-5 col-md-8 col-sm-12  tabini sombra  justify-content-between p-2 m-1 marcelopata2"
             style="zoom:90%">
 
