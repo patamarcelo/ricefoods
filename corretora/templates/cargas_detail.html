@@ -203,12 +203,363 @@
                     <h2><span class="badge badge-success badge-pill">
                             Relatório Carregamento
                         </span></h2>
+                    <i type="submit" style="color:green" class="fas fa-lg fa-file-excel" id="btnExport"></i>
+
                 </div>
 
             </div>
         </div>
+        <!--------------------------------EXCEL---------------------------------->
+        <div class="container-fluid" id="cargasrelatorio2" style="display: none">
+            <table class=" width table table-sm table-hover" align="center">
 
-        <div class="container-fluid">
+
+
+                <thead align="center" class="table-bordered thead-dark">
+
+                    <tr>
+                        <th scope="col"><a class="text-white fa fa-sort-desc"></a></th>
+                        <th scope="col"><strong>Contrato</strong></th>
+                        <th scope="col"><strong>Data</strong></th>
+                        <th scope="col"><strong>Transportadora</strong></th>
+                        <th scope="col"><strong>Fornecedor</strong></th>
+                        <th scope="col"><strong>Placa</strong></th>
+                        <th scope="col"><strong>Motorista</strong></th>
+                        <th scope="col"><strong>Peso</strong></th>
+                        <th scope="col"><strong>Valor Produto</strong></th>
+                        <th scope="col"><strong>NF</strong></th>
+                        {% if notafiscal2 %}
+                        <th scope="col"><strong>NF 2</strong></th>
+                        {% else %}
+                        {% endif %}
+
+                        <th scope="col"><strong>Renda </strong></th>
+                        <th scope="col"><strong>Inteiro </strong></th>
+                        <th scope="col"><strong>Impureza </strong></th>
+                        <th scope="col"><strong>Umidade </strong></th>
+                        <th scope="col"><strong>Gessado </strong></th>
+                        <th scope="col"><strong>B.Branca </strong></th>
+                        <th scope="col"><strong>Amarelo</strong></th>
+                        <th scope="col"><strong>Manch/Pic </strong></th>
+                        <th scope="col"><strong>Vermelhos </strong></th>
+                    </tr>
+
+
+                </thead>
+
+                <tbody class="align-text-bottom table-borderless">
+                    {% for pedido in pedidos %}
+                    <tr align="center">
+                        <td colspan="1" class="border_bottom"></td>
+                        <td colspan="1" class="border_bottom"></td>
+                        <td colspan="1" class="border_bottom"></td>
+                        <td colspan="1" class="border_bottom"></td>
+                        <td colspan="1" class="border_bottom"></td>
+                        <td align="right" colspan="4" class="border_bottom"></td>
+                        <td colspan="1" class="border_bottom"></td>
+                        {% if pedido.renda == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.renda }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.inteiro == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.inteiro }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.impureza == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.impureza }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.umidade == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.umidade }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.gessado == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.gessado }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.bbranca == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.bbranca }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.amarelo == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.amarelo }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.manchpic == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.manchpic }}</i></strong>
+                        </td>
+                        {% endif %}
+
+                        {% if pedido.vermelhos == None %}
+                        <td class="border_bottom">-</td>
+                        {% else %}
+                        <td class="border_bottom">
+                            <strong><i>{{ pedido.vermelhos }}</i></strong>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    {% for carga in cargas %}
+                    {% for pedido in pedidos %}
+                    {% if carga.situacao == 'Carregado' %}
+
+                    <tr align="center">
+                        <td>{{ forloop.parentloop.counter }}</b></td>
+                        <td><b>{{ carga.pedido }}</b></td>
+                        <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
+                        <td><b>{{ carga.transp|title }}</b></td>
+                        <td><b>{{ carga.pedido.fornecedor.nome|title }}
+                            </b></td>
+                        <td><b>
+                                {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</b></td>
+                        <td><b>{{ carga.motorista|title }}</b></td>
+                        <td><b>{{ carga.peso|intcomma }} </b></td>
+                        {% if carga.valorcarga == None %}
+                        <td><b>R$ &nbsp; - </b></td>
+                        {% else %}
+                        <td><b>R$ {{carga.valorcarga|floatformat:"2"}}</b></td>
+                        {% endif %}
+                        {% if carga.notafiscal == None %}
+                        <td class="text-danger"><strong>Sem NF</strong></td>
+                        {% elif carga.notafiscal|length <= 4 %}
+                        <td><b>
+                                {{ carga.notafiscal }}
+                            </b></td>
+                        {% elif carga.notafiscal|length <= 6 %}
+                        <td><b>
+                                {{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </b></td>
+                        {% elif carga.notafiscal|length > 6 and carga.notafiscal|length < 8 %}
+                        <td><b>
+                                {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </b></td>
+
+                        {% elif carga.notafiscal|length == 8 %}
+                        <td><b>
+                                0{{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </b></td>
+                        {% elif carga.notafiscal|length > 8 %}
+                        <td><b>
+                                {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </b></td>
+                        {% else %}
+                        <td><b>{{carga.notasfiscal}}</b></td>
+                        {% endif %}
+                        {% if notafiscal2 %}
+                        <td><b>{{carga.notasfiscal2}}</b></td>
+                        {% else %}
+                        {% endif %}
+
+                        {% if carga.renda == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.renda < pedido.renda %}
+                        <td class="text-danger"><b> {{carga.renda}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.renda}}</b></td>
+                        {% endif %}
+
+                        {% if carga.inteiro == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.inteiro < pedido.inteiro %}
+                        <td class="text-danger"><b> {{carga.inteiro}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.inteiro}}</b></td>
+                        {% endif %}
+
+                        {% if carga.impureza == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.impureza > pedido.impureza %}
+                        <td class="text-danger"><b> {{carga.impureza}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.impureza}}</b></td>
+                        {% endif %}
+
+                        {% if carga.umidade == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.umidade > pedido.umidade %}
+                        <td class="text-danger"><b> {{carga.umidade}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.umidade}}</b></td>
+                        {% endif %}
+
+                        {% if carga.gessado == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.gessado > pedido.gessado %}
+                        <td class="text-danger"><b> {{carga.gessado}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.gessado}}</b></td>
+                        {% endif %}
+
+                        {% if carga.bbranca == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.bbranca > pedido.bbranca %}
+                        <td class="text-danger"><b> {{carga.bbranca}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.bbranca}}</b></td>
+                        {% endif %}
+
+                        {% if carga.amarelo == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.amarelo > pedido.amarelo %}
+                        <td class="text-danger"><b> {{carga.amarelo}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.amarelo}}</b></td>
+                        {% endif %}
+
+                        {% if carga.manchpic == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.manchpic > pedido.manchpic %}
+                        <td class="text-danger"><b> {{carga.manchpic}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.manchpic}}</b></td>
+                        {% endif %}
+
+                        {% if carga.vermelhos == None %}
+                        <td><b>-</b></td>
+                        {% elif carga.vermelhos > pedido.vermelhos %}
+                        <td class="text-danger"><b> {{carga.vermelhos}}</b></td>
+                        {% else %}
+                        <td><b> {{carga.vermelhos}}</b></td>
+                        {% endif %}
+
+                        {% endif %}
+                        {% endfor %}
+                        {% endfor %}
+                    </tr>
+                <tfoot>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td align="right" colspan="1" class="border-top border-dark"></td>
+                    <td align="center" colspan="2" class="border-top border-dark"><strong><i>Totais</i></strong></td>
+                    {% for p in pedidos %}
+                    <td align="center" class="border-top border-dark"><b><i>{{ total.peso__sum|intcomma }}
+                                Kg</i></b></td>
+                    {% if total.peso__sum == None %}
+                    <td align="center" class="border-top border-dark"><b>R$ &nbsp; - </b></td>
+                    {% elif p.produto == 'Arroz em Casca' %}
+                    <td align="center" class="border-top border-dark"><b><i>R$
+                                {{ total.peso__sum|div:50|mul:p.preco_produto|floatformat:"2" }}
+                            </i></b></td>
+                    {% else %}
+                    <td align="center" class="border-top border-dark"><b><i>R$
+                                {{ total.peso__sum|div:30|mul:p.preco_produto|floatformat:"2" }}
+                            </i></b></td>
+                    {% endif %}
+
+                    <td align="center" class="border-top border-dark"><b><i><strong>Média</strong></i></td>
+                    {% if mrenda.w_avg < p.renda %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mrenda.w_avg|floatformat:2 }}</b></td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark">
+                        <b>{{ mrenda.w_avg|floatformat:2 }}</b></td>
+                    {% endif %}
+
+                    {% if minteiro.w_avg < p.inteiro %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ minteiro.w_avg|floatformat:2 }}</b></td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark"><b>{{ minteiro.w_avg|floatformat:2 }}
+                        </b></td>
+                    {% endif %}
+
+                    {% if mimpureza.w_avg > p.impureza %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mimpureza.w_avg|floatformat:2 }}</b></td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark"><b>{{ mimpureza.w_avg|floatformat:2 }}
+                        </b></td>
+                    {% endif %}
+
+
+                    {% if mumidade.w_avg > p.umidade %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mumidade.w_avg|floatformat:2 }}</b></td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark"><b>{{ mumidade.w_avg|floatformat:2 }}
+                        </b></td>
+                    {% endif %}
+
+                    {% if mgessado.w_avg > p.gessado %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mgessado.w_avg|floatformat:2 }}</b></td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark"><b>{{ mgessado.w_avg|floatformat:2 }}
+                        </b></td>
+                    {% endif %}
+
+                    {% if mbbranca.w_avg > p.bbranca %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mbbranca.w_avg|floatformat:2 }}</b></td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark"><b>{{ mbbranca.w_avg|floatformat:2 }}
+                        </b></td>
+                    {% endif %}
+
+                    {% if mamarelo.w_avg > p.amarelo %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mamarelo.w_avg|floatformat:2 }}</b></td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark"><b>{{ mamarelo.w_avg|floatformat:2 }}
+                        </b></td>
+                    {% endif %}
+
+                    {% if mmanchpic.w_avg > p.manchpic %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mmanchpic.w_avg|floatformat:2 }}</b></td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark"><b>{{ mmanchpic.w_avg|floatformat:2 }}
+                        </b></td>
+                    {% endif %}
+
+                    {% if mvermelhos.w_avg > p.vermelhos %}
+                    <td align="center" colspan="1" class="border-top border-dark text-danger"><b>
+                            {{ mvermelhos.w_avg|floatformat:2 }}</b></td>
+                    {% else %}
+                    <td align="center" colspan="1" class="border-top border-dark">
+                        <b>{{ mvermelhos.w_avg|floatformat:2 }}
+                        </b></td>
+                    {% endif %}
+                    {% endfor %}
+                </tfoot>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container-fluid" id="cargasrelatorio">
             <table class=" width table table-sm table-hover" align="center">
 
 
@@ -567,6 +918,10 @@
 
     </body>
 
+
+
+
+
 </div>
 {% elif pt.produto == "Arroz Beneficiado" %}
 <!--Tabel do BENEFICIADO-->
@@ -675,6 +1030,7 @@
                     <h2><span class="badge badge-success badge-pill">
                             Relatório Carregamento
                         </span></h2>
+
                 </div>
 
             </div>
@@ -864,3 +1220,22 @@
         });
     }, 3000);
 </script>
+
+<script>
+    $(document).ready(function () {
+        $("#btnExport").click(function (e) {
+            e.preventDefault();
+            var table_div = document.getElementById('cargasrelatorio2');
+            // esse "\ufeff" é importante para manter os acentos         
+            var blobData = new Blob(['\ufeff' + table_div.outerHTML], { type: 'application/vnd.ms-excel' });
+            var url = window.URL.createObjectURL(blobData);
+            var a = document.createElement('a');
+            a.href = url;
+            {% for carga in cargas %}
+            a.download = '{{ carga.pedido }}_{{ carga.pedido.fornecedor.nome|title}}.xls'
+            {% endfor %}
+            a.click();
+        });
+    });
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

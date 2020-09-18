@@ -38,7 +38,7 @@ from django.shortcuts import render
 class CargasFiltradasView(LoginRequiredMixin, FilterView):
     model = Carga
     template_name = 'cargasfiltro.html'  
-    paginate_by = 50
+    paginate_by = 100
     filterset_class = CargasFilter
     ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
     
