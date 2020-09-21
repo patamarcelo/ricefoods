@@ -70,6 +70,7 @@
     </div>
     <br />
 
+
     <div class="container caixaobs">
 
         <div class="form-row flex-row justify-content-center caixacheck">
@@ -178,5 +179,12 @@
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
+
+    $(document).ready(function () {
+        $('#id_data').mask('00/00/0000');
+    })
+
+
+
 </script>
 {% endblock %}

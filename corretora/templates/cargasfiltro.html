@@ -379,15 +379,15 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-center align-items-start">
+            <div class="container" style="justify-content:center">
                 <button type="submit" class="btn btn-primary btn-xs btnfiltrar" id="btnfiltrar">Filtrar</button>
+
+                {% if request.get_full_path ==  "/corretora/cargasfiltro" %}
+                {% else %}
+                <i type="submit" style="color:green; margin-bottom: 20px; float: right;" class="fas fa-lg fa-file-excel"
+                    id="btnExport"></i>
+                {% endif %}
             </div>
-            {% if request.get_full_path ==  "/corretora/cargasfiltro" %}
-            {% else %}
-            <div class="d-flex justify-content-center align-items-start">
-                <i type="submit" style="color:green; margin: 10px;" class="fas fa-lg fa-file-excel" id="btnExport"></i>
-            </div>
-            {% endif %}
 
 
         </form>
@@ -877,7 +877,7 @@
 
                             <td>{{ carga.pedido.fornecedor.nome|title }}</td>
 
-                            <td>{{ carga.pedido.fornecedor.cidade.cidade|truncatechars:18 }}</td>
+                            <td>{{ carga.pedido.fornecedor.cidade.cidade }}</td>
 
                             <td>{{ carga.pedido.cliente|upper }}</td>
 
