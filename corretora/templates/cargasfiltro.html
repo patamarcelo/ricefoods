@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- MDBootstrap Datatables  -->
     <link href="{% static 'css/addons/datatables.min.css' %}" rel="stylesheet">
+
     <style>
         .btn-xs {
             padding: 5px 10px;
@@ -123,6 +124,24 @@
 
         .checkbox-inline {
             font-size: .890rem;
+
+        }
+
+
+        #select-all {
+            margin-right: 4px;
+            margin-bottom: 7px;
+            width: 12px !important;
+            text-align: center;
+            vertical-align: middle;
+
+        }
+
+        .fa-check {
+            font-size: 18px;
+            padding-bottom: 6px;
+            vertical-align: middle;
+
 
         }
 
@@ -361,36 +380,31 @@
 
                 </div>
                 <div class="row">
-                    <div class="col-1">
-                        <div class="d-flex justify-content-start checkcheck check2">
-                            <input type="checkbox" id="select-all" class="select-all"><a
-                                class="text-primary fa fa-check"></a>
-                            <label class="checkbox-inline"></label>
-                        </div>
-                    </div>
-                    <div class="col-10">
 
-                        <div class="d-flex justify-content-between checkcheck">
-                            {% for choice in filter.form.transp %}
-                            <label class="checkbox-inline">
-                                {{ choice.tag }} {{ choice.choice_label }} &nbsp;&nbsp;&nbsp;
-                            </label>{% endfor %}
-                        </div>
+
+                    <div class="col-12 d-flex justify-content-around checkcheck">
+                        <i><input type="checkbox" id="select-all" class="select-all"><a
+                                class="text-primary fa fa-check"></a></i>
+                        {% for choice in filter.form.transp %}
+                        <label class="checkbox-inline">
+                            {{ choice.tag }} {{ choice.choice_label }} &nbsp;&nbsp;&nbsp;
+                        </label>{% endfor %}
                     </div>
                 </div>
             </div>
-            <div class="container" style="justify-content:center">
-                <button type="submit" class="btn btn-primary btn-xs btnfiltrar" id="btnfiltrar">Filtrar</button>
+    </div>
+    <div class="container" style="justify-content:center">
+        <button type="submit" class="btn btn-primary btn-xs btnfiltrar" id="btnfiltrar">Filtrar</button>
 
-                {% if request.get_full_path ==  "/corretora/cargasfiltro" %}
-                {% else %}
-                <i type="submit" style="color:green; margin-bottom: 20px; float: right;" class="fas fa-lg fa-file-excel"
-                    id="btnExport"></i>
-                {% endif %}
-            </div>
+        {% if request.get_full_path ==  "/corretora/cargasfiltro" %}
+        {% else %}
+        <i type="submit" style="color:green; margin-bottom: 20px; float: right;" class="fas fa-lg fa-file-excel"
+            id="btnExport"></i>
+        {% endif %}
+    </div>
 
 
-        </form>
+    </form>
     </div>
 
     {% if request.get_full_path ==  "/corretora/cargasfiltro" %}
@@ -1032,6 +1046,16 @@
     });
 
 
+    $(document).ready(function () {
+        $('#id_data').mask('00/00/0000');
+        $('#id_data__gte').mask('00/00/0000');
+        $('#id_data__lte').mask('00/00/0000');
+    })
+
 
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!-- jQuery -->
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<!-- jQuery Masks-->
+<script type="text/javascript" src="{% static 'js/jquery.mask.js' %}"></script>
