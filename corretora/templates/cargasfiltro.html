@@ -33,6 +33,10 @@
     <!-- MDBootstrap Datatables  -->
     <link href="{% static 'css/addons/datatables.min.css' %}" rel="stylesheet">
 
+
+
+
+
     <style>
         .btn-xs {
             padding: 5px 10px;
@@ -173,6 +177,9 @@
         }
 
         input[type=text]:hover,
+        input[type=number]:hover,
+        input[type=checkbox]:hover,
+        #id_ordering:hover,
         textarea:hover {
             background: #ffffff;
             border: 2px solid #0275d8;
@@ -297,84 +304,84 @@
             <div class="form-group">
                 <div class="form-row caixatexto">
                     <div class="col-2 form-group form-control-sm" data-toggle="tooltip" title="Motorista"
-                        data-placement="bottom" placeholder="Motorista">
+                        data-placement="bottom" placeholder="Motorista" autocomplete="on">
                         {{ filter.form.motorista__icontains|as_crispy_field }}
                     </div>
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Placa" data-placement="bottom"
                         placeholder="Placa">
 
                         {{ filter.form.placa__icontains|as_crispy_field }}
                     </div>
 
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
-                        placeholder="Data">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Nota Fsical" data-placement="bottom"
+                        placeholder="NF">
                         {{ filter.form.notafiscal__icontains|as_crispy_field }}
                     </div>
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Data" data-placement="bottom"
                         placeholder="Data">
                         {{ filter.form.data|as_crispy_field }}
                     </div>
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Data" data-placement="bottom"
                         placeholder="Data">
                         {{ filter.form.data__gte|as_crispy_field }}
 
                     </div>
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Data" data-placement="bottom"
                         placeholder="Data">
                         {{ filter.form.data__lte|as_crispy_field }}
                     </div>
                 </div>
                 <div class="form-row caixatexto">
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Contrato" data-placement="bottom"
                         placeholder="Contrato">
                         {{ filter.form.pedido__contrato__icontains|as_crispy_field }}
                     </div>
 
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
-                        placeholder="Data">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Fornecedor" data-placement="bottom"
+                        placeholder="Fornecedor">
                         {{ filter.form.pedido__fornecedor__nome__icontains|as_crispy_field }}
                     </div>
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
-                        placeholder="Data">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Cliente" data-placement="bottom"
+                        placeholder="Cliente">
                         {{ filter.form.pedido__cliente__nome_fantasia__icontains|as_crispy_field }}
                     </div>
 
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
-                        placeholder="Contrato">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Peso" data-placement="bottom"
+                        placeholder="Peso">
                         {{ filter.form.peso__icontains|as_crispy_field }}
                     </div>
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
-                        placeholder="Contrato">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Peso" data-placement="bottom"
+                        placeholder="Peso">
                         {{ filter.form.peso__gte|as_crispy_field }}
                     </div>
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
-                        placeholder="Contrato">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Peso" data-placement="bottom"
+                        placeholder="Peso">
                         {{ filter.form.peso__lte|as_crispy_field }}
                     </div>
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
-                        placeholder="Data">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Ordem" data-placement="bottom"
+                        placeholder="Ordem">
                         {{ filter.form.ordering|as_crispy_field }}
                     </div>
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
-                        placeholder="Contrato">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Situacao" data-placement="bottom"
+                        placeholder="Situacao">
                         {{ filter.form.situacao__icontains|as_crispy_field }}
                     </div>
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
-                        placeholder="Contrato">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Cidade" data-placement="bottom"
+                        placeholder="Cidade">
                         {{ filter.form.pedido__fornecedor__cidade__cidade__icontains|as_crispy_field }}
                     </div>
 
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
-                        placeholder="Data">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Valor NF" data-placement="bottom"
+                        placeholder="Valor NF">
                         {{ filter.form.valornf__icontains|as_crispy_field }}
                     </div>
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
-                        placeholder="Data">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Valor NF" data-placement="bottom"
+                        placeholder="Valor NF">
                         {{ filter.form.valornf__gte|as_crispy_field }}
 
                     </div>
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom"
-                        placeholder="Data">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Valor NF" data-placement="bottom"
+                        placeholder="Valor NF">
                         {{ filter.form.valornf__lte|as_crispy_field }}
                     </div>
 
@@ -976,6 +983,8 @@
 
     </div>
     {% endif %}
+
+
 </body>
 <br>
 <script>
@@ -994,6 +1003,8 @@
 <script type="text/javascript"></script>
 <!-- MDBootstrap Datatables  -->
 <script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
+
+
 <script>
     $(document).ready(function () {
         $('#cargas5').DataTable({
@@ -1045,16 +1056,54 @@
     });
 
 
+
     $(document).ready(function () {
         $('#id_data').mask('00/00/0000');
         $('#id_data__gte').mask('00/00/0000');
         $('#id_data__lte').mask('00/00/0000');
     })
 
+    $(document).ready(function () {
+        var listamot = [{% for c in cargas|dictsort:"motorista" %} "{{ c.motorista|safe }}", {% endfor %}]
+        var lista1 = [...new Set(listamot)];
+    $("#id_motorista__icontains").autocomplete({
+        source: lista1
+    })
+    })
+
+
+    $(document).ready(function () {
+        var listaplaca = [{% for c in cargas|dictsort:"placa" %} "{{ c.placa|safe }}", {% endfor %}]
+        var listaplaca1 = [...new Set(listaplaca)];
+    $("#id_placa__icontains").autocomplete({
+        source: listaplaca1
+    })
+    })
+
 
 </script>
+
+<script>
+
+</script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <!-- jQuery -->
 <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+
+
+<!--Autocomplete-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
 <!-- jQuery Masks-->
 <script type="text/javascript" src="{% static 'js/jquery.mask.js' %}"></script>
+
+
+<script type="text/javascript">
+
+</script>

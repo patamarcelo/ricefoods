@@ -1,25 +1,45 @@
 {% load bootstrap4 %}
 {% block content %}
 
+<style>
+    @media (min-width:980px) {
+        small {
+            margin-left: 55%;
+        }
+    }
+
+    @media (min-width:980px) {
+        small {
+            margin-right: 12.5%;
+        }
+    }
+
+    .fa-lg,
+    .fa-sm {
+        vertical-align: bottom !important;
+        margin-bottom: 9.5px;
+    }
+
+</style>
 <small style="float: right;">Olá {{ user.first_name|title }}, {% now "SHORT_DATETIME_FORMAT" %}</small>
 <br />
-{% if user.is_superuser %}
-{% if request.get_full_path ==  "/corretora/dashboard" %}
-{% else %}
-<a class="btn btn-success btn-sm" href="{% url 'dashboard' %}" target="_blank">Painel</a>
-{% endif %}
-{% endif %}
-<a class="btn btn-primary btn-sm" href="{% url 'pedidos' %}" target="_blank">Pedidos</a>
-<a class="text text-success fas fa-clipboard-list fa-lg" href="{% url 'add_pedidos' %}" target="_blank"></a>
-<a class="btn btn-primary btn-sm" href="{% url 'cargas' %}" target="_blank">Cargas</a>
-<a class="text text-success fas fa-truck-moving fa-lg" href="{% url 'add_age_cargas' %}" target="_blank"></a>
-<a class="btn btn-outline-info btn-sm" href="{% url 'cargasfiltro' %}" target="_blank">Cargas F</a>
-<a class="btn btn-primary btn-sm" href="{% url 'fornecedores' %}" target="_blank">Fornecedores</a>
-<a class="text text-success fas fa-user-plus fa-sm" href="{% url 'add_fornecedor' %}" target="_blank"></a>
+<div class="container botoesfixo">
+    {% if user.is_superuser %}
+    {% if request.get_full_path ==  "/corretora/dashboard" %}
+    {% else %}
+    <a class="btn btn-success btn-sm" href="{% url 'dashboard' %}" target="_blank">Painel</a>
+    {% endif %}
+    {% endif %}
+    <a class="btn btn-primary btn-sm" href="{% url 'pedidos' %}" target="_blank">Pedidos</a>
+    <a class="text text-success fas fa-clipboard-list fa-lg" href="{% url 'add_pedidos' %}" target="_blank"></a>
+    <a class="btn btn-primary btn-sm" href="{% url 'cargas' %}" target="_blank">Cargas</a>
+    <a class="text text-success fas fa-truck-moving fa-lg" href="{% url 'add_age_cargas' %}" target="_blank"></a>
+    <a class="btn btn-outline-info btn-sm" href="{% url 'cargasfiltro' %}" target="_blank">Cargas F</a>
+    <a class="btn btn-primary btn-sm" href="{% url 'fornecedores' %}" target="_blank">Fornecedores</a>
+    <a class="text text-success fas fa-user-plus fa-sm" href="{% url 'add_fornecedor' %}" target="_blank"></a>
+    <a class="btn btn-outline-info btn-sm" target="_blank" href="{% url 'admin:index'  %}">Admin</a>
 
-
-
-<a class="btn btn-outline-info btn-sm" target="_blank" href="{% url 'admin:index'  %}">Admin</a>
+</div>
 <hr>
 
 {% endblock %}

@@ -42,7 +42,10 @@ class CargasFiltradasView(LoginRequiredMixin, FilterView):
     filterset_class = CargasFilter
     ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
     
-    
+    def get_context_data(self, **kwargs):
+        context = super(CargasFiltradasView, self).get_context_data(**kwargs)
+        context['cargas'] = Carga.objects.all
+        return context
     
 
   

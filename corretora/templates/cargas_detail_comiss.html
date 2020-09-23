@@ -69,8 +69,8 @@
 
     </style>
     <style>
-        .table-hover>tbody>tr:hover>td,
-        .table-hover>tbody>tr:hover>th {
+        .table-hover>tbody>tr:not(.nothover):hover>td,
+        .table-hover>tbody>tr:not(.nothover):hover>th {
             background-color: #a9a9a9;
             color: black;
         }
@@ -318,53 +318,56 @@
                         {% endfor %}
                         {% endfor %}
                     </tr>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="3" class="border-top border-dark"></td>
-                    <td align="right" colspan="1" class="border-top border-dark"></td>
+                    <tr class="nothover">
+                        <td colspan="1" class="border-top border-dark"></td>
+                        <td colspan="1" class="border-top border-dark"></td>
+                        <td colspan="1" class="border-top border-dark"></td>
+                        <td colspan="3" class="border-top border-dark"></td>
+                        <td align="right" colspan="1" class="border-top border-dark"></td>
 
 
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td align="center" colspan="1" class="border-top border-dark"><strong><i>TOTAIS</i></strong></td>
-                    <td align="center" class="border-top border-dark"><i><strong>{{ totalpeso.peso__sum|intcomma }}
-                                Kg</i><strong></td>
-                    <td align="center" class="border-top border-dark">
-                        <i><strong>{{ totalpeso.peso__sum|div:50|floatformat:"-2" }}
-                                Scs</i><strong></td>
-                    {% for pedido in pedidos %}
-                    {% if "CDA" in pedido.cliente.nome %}
-                    <td align="center" class="border-top border-dark"><i><strong>R$ {{ totalnf.valornf__sum|intcomma }}
-                        </i><strong></td>
-                    {% else %}
-                    <td align="center" class="border-top border-dark"><strong><i>R$
-                                {{ totalpeso.peso__sum|div:50|mul:pedido.preco_produto|floatformat:"2" }}
-                            </i></strong></td>
-                    {% endif %}
+                        <td colspan="1" class="border-top border-dark"></td>
+                        <td align="center" colspan="1" class="border-top border-dark"><strong><i>TOTAIS</i></strong>
+                        </td>
+                        <td align="center" class="border-top border-dark"><i><strong>{{ totalpeso.peso__sum|intcomma }}
+                                    Kg</i><strong></td>
+                        <td align="center" class="border-top border-dark">
+                            <i><strong>{{ totalpeso.peso__sum|div:50|floatformat:"-2" }}
+                                    Scs</i><strong></td>
+                        {% for pedido in pedidos %}
+                        {% if "CDA" in pedido.cliente.nome %}
+                        <td align="center" class="border-top border-dark"><i><strong>R$
+                                    {{ totalnf.valornf__sum|intcomma }}
+                            </i><strong></td>
+                        {% else %}
+                        <td align="center" class="border-top border-dark"><strong><i>R$
+                                    {{ totalpeso.peso__sum|div:50|mul:pedido.preco_produto|floatformat:"2" }}
+                                </i></strong></td>
+                        {% endif %}
 
-                    <td align="center" class="border-top border-dark"><i><strong>R$
-                                {{ pedido.totalcomissaocasca|floatformat:2 }}
-                        </i><strong></td>
-                    {% endfor %}
-                    {% if totalpago.vpcomissaoc__sum == 0 or totalpago.vpcomissaoc__sum == None %}
-                    <td align="center" class="border-top border-dark"><i>R$ &nbsp; - </i> </td>
-                    {% else %}
-                    <td align="center" class="border-top border-dark"><i><strong>R$
-                                {{ totalpago.vpcomissaoc__sum|floatformat:2 }}
-                        </i><strong></td>
-                    {% endif %}
-                    {% for pedido in pedidos %}
-                    {% if totalaberto.vpcomissaoc__count == 0 %}
-                    <td align="center" class="border-top border-dark"><b> R$ 0,00 </b></td>
-                    {% else %}
-                    <td align="center" class="border-top border-dark"><i><strong>R$
-                                {{ pedido.saldototalcomissaocasca|floatformat:2 }}
-                        </i><strong></td>
+                        <td align="center" class="border-top border-dark"><i><strong>R$
+                                    {{ pedido.totalcomissaocasca|floatformat:2 }}
+                            </i><strong></td>
+                        {% endfor %}
+                        {% if totalpago.vpcomissaoc__sum == 0 or totalpago.vpcomissaoc__sum == None %}
+                        <td align="center" class="border-top border-dark"><i>R$ &nbsp; - </i> </td>
+                        {% else %}
+                        <td align="center" class="border-top border-dark"><i><strong>R$
+                                    {{ totalpago.vpcomissaoc__sum|floatformat:2 }}
+                            </i><strong></td>
+                        {% endif %}
+                        {% for pedido in pedidos %}
+                        {% if totalaberto.vpcomissaoc__count == 0 %}
+                        <td align="center" class="border-top border-dark"><b> R$ 0,00 </b></td>
+                        {% else %}
+                        <td align="center" class="border-top border-dark"><i><strong>R$
+                                    {{ pedido.saldototalcomissaocasca|floatformat:2 }}
+                            </i><strong></td>
 
-                    {% endif %}
-                    {% endfor %}
+                        {% endif %}
+                        {% endfor %}
 
-
+                    </tr>
 
 
                 </tbody>

@@ -77,8 +77,8 @@
 
     </style>
     <style>
-        .table-hover>tbody>tr:hover>td,
-        .table-hover>tbody>tr:hover>th {
+        .table-hover>tbody>tr:not(.nothover):hover>td,
+        .table-hover>tbody>tr:not(.nothover):hover>th {
             background-color: #a9a9a9;
             color: black;
         }
@@ -561,9 +561,6 @@
 
         <div class="container-fluid" id="cargasrelatorio">
             <table class=" width table table-sm table-hover" align="center">
-
-
-
                 <thead align="center" class="table-bordered thead-dark">
 
                     <tr>
@@ -597,7 +594,7 @@
 
                 <tbody class="align-text-bottom table-borderless">
                     {% for pedido in pedidos %}
-                    <tr align="center">
+                    <tr align="center" class="nothover">
                         <td colspan="1" class="border_bottom"></td>
                         <td colspan="1" class="border_bottom"></td>
                         <td colspan="1" class="border_bottom"></td>
