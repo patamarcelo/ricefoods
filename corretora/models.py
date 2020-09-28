@@ -519,7 +519,7 @@ class Pedido(Base):
     data = models.DateField(default=timezone.now, help_text="dd/mm/aaaa")
     fornecedor = models.ForeignKey(Fornecedor, on_delete=models.PROTECT)
     cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
-    preco_produto = models.DecimalField('Preço Produto', max_digits=8, decimal_places=2)
+    preco_produto = models.DecimalField('R$ Produto', max_digits=8, decimal_places=2)
     preco_frete = models.DecimalField('Frete', max_digits=5, decimal_places=2)
 
     comissaoc = models.DecimalField('Comissão C', max_digits=4, decimal_places=2 )
@@ -536,13 +536,13 @@ class Pedido(Base):
     gessado = models.DecimalField('Gessado', max_digits=4, decimal_places=2,null=True,blank=True)
     bbranca = models.DecimalField('B. Branca', max_digits=4, decimal_places=2,null=True, blank=True)
     amarelo = models.DecimalField('Amarelo', max_digits=4, decimal_places=2,null=True, blank=True)
-    manchpic = models.DecimalField('Manch/ Pic', max_digits=4, decimal_places=2,null=True, blank=True)
+    manchpic = models.DecimalField('Man / Pic', max_digits=4, decimal_places=2,null=True, blank=True)
     vermelhos = models.DecimalField('Vermelhos', max_digits=4, decimal_places=2,null=True, blank=True)
 
     variedade = models.CharField('Variedade', max_length=12)
     produto = models.CharField('Produto', max_length=17, choices=PROD_CHOICES,default='Arroz em Casca')
     tipo = models.CharField('Tipo', max_length=12, choices=TIPO_CHOICES, default='Saco 50Kg')
-    quantidade_pedido = models.PositiveIntegerField('Quantidade Pedido', help_text="Peso em Kg")
+    quantidade_pedido = models.PositiveIntegerField('Quant. Pedido', help_text="Peso em Kg")
     
 
     obs = models.TextField('Observação', max_length=500, blank=True)    

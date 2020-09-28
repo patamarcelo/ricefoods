@@ -13,7 +13,26 @@
     {% bootstrap_css %}
     {% if 'add/age' in request.get_full_path %}
     <title>Agendar | Painel de Controle</title>
+    {% elif 'corretora/fornecedores/add' in request.get_full_path %}
+    <title>Add Fornecedor | Painel de Controle</title>
+    {% elif 'corretora/fornecedores' in request.get_full_path and 'update' in request.get_full_path %}
+    <title>Editar Fornecedor | Painel de Controle</title>
+
+    {% elif 'corretora/pedidos/add' in request.get_full_path %}
+    <title>Add Pedido | Painel de Controle</title>
+    {% elif 'corretora/pedidos' in request.get_full_path  and 'update' in request.get_full_path %}
+    <title>Editar Pedido | Painel de Controle</title>
+
+    {% elif 'corretora/cargas/add' in request.get_full_path %}
+    <title>Add Carga | Painel de Controle</title>
+
+    {% elif 'corretora/cargas' in request.get_full_path  and 'update/comiss' in request.get_full_path %}
+    <title>Editar Comissão | Painel de Controle</title>
+
+    {% elif 'corretora/cargas' in request.get_full_path  and 'update' in request.get_full_path %}
+    <title>Editar Carga | Painel de Controle</title>
     {% else %}
+
     <title>Corretora | Painel de Controle</title>
     {% endif %}
 
@@ -116,17 +135,24 @@
             font-size: .990rem;
         }
 
-        #resumopedidos,
-        #resumocargas,
-        #resumos,
-        #graficos {
-            display: none;
-        }
+
 
 
         @media (min-width:980px) {
             .cabecalho {
                 margin-left: 55%;
+            }
+        }
+
+        @media (min-width:980px) {
+            .cabecalhopedido {
+                margin-left: 30%;
+            }
+        }
+
+        @media (min-width:980px) {
+            .editarpedido {
+                margin-left: 30%;
             }
         }
 
@@ -146,6 +172,14 @@
             color: whitesmoke !important;
         }
 
+        #icms {
+            height: 30px;
+            width: 125px;
+            border: 2px solid black;
+            font-style: italic;
+            font-weight: bold;
+        }
+
     </style>
     <!--Favicon-->
     <link rel="icon" href="{% static 'images/favicon.png' %}">
@@ -160,6 +194,34 @@
 
             <div class="col-3">
                 <h1 class="cabecalho"> <strong>Agendamento</strong></h1>
+            </div>
+            {% elif 'corretora/fornecedores/add' in request.get_full_path %}
+            <div class="col-6">
+                <h1 class="cabecalhopedido"> <strong>Add Fornecedor</strong></h1>
+            </div>
+            {% elif 'corretora/fornecedores' in request.get_full_path and 'update' in request.get_full_path %}
+            <div class="col-6">
+                <h1 class="cabecalhopedido"> <strong>Editar Fornecedor</strong></h1>
+            </div>
+            {% elif 'corretora/pedidos/add' in request.get_full_path %}
+            <div class="col-6">
+                <h1 class="cabecalhopedido"> <strong>Add Pedido</strong></h1>
+            </div>
+            {% elif 'corretora/pedidos' in request.get_full_path  and 'update' in request.get_full_path %}
+            <div class="col-6">
+                <h1 class="editarpedido"> <strong>Editar Pedido</strong></h1>
+            </div>
+            {% elif 'corretora/cargas/add' in request.get_full_path %}
+            <div class="col-6">
+                <h1 class="editarpedido"> <strong>Add Carga</strong></h1>
+            </div>
+            {% elif 'corretora/cargas' in request.get_full_path  and 'update/comiss' in request.get_full_path %}
+            <div class="col-6">
+                <h1 class="editarpedido"> <strong>Editar Comissão</strong></h1>
+            </div>
+            {% elif 'corretora/cargas' in request.get_full_path  and 'update' in request.get_full_path %}
+            <div class="col-6">
+                <h1 class="editarpedido"> <strong>Editar Carga</strong></h1>
             </div>
             {% else %}
             <div class="col-8">
@@ -264,12 +326,6 @@
         }, 3000);
 
 
-        setTimeout(function () {
-            document.getElementById("resumopedidos").style.display = "block";
-            document.getElementById("resumocargas").style.display = "block";
-            document.getElementById("resumos").style.display = "block";
-            document.getElementById("graficos").style.display = "block";
-        }, 100);
 
 
     </script>

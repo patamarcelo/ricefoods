@@ -3,78 +3,119 @@
 {% block content %}
 {% load crispy_forms_tags %}
 
+<style>
+    #id_obs {
+        height: 150px;
+        margin-bottom: 0px;
+    }
+
+    .formulario {
+        border: 0.2px solid #ccc;
+        padding: 20px;
+        padding-bottom: 0px;
+    }
+
+    @media (min-width:980px) {
+        .botoestop {
+            margin-left: 16%;
+        }
+    }
+
+    @media (min-width:980px) {
+        .botoestop2 {
+            margin-right: 41%;
+        }
+    }
+
+    input[type=text],
+    input[type=number],
+    div select {
+        height: 32px !important;
+        font-size: 15px !important;
+        margin-bottom: 0px !important;
+        margin-top: 0px !important;
+    }
+
+</style>
+
 
 <form method="POST" novalidate class="needs-validation">
     {% csrf_token %}
 
     <div class="row align-items-center">
-        <div class="col">
+        <div class="col botoestop">
             <h4><span class="badge badge-success"> Adicionar Fornecedor</span></h4>
         </div>
         <div class="col" align=right>
             <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" />
-            <a class="btn btn-warning btn-sm" href="{% url 'corretora' %}">Voltar</a>
+            <a class="btn btn-warning btn-sm botoestop2" href="javascript:history.back()">Voltar</a>
         </div>
     </div>
     <br />
-    <hr>
-    <div class="container">
-        <div class="form-row">
-            <div class="col-lg-6 col-md-10 col-sm-12 col-12 form-group">
+
+    <div class="container d-flex flex-column justify-content-center  col-8 formulario">
+        <div class="d-flex flex-row justify-content-between form-row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12 form-group">
                 {{ form.nome|as_crispy_field }}
             </div>
         </div>
-        <div class="form-row">
-            <div class="col-lg-3 col-md-5 col-sm-6 col-6 form-group">
+        <div class="d-flex flex-row justify-content-between form-row">
+            <div class="col-lg-8 col-md-6 col-sm-6 col-6 form-group">
                 {{ form.cnpj_cpf|as_crispy_field }}
             </div>
-            <div class="col-lg-3 col-md-5 col-sm-6 col-6 form-group">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-6 form-group">
                 {{ form.insc_estadual|as_crispy_field }}
             </div>
         </div>
-        <div class="form-row">
-            <div class="col-lg-6 col-md-10 col-sm-12 col-12 form-group">
+        <div class="d-flex flex-row justify-content-between form-row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12 form-group">
                 {{ form.endereco|as_crispy_field }}
             </div>
         </div>
-        <div class="form-row">
-            <div class="col-lg-4 col-md-6 col-sm-7 col-7 form-group">
+        <div class="d-flex flex-row justify-content-between form-row">
+            <div class="col-lg-8 col-md-8 col-sm-7 col-7 form-group">
                 {{ form.cidade|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-md-4 col-sm-5 col-5 form-group">
+            <div class="col-lg-4 col-md-4 col-sm-5 col-5 form-group">
                 {{ form.estado|as_crispy_field }}
             </div>
         </div>
         <hr>
-        <div class="form-row">
-            <div class="col-lg-2 col-md-4 col-sm-4 col-4 form-group">
+        <div class="d-flex flex-row justify-content-between form-row">
+            <div class="col-lg-5 col-md-4 col-sm-4 col-4 form-group">
                 {{ form.banco|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-4 col-4 form-group">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-4 form-group">
                 {{ form.agencia|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-4 col-4 form-group">
+            <div class="col-lg-4 col-md-5 col-sm-4 col-4 form-group">
                 {{ form.conta|as_crispy_field }}
             </div>
         </div>
-        <hr>
 
-        <div class="form-row">
-            <div class="col-lg-6 col-md-10 col-sm-12 col-12 offset-sm form-group">{{ form.obs|as_crispy_field }}</div>
+        <div class="d-flex flex-row justify-content-between form-row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12  form-group">{{ form.obs|as_crispy_field }}
+            </div>
         </div>
+    </div>
+
+    {% buttons %}
+    <div class="container botoes">
+        <div class="d-flex flex-row justify-content-center align-content-center">
+            <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" data-toggle="tooltip"
+                title="Salvar" data-placement="top" />
+            <input type="submit" class="btn btn-success btn-sm" name="save_and_continue" value="Salvar e Continuar"
+                data-toggle="tooltip" title="Salvar e Continuar" data-placement="top" />
+            <button type="button" class="btn btn-outline-warning btn-sm">
+                <a href="{% url 'fornecedores' %}" data-toggle="tooltip" title="Cancelar"
+                    data-placement="top">Cancelar</a>
+            </button>
+        </div>
+    </div>
 
 
 
-        {% buttons %}
+    {% endbuttons %}
 
-        <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" />
-        <input type="submit" class="btn btn-success btn-sm" name="save_and_continue" value="Salvar e Continuar" />
-        <button type="button" class="btn btn-warning btn-sm">
-            <a href="{% url 'fornecedores' %}">Cancelar</a>
-        </button>
-
-
-
-        {% endbuttons %}
 </form>
 {% endblock %}

@@ -4,20 +4,46 @@
 {% load crispy_forms_tags %}
 
 
+<style>
+    #id_obs {
+        height: 150px;
 
+    }
+
+    .classificacao {
+        font-style: oblique;
+        margin-bottom: 0px;
+        text-decoration: underline;
+        margin-top: 20px;
+        align-self: center;
+    }
+
+    @media (min-width:980px) {
+        .botoestop {
+            margin-left: 32%;
+        }
+    }
+
+    @media (min-width:980px) {
+        .botoestop2 {
+            margin-right: 27%;
+        }
+    }
+
+</style>
 
 <form method="POST">
     <div class="row align-items-center">
         <div class="col">
             <div class="row">
-                <div class="container">
+                <div class="botoestop container">
                     <h4> <span class="badge badge-primary p-1 m-1"> Pedido: {{carga.pedido}}
                         </span>&nbsp;&nbsp;<span
                             class="badge badge-dark p-1 m-1">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
                             -
                             {{carga.motorista|title}}</span>
                 </div>
-                <div class="container-fluid">
+                <div class="botoestop container-fluid">
                     <h5> <span class="badge badge-warning p-1 m-1">{{carga.pedido.fornecedor.nome}}</span>
                         &nbsp;&nbsp;<span
                             class="badge badge-warning p-1 m-1">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
@@ -27,66 +53,79 @@
         </div>
         <div class="col" align=right>
             <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-            <a class="btn btn-warning btn-sm" href="javascript:history.back()">Voltar</a>
+            <a class="btn btn-warning btn-sm botoestop2" href="javascript:history.back()">Voltar</a>
         </div>
     </div>
 
     {% csrf_token %}
-    <hr>
-    <div class="form-row">
-        <div class="col-lg-2 col-md-3 col-sm-3 col-3  form-group">
-            {{ form.renda|as_crispy_field }}
+    <div class="container d-flex flex-column justify-content-center align-items-center col-7">
+        <h4 class="classificacao" style="margin-bottom: 20px"><span class="badge badge-info">Classificação</span></h4>
+        <div class=" d-flex flex-row justify-content-between form-row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-3  form-group">
+                {{ form.renda|as_crispy_field }}
 
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-3  form-group">
+                {{ form.inteiro|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-3  form-group">
+                {{ form.impureza|as_crispy_field }}
+
+            </div>
+
+
+            <div class="col-lg-3 col-md-3 col-sm-3 col-3  form-group">
+                {{ form.umidade|as_crispy_field }}
+
+            </div>
         </div>
-        <div class="col-lg-2 col-md-3 col-sm-3 col-3  form-group">
-            {{ form.inteiro|as_crispy_field }}
+        <div class="d-flex flex-row justify-content-between form-row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-3 form-group">
+                {{ form.gessado|as_crispy_field }}
 
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-3 form-group">
+                {{ form.bbranca|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
+                {{ form.amarelo|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
+                {{ form.manchpic|as_crispy_field }}
+
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
+                {{ form.vermelhos|as_crispy_field }}
+            </div>
         </div>
-        <div class="col-lg-2 col-md-3 col-sm-3 col-3  form-group">
-            {{ form.impureza|as_crispy_field }}
+        <br>
 
+        <div class="form-row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                {{ form.obs|as_crispy_field }}
+            </div>
         </div>
 
 
-        <div class="col-lg-2 col-md-3 col-sm-3 col-3  form-group">
-            {{ form.umidade|as_crispy_field }}
-
-        </div>
     </div>
-    <div class="form-row">
-        <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
-            {{ form.gessado|as_crispy_field }}
 
-        </div>
-        <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
-            {{ form.bbranca|as_crispy_field }}
 
-        </div>
-        <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
-            {{ form.amarelo|as_crispy_field }}
 
-        </div>
-        <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
-            {{ form.manchpic|as_crispy_field }}
 
-        </div>
-        <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
-            {{ form.vermelhos|as_crispy_field }}
-        </div>
-    </div>
-    <hr>
-
-    <div class="form-row">
-        <div class="col-lg-8 col-md-8 col-sm-8 col-8 offset-sm form-group">{{ form.obs|as_crispy_field }}</div>
-    </div>
     {% buttons %}
+    <div class="container botoes">
+        <div class="d-flex flex-row justify-content-center align-content-center">
+            <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" data-toggle="tooltip"
+                title="Salvar" data-placement="top" />
 
-    <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-    <button type="button" class="btn btn-outline-warning btn-sm">
-        <a href="{% url 'cargas' %}">Cancelar</a>
-    </button>
-
-
+            <button type="button" class="btn btn-outline-warning btn-sm">
+                <a href="{% url 'cargas' %}" data-toggle="tooltip" title="Cancelar" data-placement="top">Cancelar</a>
+            </button>
+        </div>
+    </div>
 
     {% endbuttons %}
 </form>

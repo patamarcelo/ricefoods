@@ -39,17 +39,35 @@
         margin-right: 10px;
     }
 
+    #id_obs {
+        height: 150px;
+    }
+
+    input[type=text],
+    input[type=number],
+    div select {
+        height: 32px !important;
+        font-size: 15px !important;
+        margin-bottom: 0px !important;
+        margin-top: 0px !important;
+    }
 
     @media (min-width:980px) {
         .botoestop {
-            margin-left: 11%;
+            margin-left: 14.5%;
         }
     }
 
     @media (min-width:980px) {
         .botoestop2 {
-            margin-right: 26%;
+            margin-right: 36%;
         }
+    }
+
+    .formulario {
+        border: 0.2px solid #ccc;
+        padding: 20px;
+        padding-bottom: 0px;
     }
 
 </style>
@@ -64,16 +82,16 @@
 
             <div class="col savea " align=right>
                 <input type="submit" class="btn btn-primary btn-sm " name='save' value="Salvar" />
-                <a class="btn btn-warning btn-sm botoestop2" href="{% url 'corretora' %}">Voltar</a>
+                <a class="btn btn-warning btn-sm botoestop2" href="{% url 'cargas' %}">Voltar</a>
             </div>
         </div>
     </div>
     <br />
 
 
-    <div class="container caixaobs">
+    <div class="container d-flex flex-column justify-content-center  col-8 formulario">
 
-        <div class="form-row flex-row justify-content-center caixacheck">
+        <div class="form-row flex-row justify-content-around caixacheck">
 
             <div class="col-lg-2 col-md-3 col-sm-4 col-4 form-group" data-toggle="tooltip" title="Ordem Enviada?"
                 data-placement="bottom">
@@ -95,30 +113,30 @@
 
         <div class="form-row form-control-is-valid flex-row justify-content-center">
 
-            <div class="col-lg-3 col-sm-4 col-6   form-group" data-toggle="tooltip" title="Pedido"
+            <div class="col-lg-4 col-sm-6 col-6   form-group" data-toggle="tooltip" title="Pedido"
                 data-placement="bottom">
                 {{ form.pedido|as_crispy_field }}
             </div>
-            <div class="col-lg-3 col-sm-4 col-6   form-group" data-toggle="tooltip" title="Data"
+            <div class="col-lg-4 col-sm-6 col-6   form-group" data-toggle="tooltip" title="Data"
                 data-placement="bottom">
                 {{ form.data|as_crispy_field }}
             </div>
-            <div class="col-lg-3 col-sm-4 col-6   form-group" data-toggle="tooltip" title="Situação"
+            <div class="col-lg-4 col-sm-6 col-6   form-group" data-toggle="tooltip" title="Situação"
                 data-placement="bottom">
                 {{ form.situacao|as_crispy_field }}
             </div>
         </div>
         <div class="form-row flex-row justify-content-center">
 
-            <div class="col-lg-3 col-sm-4 col-6  form-group" data-toggle="tooltip" title="Transportadora"
+            <div class="col-lg-4 col-sm-6 col-6  form-group" data-toggle="tooltip" title="Transportadora"
                 data-placement="bottom">
                 {{ form.transp|as_crispy_field }}
             </div>
-            <div class="col-lg-3 col-sm-4 col-6  form-group" data-toggle="tooltip" title="Veículo"
+            <div class="col-lg-4 col-sm-6 col-6  form-group" data-toggle="tooltip" title="Veículo"
                 data-placement="bottom">
                 {{ form.veiculo|as_crispy_field }}
             </div>
-            <div class="col-lg-3 col-sm-4 col-6 form-group" data-toggle="tooltip" title="Buonny"
+            <div class="col-lg-4 col-sm-6 col-6 form-group" data-toggle="tooltip" title="Buonny"
                 data-placement="bottom">
                 {{ form.buonny|as_crispy_field }}
             </div>
@@ -131,24 +149,24 @@
 
 
 
-            <div class="col-lg-3 col-sm-4 col-6 form-group" data-toggle="tooltip" title="Placa" data-placement="bottom">
+            <div class="col-lg-4 col-sm-6 col-6 form-group" data-toggle="tooltip" title="Placa" data-placement="bottom">
                 {{ form.placa|as_crispy_field }}
             </div>
-            <div class="col-lg-3 col-sm-4 col-6 form-group" data-toggle="tooltip" title="Motorista"
+            <div class="col-lg-4 col-sm-6 col-6 form-group" data-toggle="tooltip" title="Motorista"
                 data-placement="bottom">
                 {{ form.motorista|as_crispy_field }}
             </div>
 
 
 
-            <div class="col-lg-3 col-sm-4 col-6 form-group" data-toggle="tooltip" title="Valor frete"
+            <div class="col-lg-4 col-sm-6 col-6 form-group" data-toggle="tooltip" title="Valor frete"
                 data-placement="bottom">
                 {{ form.valor_mot|as_crispy_field }}
             </div>
 
         </div>
         <div class="form-row flex-row justify-content-center">
-            <div class="col-lg-9 col-md-12 col-sm-12 col-12  offset-sm form-group caixaobs" data-toggle="tooltip"
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12  offset-sm form-group caixaobs" data-toggle="tooltip"
                 title="Observações" data-placement="top">
                 {{ form.obs|as_crispy_field }}
             </div>
@@ -164,7 +182,7 @@
                 title="Salvar" data-placement="top" />
             <input type="submit" class="btn btn-success btn-sm" name="save_and_continue" value="Salvar e Continuar"
                 data-toggle="tooltip" title="Salvar e Continuar" data-placement="top" />
-            <button type="button" class="btn btn-warning btn-sm">
+            <button type="button" class="btn btn-outline-warning btn-sm">
                 <a href="{% url 'cargas' %}" data-toggle="tooltip" title="Cancelar" data-placement="top">Cancelar</a>
             </button>
         </div>

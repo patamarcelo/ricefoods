@@ -3,21 +3,66 @@
 {% block content %}
 {% load crispy_forms_tags %}
 
+<style>
+    #id_obs {
+        height: 150px;
+    }
 
+    .classificacao {
+        font-style: oblique;
+        margin-bottom: 30px;
+        text-decoration: underline;
+        margin-top: 20px;
+        align-self: center;
+    }
+
+    .produto {
+        margin-bottom: 30px;
+        align-self: center;
+        margin-top: 0px;
+    }
+
+    input[type=text],
+    input[type=number],
+    div select {
+        height: 34px !important;
+        font-size: 15px !important;
+
+    }
+
+    @media (min-width:980px) {
+        .botoestop {
+            margin-left: 24%;
+        }
+    }
+
+    @media (min-width:980px) {
+        .botoestop2 {
+            margin-right: 26%;
+        }
+    }
+
+    .formulario {
+        border: 0.2px solid #ccc;
+        padding: 20px;
+        padding-bottom: 0px;
+    }
+
+</style>
 
 <form method="POST" novalidate class="needs-validation">
     {% csrf_token %}
     <div class="row align-items-center">
         <div class="col">
             <div class="row">
-                <div class="container">
+                <div class="container botoestop">
                     <h4> <span class="badge badge-primary p-1 m-1"> Pedido: {{carga.pedido}}
                         </span>&nbsp;&nbsp;<span
                             class="badge badge-dark p-1 m-1">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
                             -
                             {{carga.motorista|title}}</span>
                 </div>
-                <div class="container-fluid">
+                <div class="container-fluid botoestop">
                     <h5><span class="badge badge-warning p-1 m-1">{{carga.pedido.fornecedor.nome}}</span>
                         &nbsp;&nbsp;<span
                             class="badge badge-warning p-1 m-1">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
@@ -27,22 +72,23 @@
         </div>
         <div class="col" align=right>
             <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-            <a class="btn btn-warning btn-sm" href="javascript:history.back()">Voltar</a>
+            <a class="btn btn-warning btn-sm botoestop2" href="javascript:history.back()">Voltar</a>
         </div>
     </div>
+
+
     <br />
-    <hr>
-    <div class="container">
-        <div class="form-row">
-            <div class="col-lg-1 col-md-6 col-sm-2 col-4 form-group" data-toggle="tooltip" title="Ordem Enviada?"
+    <div class="container d-flex flex-column justify-content-center  col-9 formulario">
+        <div class="d-flex flex-row justify-content-start form-row">
+            <div class="col-lg-2 col-md-4 col-sm-4 col-4 form-group" data-toggle="tooltip" title="Ordem Enviada?"
                 data-placement="bottom">
                 {{ form.ordem|as_crispy_field }}
             </div>
-            <div class="col-lg-1 col-md-6 col-sm-2 col-4 form-group" data-toggle="tooltip" title="CPF?"
+            <div class="col-lg-2 col-md-4 col-sm-4 col-4 form-group" data-toggle="tooltip" title="CPF?"
                 data-placement="bottom">
                 {{ form.tac|as_crispy_field }}
             </div>
-            <div class="col-lg-1 col-md-6 col-sm-2 col-4 form-group" data-toggle="tooltip" title="Chegou?"
+            <div class="col-lg-2 col-md-4 col-sm-4 col-4 form-group" data-toggle="tooltip" title="Chegou?"
                 data-placement="bottom">
                 {{ form.chegada|as_crispy_field }}
             </div>
@@ -50,108 +96,105 @@
 
 
 
-
-        <div class="form-row form-control-is-valid">
+        <div class="d-flex flex-row justify-content-around form-row">
             <div class="col-lg-2 col-sm-4 col-6 form-group" data-toggle="tooltip" title="Pedido"
                 data-placement="bottom">
                 {{ form.pedido|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-4 col-6  form-group" data-toggle="tooltip" title="Data" data-placement="bottom">
+            <div class="col-lg-2 col-md-4 col-sm-4 col-6  form-group" data-toggle="tooltip" title="Data"
+                data-placement="bottom">
 
                 {{ form.data|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-4 col-4  form-group" data-toggle="tooltip" title="Situação"
+            <div class="col-lg-3 col-md-4 col-sm-4 col-4  form-group" data-toggle="tooltip" title="Situação"
                 data-placement="bottom">
                 {{ form.situacao|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-4 col-4 form-group" data-toggle="tooltip" title="Transportadora"
+            <div class="col-lg-3 col-md-6 col-sm-6 col-4 form-group" data-toggle="tooltip" title="Transportadora"
                 data-placement="bottom">
                 {{ form.transp|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-4 col-4 form-group" data-toggle="tooltip" title="Veículo"
+            <div class="col-lg-2 col-md-6 col-sm-6 col-4 form-group" data-toggle="tooltip" title="Veículo"
                 data-placement="bottom">
                 {{ form.veiculo|as_crispy_field }}
             </div>
         </div>
-        <div class="form-row">
-            <div class="col-lg-2 col-sm-4 col-md-4 col-4 form-group" data-toggle="tooltip" title="Buonny"
-                data-placement="bottom">
+        <h4 class="produto"><span class="badge badge-info">Dados Motorista</span></h4>
+        <div class="d-flex flex-row justify-content-center form-row">
+            <div class="col-lg-2 col-sm-4 order-sm-3 order-lg-0 order-md-0  order-3  col-md-4 col-4 form-group"
+                data-toggle="tooltip" title="Buonny" data-placement="bottom">
                 {{ form.buonny|as_crispy_field }}
             </div>
 
-
-
-            <div class="col-lg-2 col-sm-3 col-md-3 col-3 form-group" data-toggle="tooltip" title="Placa"
+            <div class="col-lg-2 col-sm-5 col-md-3 col-5 form-group" data-toggle="tooltip" title="Placa"
                 data-placement="bottom">
                 {{ form.placa|as_crispy_field }}
             </div>
-            <div class="col-lg-2 col-sm-5 col-md-5 col-5 form-group" data-toggle="tooltip" title="Motorista"
+            <div class="col-lg-4 col-sm-7 col-md-5 col-7 form-group" data-toggle="tooltip" title="Motorista"
                 data-placement="bottom">
                 {{ form.motorista|as_crispy_field }}
             </div>
 
-
-
-            <div class="col-lg-2 col-sm-4 col-md-4 col-6 form-group" data-toggle="tooltip" title="Valor frete"
+            <div class="col-lg-2 col-sm-4 col-md-4 col-4 form-group" data-toggle="tooltip" title="Valor frete"
                 data-placement="bottom">
                 {{ form.valor_mot|as_crispy_field }}
             </div>
 
-            <div class="col-lg-2 col-sm-4 col-md-4 col-6  form-group" data-toggle="tooltip" title="Peso"
+            <div class="col-lg-2 col-sm-4 col-md-4 col-4  form-group" data-toggle="tooltip" title="Peso"
                 data-placement="bottom">
                 {{ form.peso|as_crispy_field }}
             </div>
         </div>
 
 
-        <hr>
-        <div class="form-row">
-            <div class="col-lg-3 col-sm-4 col-md-4 col-4  form-group" data-toggle="tooltip" title="Nota Fiscal"
+        <h4 class="produto"><span class="badge badge-info">Produto</span></h4>
+        <div class="d-flex flex-row justify-content-around form-row">
+            <div class="col-lg-3 col-sm-6 col-md-4 col-6  form-group" data-toggle="tooltip" title="Nota Fiscal"
                 data-placement="bottom">
                 {{ form.notafiscal|as_crispy_field }}
             </div>
-            <div class="col-lg-3 col-sm-4 col-md-4 col-4  form-group" data-toggle="tooltip" title="Nota Fiscal 2"
-                data-placement="bottom">
-                {{ form.notafiscal2|as_crispy_field }}
-            </div>
-            <div class="col-lg-3 col-sm-4 col-md-4 col-4  form-group" data-toggle="tooltip" title="Valor NF"
+            <div class="col-lg-3 col-sm-6 col-md-4 col-6  form-group" data-toggle="tooltip" title="Valor NF"
                 data-placement="bottom">
                 {{ form.valornf|as_crispy_field }}
             </div>
+            <div class="col-lg-3 col-sm-6 col-md-4 col-6  form-group" data-toggle="tooltip" title="Nota Fiscal 2"
+                data-placement="bottom">
+                {{ form.notafiscal2|as_crispy_field }}
+            </div>
         </div>
-        <hr>
+        <h4 class="classificacao"><span class="badge badge-info">Classificação</span></h4>
         {% if carga.pedido.produto == "Arroz em Casca" %}
-        <div class="form-row">
-            <div class="col-lg-2 col-md-3 col-sm-3 col-3   form-group" data-toggle="tooltip" title="Renda"
+        <div class="d-flex flex-row justify-content-between form-row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-3   form-group" data-toggle="tooltip" title="Renda"
                 data-placement="bottom">
                 {{ form.renda|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-3 col-3   form-group" data-toggle="tooltip" title="Inteiro"
+            <div class="col-lg-3 col-md-3 col-sm-3 col-3   form-group" data-toggle="tooltip" title="Inteiro"
                 data-placement="bottom">
                 {{ form.inteiro|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-3 col-3   form-group" data-toggle="tooltip" title="Impureza"
+            <div class="col-lg-3 col-md-3 col-sm-3 col-3   form-group" data-toggle="tooltip" title="Impureza"
                 data-placement="bottom">
                 {{ form.impureza|as_crispy_field }}
 
             </div>
 
 
-            <div class="col-lg-2 col-md-3 col-sm-3 col-3   form-group" data-toggle="tooltip" title="Umidade"
+            <div class="col-lg-3 col-md-3 col-sm-3 col-3   form-group" data-toggle="tooltip" title="Umidade"
                 data-placement="bottom">
                 {{ form.umidade|as_crispy_field }}
 
             </div>
         </div>
-        <div class="form-row">
-            <div class="col-lg-2 col-md-3 col-sm-3 col-3  form-group" data-toggle="tooltip" title="Gessado"
+        <div class="d-flex flex-row justify-content-between form-row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-3  form-group" data-toggle="tooltip" title="Gessado"
                 data-placement="bottom">
                 {{ form.gessado|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-3 col-3  form-group" data-toggle="tooltip" title="B.Branca"
+            <div class="col-lg-3 col-md-3 col-sm-3 col-3  form-group" data-toggle="tooltip" title="B.Branca"
                 data-placement="bottom">
                 {{ form.bbranca|as_crispy_field }}
 
@@ -171,12 +214,12 @@
                 {{ form.vermelhos|as_crispy_field }}
             </div>
         </div>
-        <hr>
+
         {% else %}
         {% endif %}
 
-        <div class="form-row">
-            <div class="col-9  offset-sm form-group" data-toggle="tooltip" title="Observações" data-placement="bottom">
+        <div class="d-flex flex-row justify-content-center form-row">
+            <div class="col-12 form-group" data-toggle="tooltip" title="Observações" data-placement="bottom">
                 {{ form.obs|as_crispy_field }}</div>
         </div>
     </div>
@@ -184,11 +227,14 @@
 
     {% buttons %}
 
-    <button type="submit" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Salvar"
-        data-placement="top">Salvar</button>
-    <button type="button" class="btn btn-outline-warning btn-sm">
-        <a href="{% url 'cargas' %}" data-toggle="tooltip" title="Cancelar" data-placement="top">Cancelar</a>
-    </button>
+    <div class="conatiner botoes">
+        <div class="d-flex flex-row justify-content-center align-content-center">
+            <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+            <button type="button" class="btn btn-outline-warning btn-sm">
+                <a href="{% url 'cargas' %}">Cancelar</a>
+            </button>
+        </div>
+    </div>
 
 
 

@@ -97,6 +97,15 @@
             background-color: #111111;
         }
 
+
+        #icms {
+            height: 30px;
+            width: 125px;
+            border: 2px solid black;
+            font-style: italic;
+            font-weight: bold;
+        }
+
     </style>
     <!--Favicon-->
     <link rel="icon" href="{% static 'images/favicon.png' %}">
@@ -140,9 +149,9 @@
                 <a class="btn btn-primary btn-sm" href="{% url 'add_pedidos' %}">Adicionar Pedido</a>
             </div>
             <div class="col-3-sm">
-                <a class="btn btn-outline-warning btn-sm" href="{% url 'corretora' %}">Voltar</a>
+                <a class="btn btn-outline-warning btn-sm" href="javascript:history.back()">Voltar</a>
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 justify-content-end offset-md-5 ">
+            <div class="col-lg-2 col-md-2 col-sm-2 justify-content-end align-self-center offset-md-5">
                 <input class="form-control input-sm" type="text" id="icms" onclick="AddValor()"
                     placeholder="Peso em Kg">
             </div>
