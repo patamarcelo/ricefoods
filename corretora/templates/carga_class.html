@@ -6,7 +6,8 @@
 
 <style>
     #id_obs {
-        height: 150px;
+        height: 100px;
+
 
     }
 
@@ -31,10 +32,19 @@
     }
 
     .formulario {
-        margin-top: 10px;
+        margin-top: 20px;
         border: 0.2px solid #ccc;
         padding: 20px;
-        padding-bottom: 0px;
+        padding-bottom: 20px;
+    }
+
+    input[type=text],
+    input[type=number],
+    div select {
+        height: 32px !important;
+        font-size: 15px !important;
+        margin-bottom: 0px !important;
+        margin-top: 0px !important;
     }
 
 </style>
@@ -68,7 +78,7 @@
     <div
         class="container d-flex flex-column justify-content-center align-items-center col-lg-8 col-md-12 col-sm-12 col-12 formulario">
         <h4 class="classificacao" style="margin-bottom: 20px"><span class="badge badge-info">Classificação</span></h4>
-        <div class=" d-flex flex-row justify-content-between form-row">
+        <div class="container d-flex flex-row justify-content-between form-row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-3  form-group">
                 {{ form.renda|as_crispy_field }}
 
@@ -88,7 +98,7 @@
 
             </div>
         </div>
-        <div class="d-flex flex-row justify-content-between form-row">
+        <div class="container d-flex flex-row justify-content-between form-row">
             <div class=" col form-group">
                 {{ form.gessado|as_crispy_field }}
 
@@ -111,7 +121,7 @@
         </div>
         <br>
 
-        <div class="d-flex flex-row justify-content-center form-row">
+        <div class="container-fluid d-flex flex-row justify-content-center form-row">
             <div class="col">
                 {{ form.obs|as_crispy_field }}
             </div>
