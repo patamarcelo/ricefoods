@@ -14,7 +14,7 @@
         font-style: oblique;
         margin-bottom: 0px;
         text-decoration: underline;
-        margin-top: 20px;
+        margin-top: 0px;
         align-self: center;
     }
 
@@ -28,6 +28,13 @@
         .botoestop2 {
             margin-right: 27%;
         }
+    }
+
+    .formulario {
+        margin-top: 10px;
+        border: 0.2px solid #ccc;
+        padding: 20px;
+        padding-bottom: 0px;
     }
 
 </style>
@@ -58,7 +65,8 @@
     </div>
 
     {% csrf_token %}
-    <div class="container d-flex flex-column justify-content-center align-items-center col-7">
+    <div
+        class="container d-flex flex-column justify-content-center align-items-center col-lg-8 col-md-12 col-sm-12 col-12 formulario">
         <h4 class="classificacao" style="margin-bottom: 20px"><span class="badge badge-info">Classificação</span></h4>
         <div class=" d-flex flex-row justify-content-between form-row">
             <div class="col-lg-3 col-md-3 col-sm-3 col-3  form-group">
@@ -81,30 +89,30 @@
             </div>
         </div>
         <div class="d-flex flex-row justify-content-between form-row">
-            <div class="col-lg-3 col-md-3 col-sm-3 col-3 form-group">
+            <div class=" col form-group">
                 {{ form.gessado|as_crispy_field }}
 
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-3 form-group">
+            <div class=" col form-group">
                 {{ form.bbranca|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
+            <div class=" col form-group">
                 {{ form.amarelo|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
+            <div class=" col form-group">
                 {{ form.manchpic|as_crispy_field }}
 
             </div>
-            <div class="col-lg-2 col-md-3 col-sm-3 col-3 form-group">
+            <div class=" col form-group">
                 {{ form.vermelhos|as_crispy_field }}
             </div>
         </div>
         <br>
 
-        <div class="form-row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="d-flex flex-row justify-content-center form-row">
+            <div class="col">
                 {{ form.obs|as_crispy_field }}
             </div>
         </div>

@@ -293,7 +293,8 @@
 <script>
     var total = 0;
     //Chama a função com click em qualquer checkbox
-    $(':checkbox').click(function () {
+
+    $("#dtBasicExample2").find("input:checkbox").click(function () {
         //Atribui o valor do input p/ variável 'valor'
         var valor = parseInt($(this).val());
         //Se o checkbox for marcado ele soma se não subtrai
@@ -306,5 +307,6 @@
         //Atribui o valor ao input
         $("#icms").val(total1);
     });
+
 </script>
 {% endblock %}
