@@ -132,38 +132,46 @@
         <h4 class="produto"><span class="badge badge-info">Mercadoria</span></h4>
         <div class="container d-flex flex-column  justify-content-center col-lg-12 ">
             <div class="d-flex flex-row justify-content-between  form-row">
-                <div class="col form-group" data-toggle="tooltip" title="Quantidade" data-placement="bottom">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-6 form-group" data-toggle="tooltip" title="Quantidade"
+                    data-placement="bottom">
                     {{ form.quantidade_pedido|as_crispy_field }}
 
                 </div>
-                <div class="col  form-group" data-toggle="tooltip" title="Preço" data-placement="bottom">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-6  form-group" data-toggle="tooltip" title="Preço"
+                    data-placement="bottom">
                     {{ form.preco_produto|as_crispy_field }}
                 </div>
 
-                <div class="col" data-toggle="tooltip" title="Comissão C" data-placement="bottom">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-6" data-toggle="tooltip" title="Comissão C"
+                    data-placement="bottom">
                     {{ form.comissaoc|as_crispy_field }}
                 </div>
-                <div class="col" data-toggle="tooltip" title="Comissão F" data-placement="bottom">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-6" data-toggle="tooltip" title="Comissão F"
+                    data-placement="bottom">
                     {{ form.comissaof|as_crispy_field }}
                 </div>
             </div>
         </div>
         <div class="container d-flex flex-column  justify-content-center col-lg-12 ">
             <div class="d-flex flex-row justify-content-between  form-row">
-                <div class="col" data-toggle="tooltip" title="Preço Frete" data-placement="bottom">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-6" data-toggle="tooltip" title="Preço Frete"
+                    data-placement="bottom">
                     {{ form.preco_frete|as_crispy_field }}
                 </div>
 
 
-                <div class="col form-group" data-toggle="tooltip" title="Tipo" data-placement="bottom">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-6 form-group" data-toggle="tooltip" title="Tipo"
+                    data-placement="bottom">
                     {{ form.tipo|as_crispy_field }}
 
                 </div>
-                <div class="col form-group" data-toggle="tooltip" title="Produto" data-placement="bottom">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-6 form-group" data-toggle="tooltip" title="Produto"
+                    data-placement="bottom">
                     {{ form.produto|as_crispy_field }}
 
                 </div>
-                <div class="col form-group" data-toggle="tooltip" title="Variedade" data-placement="bottom">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-6 form-group" data-toggle="tooltip" title="Variedade"
+                    data-placement="bottom">
                     {{ form.variedade|as_crispy_field }}
 
                 </div>

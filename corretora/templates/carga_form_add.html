@@ -123,7 +123,8 @@
 
 
 
-                <div class="col-lg-2 col-sm-6  form-group" data-toggle="tooltip" title="Buonny" data-placement="bottom">
+                <div class="col-lg-2 col-sm-6 col-6  form-group" data-toggle="tooltip" title="Buonny"
+                    data-placement="bottom">
                     {{ form.buonny|as_crispy_field }}
                 </div>
 
@@ -137,7 +138,7 @@
                     data-placement="bottom">
                     {{ form.placa|as_crispy_field }}
                 </div>
-                <div class="col-lg-4 col-sm-8 col-md-8 col-12  form-group" data-toggle="tooltip" title="Motorista"
+                <div class="col-lg-4 col-sm-8 col-md-8  col-6 form-group" data-toggle="tooltip" title="Motorista"
                     data-placement="bottom">
                     {{ form.motorista|as_crispy_field }}
                 </div>
@@ -146,18 +147,22 @@
             </div>
 
             <h4 class="mercadoria"><span class="badge badge-info">Produto</span></h4>
-            <div class="container d-flex flex-column  justify-content-center col-lg-9 ">
+            <div class="container d-flex flex-column  justify-content-center col-lg-10">
                 <div class="d-flex flex-row justify-content-around form-row notas">
-                    <div class="col form-group " data-toggle="tooltip" title="Nota Fiscal" data-placement="bottom">
+                    <div class="col-sm-6 col-6 col-md-3 col-lg-3   form-group " data-toggle="tooltip"
+                        title="Nota Fiscal" data-placement="bottom">
                         {{ form.notafiscal|as_crispy_field }}
                     </div>
-                    <div class="col form-group" data-toggle="tooltip" title="Peso" data-placement="bottom">
+                    <div class="col-sm-6 col-6 col-md-3 col-lg-3   form-group" data-toggle="tooltip" title="Peso"
+                        data-placement="bottom">
                         {{ form.peso|as_crispy_field }}
                     </div>
-                    <div class="col form-group " data-toggle="tooltip" title="Valor NF" data-placement="bottom">
+                    <div class="col-sm-6 col-6 col-md-3 col-lg-3   form-group " data-toggle="tooltip" title="Valor NF"
+                        data-placement="bottom">
                         {{ form.valornf|as_crispy_field }}
                     </div>
-                    <div class="col form-group " data-toggle="tooltip" title="Nota Fiscal 2" data-placement="bottom">
+                    <div class="col-sm-6 col-6 col-md-3 col-lg-3   form-group " data-toggle="tooltip"
+                        title="Nota Fiscal 2" data-placement="bottom">
                         {{ form.notafiscal2|as_crispy_field }}
                     </div>
                 </div>
@@ -165,23 +170,20 @@
 
             <h4 class="classificacao"><span class="badge badge-info">Classificação</span></h4>
             <br>
-            <div class="container d-flex flex-column  justify-content-center col-lg-9 ">
-                <div class="d-flex flex-row justify-content-around form-row classificacaocont">
-                    <div class="col  form-group" data-toggle="tooltip" title="Renda" data-placement="bottom">
+            <div class="container d-flex flex-column  justify-content-center col-lg-10">
+                <div class="d-flex flex-row justify-content-around form-row ">
+                    <div class="col-sm-col  form-group" data-toggle="tooltip" title="Renda" data-placement="bottom">
                         {{ form.renda|as_crispy_field }}
 
                     </div>
-                    <div class="col  form-group" data-toggle="tooltip" title="Inteiro" data-placement="bottom">
+                    <div class="col-sm-col  form-group" data-toggle="tooltip" title="Inteiro" data-placement="bottom">
                         {{ form.inteiro|as_crispy_field }}
 
                     </div>
-                    <div class="col  form-group" data-toggle="tooltip" title="Impureza" data-placement="bottom">
+                    <div class="col-sm-col  form-group" data-toggle="tooltip" title="Impureza" data-placement="bottom">
                         {{ form.impureza|as_crispy_field }}
-
                     </div>
-
-
-                    <div class="col  form-group" data-toggle="tooltip" title="Umidade" data-placement="bottom">
+                    <div class="col-sm-col  form-group" data-toggle="tooltip" title="Umidade" data-placement="bottom">
                         {{ form.umidade|as_crispy_field }}
 
                     </div>
@@ -216,7 +218,7 @@
         </div>
     </div>
     {% buttons %}
-    <div class="conatiner botoes">
+    <div class="container botoes">
         <div class="d-flex flex-row justify-content-center align-content-center">
             <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" data-toggle="tooltip"
                 title="Salvar" data-placement="top" />
