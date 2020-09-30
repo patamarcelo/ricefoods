@@ -54,6 +54,30 @@
         padding-bottom: 0px;
     }
 
+    .classiboto>div>div {
+        margin: 10px;
+
+    }
+
+    .classiboto>div>div>label {
+        margin: 10px;
+    }
+
+    .classiboto>div>div>div>input {
+        min-width: 50px;
+        max-width: 150px;
+        height: 30px !important;
+        align-self: right;
+    }
+
+    .classiboto>div {
+        margin: 0.5px;
+    }
+
+    .form-inline {
+        margin-bottom: 20px;
+    }
+
 </style>
 
 <form method="POST" novalidate class="needs-validation">
@@ -148,45 +172,45 @@
             </div>
         </div>
         <h4 class="classificacao"><span class="badge badge-info">Classificação</span></h4>
-        <div class="container d-flex flex-column  justify-content-center col-lg-11 ">
-            <div class="d-flex flex-row justify-content-between  form-row">
-                <div class="col   form-group">
+        <div class="container d-flex  col-12 form-inline" style="padding-right: 100px;">
+            <div class="col-6 d-flex flex-column  align-items-end classiboto ">
+                <div class="row  form-group " data-toggle="tooltip" title="Renda" data-placement="bottom">
                     {{ form.renda|as_crispy_field }}
 
                 </div>
-                <div class="col   form-group">
+                <div class="row  form-group" data-toggle="tooltip" title="Inteiro" data-placement="bottom">
                     {{ form.inteiro|as_crispy_field }}
 
                 </div>
-                <div class="col   form-group">
+                <div class="row  form-group" data-toggle="tooltip" title="Impureza" data-placement="bottom">
                     {{ form.impureza|as_crispy_field }}
 
                 </div>
 
 
-                <div class="col   form-group">
+                <div class="row  form-group" data-toggle="tooltip" title="Umidade" data-placement="bottom">
                     {{ form.umidade|as_crispy_field }}
 
                 </div>
             </div>
-            <div class="d-flex flex-row justify-content-between  form-row">
-                <div class="col  form-group">
+            <div class="col-6 d-flex flex-column  align-items-end classiboto ">
+                <div class="row form-group" data-toggle="tooltip" title="Gessado" data-placement="bottom">
                     {{ form.gessado|as_crispy_field }}
 
                 </div>
-                <div class="col form-group">
+                <div class="row form-group" data-toggle="tooltip" title="B.Branca" data-placement="bottom">
                     {{ form.bbranca|as_crispy_field }}
 
                 </div>
-                <div class="col form-group">
+                <div class="row form-group" data-toggle="tooltip" title="Amarelo" data-placement="bottom">
                     {{ form.amarelo|as_crispy_field }}
 
                 </div>
-                <div class="col form-group">
+                <div class="row form-group" data-toggle="tooltip" title="Manch/Pic" data-placement="bottom">
                     {{ form.manchpic|as_crispy_field }}
 
                 </div>
-                <div class="col form-group">
+                <div class="row form-group" data-toggle="tooltip" title="Vermelhos" data-placement="bottom">
                     {{ form.vermelhos|as_crispy_field }}
                 </div>
             </div>
