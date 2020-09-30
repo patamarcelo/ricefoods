@@ -88,10 +88,6 @@
         margin: 0.5px;
     }
 
-    .form-inline {
-        margin-bottom: 20px;
-    }
-
 </style>
 
 <form method="POST" novalidate class="needs-validation">
@@ -257,15 +253,15 @@
                 </div>
             </div>
         </div>
-    </div>
-    <hr>
-    <div class="container d-flex flex-column  justify-content-center col-lg-12 ">
-        <div class="d-flex flex-row justify-content-between  form-row">
-            <div class="col-12" data-toggle="tooltip" title="Observações" data-placement="top">
-                {{ form.obs|as_crispy_field }}
+
+
+        <div class="container d-flex flex-column  justify-content-center col-lg-12 ">
+            <div class="d-flex flex-row justify-content-between  form-row">
+                <div class="col-12" data-toggle="tooltip" title="Observações" data-placement="top">
+                    {{ form.obs|as_crispy_field }}
+                </div>
             </div>
         </div>
-    </div>
     </div>
 
     {% buttons %}
