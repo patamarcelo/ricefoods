@@ -1,5 +1,6 @@
 {% extends 'base2.html' %}
 {% load static %}
+{% load bootstrap4 %}
 {% block content %}
 
 <div class="container">
@@ -36,23 +37,37 @@
         </div>
     </div>
     {% endif %}
-    <div class="container" align=center>
-        <div class="inline-flex justify-content-between">
-            <a class="col-lg-1 col-md-2 col-sm-3 col-3 p-1 ml-2 btn btn-outline-primary" target="_blank"
-                href="{% url 'pedidos' %}">Pedidos</a>
+    <div class="container">
+        <div class="container d-inline-flex  justify-content-center">
+            <a target="_blank" href="{% url 'pedidos' %}" style="margin-left: 20px;"><button type="button"
+                    class="btn btn-outline-primary">Pedidos</button></a>
+            <!-- <a class="col-lg-1 col-md-2 col-sm-3 col-3 p-1 ml-2 btn btn-outline-primary" target="_blank"
+                href="{% url 'pedidos' %}">Pedidos</a> -->
 
-            <a class="col-lg-1 col-md-2 col-sm-3 col-3 p-1 m-1 btn btn-outline-primary" target="_blank"
-                href="{% url 'cargas' %}">Cargas</a>
+            <div class="btn-group" style="padding-left: 15px;">
+                <a target="_blank" href="{% url 'cargas' %}"><button type="button"
+                        class="btn btn-outline-primary">Cargas</button></a>
+                <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                    data-toggle="dropdown">
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'add_age_cargas' %}" target="_blank">Agendar</a>
+                    <a class="dropdown-item" href="{% url 'cargasfiltro' %}" target="_blank">Cargas F.</a>
+                </div>
+            </div>
+            <!-- <a class="col-lg-1 col-md-2 col-sm-3 col-3 p-1 m-1 btn btn-outline-primary" target="_blank"
+                href="{% url 'cargas' %}">Cargas</a> -->
         </div>
-        <a class="text text-warning fas fa-truck-pickup fa-lg" href="{% url 'cargasfiltro' %}" target="_blank"
-            style="margin-right: 1px;margin-left: 3px"></a>
+        <!-- <a class="text text-warning fas fa-truck-pickup fa-lg" href="{% url 'cargasfiltro' %}" target="_blank"
+            style="margin-right: 1px;margin-left: 3px"></a> -->
 
 
     </div>
     <br />
     <div class="container" align=center>
         <a class="btn btn-outline-danger btn-sm" href="{% url 'logout' %}">Logout</a>
-        <a class="btn btn-outline-warning btn-sm" target="_blank" href="{% url 'admin:index'  %}">Admin</a>
+        <a class="btn btn-outline-warning btn-sm" target="_blank" href="{% url 'admin:index'  %}"
+            style="margin-left: 5px;">Admin</a>
     </div>
     <br />
 

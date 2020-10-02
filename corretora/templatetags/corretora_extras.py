@@ -38,11 +38,27 @@ def param_replace(context, **kwargs):
     return d.urlencode()
 
 
+nomes = {
+    1: "Janeiro",
+    2: "Fevereiro",
+    3: "Março",
+    4: "Abril",
+    5: "Maio",
+    6: "Junho",
+    7: "Julho",
+    8: "Agosto",
+    9: "Setembro",
+    10: "Outubro",
+    11: "Novembro",
+    12: "Dezembro",
+}
+
+
 @register.filter
 def nome_mes(datemont):
 
     numeromes = datetime.now().month
-    mes = calendar.month_name[numeromes]
+    mes = nomes.get(numeromes)
     return mes
 
 
@@ -52,10 +68,10 @@ def nome_mes_anterior(datemont):
     numeromes = datetime.now().month
     if numeromes == 1:
         mesanterior == 12
-        return calendar.month_name[mesanterior]
+        return nomes.get(mesanterior)
     else:
         mesanterior = numeromes - 1
-        return calendar.month_name[mesanterior]
+        return nomes.get(mesanterior)
 
 
 @register.filter
@@ -64,10 +80,10 @@ def nome_mes_anteanterior(datemont):
     numeromes = datetime.now().month
     if numeromes == 1:
         mesanterior == 11
-        return calendar.month_name[mesanterior]
+        return nomes.get(mesanterior)
     else:
         mesanterior = numeromes - 2
-        return calendar.month_name[mesanterior]
+        return nomes.get(mesanterior)
 
 
 @register.filter
@@ -76,8 +92,8 @@ def nome_mes_tresanterior(datemont):
     numeromes = datetime.now().month
     if numeromes == 1:
         mestresanterior == 10
-        return calendar.month_name[mestresanterior]
+        return nomes.get(mestresanterior)
     else:
         mestresanterior = numeromes - 3
-        return calendar.month_name[mestresanterior]
+        return nomes.get(mestresanterior)
 

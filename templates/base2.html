@@ -9,8 +9,15 @@
     <title>Corretora de Cereais</title>
     <!--Fontawesome-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
+    {% if user.is_authenticated %}
+    <!--Favicon-->
+    <link rel="icon" href="{% static 'images/favicon.png' %}">
+    {% else %}
     <!--Favicon-->
     <link rel="shortcut icon" type='image/png' href="{% static 'images/favicon_b.png' %}" />
+    {% endif %}
+
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
         id="bootstrap-css">
     <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
@@ -23,6 +30,11 @@
 
     </style>
     <link href="{% static 'css/fontawesome-all.css' %}" rel="stylesheet">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body class="text-center">

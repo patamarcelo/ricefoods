@@ -101,7 +101,7 @@
 
 <body>
     <br><br>
-    <div class="container-fluid" align=center">
+    <div class="container-fluid d-flex flex-column" align=center">
         <div class="row">
             <div class="col-3">
                 <h3> <u><strong>Fornecedores</strong></u></h3>
@@ -110,102 +110,97 @@
                 <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
                 <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'corretora' %}">Inicio</a>
             </div>
-            <div class="col-5">
-                {% if messages %}
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12 col-sm-offset-2">
-                            <div class="alert alert-success alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert"><span
-                                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                {% for m in messages %}
-                                {{ m }} <br />
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
+        </div>
 
+        {% if messages %}
+        <div class="d-flex flex-row justify-content-center">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                {% for m in messages %}
+                {{ m }} <br />
+                {% endfor %}
             </div>
         </div>
-        <br>
+        {% endif %}
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-3-sm">
-                    <a class="btn btn-primary btn-sm" href="{% url 'add_fornecedor' %}">Adicionar Fornecedor</a>
-                </div>
-                <div class="col-3-sm">
-                    <a class="btn btn-outline-warning btn-sm" href="javascript:history.back()">Voltar</a>
-                </div>
+    </div>
+    <br>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3-sm">
+                <a class="btn btn-primary btn-sm" href="{% url 'add_fornecedor' %}">Adicionar Fornecedor</a>
+            </div>
+            <div class="col-3-sm">
+                <a class="btn btn-outline-warning btn-sm" href="javascript:history.back()">Voltar</a>
             </div>
         </div>
-        <br>
+    </div>
+    <br>
 
 
 
-        <div class="my-table container-fluid">
-            <table id="fornecedores"
-                class="width table-round-corner  table table-hover table-striped table-dark table-bordered table-sm"
-                width="100%">
-                <thead class="borderless">
-                    <tr>
-                        <th scope="col">Nome</th>
-                        <th scope="col">CPF/CNPJ</th>
-                        <th scope="col">Insc. Estadual&nbsp;&nbsp;</th>
-                        <th scope="col">Cidade</th>
-                        <th scope="col">Estado&nbsp;&nbsp;</th>
-                        <th scope="col">Banco</th>
-                        <th scope="col">Agencia&nbsp;&nbsp;</th>
-                        <th scope="col">Conta</th>
-                        <th scope="col" class="text text-center">Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for fornecedor in fornecedores %}
-                    <tr>
-                        {% if fornecedor.obs %}
-                        <td><abbr class="text-warning"
-                                title="{{ fornecedor.obs }}"><em>{{ fornecedor.nome|title }}</em></abbr></td>
-                        {% else %}
-                        <td>{{ fornecedor.nome|title }}</td>
-                        {% endif %}
+    <div class="my-table container-fluid">
+        <table id="fornecedores"
+            class="width table-round-corner  table table-hover table-striped table-dark table-bordered table-sm"
+            width="100%">
+            <thead class="borderless">
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">CPF/CNPJ</th>
+                    <th scope="col">Insc. Estadual&nbsp;&nbsp;</th>
+                    <th scope="col">Cidade</th>
+                    <th scope="col">Estado&nbsp;&nbsp;</th>
+                    <th scope="col">Banco</th>
+                    <th scope="col">Agencia&nbsp;&nbsp;</th>
+                    <th scope="col">Conta</th>
+                    <th scope="col" class="text text-center">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fornecedor in fornecedores %}
+                <tr>
+                    {% if fornecedor.obs %}
+                    <td><abbr class="text-warning"
+                            title="{{ fornecedor.obs }}"><em>{{ fornecedor.nome|title }}</em></abbr></td>
+                    {% else %}
+                    <td>{{ fornecedor.nome|title }}</td>
+                    {% endif %}
 
-                        {% if fornecedor.cnpj_cpf|length <= 11 %}
-                        <td>{{ fornecedor.cnpj_cpf|slice:"0:3"}}.{{ fornecedor.cnpj_cpf|slice:"3:6"}}.{{ fornecedor.cnpj_cpf|slice:"6:9"}}-{{ fornecedor.cnpj_cpf|slice:"9:"}}
-                        </td>
-                        {% elif fornecedor.cnpj_cpf|length <= 16 %}
-                        <td>{{ fornecedor.cnpj_cpf|slice:"0:2"}}.{{ fornecedor.cnpj_cpf|slice:"2:5"}}.{{ fornecedor.cnpj_cpf|slice:"5:8"}}/{{ fornecedor.cnpj_cpf|slice:"8:12"}}.{{ fornecedor.cnpj_cpf|slice:"12:"}}
-                        </td>
-                        {% else %}
-                        <td>{{ fornecedor.cnpj_cpf }}</td>
-                        {% endif %}
-                        <td>{{ fornecedor.insc_estadual|slice:"0:3" }}/{{ fornecedor.insc_estadual|slice:"3:" }}</td>
-                        <td>{{ fornecedor.cidade }}</td>
-                        <td>{{ fornecedor.estado }}</td>
-                        <td>{{ fornecedor.banco|title }}</td>
-                        {% if fornecedor.agencia|length == 5 %}
-                        <td>{{ fornecedor.agencia|slice:"0:4"}}-{{ fornecedor.agencia|slice:"-1:"}}</td>
-                        {% else %}
-                        <td>{{ fornecedor.agencia }}</td>
-                        {% endif %}
-                        {% if fornecedor.conta %}
-                        <td>{{ fornecedor.conta|slice:":-1"}}-{{ fornecedor.conta|slice:"-1:"}}</td>
-                        {% else %}
-                        <td></td>
-                        {% endif %}
-                        <td align=center>
-                            <a class="btn btn-warning btn-xs"
-                                href="{% url 'upd_fornecedores' fornecedor.pk %}">Editar</a>
-                            <a class="btn btn-danger btn-xs"
-                                href="{% url 'del_fornecedores' fornecedor.pk %}">Deletar</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                    {% if fornecedor.cnpj_cpf|length <= 11 %}
+                    <td>{{ fornecedor.cnpj_cpf|slice:"0:3"}}.{{ fornecedor.cnpj_cpf|slice:"3:6"}}.{{ fornecedor.cnpj_cpf|slice:"6:9"}}-{{ fornecedor.cnpj_cpf|slice:"9:"}}
+                    </td>
+                    {% elif fornecedor.cnpj_cpf|length <= 16 %}
+                    <td>{{ fornecedor.cnpj_cpf|slice:"0:2"}}.{{ fornecedor.cnpj_cpf|slice:"2:5"}}.{{ fornecedor.cnpj_cpf|slice:"5:8"}}/{{ fornecedor.cnpj_cpf|slice:"8:12"}}.{{ fornecedor.cnpj_cpf|slice:"12:"}}
+                    </td>
+                    {% else %}
+                    <td>{{ fornecedor.cnpj_cpf }}</td>
+                    {% endif %}
+                    <td>{{ fornecedor.insc_estadual|slice:"0:3" }}/{{ fornecedor.insc_estadual|slice:"3:" }}
+                    </td>
+                    <td>{{ fornecedor.cidade }}</td>
+                    <td>{{ fornecedor.estado }}</td>
+                    <td>{{ fornecedor.banco|title }}</td>
+                    {% if fornecedor.agencia|length == 5 %}
+                    <td>{{ fornecedor.agencia|slice:"0:4"}}-{{ fornecedor.agencia|slice:"-1:"}}</td>
+                    {% else %}
+                    <td>{{ fornecedor.agencia }}</td>
+                    {% endif %}
+                    {% if fornecedor.conta %}
+                    <td>{{ fornecedor.conta|slice:":-1"}}-{{ fornecedor.conta|slice:"-1:"}}</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                    <td align=center>
+                        <a class="btn btn-warning btn-xs" href="{% url 'upd_fornecedores' fornecedor.pk %}">Editar</a>
+                        <a class="btn btn-danger btn-xs" href="{% url 'del_fornecedores' fornecedor.pk %}">Deletar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 
     </div>
