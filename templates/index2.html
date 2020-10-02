@@ -3,6 +3,22 @@
 {% load bootstrap4 %}
 {% block content %}
 
+<style>
+    .dropdown-item {
+        font-size: 12px;
+        font-weight: bold !important;
+        padding-right: 0px !important;
+        width: 100px !important;
+    }
+
+    .dropdown-menu {
+        margin: 0px;
+        padding: 0px !important;
+        width: 100px !important;
+        min-width: 120px !important;
+    }
+
+</style>
 <div class="container">
     <div class="container">
         <svg class="bi bi-bar-chart" width="5em" height="5em" viewBox="0 0 16 16" fill="currentColor"
@@ -21,7 +37,7 @@
         </div>
     </div>
     {% if user.is_superuser %}
-    <div class="container" align=center>
+    <div class="container" align=center style="margin-bottom:10px;">
         <div class="inline-flex">
             <a class="col-lg-2 col-md-3 col-sm-4 col-4 p-1 m-1 btn btn-primary"
                 href="{% url 'corretora' %}">Corretora</a>
@@ -30,7 +46,7 @@
         </div>
     </div>
     {% else %}
-    <div class="container" align=center>
+    <div class="container" align=center style="margin-bottom:10px;">
         <div class="inline-flex">
             <a class="col-lg-3 col-md-5 col-sm-7 col-8 p-1 m-1 btn btn-primary"
                 href="{% url 'corretora' %}">Corretora</a>
@@ -41,25 +57,23 @@
         <div class="container d-inline-flex  justify-content-center">
             <a target="_blank" href="{% url 'pedidos' %}" style="margin-left: 20px;"><button type="button"
                     class="btn btn-outline-primary">Pedidos</button></a>
-            <!-- <a class="col-lg-1 col-md-2 col-sm-3 col-3 p-1 ml-2 btn btn-outline-primary" target="_blank"
-                href="{% url 'pedidos' %}">Pedidos</a> -->
+
 
             <div class="btn-group" style="padding-left: 15px;">
-                <a target="_blank" href="{% url 'cargas' %}"><button type="button"
-                        class="btn btn-outline-primary">Cargas</button></a>
+                <button type="button" class="btn btn-outline-primary"
+                    onclick='window.location.href="{% url 'cargas' %}"'>Cargas</button>
                 <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
-                    data-toggle="dropdown">
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
                 </button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="{% url 'add_age_cargas' %}" target="_blank">Agendar</a>
                     <a class="dropdown-item" href="{% url 'cargasfiltro' %}" target="_blank">Cargas F.</a>
                 </div>
             </div>
-            <!-- <a class="col-lg-1 col-md-2 col-sm-3 col-3 p-1 m-1 btn btn-outline-primary" target="_blank"
-                href="{% url 'cargas' %}">Cargas</a> -->
+
         </div>
-        <!-- <a class="text text-warning fas fa-truck-pickup fa-lg" href="{% url 'cargasfiltro' %}" target="_blank"
-            style="margin-right: 1px;margin-left: 3px"></a> -->
+
 
 
     </div>
