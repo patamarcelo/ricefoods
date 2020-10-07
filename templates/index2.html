@@ -9,13 +9,23 @@
         font-weight: bold !important;
         padding-right: 0px !important;
         width: 100px !important;
+        min-width: 110px !important;
+        background-color: whitesmoke !important;
+
+    }
+
+    .dropdown-item:hover {
+        background-color: #0275d8 !important;
+        color: whitesmoke !important;
+        border-radius: 2px !important;
     }
 
     .dropdown-menu {
         margin: 0px;
         padding: 0px !important;
         width: 100px !important;
-        min-width: 120px !important;
+        min-width: 110px !important;
+
     }
 
 </style>
@@ -55,7 +65,7 @@
     {% endif %}
     <div class="container">
         <div class="container d-inline-flex  justify-content-center">
-            <a target="_blank" href="{% url 'pedidos' %}" style="margin-left: 20px;"><button type="button"
+            <a href="{% url 'pedidos' %}" style="margin-left: 20px;"><button type="button"
                     class="btn btn-outline-primary">Pedidos</button></a>
 
 

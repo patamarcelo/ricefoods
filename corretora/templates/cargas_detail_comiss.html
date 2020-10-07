@@ -193,6 +193,8 @@
                             Relatório Comissões
                         </span></h2>
                     <i type="submit" style="color:green" class="fas fa-lg fa-file-excel" id="btnExport"></i>
+                    <i type="submit" style="color:black" class="fas fa-lg fa-file-pdf" id="pdf" onclick="createPDF()"
+                        target="_blank"></i>
                 </div>
 
             </div>
@@ -619,5 +621,31 @@
             a.click();
         });
     });
+
+    function createPDF() {
+        var sTable = document.getElementById('cargasrelatoriocomissao2').innerHTML;
+
+        var style = "<style>";
+        style = style + "table {width: 100%;font: 12px Calibri;  margin-top: 60px;}";
+        style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
+        style = style + "white-space: nowrap;";
+        style = style + "padding: 2px 3px;text-align: center;}";
+        style = style + "</style>";
+
+        // CREATE A WINDOW OBJECT.
+        var win = window.open('', '', "_blank", 'height=700,width=700');
+
+        win.document.write('<html><head>');
+        win.document.write('<title>{% for pedido in pedidos %}{{ pedido.contrato }} | {{ pedido.fornecedor.nome|title}}{% endfor%} </title>');   // <title> FOR PDF HEADER.
+        win.document.write(style);          // ADD STYLE INSIDE THE HEAD TAG.
+        win.document.write('</head>');
+        win.document.write('<body>');
+        win.document.write(sTable);         // THE TABLE CONTENTS INSIDE THE BODY TAG.
+        win.document.write('<embed width="100%" height="100%" src="data:application/pdf;base64,' + base64 + '" type="application/pdf"/>');
+        win.document.write('</body></html>');
+
+        win.document.close(); 	// CLOSE THE CURRENT WINDOW.
+
+    }
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

@@ -70,6 +70,12 @@
         padding-right: 4px;
     }
 
+    .table-hover>tbody>tr:hover>td,
+    .table-hover>tbody>tr:hover>th {
+        background-color: #111111;
+        color: whitesmoke;
+    }
+
 </style>
 
 <div class="container-fluid" id="resumos">
@@ -83,7 +89,7 @@
             <div class="d-flex align-items-center marcelopata flex-fill hide" id="contratodash">
 
                 <table
-                    class="table tabledash table-round-corner table-striped table-borderless table-dark  nowrap table-sm"
+                    class="table tabledash table-round-corner table-striped table-borderless table-hover table-dark  nowrap table-sm"
                     style="color: antiquewhite;">
                     <caption><strong>Contratos Ativos</strong></caption>
                     <thead>
@@ -152,7 +158,7 @@
             <div class="d-flex align-items-center marcelopata flex-fill hide" id="comidash">
 
                 <table
-                    class="table tabledash table-round-corner table-striped table-borderless table-dark nowrap table-sm"
+                    class="table tabledash table-round-corner table-striped table-borderless table-hover table-dark nowrap table-sm"
                     style="color: antiquewhite;">
                     <caption><strong>Total Aberto - {% for cliente in clientes %}{% if 'ust' in cliente.nome|lower %}
                             R$ {{ cliente.comissaoabertocascatotal|slice:"1"|floatformat:'2'}}
@@ -216,7 +222,7 @@
             <div class="d-flex align-items-center marcelopata flex-fill hide" id="cargasdash">
 
                 <table
-                    class="table tabledash table-round-corner table-striped table-borderless table-dark nowrap table-sm"
+                    class="table tabledash table-round-corner table-striped table-borderless table-hover table-dark nowrap table-sm"
                     style="color: antiquewhite;">
                     <caption><strong>Semana Atual - {% for cliente in clientes %}{% if 'ust' in cliente.nome|lower %}
                             {{ cliente.carregadosemanatotal|intcomma }} Kg &ensp;&ensp; / &ensp;&ensp;Mês Atual -

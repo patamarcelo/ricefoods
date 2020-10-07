@@ -400,12 +400,14 @@
 
 
                 </div>
-                <div class="container" style="justify-content:center">
+                <div class="container" style="justify-content:center; padding: 15px;">
                     <button type="submit" class="btn btn-primary btn-xs btnfiltrar" id="btnfiltrar">Filtrar</button>
 
                     {% if request.get_full_path ==  "/corretora/cargasfiltro" %}
                     {% else %}
-                    <i type="submit" style="color:green; margin-bottom: 20px; float: right;"
+                    <i type="submit" style="color:grey; margin-bottom: 20px; float: right;" class="fas fa-lg fa-file-pdf" id="pdf" onclick="createPDF()"
+                        target="_blank"></i>
+                    <i type="submit" style="color:green; margin-bottom: 20px; float: right; margin-right: 10px;"
                         class="fas fa-lg fa-file-excel" id="btnExport"></i>
                     {% endif %}
                 </div>
@@ -671,15 +673,15 @@
                             {% if carga.pgcomissao == True %}
 
                             <td align=center><a class="text text-success" style='font-style:italic'
-                                    href="{% url 'upd_comiss' carga.pk %}"><b>R$
+                                    href="{% url 'upd_comiss' carga.pk %}" target="_blank"><b>R$
                                         {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
                             {% elif carga.pgcomissao == False and carga.vpcomissaoc > 0 %}
                             <td align=center><a class="text text-danger" style='font-style:italic'
-                                    href="{% url 'upd_comiss' carga.pk %}"><b>R$
+                                    href="{% url 'upd_comiss' carga.pk %}" target="_blank"><b>R$
                                         {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
                             {% else %}
                             <td align=center><a class="text text-warning" style='font-style:italic'
-                                    href="{% url 'upd_comiss' carga.pk %}"><b>R$
+                                    href="{% url 'upd_comiss' carga.pk %}" target="_blank"><b>R$
                                         {{ carga.comissaocasca|floatformat:2 }}</b></a></td>
                             {% endif %}
                             {% else %}
@@ -690,12 +692,12 @@
                             {% endif %}
                             {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %}
                             <td align=center>
-                                <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
-                                <a class="btn btn-danger btn-xs" href="{% url 'del_cargas' carga.pk %}">Deletar</a>
+                                <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}" target="_blank">Editar</a>
+                                <a class="btn btn-danger btn-xs" href="{% url 'del_cargas' carga.pk %}" target="_blank">Deletar</a>
                             </td>
                             {% elif carga.situacao == 'Carregado'  and carga.pedido.situacao == 'a' %}
                             <td align=center>
-                                <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
+                                <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}" target="_blank">Editar</a>
                             </td>
                             {% else %}
                             <td align=center>-</td>
@@ -749,9 +751,16 @@
                     {% endif %}
                 </nav>
                 {% endif %}
-                <p style="float: left;"><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
-                        {{ page_obj.paginator.count }} Itens </strong></p>
 
+                {% if page_obj.paginator.count > 100 %}
+                <p style="float: left;"><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
+                        {{ page_obj.paginator.count }} Cargas </strong></p>
+
+                {% else %}
+                <p style="float: left;"><strong> Total: {{ page_obj.end_index }}
+                     Cargas </strong></p>
+
+                {% endif %}
                 <p><span style="float: right;"><strong>{% now "SHORT_DATETIME_FORMAT" %}
                     </span></strong></p>
             </div>
@@ -804,7 +813,7 @@
                     {% if 'GDX' in carga.transp|upper %}
                     <td>{{ carga.transp|title }}</td>
                     {% else %}
-                    <td style="background-color: #660066;">{{ carga.transp|title }}</td>
+                    <td style="background-color: rgba(102,0,102,0.3);font-weight: bold;">{{ carga.transp|title }}</td>
                     {% endif %}
 
 
@@ -933,48 +942,8 @@
         </table>
 
         <!--aisuhdioashiduhasihdiuashaiosudh-->
-        {% if is_paginated %}
-
-        <nav aria-label="Page navigation">
-            <ul class="pagination pagination-md">
-                {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" style="color: blanchedalmond" href="?{% param_replace page=1 %}"
-                        aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">begin</span>
-                    </a>
-
-                    {% else %}
-                <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
-                </li> {% endif %}
-
-                {% for n in page_obj.paginator.page_range %}
-                {% if page_obj.number == n %}
-                <li class="page-item active">
-                    <span class="page-link" style="color: blanchedalmond">{{ n }}<span
-                            class="sr-only">(current)</span></span>
-                </li>
-                {% elif n > page_obj.number|add:'-5' and n < page_obj.number|add:'5' %}
-                <li style="color: blanchedalmond" class="page-item"><a style="color: blanchedalmond" class="page-link"
-                        href="?{% param_replace page=n %}">{{ n }}</a></li>
-                {% endif %}
-                {% endfor %}
-
-                {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a style="color: blanchedalmond" class="page-link"
-                        href="?{% param_replace page=paginator.num_pages %}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">end</span>
-                    </a>
-                    {% else %}
-                <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
-                </li>
-            </ul>
-            {% endif %}
-        </nav>
-        {% endif %}
+       
+       
         <p style="float: left;"><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
                 {{ page_obj.paginator.count }} Itens </strong></p>
 
@@ -1054,6 +1023,32 @@
             a.click();
         });
     });
+
+    function createPDF() {
+        var sTable = document.getElementById('cargasfiltro2').innerHTML;
+
+        var style = "<style>";
+        style = style + "table {width: 100%;font: 12px Calibri;  margin-top: 60px;}";
+        style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
+        style = style + "white-space: nowrap;";
+        style = style + "padding: 2px 3px;text-align: center;}";
+        style = style + "</style>";
+
+        // CREATE A WINDOW OBJECT.
+        var win = window.open('', '', "_blank", 'height=700,width=700');
+
+        win.document.write('<html><head>');
+        win.document.write('<title>{% for pedido in pedidos %}{{ pedido.contrato }} | {{ pedido.fornecedor.nome|title}}{% endfor%} </title>');   // <title> FOR PDF HEADER.
+        win.document.write(style);          // ADD STYLE INSIDE THE HEAD TAG.
+        win.document.write('</head>');
+        win.document.write('<body>');
+        win.document.write(sTable);         // THE TABLE CONTENTS INSIDE THE BODY TAG.
+        win.document.write('<embed width="100%" height="100%" src="data:application/pdf;base64,' + base64 + '" type="application/pdf"/>');
+        win.document.write('</body></html>');
+
+        win.document.close(); 	// CLOSE THE CURRENT WINDOW.
+
+    }
 
 
 
