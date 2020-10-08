@@ -104,11 +104,15 @@
                         {% for cliente in clientes %}
                         <tr align=" center">
                             {% if cliente.locaiscarrega > 0 %}
-                            {% if 'uston' in cliente.nome|lower %}
+                            {% if 'USTON' in cliente.nome_fantasia|upper %}
                             <td scope="col" class="text-primary"><strong>{{ cliente.nome_fantasia}}</strong></td>
-                            {% elif 'cda' in cliente.nome|lower %}
+                            {% elif 'CDA - GO' in cliente.nome_fantasia|upper %}
                             <td scope="col" class="text-danger"><strong>{{ cliente.nome_fantasia}}</strong></td>
-                            {% elif 'apit' in cliente.nome|lower %}
+                            {% elif 'CDA - TO' in cliente.nome_fantasia|upper %}
+                            <td style=" color: olive;"><em><strong>{{ cliente|upper }}</strong></em></td>
+                            {% elif 'DIAMANTE - TO' in cliente.nome_fantasia|upper %}
+                            <td style=" color: #FFD700"><em><strong>{{ cliente|upper }}</strong></em></td>
+                            {% elif 'APIT' in cliente.nome_fantasia|upper %}
                             <td scope="col" style="color: orange;"><strong>{{ cliente.nome_fantasia}}</strong></td>
                             {% else %}
                             <td scope="col"><strong>{{ cliente.nome_fantasia}}</strong></td>
@@ -178,11 +182,15 @@
                         {% for cliente in clientes %}
                         <tr align="center">
                             {% if cliente.comissaoabertocasca > 0 or cliente.comissaosemanacasca > 0 or cliente.comissaomescasca > 0%}
-                            {% if 'uston' in cliente.nome|lower %}
+                            {% if 'USTON' in cliente.nome_fantasia|upper %}
                             <td scope="col" class="text-primary"><strong>{{ cliente.nome_fantasia}}</strong></td>
-                            {% elif 'cda' in cliente.nome|lower %}
+                            {% elif 'CDA - GO' in cliente.nome_fantasia|upper %}
                             <td scope="col" class="text-danger"><strong>{{ cliente.nome_fantasia}}</strong></td>
-                            {% elif 'apit' in cliente.nome|lower %}
+                            {% elif 'CDA - TO' in cliente.nome_fantasia|upper %}
+                            <td style=" color: olive;"><em><strong>{{ cliente|upper }}</strong></em></td>
+                            {% elif 'DIAMANTE - TO' in cliente.nome_fantasia|upper %}
+                            <td style=" color: #FFD700"><em><strong>{{ cliente|upper }}</strong></em></td>
+                            {% elif 'APIT' in cliente.nome_fantasia|upper %}
                             <td scope="col" style="color: orange;"><strong>{{ cliente.nome_fantasia}}</strong></td>
                             {% else %}
                             <td scope="col"><strong>{{ cliente.nome_fantasia}}</strong></td>
@@ -243,11 +251,15 @@
                         {% for cliente in clientes %}
                         <tr align=" center">
                             {% if cliente.agendadosemana > 0 or cliente.carregadosemana > 0 or cliente.agendadoordemsemana > 0 or cliente.agendadosemanaseguinte > 0 %}
-                            {% if 'uston' in cliente.nome|lower %}
+                            {% if 'USTON' in cliente.nome_fantasia|upper %}
                             <td scope="col" class="text-primary"><strong>{{ cliente.nome_fantasia}}</strong></td>
-                            {% elif 'cda' in cliente.nome|lower %}
+                            {% elif 'CDA - GO' in cliente.nome_fantasia|upper %}
                             <td scope="col" class="text-danger"><strong>{{ cliente.nome_fantasia}}</strong></td>
-                            {% elif 'apit' in cliente.nome|lower %}
+                            {% elif 'CDA - TO' in cliente.nome_fantasia|upper %}
+                            <td style=" color: olive;"><em><strong>{{ cliente|upper }}</strong></em></td>
+                            {% elif 'DIAMANTE - TO' in cliente.nome_fantasia|upper %}
+                            <td style=" color: #FFD700"><em><strong>{{ cliente|upper }}</strong></em></td>
+                            {% elif 'APIT' in cliente.nome_fantasia|upper %}
                             <td scope="col" style="color: orange;"><strong>{{ cliente.nome_fantasia}}</strong></td>
                             {% else %}
                             <td scope="col"><strong>{{ cliente.nome_fantasia}}</strong></td>
@@ -301,8 +313,7 @@
         if (document.getElementById("comidash").classList.contains('hide')) {
             document.getElementById(el).classList.remove('hide');
             document.getElementById(el2).className = "fas fa-eye text-info";
-        }
-        else {
+        } else {
             document.getElementById(el).classList.add('hide');
             document.getElementById(el2).className = "fas fa-eye-slash text-danger";
         }

@@ -228,8 +228,12 @@
 
                     <td>{{ pedido.fornecedor.cidade|truncatechars:20 }}</td>
 
-                    {% if 'CDA' in pedido.cliente.nome_fantasia|upper %}
+                    {% if 'CDA - GO' in pedido.cliente.nome_fantasia|upper %}
                     <td class="text-danger"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
+                    {% elif 'CDA - TO' in pedido.cliente.nome_fantasia|upper %}
+                    <td style=" color: olive;"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
+                    {% elif 'DIAMANTE - TO' in pedido.cliente.nome_fantasia|upper %}
+                    <td style=" color: #FFD700"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
                     {% elif 'USTON' in pedido.cliente.nome_fantasia|upper %}
                     <td class="text-primary"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
                     {% elif 'APIT' in pedido.cliente.nome_fantasia|upper %}
@@ -382,7 +386,9 @@
 <script>
     $(document).ready(function () {
         $('#dtBasicExample').DataTable({
-            "order": [[1, "asc"]]
+            "order": [
+                [1, "asc"]
+            ]
         });
         $('.dataTables_length').addClass('bs-select');
     });
@@ -416,4 +422,5 @@
         //Atribui o valor ao input
         $("#icms").val(total1);
     });
+
 </script>

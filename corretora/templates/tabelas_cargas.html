@@ -196,8 +196,12 @@
                     <td>{{ carga.pedido.fornecedor.nome|title|truncatechars:26 }}</td>
                     {% endif %}
                     <td>{{ carga.pedido.fornecedor.cidade|truncatechars:20 }}</td>
-                    {% if 'CDA' in carga.pedido.cliente.nome_fantasia|upper %}
+                    {% if 'CDA - GO' in carga.pedido.cliente.nome_fantasia|upper %}
                     <td class=" text-danger"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
+                    {% elif 'CDA - TO' in carga.pedido.cliente.nome_fantasia|upper %}
+                    <td style=" color: olive;"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
+                    {% elif 'DIAMANTE - TO' in carga.pedido.cliente.nome_fantasia|upper %}
+                    <td style=" color: #FFD700"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
                     {% elif 'USTON' in carga.pedido.cliente.nome_fantasia|upper %}
                     <td class="text-primary"><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
                     {% elif 'APIT' in carga.pedido.cliente.nome_fantasia|upper %}
