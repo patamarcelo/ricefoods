@@ -399,12 +399,12 @@
 
                         {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %}
                         <td align=center>
-                            <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
-                            <a class="btn btn-danger btn-xs" href="{% url 'del_cargas' carga.pk %}">Deletar</a>
+                            <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">EDIT</a>
+                            <a class="btn btn-danger btn-xs" href="{% url 'del_cargas' carga.pk %}">DEL</a>
                         </td>
                         {% elif carga.situacao == 'Carregado'  and carga.pedido.situacao == 'a' %}
                         <td align=center>
-                            <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">Editar</a>
+                            <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">EDIT</a>
                         </td>
                         {% else %}
                         <td align=center>-</td>

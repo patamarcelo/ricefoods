@@ -215,14 +215,14 @@
                     {% if pedido.carregado %}
                     <td align=center>
                         <a class="btn btn-warning btn-xs" target="_blank"
-                            href="{% url 'upd_pedidos' pedido.pk %}">Editar</a>
+                            href="{% url 'upd_pedidos' pedido.pk %}">EDIT</a>
                     </td>
                     {% else %}
                     <td align=center>
                         <a class="btn btn-warning btn-xs" target="_blank"
-                            href="{% url 'upd_pedidos' pedido.pk %}">Editar</a>
+                            href="{% url 'upd_pedidos' pedido.pk %}">EDIT</a>
                         <a class="btn btn-danger btn-xs" target="_blank"
-                            href="{% url 'del_pedidos' pedido.pk %}">Deletar</a>
+                            href="{% url 'del_pedidos' pedido.pk %}">DEL</a>
                     </td>
                     {% endif %}
 

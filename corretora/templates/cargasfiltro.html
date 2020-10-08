@@ -431,6 +431,7 @@
                     <th scope="col">Data</th>
                     <th scope="col">Placa</th>
                     <th scope="col">Motorista</th>
+                    <th scope="col">Frete</th>
 
 
                     <th scope="col">Peso</th>
@@ -450,14 +451,58 @@
             <tbody>
                 {% if user.is_superuser%}
                 <tr>
-                    <th scope="row" colspan="18" style="font-size: 18px;">Filtre os dados!!</th>
+                    <th class="text text-info" scope="row" colspan="19" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
                 </tr>
                 {% else %}
                 <tr>
-                    <th scope="row" colspan="17" style="font-size: 18px;">Filtre os dados!!</th>
+                    <th class="text text-info" scope="row" colspan="18" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
                 </tr>
                 {% endif %}
             </tbody>
+            {% elif  page_obj.paginator.count == 0 %}
+
+            <div class="my-table container-fluid" id="cargasfiltro4">
+                <table id="cargas5" class="width table-round-corner  table  table-striped table-dark table-bordered table-sm"
+                    width="100%">
+                    <thead class="borderless">
+                        <tr>
+        
+                            <th scope="col"><a class="text-info fa fa-sort-desc"></a></th>
+                            <th scope="col">Pedido</th>
+                            <th scope="col">Transp.</th>
+                            <th scope="col">Buonny</th>
+                            <th scope="col">Situação</th>
+                            <th scope="col">Ordem</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Placa</th>
+                            <th scope="col">Motorista</th>
+                            <th scope="col">Frete</th>
+        
+        
+                            <th scope="col">Peso</th>
+                            <th scope="col">NF</th>
+                            <th scope="col">Valor NF</th>
+                            <th scope="col">Fornecedor</th>
+                            <th scope="col">Origem</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col" class="text text-center">Class.</th>
+                            {% if user.is_superuser%}
+                            <th scope="col" class="text text-center">Comiss.</th>
+                            {% endif %}
+                            <th scope="col" class="text text-center">Ação</th>
+        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if user.is_superuser%}
+                        <tr>
+                            <th class="text text-danger" scope="row" colspan="19" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <th class="text text-danger" scope="row" colspan="18" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
+                        </tr>
+                        {% endif %}
             {% else %}
 
             <div class="my-table container-fluid" id="cargasfiltro">
@@ -476,7 +521,7 @@
                             <th scope="col">Data</th>
                             <th scope="col">Placa</th>
                             <th scope="col">Motorista</th>
-
+                            <th scope="col">Frete</th>
 
                             <th scope="col">Peso</th>
                             <th scope="col">NF</th>
@@ -586,7 +631,12 @@
                             <td>{{ carga.motorista|title }}</td>
                             {% endif %}
 
-
+                            {% if carga.valor_mot == None %}
+                            <td align=left>R$ &nbsp;&nbsp;&nbsp;&nbsp;- </td>
+                            {% else %}
+                            <td>R$ {{ carga.valor_mot }}</td>
+                            {% endif %}
+                            
                             {% if carga.peso == 0 %}
                             <td class="text-warning"><strong>{{ carga.veiculo|intcomma }} Kg </strong></td>
                             {% elif carga.peso < 18000 and carga.peso > 0  %}
@@ -696,12 +746,12 @@
                             {% endif %}
                             {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %}
                             <td align=center>
-                                <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}" target="_blank">Editar</a>
-                                <a class="btn btn-danger btn-xs" href="{% url 'del_cargas' carga.pk %}" target="_blank">Deletar</a>
+                                <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}" target="_blank">Edit</a>
+                                <a class="btn btn-danger btn-xs" href="{% url 'del_cargas' carga.pk %}" target="_blank">Del</a>
                             </td>
                             {% elif carga.situacao == 'Carregado'  and carga.pedido.situacao == 'a' %}
                             <td align=center>
-                                <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}" target="_blank">Editar</a>
+                                <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}" target="_blank">Edit</a>
                             </td>
                             {% else %}
                             <td align=center>-</td>
