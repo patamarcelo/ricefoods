@@ -28,8 +28,12 @@
 
     }
 
+    /* .btn-group {
+        margin:0px 10px;
+    } */
+
 </style>
-<div class="container">
+<div class="container d-flex flex-column  justify-content-center">
     <div class="container">
         <svg class="bi bi-bar-chart" width="5em" height="5em" viewBox="0 0 16 16" fill="currentColor"
             xmlns="http://www.w3.org/2000/svg">
@@ -39,7 +43,9 @@
     </div>
     <h1> Corretora de Cereais </h1>
     {% if user.is_anonymous %}
-    <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+    <div class="container d-inline-flex  justify-content-center">
+    <a class="btn btn-primary col-lg-1 col-md-2 col-sm-3 col-3" href="{% url 'login' %}">Login</a>
+    </div>
     {% else %}
     <div class="container" align=center>
         <div class="col-lg-5 col-md-7 col-sm-9 col-11 alert alert-primary" role="alert">
@@ -49,27 +55,37 @@
     {% if user.is_superuser %}
     <div class="container" align=center style="margin-bottom:10px;">
         <div class="inline-flex">
-            <a class="col-lg-2 col-md-3 col-sm-4 col-4 p-1 m-1 btn btn-primary"
+            <a class="col-lg-2 col-md-3 col-sm-4 col-4  btn btn-primary"
                 href="{% url 'corretora' %}">Corretora</a>
-            <a class="col-lg-2 col-md-3 col-sm-4 col-4 p-1 m-1 btn btn-success" href="{% url 'dashboard' %}"
+            <a class="col-lg-2 col-md-3 col-sm-4 col-4  btn btn-success" href="{% url 'dashboard' %}"
                 target="_blank">Painel</a>
         </div>
     </div>
     {% else %}
     <div class="container" align=center style="margin-bottom:10px;">
         <div class="inline-flex">
-            <a class="col-lg-3 col-md-5 col-sm-7 col-8 p-1 m-1 btn btn-primary"
+            <a class="col-lg-3 col-md-5 col-sm-7 col-8  btn btn-primary"
                 href="{% url 'corretora' %}">Corretora</a>
-        </div>
+        </div>  
     </div>
     {% endif %}
-    <div class="container">
+    <div class="container d-flex ">        
         <div class="container d-inline-flex  justify-content-center">
-            <a href="{% url 'pedidos' %}" style="margin-left: 20px;"><button type="button"
-                    class="btn btn-outline-primary">Pedidos</button></a>
+            <div class="col-lg-3 col-md-5 col-sm-7 col-7 d-flex justify-content-around">
+            <div class="btn-group" >
+                <button type="button" class="btn btn-outline-primary"
+                    onclick='window.location.href="{% url 'pedidos' %}"'>Pedidos</button>
+                <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                </button>                
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'add_pedidos' %}" target="_blank">Add Pedido</a>                    
+                </div>
+            </div>
 
 
-            <div class="btn-group" style="padding-left: 15px;">
+            <div class="btn-group" >
                 <button type="button" class="btn btn-outline-primary"
                     onclick='window.location.href="{% url 'cargas' %}"'>Cargas</button>
                 <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
@@ -81,8 +97,10 @@
                     <a class="dropdown-item" href="{% url 'cargasfiltro' %}" target="_blank">Cargas F.</a>
                 </div>
             </div>
+        </div> 
+        </div> 
 
-        </div>
+    
 
 
 

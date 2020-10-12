@@ -19,7 +19,8 @@ class CargasFilter(django_filters.FilterSet):
     )
 
     transp = django_filters.ModelMultipleChoiceFilter(
-        queryset=Transportadora.objects.order_by('nome').all(), widget=forms.CheckboxSelectMultiple,
+        queryset=Transportadora.objects.order_by("nome").all(),
+        widget=forms.CheckboxSelectMultiple,
     )
 
     motorista__icontains = django_filters.CharFilter(

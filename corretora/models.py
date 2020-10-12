@@ -63,7 +63,7 @@ class Cidade(Base):
         verbose_name_plural = 'Cidades'
 
     def __str__(self):
-        return f'{self.cidade} - {self.estado}'
+        return self.cidade
 
 
 PROD_CHOICES = (

@@ -1047,6 +1047,7 @@
                         <th scope="col"><strong>Contrato</strong></th>
                         <th scope="col"><strong>Data</strong></th>
                         <th scope="col"><strong>Fornecedor</strong></th>
+                        <th scope="col"><strong>Cidade</strong></th>
                         <th scope="col"><strong>Cliente</strong></th>
                         <th scope="col"><strong>Placa</strong></th>
                         <th scope="col"><strong>Motorista</strong></th>
@@ -1076,6 +1077,10 @@
                         <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
                         <td><b>{{ carga.pedido.fornecedor.nome|title|truncatechars:38 }}
                             </b></td>
+                        
+                        <td><b>{{ carga.pedido.fornecedor.cidade }}
+                            </b></td>
+
                         <td><b>{{ carga.pedido.cliente.nome_fantasia|upper|truncatechars:38 }}
                             </b></td>
                         <td><b>
@@ -1115,10 +1120,10 @@
                         {% endif %}
                         <td><b>{{ carga.peso|intcomma }} Kg </b></td>
                         <td><b>{{ carga.peso|div:30|floatformat:"0" }} Fds </b></td>
-                        {% if carga.valorcarga == None %}
+                        {% if carga.valornf == None or carga.valornf == 0 %}
                         <td><b>R$ &nbsp; - </b></td>
                         {% else %}
-                        <td><b>R$ {{carga.valorcarga|floatformat:"2"}}</b></td>
+                        <td><b>R$ {{carga.valornf|floatformat:"2"}}</b></td>
                         {% endif %}
 
 
@@ -1128,7 +1133,7 @@
                         {% endfor %}
                     </tr>
                 <tfoot>
-                    <td colspan="2" class="border-top border-dark"></td>
+                    <td colspan="3" class="border-top border-dark"></td>
                     <td colspan="1" class="border-top border-dark"></td>
                     <td colspan="1" class="border-top border-dark"></td>
                     <td colspan="1" class="border-top border-dark"></td>
@@ -1150,7 +1155,7 @@
                             </i></b></td>
                     {% else %}
                     <td align="center" class="border-top border-dark"><b><i>R$
-                                {{ total.peso__sum|div:30|mul:p.preco_produto|floatformat:"2" }}
+                                {{ totalnf.valornf__sum|floatformat:"2" }}
                             </i></b></td>
                     {% endif %}
 
