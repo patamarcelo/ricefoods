@@ -1712,7 +1712,7 @@ input[type='checkbox'] {
 }
 
 .footerpata {
-	padding-top: 2rem;
+	height: 3rem;
 	background-color: #113448;
 	text-decoration: #daa520;
 }
@@ -1727,7 +1727,7 @@ input[type='checkbox'] {
 /*     17. Footer     */
 /**********************/
 .footer {
-	padding-top: 5rem;
+	
 	background-color: #113448;
 }
 
@@ -1735,9 +1735,8 @@ input[type='checkbox'] {
 	margin-bottom: 2.25rem;
 }
 
-.footer h4 {
-	margin-bottom: 0.75rem;
-	color: #fff;
+.footerpata h6 {
+	margin-bottom: 10px;	
 }
 
 .footer p,
@@ -2460,3 +2459,7 @@ a:hover.back-to-top {
 	/* end of navigation */
 }
 /* end of min-width width 1200px */
+
+/* rodapé Marcelo personalizado */
+
+
