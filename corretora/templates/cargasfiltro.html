@@ -6,6 +6,7 @@
 {% load crispy_forms_tags %}
 {% load  corretora_extras %}
 {% load widget_tweaks %}
+{% load mathfilters %}
 
 
 <!DOCTYPE html>
@@ -231,6 +232,25 @@
             color: whitesmoke;
             font-size: .990rem;
             text-align: bottom;
+        }
+
+
+        .linhatitulototal {
+            white-space: nowrap;                    
+        }
+
+        .linhatitulototal:first-child {
+            text-align:left;
+        }
+
+        .titulototal {
+            max-width: 14% !important;
+            white-space: nowrap;  
+                            
+        }
+ 
+        .titulototal > p {
+            margin-bottom: 0px;                     
         }
 
     </style>
@@ -760,6 +780,43 @@
 
                         {% endfor %}
                     </tbody>
+                    {% if agendatotal.veiculo__sum == None %}  
+                    <div class="container-fluid">
+                        <div class="row linhatitulototal">
+                                      
+                            <div class="col titulototal">
+                                {% if pesototal.peso__sum == None %}                    
+                                {% else %}
+                                <p ><strong>Carregado: <i style="color: whitesmoke;">{{ pesototal.peso__sum }} Kg</i></strong></p>
+                                {% endif %}  
+                            </div>  
+                            
+                        </div>
+                    </div>                    
+                    {% else %}
+                    <div class="container-fluid">
+                        <div class="row linhatitulototal">
+                            <div class="col titulototal">
+                                {% if agendatotal.veiculo__sum == None %}                    
+                                {% else %}
+                                <p><strong>Agendado: <i class="text text-warning" >{{ agendatotal.veiculo__sum }} Kg</i></strong></p>
+                                {% endif %}        
+                            </div>             
+                            <div class="col titulototal">
+                                {% if pesototal.peso__sum == None %}                    
+                                {% else %}
+                                <p ><strong>Carregado: <i style="color: whitesmoke;">{{ pesototal.peso__sum }} Kg</i></strong></p>
+                                {% endif %}  
+                            </div>  
+                            {% if pesototal.peso__sum == None and agendatotal.peso__sum == None %}
+                            {% else %}
+                            <div class="col titulototal">                                
+                                <p ><strong>Total: <i class="text text-info">{{ pesototal.peso__sum|addition:agendatotal.veiculo__sum }} Kg</i></strong></p>
+                            </div>  
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
                 </table>
 
                 <!--aisuhdioashiduhasihdiuashaiosudh-->
@@ -994,20 +1051,52 @@
                 {% endfor %}
             </tbody>
         </table>
+        
+            {% if agendatotal.veiculo__sum == None %}  
+                    <div class="container">
+                        <div class="row linhatitulototal">
+                                      
+                            <div class="col titulototal">
+                                {% if pesototal.peso__sum == None %}                    
+                                {% else %}
+                                <p ><strong>Carregado: <i>{{ pesototal.peso__sum }} Kg</i></strong></p>
+                                {% endif %}  
+                            </div>  
+                            
+                        </div>
+                    </div>                    
+                    {% else %}
+                    <div class="container">
+                        <div class="row linhatitulototal">
+                            <div class="col titulototal">
+                                {% if agendatotal.veiculo__sum == None %}                    
+                                {% else %}
+                                <p><strong>Agendado: <i >{{ agendatotal.veiculo__sum }} Kg</i></strong></p>
+                                {% endif %}        
+                            </div>             
+                            <div class="col titulototal">
+                                {% if pesototal.peso__sum == None %}                    
+                                {% else %}
+                                <p ><strong>Carregado: <i>{{ pesototal.peso__sum }} Kg</i></strong></p>
+                                {% endif %}  
+                            </div>  
+                            {% if pesototal.peso__sum == None and agendatotal.peso__sum == None %}
+                            {% else %}
+                            <div class="col titulototal">                                
+                                <p ><strong>Total: <i >{{ pesototal.peso__sum|addition:agendatotal.veiculo__sum }} Kg</i></strong></p>
+                            </div>  
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+                <p><span style="float: right; font-size: 12px"><strong>{% now "SHORT_DATETIME_FORMAT" %}
+                    </span></strong></p>
+        
+        
 
-        <!--aisuhdioashiduhasihdiuashaiosudh-->
+        
        
-        {% if page_obj.paginator.count > 100 %}
-        <p style="float: left; font-size: 12px"><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
-                {{ page_obj.paginator.count }} Cargas </strong></p>
-
-        {% else %}
-        <p style="float: left; font-size: 12px"><strong> Total: {{ page_obj.end_index }}
-             Cargas </strong></p>
-
-        {% endif %}
-        <p><span style="float: right; font-size: 12px"><strong>{% now "SHORT_DATETIME_FORMAT" %}
-            </span></strong></p>
+        
 
     </div>
     {% endif %}

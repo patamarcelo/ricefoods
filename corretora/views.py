@@ -45,6 +45,10 @@ class CargasFiltradasView(LoginRequiredMixin, FilterView):
     def get_context_data(self, **kwargs):
         context = super(CargasFiltradasView, self).get_context_data(**kwargs)
         context['cargas'] = Carga.objects.all
+        queryset = self.get_queryset()
+        filter = CargasFilter(self.request.GET, queryset=queryset)        
+        context['pesototal'] = filter.qs.filter(situacao='Carregado').filter(peso__gt=0).values('peso').aggregate(Sum('peso'))
+        context['agendatotal'] = filter.qs.filter(situacao='Agendado').filter(peso=0).values('veiculo').aggregate(Sum('veiculo'))    
         return context
     
 
