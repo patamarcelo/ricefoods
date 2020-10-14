@@ -236,7 +236,9 @@
 
 
         .linhatitulototal {
-            white-space: nowrap;                    
+            white-space: normal;
+            display: flex;
+            flex-wrap: nowrap;   
         }
 
         .linhatitulototal:first-child {
@@ -245,12 +247,43 @@
 
         .titulototal {
             max-width: 14% !important;
-            white-space: nowrap;  
-                            
+                                     
         }
  
         .titulototal > p {
-            margin-bottom: 0px;                     
+            margin-bottom: 0px; 
+            display: flex;
+            flex-wrap: nowrap;                    
+        }
+        
+        .pesostitulo {            
+            white-space: nowrap;
+            margin-right:                    
+        }
+        
+        @media (min-width:300px) and  (max-width:900px) {
+            .titulototal {                
+                margin-right: 25px;
+            }
+        }
+
+
+        /* @media (min-width:300px) and  (max-width:980px) {
+            #cargas4, #filtro, .linhatitulototal {                
+                zoom: 72%;
+            }
+        } */
+        
+        @media (min-width:300px) and  (max-width:980px) {
+            body  {                
+                zoom: 60%;
+            }
+        }
+
+        @media (max-width:1000px) {
+            .fa-file-excel, .fa-file-pdf {                
+                display: none;
+            }
         }
 
     </style>
@@ -799,19 +832,19 @@
                             <div class="col titulototal">
                                 {% if agendatotal.veiculo__sum == None %}                    
                                 {% else %}
-                                <p><strong>Agendado: <i class="text text-warning" >{{ agendatotal.veiculo__sum }} Kg</i></strong></p>
+                                <p><strong>Agendado: <i class="text text-warning pesostitulo" >{{ agendatotal.veiculo__sum }} Kg</i></strong></p>
                                 {% endif %}        
                             </div>             
                             <div class="col titulototal">
                                 {% if pesototal.peso__sum == None %}                    
                                 {% else %}
-                                <p ><strong>Carregado: <i style="color: whitesmoke;">{{ pesototal.peso__sum }} Kg</i></strong></p>
+                                <p ><strong>Carregado: <i class="pesostitulo" style="color: whitesmoke;">{{ pesototal.peso__sum }} Kg</i></strong></p>
                                 {% endif %}  
                             </div>  
                             {% if pesototal.peso__sum == None and agendatotal.peso__sum == None %}
                             {% else %}
                             <div class="col titulototal">                                
-                                <p ><strong>Total: <i class="text text-info">{{ pesototal.peso__sum|addition:agendatotal.veiculo__sum }} Kg</i></strong></p>
+                                <p ><strong>Total: <i class="text text-info pesostitulo">{{ pesototal.peso__sum|addition:agendatotal.veiculo__sum }} Kg</i></strong></p>
                             </div>  
                             {% endif %}
                         </div>
