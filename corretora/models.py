@@ -665,10 +665,10 @@ class Carga(Base):
 
     RODOTREM = 51000
     BITREM = 39000
-    BICACAMBA = 37000
+    BICACAMBA = 36900
     VANDERLEIA = 36000
-    LSTRUCADA = 32000
-    TOCO = 26000
+    LSTRUCADA = 33000
+    TOCO = 25500
 
     VEICULO_CHOICES = (
         (RODOTREM, 'Rodotrem'),

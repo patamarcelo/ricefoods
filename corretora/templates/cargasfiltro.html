@@ -286,7 +286,7 @@
             }
         }
 
-        .titulospesos {
+        p.agendado {
         opacity: 0;
         -webkit-animation: fadeIn 1000ms linear;
         -moz-animation: fadeIn 1000ms linear;
@@ -489,7 +489,7 @@
         </form>
     </div>
 
-    {% if request.get_full_path ==  "/corretora/cargasfiltro" %}
+    {% if request.get_full_path ==  "/corretora/cf" %}
     <div class="my-table container-fluid" id="cargasfiltro">
         <table id="cargas4" class="width table-round-corner  table  table-striped table-dark table-bordered table-sm"
             width="100%">
@@ -848,20 +848,20 @@
                         </div>
                     </div>                    
                     {% else %}
-                    <div class="container-fluid titulospesos">
+                    <div class="container-fluid">
                         <div class="row linhatitulototal">
-                            <div class="col titulototal">
-                                {% if agendatotal.veiculo__sum == None %}                    
-                                {% else %}
-                                <p><strong>Agendado <i class="text text-warning pesostitulo" ><br/>{{ agendatotal.veiculo__sum }} Kg</i></strong></p>
-                                {% endif %}        
-                            </div>             
                             <div class="col titulototal">
                                 {% if pesototal.peso__sum == None %}                    
                                 {% else %}
                                 <p ><strong>Carregado <i class="pesostitulo" style="color: whitesmoke;"><br/>{{ pesototal.peso__sum }} Kg</i></strong></p>
                                 {% endif %}  
                             </div>  
+                            <div class="col titulototal">
+                                {% if agendatotal.veiculo__sum == None %}                    
+                                {% else %}
+                                <p class="agendado"><strong>Agendado <i class="text text-warning pesostitulo" ><br/>{{ agendatotal.veiculo__sum }} Kg</i></strong></p>
+                                {% endif %}        
+                            </div>             
                             {% if pesototal.peso__sum == None and agendatotal.peso__sum == None %}
                             {% else %}
                             <div class="col titulototal">                                

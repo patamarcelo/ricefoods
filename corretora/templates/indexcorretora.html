@@ -20,8 +20,27 @@
         margin-bottom: 9.5px;
     }
 
+
+    b.time {
+        opacity: 0;
+        -webkit-animation: fadeIn 1000ms linear;
+        -moz-animation: fadeIn 1000ms linear;
+        -o-animation: fadeIn 1000ms linear;
+        animation: fadeIn 1000ms linear; 
+        -webkit-animation-fill-mode:forwards;
+        -moz-animation-fill-mode:forwards;
+        -o-animation-fill-mode:forwards;
+        animation-fill-mode:forwards;
+
+        -webkit-animation-direction:alternate;
+        animation-iteration-count:infinite;
+        animation-iteration-count:infinite;
+        -moz-animation-iteration-count:infinite;
+        -webkit-animation-iteration-count:infinite;
+        }
+
 </style>
-<small style="float: right;">Olá {{ user.first_name|title }}, {% now "SHORT_DATETIME_FORMAT" %}</small>
+<small style="float: right;">Olá {{ user.first_name|title }}, {% now "SHORT_DATE_FORMAT" %} <b class="time"> {% now "H:i" %}</b></small>
 <br />
 <div class="container botoesfixo">
     {% if user.is_superuser %}
