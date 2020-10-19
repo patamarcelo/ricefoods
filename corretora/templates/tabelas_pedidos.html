@@ -19,14 +19,14 @@
                 <h4 style="margin:0px"><strong>Resumo Pedidos</strong></h4>
             </div>
             <div class="col-2">
-                <input class="form-control input-sm" type="text" id="pedidossaldos" onclick="AddValor()">
+                <input class="form-control input-sm" type="text" id="pedidossaldos" onclick="AddValor()" placeholder="Peso em Kg">
             </div>
 
         </div>
 
     </div>
     <hr />
-    <div class="my-table hide" style="zoom:67%" id="###">
+    <div class="my-table hide" style="zoom:67%" id="pedidos10">
         <table id="dtBasicExample"
             class="width table table-condensed table-striped table-hover table-dark table-bordered table-sm">
             <thead class="borderless">
@@ -43,13 +43,13 @@
                     <th scope="col">Frete</th>
                     <th scope="col" class="text text-center">Quantidade</th>
                     <th scope="col" class="text text-center">Quantidade Kg </th>
-                    <th scope="col"><a class="text-primary fa fa-check"></a></th>
+                    <th scope="col"><input type="checkbox" value="0" id='select-all-carregado'></th>
                     <th scope="col" class="text text-center">Carregado</th>
-                    <th scope="col"><a class="text-primary fa fa-check"></a></th>
+                    <th scope="col"><input type="checkbox" value="0" id='select-all-saldo'></th>
                     <th scope="col" class="text text-center">Saldo Real</th>
-                    <th scope="col"><a class="text-primary fa fa-check"></a></th>
+                    <th scope="col"><input type="checkbox" value="0" id='select-all-previsto'></th>
                     <th scope="col" class="text text-center">Previsto</th>
-                    <th scope="col"><a class="text-primary fa fa-check"></a></th>
+                    <th scope="col"><input type="checkbox" value="0" id='select-all-saldoprevisto'></th>
                     <th scope="col" class="text text-center">Saldo Prev.</th>
                     {% if user.is_superuser%}
                     <th scope="col" class="text text-center">Comiss</th>
@@ -144,19 +144,19 @@
                     {% endif %}
                     <td align=center>{{ pedido.quantidade_pedido|intcomma }} Kg </td>
                     {% if pedido.carregado == 0 %}
-                    <td align=center><input type="checkbox" value="0" align="center" style="size: 10px;">
+                    <td align=center><input type="checkbox" name="carregado" value="0" align="center" style="size: 10px;">
                     </td>
                     <td align=center> - </td>
                     {% elif pedido.carregado == None %}
-                    <td align=center><input type="checkbox" value="0" align="center" style="size: 10px;">
+                    <td align=center><input type="checkbox" name="carregado" value="0" align="center" style="size: 10px;">
                     </td>
                     <td align=center> - </td>
                     {% else %}
-                    <td align=center><input type="checkbox" value="{{ pedido.carregado|stringformat:"i" }}"
+                    <td align=center><input type="checkbox" name="carregado" value="{{ pedido.carregado|stringformat:"i" }}"
                             align="center" style="size: 10px;"></td>
                     <td align=center>{{ pedido.carregado }} Kg</td>
                     {% endif %}
-                    <td align=center><input type="checkbox" value="{{ pedido.saldo|stringformat:"i" }}" align="center"
+                    <td align=center><input type="checkbox" name="saldo" value="{{ pedido.saldo|stringformat:"i" }}" align="center"
                             style="size: 10px;"></td>
                     {% if pedido.saldo == 0 %}
                     <td align=center> - </td>
@@ -172,7 +172,7 @@
                     {% else %}
                     <td align=center>{{ pedido.saldo }} Kg</td>
                     {% endif %}
-                    <td align=center><input type="checkbox" value="{{ pedido.previsto|stringformat:"i" }}"
+                    <td align=center><input type="checkbox" name="previsto" value="{{ pedido.previsto|stringformat:"i" }}"
                             align="center" style="size: 10px;"></td>
                     {% if pedido.previsto == 0 %}
                     <td align=center> - </td>
@@ -181,7 +181,7 @@
                     {% else %}
                     <td align=center class="text-primary"><strong>{{ pedido.previsto }} Kg</strong></td>
                     {% endif %}
-                    <td align=center><input type="checkbox" value="{{ pedido.saldoprevisto|stringformat:"i" }}"
+                    <td align=center><input type="checkbox" name="saldoprevisto" value="{{ pedido.saldoprevisto|stringformat:"i" }}"
                             class="icms" align="center" style="size: 10px;"></td>
                     {% if pedido.saldoprevisto == 0 %}
                     <td align=center> - </td>
@@ -236,27 +236,57 @@
 
 
 <script>
-    // $("#seletodos").click(function () {
-    //     $('input.seletodos2:checkbox').not(this).prop('checked', this.checked);
-    // });
+   
 
 
-    var total2 = 0;
-    //Chama a função com click em qualquer checkbox
-
-    $("#dtBasicExample").find("input:checkbox").click(function () {
+    $("#dtBasicExample").find("input:checkbox").on("change", function () {
         //Atribui o valor do input p/ variável 'valor'
-        var valor1 = parseInt($(this).val());
-        //Se o checkbox for marcado ele soma se não subtrai
-        if ($(this).is(":checked")) {
-            total2 += valor1;
-        } else {
-            total2 -= valor1;
-        }
-        var total1 = (total2).toLocaleString('pt-BR');
-        //Atribui o valor ao input
-        $("#pedidossaldos").val(total1);
+        
+        var total = 0;
+        $("#dtBasicExample").find(':checkbox').each(function () {
+            if ($(this).is(":checked")) {
+                total=total+parseInt($(this).val());
+            }        
+        })
+            var total1 = (total).toLocaleString('pt-BR');            
+        
+            if (total1 == 0) {
+                $("#pedidossaldos").val('Peso em Kg');
+            } else {
+            $("#pedidossaldos").val(total1);
+            }
+        
     });
+
+     
+    document.getElementById('select-all-carregado').onclick = function () {        
+        var checkboxes = document.getElementById('pedidos10').querySelectorAll('input[type="checkbox"][name=carregado]');
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }        
+    }
+
+    document.getElementById('select-all-saldo').onclick = function () {        
+        var checkboxes = document.getElementById('pedidos10').querySelectorAll('input[type="checkbox"][name=saldo]');
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }        
+    }
+
+    document.getElementById('select-all-previsto').onclick = function () {        
+        var checkboxes = document.getElementById('pedidos10').querySelectorAll('input[type="checkbox"][name=previsto]');
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }        
+    }
+
+    document.getElementById('select-all-saldoprevisto').onclick = function () {        
+        var checkboxes = document.getElementById('pedidos10').querySelectorAll('input[type="checkbox"][name=saldoprevisto]');
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }        
+    }
+
 
 </script>
 {% endblock %}

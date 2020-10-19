@@ -286,6 +286,27 @@
             }
         }
 
+        .titulospesos {
+        opacity: 0;
+        -webkit-animation: fadeIn 1000ms linear;
+        -moz-animation: fadeIn 1000ms linear;
+        -o-animation: fadeIn 1000ms linear;
+        animation: fadeIn 1000ms linear; 
+        -webkit-animation-fill-mode:forwards;
+        -moz-animation-fill-mode:forwards;
+        -o-animation-fill-mode:forwards;
+        animation-fill-mode:forwards;
+
+        -webkit-animation-direction:alternate;
+        animation-iteration-count:infinite;
+        animation-iteration-count:infinite;
+        -moz-animation-iteration-count:infinite;
+        -webkit-animation-iteration-count:infinite;
+        }
+
+        
+
+        
     </style>
     <!--Favicon-->
     <link rel="icon" href="{% static 'images/favicon.png' %}">
@@ -827,7 +848,7 @@
                         </div>
                     </div>                    
                     {% else %}
-                    <div class="container-fluid">
+                    <div class="container-fluid titulospesos">
                         <div class="row linhatitulototal">
                             <div class="col titulototal">
                                 {% if agendatotal.veiculo__sum == None %}                    

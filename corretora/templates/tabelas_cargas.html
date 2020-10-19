@@ -14,14 +14,14 @@
                 <h4 style="margin:0px"><strong>Resumo Cargas</strong></h4>
             </div>
             <div class="col-2">
-                <input class="form-control input-sm" type="text" id="icms" onclick="AddValor()">
+                <input class="form-control input-sm" type="text" id="icms" onclick="AddValor()" placeholder="Peso em Kg">
             </div>
 
         </div>
 
     </div>
     <hr />
-    <div class="my-table hide" style="zoom:68%" id="##">
+    <div class="my-table hide" style="zoom:68%" id="tabelascargas10">
         <table id="dtBasicExample2" class="width table table-hover table-striped table-dark table-bordered table-sm">
             <thead align=left class="borderless">
                 <tr>
@@ -37,11 +37,11 @@
                     <th scope="col">Placa</th>
                     <th scope="col">Motorista</th>
                     <th scope="col">Frete</th>
-                    <th scope="col"><a class="text-primary fa fa-check"></a></th>
+                    <th scope="col"><input type="checkbox" id='select-all-p' value="0"></th>
                     <th scope="col">Peso</th>
 
                     <th scope="col">NF</th>
-                    <th scope="col"><a class="text-primary fa fa-check"></a></th>
+                    <th scope="col"><input type="checkbox" id='select-all' value="0"></th>
                     <th scope="col">ICMS</th>
                     <th scope="col">Fornecedor</th>
                     <th scope="col">Origem</th>
@@ -54,7 +54,7 @@
                 </tr>
             </thead>
 
-            <tbody class="align-text-bottom">
+            <tbody class="align-text-bottom" id="tabelascargas10">
                 {% for carga in cargas|slice:":100" %}
                 <tr>
 
@@ -146,10 +146,10 @@
 
                     {% if carga.peso == 0 %}
                     <td align=center><input type="checkbox" value="{{ carga.veiculo|stringformat:"i" }}" class="peso"
-                            style="size: 10px;"></td>
+                            name='peso' style="size: 10px;"></td>
                     {% else %}
                     <td align=center><input type="checkbox" value="{{ carga.peso|stringformat:"i" }} "
-                            text="{{ carga.peso|intcomma }}" class="peso" style="size: 10px;"></td>
+                            text="{{ carga.peso|intcomma }}" class="peso" name='peso'  style="size: 10px;"></td>
                     {% endif %}
                     {% if carga.peso == 0 %}
                     <td class="text-warning"><strong>{{ carga.veiculo|intcomma }} Kg
@@ -295,22 +295,45 @@
 
 </style>
 <script>
-    var total = 0;
-    //Chama a função com click em qualquer checkbox
 
-    $("#dtBasicExample2").find("input:checkbox").click(function () {
-        //Atribui o valor do input p/ variável 'valor'
-        var valor = parseInt($(this).val());
-        //Se o checkbox for marcado ele soma se não subtrai
-        if ($(this).is(":checked")) {
-            total += valor;
-        } else {
-            total -= valor;
-        }
-        var total1 = (total).toLocaleString('pt-BR');
-        //Atribui o valor ao input
-        $("#icms").val(total1);
+    
+    //Chama a função com click em qualquer checkbox
+    
+    $("#tabelascargas10").find("input:checkbox").on("change", function () {
+        //Atribui o valor do input p/ variável 'valor'  
+        var total = 0;
+        $("#tabelascargas10").find(':checkbox').each(function () {
+            if ($(this).is(":checked")) {
+                total=total+parseInt($(this).val());
+            }        
+        })
+            var total1 = (total).toLocaleString('pt-BR');            
+        
+            if (total1 == 0) {
+                $("#icms").val('Peso em Kg');
+            } else {
+            $("#icms").val(total1);
+            }
     });
+
+    
+
+    
+    document.getElementById('select-all').onclick = function () {        
+        var checkboxes = document.getElementById('tabelascargas10').querySelectorAll('input[type="checkbox"][name=icms]');
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }
+        
+    }
+    
+    document.getElementById('select-all-p').onclick = function () {        
+        var checkboxes = document.getElementById('tabelascargas10').querySelectorAll('input[type="checkbox"][name=peso]');
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }
+        
+    }
 
 </script>
 {% endblock %}
