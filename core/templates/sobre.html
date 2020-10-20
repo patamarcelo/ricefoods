@@ -1,4 +1,5 @@
 {% load static %}
+{% load mathfilters %}
 
 <div id="about" class="counter">
     {% for s in subprojetos|slice:"1" %}
@@ -29,16 +30,16 @@
                     <!-- Counter -->
                     <div id="counter">
                         <div class="cell">
-                            <div class="counter-value number-count" data-count="231">1</div>
-                            <div class="counter-info">Happy<br>Users</div>
+                            <div class="counter-value number-count" data-count="160">1</div>
+                            <div class="counter-info">Produtores<br>Parceiros</div>
                         </div>
                         <div class="cell">
-                            <div class="counter-value number-count" data-count="121">1</div>
-                            <div class="counter-info">Issues<br>Solved</div>
+                            <div class="counter-value number-count" data-count="1372">1</div>
+                            <div class="counter-info">Veículos<br>Parceiros</div>
                         </div>
-                        <div class="cell">
-                            <div class="counter-value number-count" data-count="159">1</div>
-                            <div class="counter-info">Good<br>Reviews</div>
+                        <div class="cell" style="white-space: nowrap;">
+                            <div class="counter-value number-count" data-count="{{ pesototal.peso__sum|div:1000|floatformat:0|safe }}">1</div>
+                            <div class="counter-info">Toneladas<br>Embarcadas</div>
                         </div>
                     </div>
                     <!-- end of counter -->

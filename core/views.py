@@ -4,6 +4,9 @@ from django.contrib import messages
 from django.utils.translation import gettext as _
 from django.utils import translation
 
+from corretora.models import Carga
+from django.db.models import F, FloatField, Sum, Avg, Count
+
 
 from .models import Servicos, Sobre, Sobretopico, Subservicos, Projetos, Subprojetos, Inicial
 
@@ -26,6 +29,7 @@ class IndexView(FormView):
         context ['subprojetos'] = Subprojetos.objects.all()
         context ['inicial'] = Inicial.objects.all() 
         context['lang'] = lang
+        context['pesototal'] = Carga.objects.filter(situacao='Carregado').filter(peso__gt=0).values('peso').aggregate(Sum('peso'))
         translation.activate(lang)
         return context
 
