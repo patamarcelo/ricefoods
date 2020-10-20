@@ -1,5 +1,6 @@
 {% load static %}
 {% load mathfilters %}
+{% load humanize %}
 
 <div id="about" class="counter">
     {% for s in subprojetos|slice:"1" %}
@@ -38,8 +39,8 @@
                             <div class="counter-info">Veículos<br>Parceiros</div>
                         </div>
                         <div class="cell" style="white-space: nowrap;">
-                            <div class="counter-value number-count" data-count="{{ pesototal.peso__sum|div:1000|floatformat:0|safe }}">1</div>
-                            <div class="counter-info">Toneladas<br>Embarcadas</div>
+                            <div class="counter-value number-count" data-count="{{ pesototal.peso__sum|addition:11990182|div:1000|stringformat:"d" }}">1</div>
+                            <div class="counter-info">Toneladas<br>Em 2020</div>
                         </div>
                     </div>
                     <!-- end of counter -->
