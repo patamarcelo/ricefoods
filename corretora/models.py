@@ -15,9 +15,9 @@ class NameField(models.CharField):
 
 
 class Base(models.Model):
-    criados = models.DateTimeField('Criação', auto_now_add=True)
+    criados    = models.DateTimeField('Criação', auto_now_add=True)
     modificado = models.DateField('Atualização', auto_now=True)
-    ativo = models.BooleanField('Ativo', default=True)
+    ativo      = models.BooleanField('Ativo', default=True)
 
     class Meta:
         abstract = True
@@ -73,16 +73,16 @@ PROD_CHOICES = (
 
 
 class Fornecedor(Base):
-    nome = models.CharField('Nome', max_length=50)
-    cnpj_cpf = models.CharField('CNPJ/CPF', max_length=14, unique=True, null=True, help_text="digite apenas números")
+    nome          = models.CharField('Nome', max_length=50)
+    cnpj_cpf      = models.CharField('CNPJ/CPF', max_length=14, unique=True, null=True, help_text="digite apenas números")
     insc_estadual = models.CharField('Inscrição Estadual',  unique=True, max_length=13,null=True,help_text="digite apenas números")
-    banco = models.CharField('Banco', max_length=10, blank=True)
-    agencia = models.CharField('Agencia', max_length=5,blank=True, help_text="digite apenas números")
-    conta = models.CharField('Conta', max_length=12,blank=True, help_text="digite apenas números")
-    endereco = models.CharField('Endereço', max_length=50)
-    cidade = models.ForeignKey(Cidade, on_delete=models.PROTECT)
-    estado = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
-    obs = models.TextField('Observação', max_length=125, blank=True)
+    banco         = models.CharField('Banco', max_length=10, blank=True)
+    agencia       = models.CharField('Agencia', max_length=5,blank=True, help_text="digite apenas números")
+    conta         = models.CharField('Conta', max_length=12,blank=True, help_text="digite apenas números")
+    endereco      = models.CharField('Endereço', max_length=50)
+    cidade        = models.ForeignKey(Cidade, on_delete=models.PROTECT)
+    estado        = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
+    obs           = models.TextField('Observação', max_length=125, blank=True)
 
     
     class Meta:
@@ -98,15 +98,15 @@ def set_default_fornecedor():
        
 
 class Cliente(Base):
-    nome = models.CharField('Nome', max_length=50)
+    nome          = models.CharField('Nome', max_length=50)
     nome_fantasia = models.CharField('Nome Fantasia', max_length=50)
-    cnpj_cpf = models.CharField('CNPJ/CPF', max_length=14,  unique=True,  null=True, help_text="digite apenas números")
+    cnpj_cpf      = models.CharField('CNPJ/CPF', max_length=14,  unique=True,  null=True, help_text="digite apenas números")
     insc_estadual = models.CharField('Inscrição Estadual',  unique=True,  max_length=10, help_text="digite apenas números",null=True)
-    telefone = models.CharField('Telefone',max_length=11, help_text="digite apenas números", null=True)
-    endereco = models.CharField('Endereço', max_length=50)
-    cidade = models.ForeignKey(Cidade, on_delete=models.PROTECT)
-    estado = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
-    obs = models.TextField('Observação', max_length=125, blank=True)
+    telefone      = models.CharField('Telefone',max_length=11, help_text="digite apenas números", null=True)
+    endereco      = models.CharField('Endereço', max_length=50)
+    cidade        = models.ForeignKey(Cidade, on_delete=models.PROTECT)
+    estado        = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
+    obs           = models.TextField('Observação', max_length=125, blank=True)
 
     def mesanterior(self):
         lastm = today.month - 1 if today.month > 1 else 12
@@ -412,7 +412,7 @@ class Cliente(Base):
         filt = self.nome_fantasia
         totalped = Pedido.objects.filter(cliente__nome_fantasia=filt).filter(situacao='a').filter(ativo=True).values('quantidade_pedido').aggregate(pesototal=Sum('quantidade_pedido'))['pesototal']
         self.totalped = totalped
-        carregado = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(pedido__situacao='a').filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']            
+        carregado = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(pedido__situacao='a').filter(pedido__ativo=True).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']            
         self.carregado = carregado
 
         if self.totalped == None:
@@ -432,9 +432,9 @@ class Cliente(Base):
         filt = self.nome_fantasia
         totalped = Pedido.objects.filter(cliente__nome_fantasia=filt).filter(situacao='a').filter(ativo=True).values('quantidade_pedido').aggregate(pesototal=Sum('quantidade_pedido'))['pesototal']
         self.totalped = totalped
-        carregado = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(pedido__situacao='a').filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']            
+        carregado = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(pedido__situacao='a').filter(pedido__ativo=True).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']            
         self.carregado = carregado
-        previsto = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Agendado').values('pedido').aggregate(veiculot=Sum('veiculo'))['veiculot']
+        previsto = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Agendado').filter(pedido__ativo=True).values('pedido').aggregate(veiculot=Sum('veiculo'))['veiculot']
         self.previsto = previsto
 
         if self.totalped == None:
@@ -476,13 +476,13 @@ def set_default_cliente():
 
 
 class Transportadora(Base):
-    nome = models.CharField('Nome', max_length=20, unique=True)
-    cidade = models.ForeignKey(Cidade, on_delete=models.PROTECT)
-    estado = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
-    contato = models.CharField('Contato', max_length=30, blank=True)
+    nome     = models.CharField('Nome', max_length=20, unique=True)
+    cidade   = models.ForeignKey(Cidade, on_delete=models.PROTECT)
+    estado   = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
+    contato  = models.CharField('Contato', max_length=30, blank=True)
     telefone = models.CharField('Telefone', max_length=15, blank=True, help_text="digite apenas números")
-    email = models.EmailField('E-mail', max_length=30,blank=True)
-    obs = models.TextField('Observação', max_length=125, blank=True)    
+    email    = models.EmailField('E-mail', max_length=30,blank=True)
+    obs      = models.TextField('Observação', max_length=125, blank=True)
 
     class Meta:
         ordering = ['criados','nome']
@@ -514,34 +514,34 @@ class Pedido(Base):
         ('Big Bag', 'Big Bag')
     )
 
-    contrato = NameField('Numero', max_length=9, unique=True)
-    situacao = models.CharField('Situação', max_length=12, choices=SIT_CHOICES, default='Aberto')
-    data = models.DateField(default=timezone.now, help_text="dd/mm/aaaa")
-    fornecedor = models.ForeignKey(Fornecedor, on_delete=models.PROTECT)
-    cliente = models.ForeignKey(Cliente, on_delete=models.PROTECT)
+    contrato      = NameField('Numero', max_length=9, unique=True)
+    situacao      = models.CharField('Situação', max_length=12, choices=SIT_CHOICES, default='Aberto')
+    data          = models.DateField(default=timezone.now, help_text="dd/mm/aaaa")
+    fornecedor    = models.ForeignKey(Fornecedor, on_delete=models.PROTECT)
+    cliente       = models.ForeignKey(Cliente, on_delete=models.PROTECT)
     preco_produto = models.DecimalField('R$ Produto', max_digits=8, decimal_places=2)
-    preco_frete = models.DecimalField('Frete', max_digits=5, decimal_places=2)
+    preco_frete   = models.DecimalField('Frete', max_digits=5, decimal_places=2)
 
     comissaoc = models.DecimalField('Comissão C', max_digits=4, decimal_places=2 )
     comissaof = models.DecimalField('Comissão F', max_digits=4, decimal_places=2 ,null=True, blank=True )
 
-    prazopgto = models.CharField('Prazo Pgto', max_length=20,null=True, blank=True )
+    prazopgto      = models.CharField('Prazo Pgto', max_length=20,null=True, blank=True )
     modalidadepgto = models.CharField('Mod. Pgto', max_length=30,null=True, blank=True )
 
-    renda = models.DecimalField('Renda', max_digits=4, decimal_places=2)
-    inteiro = models.DecimalField('Inteiro', max_digits=4, decimal_places=2)
+    renda    = models.DecimalField('Renda', max_digits=4, decimal_places=2)
+    inteiro  = models.DecimalField('Inteiro', max_digits=4, decimal_places=2)
     impureza = models.DecimalField('Impureza', max_digits=4, decimal_places=2,null=True, blank=True)
-    umidade = models.DecimalField('Umidade', max_digits=4, decimal_places=2)
+    umidade  = models.DecimalField('Umidade', max_digits=4, decimal_places=2)
 
-    gessado = models.DecimalField('Gessado', max_digits=4, decimal_places=2,null=True,blank=True)
-    bbranca = models.DecimalField('B. Branca', max_digits=4, decimal_places=2,null=True, blank=True)
-    amarelo = models.DecimalField('Amarelo', max_digits=4, decimal_places=2,null=True, blank=True)
-    manchpic = models.DecimalField('Man / Pic', max_digits=4, decimal_places=2,null=True, blank=True)
+    gessado   = models.DecimalField('Gessado', max_digits=4, decimal_places=2,null=True,blank=True)
+    bbranca   = models.DecimalField('B. Branca', max_digits=4, decimal_places=2,null=True, blank=True)
+    amarelo   = models.DecimalField('Amarelo', max_digits=4, decimal_places=2,null=True, blank=True)
+    manchpic  = models.DecimalField('Man / Pic', max_digits=4, decimal_places=2,null=True, blank=True)
     vermelhos = models.DecimalField('Vermelhos', max_digits=4, decimal_places=2,null=True, blank=True)
 
-    variedade = models.CharField('Variedade', max_length=12)
-    produto = models.CharField('Produto', max_length=17, choices=PROD_CHOICES,default='Arroz em Casca')
-    tipo = models.CharField('Tipo', max_length=12, choices=TIPO_CHOICES, default='Saco 50Kg')
+    variedade         = models.CharField('Variedade', max_length=12)
+    produto           = models.CharField('Produto', max_length=17, choices=PROD_CHOICES,default='Arroz em Casca')
+    tipo              = models.CharField('Tipo', max_length=12, choices=TIPO_CHOICES, default='Saco 50Kg')
     quantidade_pedido = models.PositiveIntegerField('Quant. Pedido', help_text="Peso em Kg")
     
 
@@ -663,12 +663,12 @@ class Carga(Base):
         ('Carregado','Carregado')
     )
 
-    RODOTREM = 51000
-    BITREM = 39000
-    BICACAMBA = 36900
+    RODOTREM   = 51000
+    BITREM     = 39000
+    BICACAMBA  = 36900
     VANDERLEIA = 36000
-    LSTRUCADA = 33000
-    TOCO = 25500
+    LSTRUCADA  = 33000
+    TOCO       = 25500
 
     VEICULO_CHOICES = (
         (RODOTREM, 'Rodotrem'),
@@ -681,37 +681,37 @@ class Carga(Base):
 
     
     chegada = models.BooleanField('Chegou', default=False)
-    ordem = models.BooleanField('Ordem', default=False)
-    tac = models.BooleanField('TAC', default=False)
-    pedido = models.ForeignKey(Pedido, on_delete=models.PROTECT, limit_choices_to = {'situacao': 'a'})
-    data = models.DateField(help_text="dd/mm/aaaa")
-    buonny = models.CharField('Buonny', max_length=15)
-    transp = models.ForeignKey(Transportadora, on_delete=models.PROTECT, default='GDX Log')
+    ordem   = models.BooleanField('Ordem', default=False)
+    tac     = models.BooleanField('TAC', default=False)
+    pedido  = models.ForeignKey(Pedido, on_delete=models.PROTECT, limit_choices_to = {'situacao': 'a'})
+    data    = models.DateField(help_text="dd/mm/aaaa")
+    buonny  = models.CharField('Buonny', max_length=15)
+    transp  = models.ForeignKey(Transportadora, on_delete=models.PROTECT, default='GDX Log')
     
-    situacao = models.CharField('Situação', max_length=12, choices=STATUS_CHOICES, default='Agendado')
-    placa = NameField('Placa', max_length=7, help_text="Somente dígitos")
+    situacao  = models.CharField('Situação', max_length=12, choices=STATUS_CHOICES, default='Agendado')
+    placa     = NameField('Placa', max_length=7, help_text="Somente dígitos")
     motorista = models.CharField('Motorista', max_length=25)
-    peso = models.PositiveIntegerField('Peso', default=0 ,blank=True, null=True)
-    veiculo = models.IntegerField('Veículo', choices=VEICULO_CHOICES)
+    peso      = models.PositiveIntegerField('Peso', default=0 ,blank=True, null=True)
+    veiculo   = models.IntegerField('Veículo', choices=VEICULO_CHOICES)
     valor_mot = models.DecimalField('Frete', max_digits=5, decimal_places=2, null=True, blank=True)
     
-    notafiscal = models.CharField('NF', max_length=8, unique=True,  null=True, blank=True)
+    notafiscal  = models.CharField('NF', max_length=8, unique=True,  null=True, blank=True)
     notafiscal2 = models.CharField('NF 2', max_length=8, unique=True,  null=True, blank=True)
-    valornf = models.DecimalField('Valor NF', max_digits=8, decimal_places=2,  null=True, blank=True)
+    valornf     = models.DecimalField('Valor NF', max_digits=8, decimal_places=2,  null=True, blank=True)
 
-    pgcomissao = models.BooleanField('Pago', default=False)
+    pgcomissao  = models.BooleanField('Pago', default=False)
     vpcomissaoc = models.DecimalField('Valor Comissao', max_digits=7, decimal_places=2, null=True, blank=True, default=0 )
     vpcomissaof = models.DecimalField('Valor Comissao F', max_digits=7, decimal_places=2, null=True, blank=True, default=0 )
 
-    renda = models.DecimalField('Renda', max_digits=4, decimal_places=2, null=True, blank=True)
-    inteiro = models.DecimalField('Inteiro', max_digits=4, decimal_places=2, null=True, blank=True)
+    renda    = models.DecimalField('Renda', max_digits=4, decimal_places=2, null=True, blank=True)
+    inteiro  = models.DecimalField('Inteiro', max_digits=4, decimal_places=2, null=True, blank=True)
     impureza = models.DecimalField('Impureza', max_digits=4, decimal_places=2,null=True, blank=True)
-    umidade = models.DecimalField('Umidade', max_digits=4, decimal_places=2, null=True, blank=True)
+    umidade  = models.DecimalField('Umidade', max_digits=4, decimal_places=2, null=True, blank=True)
 
-    gessado = models.DecimalField('Gessado', max_digits=4, decimal_places=2,null=True,blank=True)
-    bbranca = models.DecimalField('B.Branca', max_digits=4, decimal_places=2,null=True, blank=True)
-    amarelo = models.DecimalField('Amarelo', max_digits=4, decimal_places=2,null=True, blank=True)
-    manchpic = models.DecimalField('Manch/Pic', max_digits=4, decimal_places=2,null=True, blank=True)
+    gessado   = models.DecimalField('Gessado', max_digits=4, decimal_places=2,null=True,blank=True)
+    bbranca   = models.DecimalField('B.Branca', max_digits=4, decimal_places=2,null=True, blank=True)
+    amarelo   = models.DecimalField('Amarelo', max_digits=4, decimal_places=2,null=True, blank=True)
+    manchpic  = models.DecimalField('Manch/Pic', max_digits=4, decimal_places=2,null=True, blank=True)
     vermelhos = models.DecimalField('Vermelhos', max_digits=4, decimal_places=2,null=True, blank=True)
 
     obs = models.TextField('Observação', max_length=125, blank=True) 

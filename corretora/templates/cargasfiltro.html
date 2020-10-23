@@ -943,7 +943,7 @@
                     <th scope="col"><a class="text-info fa fa-sort-desc"></a></th>
                     <th scope="col">Pedido</th>
                     <th scope="col">Transp.</th>
-                    <th scope="col">Buonny</th>
+                    
                     <th scope="col">Situação</th>
                     <th scope="col">Ordem</th>
                     <th scope="col">Data</th>
@@ -976,13 +976,13 @@
 
 
                     {% if 'GDX' in carga.transp|upper %}
-                    <td>{{ carga.transp|title }}</td>
+                    <td><strong>{{ carga.transp|title }}</strong></td>
                     {% else %}
                     <td style="background-color: rgba(102,0,102,0.3);font-weight: bold;">{{ carga.transp|title }}</td>
                     {% endif %}
 
 
-                    <td><strong>{{ carga.buonny|title }}</strong></td>
+                    
 
 
 
@@ -1009,15 +1009,15 @@
 
 
                     {% if carga.obs and carga.tac %}
-                    <td style="background-color: #7a1b0c; opacity: 0.8;"><abbr class="text-warning"
-                            title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
+                    <td style="background-color: rgba(228, 37, 7, 0.3); opacity: 0.8;"><abbr class="text-warning"
+                            title="{{ carga.obs }}"><em><strong>{{ carga.motorista|title }}</strong></em></abbr>
                     </td>
                     {% elif carga.obs %}
                     <td><abbr class="text-warning" title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
                     </td>
                     {% elif carga.tac %}
-                    <td style="background-color: #7a1b0c; opacity: 0.8">
-                        <em>{{ carga.motorista|title }}</em></abbr>
+                    <td style="background-color: rgba(228, 37, 7, 0.3); opacity: 0.8">
+                        <strong><em>{{ carga.motorista|title }}</strong></em></abbr>
                     </td>
                     {% else %}
                     <td>{{ carga.motorista|title }}</td>
