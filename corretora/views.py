@@ -42,15 +42,25 @@ class CargasFiltradasView(LoginRequiredMixin, FilterView):
     filterset_class = CargasFilter
     ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
     
+   
+
+
     def get_context_data(self, **kwargs):
         context = super(CargasFiltradasView, self).get_context_data(**kwargs)
         context['cargas'] = Carga.objects.all
         queryset = self.get_queryset()
-        filter = CargasFilter(self.request.GET, queryset=queryset)        
+        filter = CargasFilter(self.request.GET, queryset=queryset)                
         context['pesototal'] = filter.qs.filter(situacao='Carregado').filter(peso__gt=0).values('peso').aggregate(Sum('peso'))
-        context['agendatotal'] = filter.qs.filter(situacao='Agendado').filter(peso=0).values('veiculo').aggregate(Sum('veiculo'))    
+        context['agendatotal'] = filter.qs.filter(situacao='Agendado').filter(peso=0).values('veiculo').aggregate(Sum('veiculo'))            
+        def get_total_comissao():
+            total = 0                        
+            for carga in filter.qs.filter(pgcomissao=False).filter(situacao='Carregado').filter(pedido__produto='Arroz em Casca'):
+                total = total + carga.comissaocasca
+            return total
+        context['comitotal'] = get_total_comissao()
         return context
-    
+
+
 
   
                

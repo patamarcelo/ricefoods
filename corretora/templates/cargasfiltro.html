@@ -212,7 +212,7 @@
         }
 
         .checkcheck {
-            margin-top: 20px;
+            margin-top: 30px;
             margin-bottom: 10px;
         }
 
@@ -254,6 +254,11 @@
             margin-bottom: 0px; 
             display: flex;
             flex-wrap: nowrap;                    
+        }
+
+        .titulototaldireita, .titulototaldireita > p {
+            margin-bottom: 0px;
+            padding: 0px;
         }
         
         .pesostitulo {            
@@ -304,6 +309,14 @@
         -webkit-animation-iteration-count:infinite;
         }
 
+        .transpcheck {
+            margin: 0px 10px;
+        }
+
+      
+        .checkcheck2 {
+            margin-top: 12px;
+        }
         
 
         
@@ -463,12 +476,20 @@
                 <div class="row">
 
 
-                    <div class="col-12 d-flex justify-content-around checkcheck">
+                    <div class="col-12 d-flex justify-content-center checkcheck">
                         <i><input type="checkbox" id="select-all" class="select-all"><a
-                                class="text-primary fa fa-check"></a></i>
-                        {% for choice in filter.form.transp %}
-                        <label class="checkbox-inline">
-                            {{ choice.tag }} {{ choice.choice_label }} &nbsp;&nbsp;&nbsp;
+                                class="text-primary fa fa-check"></a></i>&nbsp;&nbsp;&nbsp;
+                        {% for choice in filter.form.transp|slice:"0:7" %}
+                        <label class="checkbox-inline  transpcheck">
+                            {{ choice.tag }} {{ choice.choice_label }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </label>{% endfor %}
+                    </div>
+                    
+                    <div class="col-12 d-flex justify-content-center checkcheck checkcheck2">
+                        
+                        {% for choice in filter.form.transp|slice:"7:" %}
+                        <label class="checkbox-inline transpcheck">
+                            {{ choice.tag }} {{ choice.choice_label }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </label>{% endfor %}
                     </div>
 
@@ -477,7 +498,7 @@
                 <div class="container" style="justify-content:center; padding: 15px;">
                     <button type="submit" class="btn btn-primary btn-xs btnfiltrar" id="btnfiltrar">Filtrar</button>
 
-                    {% if request.get_full_path ==  "/corretora/cargasfiltro" %}
+                    {% if request.get_full_path ==  "/corretora/cf" %}
                     {% else %}
                     <i type="submit" style="color:grey; margin-bottom: 20px; float: right;" class="fas fa-lg fa-file-pdf" id="pdf" onclick="createPDF()"
                         target="_blank"></i>
@@ -842,8 +863,14 @@
                                 {% if pesototal.peso__sum == None %}                    
                                 {% else %}
                                 <p ><strong>Carregado <i style="color: whitesmoke;"><br/> {{ pesototal.peso__sum }} Kg</i></strong></p>
-                                {% endif %}  
                             </div>  
+                            {% if user.is_superuser%}
+                            <div class="col titulototaldireita">
+                                <p style="float: right;" ><strong>Aberto <i class="text text-success"><br/> R$ {{ comitotal|floatformat:"2" }}</i></strong></p>
+                            </div>  
+                            {% else %}
+                            {% endif %}  
+                            {% endif %}  
                             
                         </div>
                     </div>                    
@@ -855,6 +882,7 @@
                             <div class="col titulototal">
                                 <p ><strong>Carregado <i class="pesostitulo" style="color: whitesmoke;"><br/>{{ pesototal.peso__sum }} Kg</i></strong></p>
                             </div>  
+                           
                             {% endif %}  
                             <div class="col titulototal">
                                 {% if agendatotal.veiculo__sum == None %}                    
@@ -867,6 +895,12 @@
                             <div class="col titulototal">                                
                                 <p ><strong>Total <i class="text text-info pesostitulo"><br/>{{ pesototal.peso__sum|addition:agendatotal.veiculo__sum }} Kg</i></strong></p>
                             </div>  
+                            {% endif %}
+                            {% if user.is_superuser%}
+                            <div class="col titulototaldireita">
+                                <p style="float: right;" ><strong>Aberto <i class="text text-success"><br/> R$ {{ comitotal|floatformat:"2" }}</i></strong></p>
+                            </div>  
+                            {% else %}
                             {% endif %}
                         </div>
                     </div>
