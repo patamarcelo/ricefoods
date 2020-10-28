@@ -865,9 +865,12 @@
                                 <p ><strong>Carregado <i style="color: whitesmoke;"><br/> {{ pesototal.peso__sum }} Kg</i></strong></p>
                             </div>  
                             {% if user.is_superuser%}
+                            {% if comitotal == 0 %}
+                            {% else %}
                             <div class="col titulototaldireita">
-                                <p style="float: right;" ><strong>Aberto <i class="text text-success"><br/> R$ {{ comitotal|floatformat:"2" }}</i></strong></p>
+                                <p style="float: right;" ><strong>Aberto <i class="text text-warning"><br/> R$ {{ comitotal|floatformat:"2" }}</i></strong></p>
                             </div>  
+                            {% endif %}
                             {% else %}
                             {% endif %}  
                             {% endif %}  
@@ -897,9 +900,12 @@
                             </div>  
                             {% endif %}
                             {% if user.is_superuser%}
+                            {% if comitotal == 0 %}
+                            {% else %}
                             <div class="col titulototaldireita">
-                                <p style="float: right;" ><strong>Aberto <i class="text text-success"><br/> R$ {{ comitotal|floatformat:"2" }}</i></strong></p>
+                                <p style="float: right;" ><strong>Aberto <i class="text text-warning"><br/> R$ {{ comitotal|floatformat:"2" }}</i></strong></p>
                             </div>  
+                            {% endif %}
                             {% else %}
                             {% endif %}
                         </div>

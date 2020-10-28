@@ -249,12 +249,12 @@
             </div>
         </div>
         <br>
-        <div class="container-fluid">
-            <div class="col-12">
+        <div class="container" align="center">
+            <div class="col-7">
                 {% if messages %}
-                <div class="container" align=center>
-                    <div class="row">
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-sm-offset-2">
+                <div class="container">
+                    <div class="d-flex flex-row justify-content-center">
+                        <div class="col-10 col-sm-qw col-sm-offset-2">
                             <div class="alert alert-success alert-dismissible" role="alert">
                                 <button type="button" class="close" data-dismiss="alert"><span
                                         aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -265,9 +265,9 @@
                         </div>
                     </div>
                 </div>
-                {% endif %}
-
             </div>
+            {% endif %}
+
         </div>
 
         {% block content %}
