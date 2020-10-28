@@ -68,7 +68,8 @@ class Cidade(Base):
 
 PROD_CHOICES = (
     ('Arroz em Casca', 'Arroz em Casca'),
-    ('Arroz Beneficiado', 'Arroz Benenficiado')
+    ('Arroz Beneficiado', 'Arroz Beneficiado'),
+    ('Semente', 'Semente')
 )
 
 
@@ -510,6 +511,7 @@ class Pedido(Base):
 
     TIPO_CHOICES = (
         ('Saco 50Kg', 'Saco 50Kg'),
+        ('Saco 40Kg', 'Saco 40Kg'),
         ('Fardo 30Kg', 'Fardo 30Kg'),
         ('Big Bag', 'Big Bag')
     )

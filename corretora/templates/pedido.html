@@ -244,11 +244,7 @@
 
                     <td>R$ {{ pedido.preco_produto|intcomma  }}</td>
                     <td> {{ pedido.produto  }} </td>
-                    {% if pedido.produto == 'Arroz em Casca' %}
-                    <td> Saco 50Kg </td>
-                    {% else %}
-                    <td> Fardo 30Kg </td>
-                    {% endif %}
+                    <td> {{ pedido.tipo}} </td>
                     <td> R$ {{ pedido.preco_frete  }} </td>
                     {% if pedido.produto == "Arroz em Casca" %}
                     {% if pedido.ativo == True and pedido.situacao == 'a'%}
@@ -258,6 +254,16 @@
                     {% else %}
                     <td align=center>{{ pedido.quantidade_pedido|div:50|floatformat:"0"}} Scs </td>
                     {% endif %}
+
+                    {% elif pedido.produto == "Semente" %}
+                    {% if pedido.ativo == True and pedido.situacao == 'a'%}
+                    <td align=center class="text text-success">
+                        <strong>{{ pedido.quantidade_pedido|div:40|floatformat:"0"}} Scs</strong>
+                    </td>
+                    {% else %}
+                    <td align=center>{{ pedido.quantidade_pedido|div:40|floatformat:"0"}} Scs </td>
+                    {% endif %}
+
                     {% else %}
                     {% if pedido.ativo == True and pedido.situacao == 'a' %}
                     <td align=center class="text text-success">

@@ -1178,6 +1178,263 @@
     </body>
 
 </div>
+{% elif pt.produto == 'Semente' %}
+
+<div class="table-responsive table-width my-table">
+
+    <body>
+        <br><br>
+        <div class="container">
+            <div class="row">
+
+                <div class="col" align="center">
+                    <h2><span class="badge badge-success badge-pill">
+                            Contrato </span></h2>
+                </div>
+
+            </div>
+        </div>
+
+        <!--------------------------PEdidos---------------------------->
+        <table class="width table table-sm table-borderless align-text-center " width=100>
+            <thead class="thead-dark table-bordered">
+                <tr align="center">
+
+                    <th scope="col"><strong> Contrato</strong></th>
+                    <th scope=" col"><strong> Situação</strong></th>
+                    <th scope="col"><strong> Data</strong></th>
+                    <th scope="col"><strong> Fornecedor</strong></th>
+                    <th scope="col"><strong> Origem </strong></th>
+                    <th scope="col"><strong> Cliente</strong></th>
+                    <th scope="col"><strong> Preço</strong></th>
+                    <th scope="col"><strong> Produto</strong></th>
+                    <th scope="col"><strong> Tipo</strong></th>
+                    <th scope="col"><strong> Frete</strong></th>
+                    <th scope="col"><strong> Quantidade</strong></th>
+                    <th scope="col"><strong> Carregado</strong></th>
+                    <th scope="col"><strong> Saldo</strong></th>
+                </tr>
+
+            </thead>
+            <tbody class="table-bordered">
+                {% for pedido in pedidos %}
+
+                <tr align="center">
+                    <td class="border_bottom"> <strong>{{ pedido.contrato }}</strong></td>
+                    {% if pedido.situacao == 'a' %}
+                    <td class="border_bottom"><strong>Aberto</strong></td>
+                    {% elif pedido.situacao == 'b' %}
+                    <td class="border_bottom"><strong>Fechado</strong></td>
+                    {% elif pedido.situacao == 'c' %}
+                    <td class="border_bottom"><strong>Cancelado</strong></td>
+                    {% else %}
+                    {% endif %}
+                    <td class="border_bottom"><strong>{{ pedido.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
+                    <td class="border_bottom"><strong>{{ pedido.fornecedor|title|truncatechars:35 }}</strong></td>
+                    <td class="border_bottom"><strong>{{ pedido.fornecedor.cidade|truncatechars:25 }}</strong></td>
+
+                    <td class="border_bottom"><strong>{{ pedido.cliente|upper }}</strong></td>
+
+
+                    <td class="border_bottom"><strong>R$ {{ pedido.preco_produto|intcomma  }}</strong></td>
+                    <td class="border_bottom"><strong> {{ pedido.produto  }} </strong></td>
+                    <td class="border_bottom"><strong> {{ pedido.tipo }} </strong></td>
+                    
+                    <td class="border_bottom"><strong> R$ {{ pedido.preco_frete  }} </strong></td>
+                    {% if pedido.produto == "Arroz em Casca" %}
+                    <td class="border_bottom" align=center><strong>{{ pedido.quantidade_pedido|div:50|floatformat:"0"}}
+                            Scs </strong></td>
+                    {% elif pedido.produto == "Semente" %}
+                    <td class="border_bottom" align=center><strong>{{ pedido.quantidade_pedido|div:40|floatformat:"0"}}
+                            Scs </strong></td>
+                    {% else %}
+                    <td class="border_bottom" align=center><strong>{{ pedido.quantidade_pedido|div:30|floatformat:"0"}}
+                            Fds </strong></td>
+                    {% endif %}
+
+
+                    {% if pedido.carregado == 0 %}
+                    <td class="border_bottom" align=center><strong> - </strong></td>
+                    {% else %}
+                    <td class="border_bottom" align=center><strong><strong>{{ pedido.carregado|div:30|floatformat:"0"}}
+                                Fds</strong></strong>
+                    </td>
+                    {% endif %}
+                    {% if pedido.saldo == 0 %}
+                    <td class="border_bottom" align=center><strong> - </strong></td>
+                    {% else %}
+                    <td class="border_bottom" align=center><strong>{{ pedido.saldo|div:40|floatformat:"0" }}
+                            Fds</strong></td>
+                    {% endif %}
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+
+
+        <!--------------------------Cargas-------------------------------------------------------------->
+
+
+        {% if cargas %}
+        <div class="container">
+            <div class="row">
+
+                <div class="col" align="center">
+                    <h2><span class="badge badge-success badge-pill">
+                            Relatório Carregamento
+                        </span></h2>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <table class=" width table table-sm table-hover" align="center">
+
+
+
+                <thead align="center" class="table-bordered thead-dark">
+
+                    <tr>
+                        <th scope="col"><a class="text-white fa fa-sort-desc"></a></th>
+                        <th scope="col"><strong>Contrato</strong></th>
+                        <th scope="col"><strong>Data</strong></th>
+                        <th scope="col"><strong>Fornecedor</strong></th>
+                        <th scope="col"><strong>Cidade</strong></th>
+                        <th scope="col"><strong>Cliente</strong></th>
+                        <th scope="col"><strong>Placa</strong></th>
+                        <th scope="col"><strong>Motorista</strong></th>
+
+
+                        <th scope="col"><strong>NF</strong></th>
+                        {% if notafiscal2 %}
+                        <th scope="col"><strong>NF 2</strong></th>
+                        {% else %}
+                        {% endif %}
+                        <th scope="col"><strong>Peso</strong></th>
+                        <th scope="col"><strong>Fardos</strong></th>
+                        <th scope="col"><strong>Valor Produto</strong></th>
+                    </tr>
+
+                </thead>
+
+                <tbody class="align-text-bottom table-borderless">
+
+                    {% for carga in cargas %}
+                    {% for pedido in pedidos %}
+                    {% if carga.situacao == 'Carregado' %}
+
+                    <tr align="center">
+                        <td>{{ forloop.parentloop.counter }}</b></td>
+                        <td><b>{{ carga.pedido }}</b></td>
+                        <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
+                        <td><b>{{ carga.pedido.fornecedor.nome|title|truncatechars:38 }}
+                            </b></td>
+                        
+                        <td><b>{{ carga.pedido.fornecedor.cidade }}
+                            </b></td>
+
+                        <td><b>{{ carga.pedido.cliente.nome_fantasia|upper|truncatechars:38 }}
+                            </b></td>
+                        <td><b>
+                                {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</b></td>
+                        <td><b>{{ carga.motorista|title }}</b></td>
+
+
+                        {% if carga.notafiscal == None %}
+                        <td class="text-danger"><strong>Sem NF</strong></td>
+                        {% elif carga.notafiscal|length <= 4 %}
+                        <td><b>
+                                {{ carga.notafiscal }}
+                            </b></td>
+                        {% elif carga.notafiscal|length <= 6 %}
+                        <td><b>
+                                {{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </b></td>
+                        {% elif carga.notafiscal|length > 6 and carga.notafiscal|length < 8 %}
+                        <td><b>
+                                {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </b></td>
+
+                        {% elif carga.notafiscal|length == 8 %}
+                        <td><b>
+                                0{{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </b></td>
+                        {% elif carga.notafiscal|length > 8 %}
+                        <td><b>
+                                {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                            </b></td>
+                        {% else %}
+                        <td><b>{{carga.notasfiscal}}</b></td>
+                        {% endif %}
+                        {% if notafiscal2 %}
+                        <td><b>{{carga.notasfiscal2}}</b></td>
+                        {% else %}
+                        {% endif %}
+                        <td><b>{{ carga.peso|intcomma }} Kg </b></td>
+                        <td><b>{{ carga.peso|div:40|floatformat:"0" }} Scs </b></td>
+                        {% if carga.valornf == None or carga.valornf == 0 %}
+                        <td><b>R$ &nbsp; - </b></td>
+                        {% else %}
+                        <td><b>R$ {{carga.valornf|floatformat:"2"}}</b></td>
+                        {% endif %}
+
+
+
+                        {% endif %}
+                        {% endfor %}
+                        {% endfor %}
+                    </tr>
+                <tfoot>
+                    <td colspan="3" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="1" class="border-top border-dark"></td>
+                    <td align="right" colspan="1" class="border-top border-dark"></td>
+                    <td align="center" colspan="1" class="border-top border-dark"><strong><i></i></strong></td>
+                    {% for p in pedidos %}
+                    <td align="center" class="border-top border-dark"><b><i><strong>Totais</strong></i></td>
+                    <td align="center" class="border-top border-dark"><b><i>{{ total.peso__sum|intcomma }}
+                                Kg</i></b></td>
+                    <td align="center" class="border-top border-dark"><b><i>{{ total.peso__sum|div:40|floatformat:"0" }}
+                                Scs</i></b></td>
+
+
+                    {% if total.peso__sum == None %}
+                    <td align="center" class="border-top border-dark"><b>R$ &nbsp; - </b></td>
+                    {% elif p.produto == 'Arroz em Casca' %}
+                    <td align="center" class="border-top border-dark"><b><i>R$
+                                {{ total.peso__sum|div:40|mul:p.preco_produto|floatformat:"2" }}
+                            </i></b></td>
+                    {% else %}
+                    <td align="center" class="border-top border-dark"><b><i>R$
+                                {{ totalnf.valornf__sum|floatformat:"2" }}
+                            </i></b></td>
+                    {% endif %}
+
+                    {% endfor %}
+                </tfoot>
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <br>
+        <br>
+        <br>
+        <div class="d-flex justify-content-center">
+            <h1><span class="badge badge-danger badge-pill">Pedido ainda sem Cargas!!</span></h1>
+        </div>
+
+
+        {% endif %}
+
+    </body>
+
+</div>
+
 {% else %}
 <h1> Outro Tipo </h1>
 {% endif %}
