@@ -10,6 +10,7 @@ class NumberInFilter(django_filters.BaseInFilter, django_filters.NumberFilter):
     pass
 
 
+
 class CargasFilter(django_filters.FilterSet):
 
     CHOICES = (("crescente", "Crescente"), ("decrescente", "Decrescente"))
@@ -17,6 +18,16 @@ class CargasFilter(django_filters.FilterSet):
     ordering = django_filters.ChoiceFilter(
         label="Data Orden.", choices=CHOICES, method="filter_by_order"
     )
+    
+    CHOICES2 = (('', 'Todos'), ('False', 'Aberto'),('True', 'Pago'))
+    
+    
+
+    pgcomissaoa = django_filters.ChoiceFilter(
+        field_name="pgcomissao",   label="Comissão", initial='Todos', choices=CHOICES2, empty_label=None 
+    )
+    
+    
 
     transp = django_filters.ModelMultipleChoiceFilter(
         queryset=Transportadora.objects.order_by("nome").all(),

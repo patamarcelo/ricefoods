@@ -471,7 +471,13 @@
                         placeholder="Valor NF">
                         {{ filter.form.valornf__lte|as_crispy_field }}
                     </div>
-
+                    {% if user.is_superuser%}
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Valor NF" data-placement="bottom"
+                        placeholder="Valor NF">
+                        {{ filter.form.pgcomissaoa|as_crispy_field }}
+                    </div>
+                    {% else %}
+                    {% endif %}
                 </div>
                 <div class="row">
 

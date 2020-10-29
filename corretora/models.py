@@ -435,7 +435,7 @@ class Cliente(Base):
         self.totalped = totalped
         carregado = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(pedido__situacao='a').filter(pedido__ativo=True).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']            
         self.carregado = carregado
-        previsto = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Agendado').filter(pedido__ativo=True).values('pedido').aggregate(veiculot=Sum('veiculo'))['veiculot']
+        previsto = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Agendado').values('pedido').aggregate(veiculot=Sum('veiculo'))['veiculot']
         self.previsto = previsto
 
         if self.totalped == None:
