@@ -5,68 +5,61 @@
 
 
 
-
+</div>
 <form method="POST">
-    <div class="row align-items-center">
-        <div class="col">
-            <div class="row">
-                <div class="container">
-                    <h4> <span class="badge badge-primary p-1 m-1"> Pedido: {{carga.pedido}}
-                        </span>&nbsp;&nbsp;<span
-                            class="badge badge-dark">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
-                            -
-                            {{carga.motorista|title}} - NF {{carga.notafiscal}}</span>
-                </div>
-                <div class="container-fluid">
-                    <h5> <span class="badge badge-warning p-1 m-1">{{carga.pedido.fornecedor.nome}}</span>
-                        &nbsp;&nbsp;<span
-                            class="badge badge-warning p-1 m-1">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
-                </div>
+    <div class="row ">        
+        <div class="d-flex flex-column justify-content-start">
+            <div class="flex-row justify-content-start">
+                <h4> <span class="badge badge-primary p-1 m-1"> Pedido: {{carga.pedido}}
+                    </span>&nbsp;&nbsp;<span
+                        class="badge badge-dark">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
+                        -
+                        {{carga.motorista|title}} - NF {{carga.notafiscal}}</span></h4>
             </div>
-            </h4>
-        </div>
-        <div class="col" align=right>
-            <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-            <a class="btn btn-warning btn-sm" href="javascript:history.back()">Voltar</a>
-        </div>
+            <div class="flex-row justify-content-start">                    
+                <h5> <span class="badge badge-warning p-1 m-1">{{carga.pedido.fornecedor.nome}}</span>
+                    &nbsp;&nbsp;<span
+                        class="badge badge-warning p-1 m-1">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
+            </div>
+        </div>                                  
     </div>
 
 
     {% csrf_token %}
     <hr>
-    <div class="form-group">
-        <div class="col-lg-5 col-md-5 col-sm-5 col-6  form-group">
-            {{ form.pgcomissao|as_crispy_field }}
-        </div>
-    </div>
-    <br>
-    <div class="form-group col-lg-5 col-md-5 col-sm-5 col-6">
-        <label for="id_vpcomissaoc" class="active">Comissao Cliente</label><br>
-        <input type="number" class="form-control-sm" name="vpcomissaoc" id="id_vpcomissaoc"
-            placeholder="{{ carga.comissaocasca|floatformat:2 }}" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" required>
-
+    <div class="d-flex justify-content-start">
+        <div class="flex-column justify-content-start">             
+                  <div class="flex-row justify-content-start" style="text-align: left;">
+                        {{ form.pgcomissao|as_crispy_field }}
+                </div>
+            <br>        
+            <div class="flex-row justify-content-start">
+                <label for="id_vpcomissaoc" class="active" style="white-space: nowrap;">Comissao Cliente</label><br>
+                <input type="number" class="form-control-sm" name="vpcomissaoc" id="id_vpcomissaoc"
+                    placeholder="{{ carga.comissaocasca|floatformat:2 }}" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" required>
+            </div>
+        </div>        
     </div>
 
     {% if carga.vpcomissaoc %}
-    <div class="container">
+    <br>
+    <div class="flex-row justify-content-start">
         <h5> <span class="badge badge-pill badge-success h3"><strong><b>Valor Atual - R$
                         {{ carga.vpcomissaoc }}</b></strong></span></h5>
-
-
-        {% else %}
-        {% endif %}
-
     </div>
+    {% else %}
+    {% endif %}
+
     <hr>
 
 
     {% buttons %}
-
-    <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-    <button type="button" class="btn btn-outline-warning btn-sm">
-        <a href="{% url 'cargas' %}">Cancelar</a>
-    </button>
-
+    <div class="d-flex justify-content-start">
+        <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 0px;">Salvar</button>
+        <button type="button" class="btn btn-outline-warning btn-sm">
+            <a href="{% url 'cargas' %}">Cancelar</a>
+        </button>
+    </div>
 
 
     {% endbuttons %}

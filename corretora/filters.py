@@ -34,6 +34,10 @@ class CargasFilter(django_filters.FilterSet):
         widget=forms.CheckboxSelectMultiple,
     )
 
+    pedido__produto__icontains = django_filters.CharFilter(
+        field_name="pedido__produto", label="Produto", lookup_expr="icontains",
+    )
+
     motorista__icontains = django_filters.CharFilter(
         field_name="motorista", label="Motorista", lookup_expr="icontains",
     )

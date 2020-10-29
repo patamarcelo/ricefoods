@@ -331,7 +331,7 @@
         <br />
         <div class="row">
             <div class="col-3">
-                <h3><u> <strong>Cargas | Filtro</strong></u></h3>
+                <h3><u> <strong><a href="{% url 'cargasfiltro' %}" style="color: blanchedalmond">Cargas | Filtro</a></strong></u></h3>
             </div>
             <div class="col-9">
                 <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
@@ -478,6 +478,10 @@
                     </div>
                     {% else %}
                     {% endif %}
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Valor NF" data-placement="bottom"
+                    placeholder="Tipo">
+                    {{ filter.form.pedido__produto__icontains|as_crispy_field }}
+                    </div>
                 </div>
                 <div class="row">
 
@@ -541,6 +545,7 @@
                     <th scope="col">Fornecedor</th>
                     <th scope="col">Origem</th>
                     <th scope="col">Cliente</th>
+                    <th scope="col">Produto</th>
                     <th scope="col" class="text text-center">Class.</th>
                     {% if user.is_superuser%}
                     <th scope="col" class="text text-center">Comiss.</th>
@@ -552,11 +557,11 @@
             <tbody>
                 {% if user.is_superuser%}
                 <tr>
-                    <th class="text text-info" scope="row" colspan="19" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
+                    <th class="text text-info" scope="row" colspan="20" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
                 </tr>
                 {% else %}
                 <tr>
-                    <th class="text text-info" scope="row" colspan="18" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
+                    <th class="text text-info" scope="row" colspan="19" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
                 </tr>
                 {% endif %}
             </tbody>
@@ -630,6 +635,7 @@
                             <th scope="col">Fornecedor</th>
                             <th scope="col">Origem</th>
                             <th scope="col">Cliente</th>
+                            <th scope="col">Produto</th>
                             <th scope="col" class="text text-center">Class.</th>
                             {% if user.is_superuser%}
                             <th scope="col" class="text text-center">Comiss.</th>
@@ -804,6 +810,7 @@
                             {% else %}
                             <td>{{ carga.pedido.cliente|upper }}</td>
                             {% endif %}
+                            <td>{{ carga.pedido.produto }}</td>
                             {% if carga.pedido.produto == "Arroz em Casca" %}
                             {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}
                             <td align="center"><a class="text-success fa fa-list-alt"
@@ -1025,6 +1032,7 @@
                             {% else %}
                             <td>{{ carga.pedido.cliente|upper }}</td>
                             {% endif %}
+                            <td>{{ carga.pedido.produto }}</td>
                             {% if carga.pedido.produto == "Arroz em Casca" %}
                             {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}
                             <td align="center"><a class="text-success fa fa-list-alt"
@@ -1226,7 +1234,7 @@
                     <th scope="col">Fornecedor</th>
                     <th scope="col">Origem</th>
                     <th scope="col">Cliente</th>
-
+                    <th scope="col">Produto</th>
                     {% if user.is_superuser%}
                     <th scope="col" class="text text-center">Comiss.</th>
                     {% endif %}
@@ -1344,6 +1352,7 @@
                     <td>{{ carga.pedido.fornecedor.cidade.cidade }}</td>
 
                     <td>{{ carga.pedido.cliente|upper }}</td>
+                    <td>{{ carga.pedido.produto }}</td>
 
 
 
@@ -1480,6 +1489,7 @@
                     <td>{{ carga.pedido.fornecedor.cidade.cidade }}</td>
 
                     <td>{{ carga.pedido.cliente|upper }}</td>
+                    <td>{{ carga.pedido.produto }}</td>
 
 
 
