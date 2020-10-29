@@ -19,12 +19,11 @@ class CargasFilter(django_filters.FilterSet):
         label="Data Orden.", choices=CHOICES, method="filter_by_order"
     )
     
-    CHOICES2 = (('', 'Todos'), ('False', 'Aberto'),('True', 'Pago'))
+    CHOICES2 = (('False', 'Aberto'),('True', 'Pago'))
     
     
-
     pgcomissaoa = django_filters.ChoiceFilter(
-        field_name="pgcomissao",   label="Comissão", initial='Todos', choices=CHOICES2, empty_label=None 
+        field_name="pgcomissao",   label="Comissão",  choices=CHOICES2, method="filtrando_comissao"
     )
     
     
@@ -123,3 +122,12 @@ class CargasFilter(django_filters.FilterSet):
         expression = "data" if value == "crescente" else "-data"
         return queryset.order_by(expression)
 
+    def filtrando_comissao(self, queryset, name, value):
+        qs = set()
+        c = Carga.objects.all()
+        for i in c:
+            if i.comissaocasca != None:
+                if i.comissaocasca > 0:
+                    qs.add(i.id)        
+        expressa = "True" if value == "True" else "False"
+        return queryset.filter(id__in=qs).filter(pgcomissao=expressa)

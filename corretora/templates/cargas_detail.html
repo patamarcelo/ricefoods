@@ -347,10 +347,10 @@
                                 {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</b></td>
                         <td><b>{{ carga.motorista|title }}</b></td>
                         <td><b>{{ carga.peso|intcomma }} </b></td>
-                        {% if carga.valorcarga == None %}
+                        {% if carga.valornf == None or carga.valornf == 0 %}
                         <td><b>R$ &nbsp; - </b></td>
                         {% else %}
-                        <td><b>R$ {{carga.valorcarga|floatformat:"2"}}</b></td>
+                        <td><b>R$ {{carga.valornf|floatformat:"2"}}</b></td>
                         {% endif %}
                         {% if carga.notafiscal == None %}
                         <td class="text-danger"><strong>Sem NF</strong></td>
@@ -471,13 +471,10 @@
                                 Kg</i></b></td>
                     {% if total.peso__sum == None %}
                     <td align="center" class="border-top border-dark"><b>R$ &nbsp; - </b></td>
-                    {% elif p.produto == 'Arroz em Casca' %}
-                    <td align="center" class="border-top border-dark"><b><i>R$
-                                {{ total.peso__sum|div:50|mul:p.preco_produto|floatformat:"2" }}
-                            </i></b></td>
+                    
                     {% else %}
                     <td align="center" class="border-top border-dark"><b><i>R$
-                                {{ total.peso__sum|div:30|mul:p.preco_produto|floatformat:"2" }}
+                        {{ totalnf.valornf__sum|floatformat:"2" }}
                             </i></b></td>
                     {% endif %}
 
@@ -691,10 +688,10 @@
                                 {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</b></td>
                         <td><b>{{ carga.motorista|title }}</b></td>
                         <td><b>{{ carga.peso|intcomma }} Kg </b></td>
-                        {% if carga.valorcarga == None %}
+                        {% if carga.valornf == None or carga.valornf == 0 %}
                         <td><b>R$ &nbsp; - </b></td>
                         {% else %}
-                        <td><b>R$ {{carga.valorcarga|floatformat:"2"}}</b></td>
+                        <td><b>R$ {{carga.valornf|floatformat:"2"}}</b></td>
                         {% endif %}
                         {% if carga.notafiscal == None %}
                         <td class="text-danger"><strong>Sem NF</strong></td>
@@ -815,13 +812,10 @@
                                 Kg</i></b></td>
                     {% if total.peso__sum == None %}
                     <td align="center" class="border-top border-dark"><b>R$ &nbsp; - </b></td>
-                    {% elif p.produto == 'Arroz em Casca' %}
-                    <td align="center" class="border-top border-dark"><b><i>R$
-                                {{ total.peso__sum|div:50|mul:p.preco_produto|floatformat:"2" }}
-                            </i></b></td>
+                   
                     {% else %}
                     <td align="center" class="border-top border-dark"><b><i>R$
-                                {{ total.peso__sum|div:30|mul:p.preco_produto|floatformat:"2" }}
+                        {{ totalnf.valornf__sum|floatformat:"2" }}
                             </i></b></td>
                     {% endif %}
 
