@@ -213,7 +213,7 @@
         </div>
         <!--------------------------------EXCEL---------------------------------->
         <div class="container-fluid" id="cargasrelatorio2" style="display: none">
-            <table class=" width table table-sm table-hover" align="center">
+            <table class=" width table table-sm table-hover cargaspdf" align="center">
 
 
 
@@ -249,9 +249,9 @@
 
                 </thead>
 
-                <tbody class="align-text-bottom table-borderless">
+                <tbody class="align-text-bottom ">
                     {% for pedido in pedidos %}
-                    <tr align="center">
+                    <tr align="center" >
                         <td colspan="1" class="border_bottom"></td>
                         <td colspan="1" class="border_bottom"></td>
                         <td colspan="1" class="border_bottom"></td>
@@ -260,73 +260,73 @@
                         <td align="right" colspan="4" class="border_bottom"></td>
                         <td colspan="1" class="border_bottom"></td>
                         {% if pedido.renda == None %}
-                        <td class="border_bottom">-</td>
+                        <td class="border_bottom corpo">-</td>
                         {% else %}
-                        <td class="border_bottom">
+                        <td class="border_bottom corpo">
                             <strong><i>{{ pedido.renda }}</i></strong>
                         </td>
                         {% endif %}
 
                         {% if pedido.inteiro == None %}
-                        <td class="border_bottom">-</td>
+                        <td class="border_bottom corpo">-</td>
                         {% else %}
-                        <td class="border_bottom">
+                        <td class="border_bottom corpo">
                             <strong><i>{{ pedido.inteiro }}</i></strong>
                         </td>
                         {% endif %}
 
                         {% if pedido.impureza == None %}
-                        <td class="border_bottom">-</td>
+                        <td class="border_bottom corpo">-</td>
                         {% else %}
-                        <td class="border_bottom">
+                        <td class="border_bottom corpo">
                             <strong><i>{{ pedido.impureza }}</i></strong>
                         </td>
                         {% endif %}
 
                         {% if pedido.umidade == None %}
-                        <td class="border_bottom">-</td>
+                        <td class="border_bottom corpo">-</td>
                         {% else %}
-                        <td class="border_bottom">
+                        <td class="border_bottom corpo">
                             <strong><i>{{ pedido.umidade }}</i></strong>
                         </td>
                         {% endif %}
 
                         {% if pedido.gessado == None %}
-                        <td class="border_bottom">-</td>
+                        <td class="border_bottom corpo">-</td>
                         {% else %}
-                        <td class="border_bottom">
+                        <td class="border_bottom corpo">
                             <strong><i>{{ pedido.gessado }}</i></strong>
                         </td>
                         {% endif %}
 
                         {% if pedido.bbranca == None %}
-                        <td class="border_bottom">-</td>
+                        <td class="border_bottom corpo">-</td>
                         {% else %}
-                        <td class="border_bottom">
+                        <td class="border_bottom corpo">
                             <strong><i>{{ pedido.bbranca }}</i></strong>
                         </td>
                         {% endif %}
 
                         {% if pedido.amarelo == None %}
-                        <td class="border_bottom">-</td>
+                        <td class="border_bottom corpo">-</td>
                         {% else %}
-                        <td class="border_bottom">
+                        <td class="border_bottom corpo">
                             <strong><i>{{ pedido.amarelo }}</i></strong>
                         </td>
                         {% endif %}
 
                         {% if pedido.manchpic == None %}
-                        <td class="border_bottom">-</td>
+                        <td class="border_bottom corpo">-</td>
                         {% else %}
-                        <td class="border_bottom">
+                        <td class="border_bottom corpo">
                             <strong><i>{{ pedido.manchpic }}</i></strong>
                         </td>
                         {% endif %}
 
                         {% if pedido.vermelhos == None %}
-                        <td class="border_bottom">-</td>
+                        <td class="border_bottom corpo">-</td>
                         {% else %}
-                        <td class="border_bottom">
+                        <td class="border_bottom corpo">
                             <strong><i>{{ pedido.vermelhos }}</i></strong>
                         </td>
                         {% endif %}
@@ -336,136 +336,136 @@
                     {% for pedido in pedidos %}
                     {% if carga.situacao == 'Carregado' %}
 
-                    <tr align="center">
-                        <td>{{ forloop.parentloop.counter }}</b></td>
-                        <td><b>{{ carga.pedido }}</b></td>
-                        <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
-                        <td><b>{{ carga.transp|title }}</b></td>
-                        <td><b>{{ carga.pedido.fornecedor.nome|title }}
-                            </b></td>
-                        <td><b>
-                                {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</b></td>
-                        <td><b>{{ carga.motorista|title }}</b></td>
-                        <td><b>{{ carga.peso|intcomma }} </b></td>
+                    <tr align="center" class="corpodados">
+                        <td>{{ forloop.parentloop.counter }}</td>
+                        <td>{{ carga.pedido }}</td>
+                        <td>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</td>
+                        <td>{{ carga.transp|title }}</td>
+                        <td>{{ carga.pedido.fornecedor.nome|title }}
+                            </td>
+                        <td>
+                                {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</td>
+                        <td>{{ carga.motorista|title }}</td>
+                        <td>{{ carga.peso|intcomma }} </td>
                         {% if carga.valornf == None or carga.valornf == 0 %}
-                        <td><b>R$ &nbsp; - </b></td>
+                        <td>R$ &nbsp; - </td>
                         {% else %}
-                        <td><b>R$ {{carga.valornf|floatformat:"2"}}</b></td>
+                        <td>R$ {{carga.valornf|floatformat:"2"}}</td>
                         {% endif %}
                         {% if carga.notafiscal == None %}
                         <td class="text-danger"><strong>Sem NF</strong></td>
                         {% elif carga.notafiscal|length <= 4 %}
-                        <td><b>
+                        <td>
                                 {{ carga.notafiscal }}
-                            </b></td>
+                            </td>
                         {% elif carga.notafiscal|length <= 6 %}
-                        <td><b>
+                        <td>
                                 {{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
-                            </b></td>
+                            </td>
                         {% elif carga.notafiscal|length > 6 and carga.notafiscal|length < 8 %}
-                        <td><b>
+                        <td>
                                 {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
-                            </b></td>
+                            </td>
 
                         {% elif carga.notafiscal|length == 8 %}
-                        <td><b>
+                        <td>
                                 0{{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
-                            </b></td>
+                            </td>
                         {% elif carga.notafiscal|length > 8 %}
-                        <td><b>
+                        <td>
                                 {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
-                            </b></td>
+                            </td>
                         {% else %}
-                        <td><b>{{carga.notasfiscal}}</b></td>
+                        <td>{{carga.notasfiscal}}</td>
                         {% endif %}
                         {% if notafiscal2 %}
-                        <td><b>{{carga.notasfiscal2}}</b></td>
+                        <td>{{carga.notasfiscal2}}</td>
                         {% else %}
                         {% endif %}
 
                         {% if carga.renda == None %}
-                        <td><b>-</b></td>
+                        <td>-</td>
                         {% elif carga.renda < pedido.renda %}
-                        <td class="text-danger"><b> {{carga.renda}}</b></td>
+                        <td class="text-danger"> {{carga.renda}}</td>
                         {% else %}
-                        <td><b> {{carga.renda}}</b></td>
+                        <td> {{carga.renda}}</td>
                         {% endif %}
 
                         {% if carga.inteiro == None %}
-                        <td><b>-</b></td>
+                        <td>-</td>
                         {% elif carga.inteiro < pedido.inteiro %}
-                        <td class="text-danger"><b> {{carga.inteiro}}</b></td>
+                        <td class="text-danger"> {{carga.inteiro}}</td>
                         {% else %}
-                        <td><b> {{carga.inteiro}}</b></td>
+                        <td> {{carga.inteiro}}</td>
                         {% endif %}
 
                         {% if carga.impureza == None %}
-                        <td><b>-</b></td>
+                        <td>-</td>
                         {% elif carga.impureza > pedido.impureza %}
-                        <td class="text-danger"><b> {{carga.impureza}}</b></td>
+                        <td class="text-danger"> {{carga.impureza}}</td>
                         {% else %}
-                        <td><b> {{carga.impureza}}</b></td>
+                        <td> {{carga.impureza}}</td>
                         {% endif %}
 
                         {% if carga.umidade == None %}
-                        <td><b>-</b></td>
+                        <td>-</td>
                         {% elif carga.umidade > pedido.umidade %}
-                        <td class="text-danger"><b> {{carga.umidade}}</b></td>
+                        <td class="text-danger"> {{carga.umidade}}</td>
                         {% else %}
-                        <td><b> {{carga.umidade}}</b></td>
+                        <td> {{carga.umidade}}</td>
                         {% endif %}
 
                         {% if carga.gessado == None %}
-                        <td><b>-</b></td>
+                        <td>-</td>
                         {% elif carga.gessado > pedido.gessado %}
-                        <td class="text-danger"><b> {{carga.gessado}}</b></td>
+                        <td class="text-danger"> {{carga.gessado}}</td>
                         {% else %}
-                        <td><b> {{carga.gessado}}</b></td>
+                        <td> {{carga.gessado}}</td>
                         {% endif %}
 
                         {% if carga.bbranca == None %}
-                        <td><b>-</b></td>
+                        <td>-</td>
                         {% elif carga.bbranca > pedido.bbranca %}
-                        <td class="text-danger"><b> {{carga.bbranca}}</b></td>
+                        <td class="text-danger"> {{carga.bbranca}}</td>
                         {% else %}
-                        <td><b> {{carga.bbranca}}</b></td>
+                        <td> {{carga.bbranca}}</td>
                         {% endif %}
 
                         {% if carga.amarelo == None %}
-                        <td><b>-</b></td>
+                        <td>-</td>
                         {% elif carga.amarelo > pedido.amarelo %}
-                        <td class="text-danger"><b> {{carga.amarelo}}</b></td>
+                        <td class="text-danger"> {{carga.amarelo}}</td>
                         {% else %}
-                        <td><b> {{carga.amarelo}}</b></td>
+                        <td> {{carga.amarelo}}</td>
                         {% endif %}
 
                         {% if carga.manchpic == None %}
-                        <td><b>-</b></td>
+                        <td>-</td>
                         {% elif carga.manchpic > pedido.manchpic %}
-                        <td class="text-danger"><b> {{carga.manchpic}}</b></td>
+                        <td class="text-danger"> {{carga.manchpic}}</td>
                         {% else %}
-                        <td><b> {{carga.manchpic}}</b></td>
+                        <td> {{carga.manchpic}}</td>
                         {% endif %}
 
                         {% if carga.vermelhos == None %}
-                        <td><b>-</b></td>
+                        <td>-</td>
                         {% elif carga.vermelhos > pedido.vermelhos %}
-                        <td class="text-danger"><b> {{carga.vermelhos}}</b></td>
+                        <td class="text-danger"> {{carga.vermelhos}}</td>
                         {% else %}
-                        <td><b> {{carga.vermelhos}}</b></td>
+                        <td> {{carga.vermelhos}}</td>
                         {% endif %}
 
                         {% endif %}
                         {% endfor %}
                         {% endfor %}
                     </tr>
-                <tfoot>
+                <tfoot class="rodape">
                     <td colspan="1" class="border-top border-dark"></td>
                     <td colspan="1" class="border-top border-dark"></td>
                     <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="1" class="border-top border-dark"></td>
+                    <td colspan="2" class="border-top border-dark"></td>
                     <td align="right" colspan="1" class="border-top border-dark"></td>
-                    <td align="center" colspan="2" class="border-top border-dark"><strong><i>Totais</i></strong></td>
+                    <td colspan="1" class="border-top border-dark" style="text-align: center !important; vertical-align: middle"><strong><i>Totais</i></strong></td>
                     {% for p in pedidos %}
                     <td align="center" class="border-top border-dark"><b><i>{{ total.peso__sum|intcomma }}
                                 Kg</i></b></td>
@@ -1498,10 +1498,14 @@
         var sTable = document.getElementById('cargasrelatorio2').innerHTML;
 
         var style = "<style>";
-        style = style + "table {width: 100%;font: 12px Calibri; margin-top: 60px;}";
-        style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
-        style = style + "white-space: nowrap;";
+        style = style + "table {width: 100%;font: 12px Calibri; margin-top: 60px; border-collapse: collapse;}";
+        style = style + "thead>tr>th{border-bottom: double;}";
+        style = style + ".corpo , .corpodados>td {border: dotted 1px #DDD; border-collapse: separate !important;}";
+        style = style + "table, td, tr, th {white-space: nowrap;";
         style = style + "padding: 2px 3px;text-align: center;}";
+        style = style + "tbody tr{border-left: solid 1px black;border-right: solid 1px black;}";
+        style = style + "tbody tr:nth-child(2) td{border-top: solid 1px black;}";
+        style = style + ".rodape {border-top: solid 2px black;}";        
         style = style + "</style>";
 
         // CREATE A WINDOW OBJECT.

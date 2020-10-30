@@ -207,7 +207,7 @@
 
                 <thead align="center" class="table-bordered thead-dark">
 
-                    <tr>
+                    <tr class="cabecalho">
                         <th scope="col"><a class="text-white fa fa-sort-desc"></a></th>
                         <th scope="col"><strong>Contrato</strong></th>
                         <th scope="col"><strong>Data</strong></th>
@@ -383,7 +383,7 @@
 
                 <thead align="center" class="table-bordered thead-dark">
 
-                    <tr>
+                    <tr class="cabecalho">
                         <th scope="col"><a class="text-white fa fa-sort-desc"></a></th>
                         <th scope="col"><strong>Contrato</strong></th>
                         <th scope="col"><strong>Data</strong></th>
@@ -418,134 +418,137 @@
 
                     <tr align="center">
                         <td class="border-left ">{{ forloop.parentloop.counter }}</td>
-                        <td><b>{{ carga.pedido }}</b></td>
-                        <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
-                        <td><b>{{ carga.pedido.fornecedor.nome|title}}
-                            </b></td>
-                        <td><b>
-                                {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</b></td>
-                        <td><b>{{ carga.motorista|title }}</b></td>
+                        <td>{{ carga.pedido }}</td>
+                        <td>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</td>
+                        <td>{{ carga.pedido.fornecedor.nome|title}}
+                            </td>
+                        <td>
+                                {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</td>
+                        <td>{{ carga.motorista|title }}</td>
 
                         {% if carga.notafiscal == None %}
                         <td class="text-danger"><strong>Sem NF</strong></td>
                         {% elif carga.notafiscal|length <= 4 %}
-                        <td><b>
+                        <td>
                                 {{ carga.notafiscal }}
-                            </b></td>
+                            </td>
                         {% elif carga.notafiscal|length <= 6 %}
-                        <td><b>
+                        <td>
                                 {{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
-                            </b></td>
+                            </td>
                         {% elif carga.notafiscal|length > 6 and carga.notafiscal|length < 8 %}
-                        <td><b>
+                        <td>
                                 {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
-                            </b></td>
+                            </td>
 
                         {% elif carga.notafiscal|length == 8 %}
-                        <td><b>
+                        <td>
                                 0{{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
-                            </b></td>
+                            </td>
                         {% elif carga.notafiscal|length > 8 %}
-                        <td><b>
+                        <td>
                                 {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
-                            </b></td>
+                            </td>
                         {% else %}
-                        <td><b>{{ carga.notasfiscal }}</b></td>
+                        <td>{{ carga.notasfiscal }}</td>
                         {% endif %}
-                        <td><b>R$ {{ pedido.preco_produto|intcomma  }}</b></td>
-                        <td><b>{{ pedido.comissaoc|intcomma }} %</b></td>
+                        <td>R$ {{ pedido.preco_produto|intcomma  }}</td>
+                        <td>{{ pedido.comissaoc|intcomma }} %</td>
 
                         {% if notafiscal2 %}
-                        <td><b>{{ carga.notasfiscal2 }}</b></td>
+                        <td>{{ carga.notasfiscal2 }}</td>
                         {% else %}
                         {% endif %}
-                        <td><b>{{ carga.peso|intcomma }}</b></td>
-                        <td><b>{{ carga.peso|div:50|floatformat:"-2" }}</b></td>
+                        <td>{{ carga.peso|intcomma }}</td>
+                        <td>{{ carga.peso|div:50|floatformat:"-2" }}</td>
                         {% if carga.valornf == None %}
-                        <td><b>R$ &nbsp; - </b></td>
+                        <td>R$ &nbsp; - </td>
                         {% elif "CDA" in carga.pedido.cliente.nome %}
-                        <td><b>R$ {{ carga.valornf }}</b></td>
+                        <td>R$ {{ carga.valornf }}</td>
                         {% else %}
-                        <td><b>R$ {{carga.valorcarga|floatformat:"2"}}</b></td>
+                        <td>R$ {{carga.valorcarga|floatformat:"2"}}</td>
 
                         {% endif %}
-                        <td><b>R$ {{ carga.comissaocasca|floatformat:2 }}</b></td>
+                        <td>R$ {{ carga.comissaocasca|floatformat:2 }}</td>
                         {% if carga.vpcomissaoc == 0 and carga.pgcomissao == True %}
-                        <td align="center"><b>R$ 0,00 </b></td>
+                        <td align="center">R$ 0,00 </td>
                         {% elif carga.vpcomissaoc == 0 and carga.pgcomissao == False %}
                         <td align="center"><i>R$ &nbsp; - </i> </td>
 
                         {% elif carga.vpcomissaoc == None %}
-                        <td align="center"><b> - </b></td>
+                        <td align="center"> - </td>
                         {% elif carga.vpcomissaoc|floatformat:2 != carga.comissaocasca|floatformat:2 %}
-                        <td class="text text-warning"><b>R$ {{ carga.vpcomissaoc|floatformat:2 }}</b></td>
+                        <td class="text text-warning">R$ {{ carga.vpcomissaoc|floatformat:2 }}</td>
                         {% else %}
-                        <td><b>R$ {{ carga.vpcomissaoc|floatformat:2 }}</b></td>
+                        <td>R$ {{ carga.vpcomissaoc|floatformat:2 }}</td>
                         {% endif %}
                         {% if carga.pgcomissao == True %}
-                        <td align="center" class="border-right"><b> R$ 0,00</b></td>
+                        <td align="center" class="border-right"> R$ 0,00</td>
                         {% elif carga.vpcomissaoc == 0 and carga.pgcomissao == True %}
-                        <td align="center" class="border-right"><b> R$ 0,00</b></td>
+                        <td align="center" class="border-right"> R$ 0,00</td>
                         {% elif carga.vpcomissaoc == 0 and carga.pgcomissao == False %}
-                        <td class="border-right"><b> R$ {{ carga.comissaocasca|floatformat:2 }}</b></td>
+                        <td class="border-right"> R$ {{ carga.comissaocasca|floatformat:2 }}</td>
                         {% else %}
-                        <td align="center"><b> - </b></td>
+                        <td align="center"> - </td>
                         {% endif %}
 
                         {% endif %}
                         {% endfor %}
                         {% endfor %}
                     </tr>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td colspan="3" class="border-top border-dark"></td>
-                    <td align="right" colspan="1" class="border-top border-dark"></td>
+                </tbody>
+                    <tfoot style="border-top: 1px solid black">
+                    <td colspan="1" class="border-top border-dark rodape"></td>
+                    <td colspan="1" class="border-top border-dark rodape"></td>
+                    <td colspan="1" class="border-top border-dark rodape"></td>
+                    <td colspan="3" class="border-top border-dark rodape"></td>
+                    <td align="right" colspan="1" class="border-top border-dark rodape"></td>
 
 
-                    <td colspan="1" class="border-top border-dark"></td>
-                    <td align="center" colspan="1" class="border-top border-dark"><strong><i>TOTAIS</i></strong></td>
-                    <td align="center" class="border-top border-dark"><i><strong>{{ totalpeso.peso__sum|intcomma }}
+                    <td colspan="1" class="border-top border-dark rodape"></td>
+                    <td align="center" colspan="1" class="border-top border-dark rodape"><strong><i>TOTAIS</i></strong></td>
+                    <td align="center" class="border-top border-dark rodape"><i><strong>{{ totalpeso.peso__sum|intcomma }}
                                 Kg</i><strong></td>
-                    <td align="center" class="border-top border-dark">
+                    <td align="center" class="border-top border-dark rodape">
                         <i><strong>{{ totalpeso.peso__sum|div:50|floatformat:"-2" }}
                                 Scs</i><strong></td>
                     {% for pedido in pedidos %}
                     {% if "CDA" in pedido.cliente.nome %}
-                    <td align="center" class="border-top border-dark"><i><strong>R$ {{ totalnf.valornf__sum|intcomma }}
+                    <td align="center" class="border-top border-dark rodape"><i><strong>R$ {{ totalnf.valornf__sum|intcomma }}
                         </i><strong></td>
                     {% else %}
-                    <td align="center" class="border-top border-dark"><strong><i>R$
+                    <td align="center" class="border-top border-dark rodape"><strong><i>R$
                                 {{ totalpeso.peso__sum|div:50|mul:pedido.preco_produto|floatformat:"2" }}
                             </i></strong></td>
                     {% endif %}
 
-                    <td align="center" class="border-top border-dark"><i><strong>R$
+                    <td align="center" class="border-top border-dark rodape"><i><strong>R$
                                 {{ pedido.totalcomissaocasca|floatformat:2 }}
                         </i><strong></td>
                     {% endfor %}
                     {% if totalpago.vpcomissaoc__sum == 0 or totalpago.vpcomissaoc__sum == None %}
-                    <td align="center" class="border-top border-dark"><i>R$ &nbsp; - </i> </td>
+                    <td align="center" class="border-top border-dark rodape"><i>R$ &nbsp; - </i> </td>
                     {% else %}
-                    <td align="center" class="border-top border-dark"><i><strong>R$
+                    <td align="center" class="border-top border-dark rodape"><i><strong>R$
                                 {{ totalpago.vpcomissaoc__sum|floatformat:2 }}
                         </i><strong></td>
                     {% endif %}
                     {% for pedido in pedidos %}
                     {% if totalaberto.vpcomissaoc__count == 0 %}
-                    <td align="center" class="border-top border-dark"><b> R$ 0,00 </b></td>
+                    <td align="center" class="border-top border-dark rodape"><b> R$ 0,00 </b></td>
                     {% else %}
-                    <td align="center" class="border-top border-dark"><i><strong>R$
+                    <td align="center" class="border-top border-dark rodape"><i><strong>R$
                                 {{ pedido.saldototalcomissaocasca|floatformat:2 }}
                         </i><strong></td>
 
+
                     {% endif %}
                     {% endfor %}
+                    </tfoot>
 
 
 
-
-                </tbody>
+                
             </table>
         </div>
         {% else %}
@@ -626,10 +629,13 @@
         var sTable = document.getElementById('cargasrelatoriocomissao2').innerHTML;
 
         var style = "<style>";
-        style = style + "table {width: 100%;font: 12px Calibri;  margin-top: 60px;}";
-        style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
+        style = style + "table {width: 100%;font: 12px Calibri;  margin-top: 60px; border-collapse: collapse;}";
+        style = style + ".cabecalho th {border-bottom: double }";
+        style = style + "tbody tr td{border-left: solid 1px black;border-right: solid 1px black;}";        
+        style = style + "tbody td:not(.rodape) {border: solid 1px #DDD; border-collapse: collapse;";
         style = style + "white-space: nowrap;";
         style = style + "padding: 2px 3px;text-align: center;}";
+        style = style + "tfoot td{white-space: nowrap; border-top: 1px solid }";
         style = style + "</style>";
 
         // CREATE A WINDOW OBJECT.

@@ -6,59 +6,70 @@
 
 
 </div>
+<style>
+
+    .badge {
+        margin: 0px;
+    }
+</style>
 <form method="POST">
-    <div class="row ">        
-        <div class="d-flex flex-column justify-content-start">
+    <div class="container" style="padding-left: 160px;">
+        <div class="d-flex flex-column ">
+            <div class="row" style="margin: 0px;">        
+                <div class="d-flex flex-column justify-content-start">
+                    <div class="flex-row justify-content-start">
+                        <br>
+                        <h4> <span class="badge badge-primary "> Pedido: {{carga.pedido}}
+                            </span>&nbsp;&nbsp;<span
+                                class="badge badge-dark">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
+                                -
+                                {{carga.motorista|title}} - NF {{carga.notafiscal}}</span></h4>
+                    </div>
+                    <div class="flex-row justify-content-start">                    
+                        <h5> <span class="badge badge-warning ">{{carga.pedido.fornecedor.nome}}</span>
+                            &nbsp;&nbsp;<span
+                                class="badge badge-warning ">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
+                    </div>
+                </div>                                  
+            </div>
+            <br>
+
+            {% csrf_token %}
+            <hr>
+            <div class="d-flex justify-content-start">
+                <div class="flex-column justify-content-start">             
+                        <div class="flex-row justify-content-start" style="text-align: left;">
+                                {{ form.pgcomissao|as_crispy_field }}
+                        </div>
+                    <br>        
+                    <div class="flex-row justify-content-start">
+                        <label for="id_vpcomissaoc" class="active" style="white-space: nowrap;">Comissao Cliente</label><br>
+                        <input type="number" class="form-control-sm" name="vpcomissaoc" id="id_vpcomissaoc"
+                            placeholder="R$ {{ carga.comissaocasca|floatformat:2 }}" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" required>
+                    </div>
+                </div>        
+            </div>
+
+            {% if carga.vpcomissaoc %}
+            <br>
             <div class="flex-row justify-content-start">
-                <h4> <span class="badge badge-primary p-1 m-1"> Pedido: {{carga.pedido}}
-                    </span>&nbsp;&nbsp;<span
-                        class="badge badge-dark">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
-                        -
-                        {{carga.motorista|title}} - NF {{carga.notafiscal}}</span></h4>
+                <h5> <span class="badge badge-pill badge-success h3"><strong><b>Valor Atual - R$
+                                {{ carga.vpcomissaoc }}</b></strong></span></h5>
             </div>
-            <div class="flex-row justify-content-start">                    
-                <h5> <span class="badge badge-warning p-1 m-1">{{carga.pedido.fornecedor.nome}}</span>
-                    &nbsp;&nbsp;<span
-                        class="badge badge-warning p-1 m-1">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
-            </div>
-        </div>                                  
-    </div>
-
-
-    {% csrf_token %}
-    <hr>
-    <div class="d-flex justify-content-start">
-        <div class="flex-column justify-content-start">             
-                  <div class="flex-row justify-content-start" style="text-align: left;">
-                        {{ form.pgcomissao|as_crispy_field }}
-                </div>
-            <br>        
-            <div class="flex-row justify-content-start">
-                <label for="id_vpcomissaoc" class="active" style="white-space: nowrap;">Comissao Cliente</label><br>
-                <input type="number" class="form-control-sm" name="vpcomissaoc" id="id_vpcomissaoc"
-                    placeholder="R$ {{ carga.comissaocasca|floatformat:2 }}" pattern="[0-9]+([\.,][0-9]+)?" step="0.01" required>
-            </div>
-        </div>        
-    </div>
-
-    {% if carga.vpcomissaoc %}
-    <br>
-    <div class="flex-row justify-content-start">
-        <h5> <span class="badge badge-pill badge-success h3"><strong><b>Valor Atual - R$
-                        {{ carga.vpcomissaoc }}</b></strong></span></h5>
-    </div>
-    {% else %}
-    {% endif %}
-
+            {% else %}
+            {% endif %}
+    
     <hr>
 
 
     {% buttons %}
-    <div class="d-flex justify-content-start">
-        <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 0px;">Salvar</button>
-        <button type="button" class="btn btn-outline-warning btn-sm">
-            <a href="{% url 'cargas' %}">Cancelar</a>
-        </button>
+            <div class="d-flex justify-content-start">
+                <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 0px;">Salvar</button>
+                <button type="button" class="btn btn-outline-warning btn-sm">
+                    <a href="{% url 'cargas' %}">Cancelar</a>
+                </button>
+            </div>
+        </div>
     </div>
 
 
