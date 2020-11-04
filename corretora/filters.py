@@ -72,10 +72,14 @@ class CargasFilter(django_filters.FilterSet):
         field_name="pedido__contrato", label="Contrato", lookup_expr="icontains",
     )
 
-    situacao__icontains = django_filters.CharFilter(
-        field_name="situacao", label="Situação", lookup_expr="icontains",
-    )
-
+    CHOICES_SITUACAO = (('Agendado', 'Agendado'),('Carregado', 'Carregado'))
+    
+    
+    situacao = django_filters.ChoiceFilter(
+        field_name="situacao",   label="Situação",  choices=CHOICES_SITUACAO
+    )    
+    
+    
     peso__icontains = django_filters.NumberFilter(
         field_name="peso", label="Peso =", lookup_expr="icontains"
     )
@@ -112,8 +116,7 @@ class CargasFilter(django_filters.FilterSet):
             "notafiscal": ["icontains"],
             "pedido__fornecedor__nome": ["icontains"],
             "pedido__cliente__nome_fantasia": ["icontains"],
-            "pedido__contrato": ["icontains"],
-            "situacao": ["icontains"],
+            "pedido__contrato": ["icontains"],            
             "peso": ["icontains", "gte", "lte"],
             "pedido__fornecedor__cidade__cidade": ["icontains"],
         }

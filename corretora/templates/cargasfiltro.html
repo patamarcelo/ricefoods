@@ -134,8 +134,7 @@
 
 
         #select-all {
-            margin-right: 4px;
-            margin-bottom: 7px;
+            margin-right: 4px;            
             width: 12px !important;
             text-align: center;
             vertical-align: middle;
@@ -212,8 +211,8 @@
         }
 
         .checkcheck {
-            margin-top: 30px;
-            margin-bottom: 10px;
+            margin-top: 15px;
+            margin-bottom: 15px;
         }
 
 
@@ -317,6 +316,29 @@
         .checkcheck2 {
             margin-top: 12px;
         }
+
+        .secondbox {
+            padding-top: 0px;
+            border-style: inset;
+            padding: 10px 20px;  
+            background-color: #2c2c2f; 
+            width: 93%;                                 
+        }
+
+        .firstbox .badge {
+            margin-bottom: 3px;            
+        }
+
+        .firstbox p {
+            /* text-decoration: underline; */
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .firstbox input {
+            margin-left: 12px;
+        }
+
         
 
         
@@ -451,7 +473,7 @@
                     </div>
                     <div class="col-2 form-group" data-toggle="tooltip" title="Situacao" data-placement="bottom"
                         placeholder="Situacao">
-                        {{ filter.form.situacao__icontains|as_crispy_field }}
+                        {{ filter.form.situacao|as_crispy_field }}
                     </div>
                     <div class="col-2 form-group" data-toggle="tooltip" title="Cidade" data-placement="bottom"
                         placeholder="Cidade">
@@ -485,27 +507,27 @@
                 </div>
                 <div class="row">
 
-
-                    <div class="col-12 d-flex justify-content-center checkcheck">
-                        <i><input type="checkbox" id="select-all" class="select-all"><a
-                                class="text-primary fa fa-check"></a></i>&nbsp;&nbsp;&nbsp;
-                        {% for choice in filter.form.transp|slice:"0:7" %}
-                        <label class="checkbox-inline  transpcheck">
-                            {{ choice.tag }} {{ choice.choice_label }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </label>{% endfor %}
+                    <div class="col firstbox"><i><h6><p onclick="Mudarestado('secondbox')" class="badge badge-info">Transportadoras</p><input type="checkbox" id="select-all" class="select-all"></h6></i>
+                        <div class="container secondbox" id="secondbox">
+                            <div class="col-12 d-flex justify-content-center checkcheck">
+                                {% for choice in filter.form.transp|slice:"0:7" %}
+                                <label class="checkbox-inline  transpcheck">
+                                    {{ choice.tag }} {{ choice.choice_label }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </label>{% endfor %}
+                            </div>
+                            
+                            <div class="col-12 d-flex justify-content-center checkcheck checkcheck2">
+                                
+                                {% for choice in filter.form.transp|slice:"7:" %}
+                                <label class="checkbox-inline transpcheck">
+                                    {{ choice.tag }} {{ choice.choice_label }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </label>{% endfor %}
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="col-12 d-flex justify-content-center checkcheck checkcheck2">
-                        
-                        {% for choice in filter.form.transp|slice:"7:" %}
-                        <label class="checkbox-inline transpcheck">
-                            {{ choice.tag }} {{ choice.choice_label }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </label>{% endfor %}
-                    </div>
-
 
                 </div>
-                <div class="container" style="justify-content:center; padding: 15px;">
+                <div class="container" style="justify-content:center; padding-bottom: 0px !important; padding: 15px;">
                     <button type="submit" class="btn btn-primary btn-xs btnfiltrar" id="btnfiltrar">Filtrar</button>
 
                     {% if request.get_full_path ==  "/corretora/cf" %}
@@ -1620,6 +1642,15 @@
     }
 
     function Mudarestado(el) {
+        var display = document.getElementById(el).style.display;
+        if (display == "none")
+            document.getElementById(el).style.display = 'block';
+        else
+            document.getElementById(el).style.display = 'none';
+    }
+
+
+    function Hidetransp(el) {
         var display = document.getElementById(el).style.display;
         if (display == "none")
             document.getElementById(el).style.display = 'block';
