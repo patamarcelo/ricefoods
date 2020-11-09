@@ -322,7 +322,7 @@
             border-style: inset;
             padding: 10px 20px;  
             background-color: #2c2c2f; 
-            width: 93%;                                 
+            width: 93%;                                             
         }
 
         .firstbox .badge {
@@ -1308,20 +1308,7 @@
 
 
 
-                    {% if carga.obs and carga.tac %}
-                    <td style="background-color: rgba(228, 37, 7, 0.3); opacity: 0.8;"><abbr class="text-warning"
-                            title="{{ carga.obs }}"><em><strong>{{ carga.motorista|title }}</strong></em></abbr>
-                    </td>
-                    {% elif carga.obs %}
-                    <td><abbr class="text-warning" title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
-                    </td>
-                    {% elif carga.tac %}
-                    <td style="background-color: rgba(228, 37, 7, 0.3); opacity: 0.8">
-                        <strong><em>{{ carga.motorista|title }}</strong></em></abbr>
-                    </td>
-                    {% else %}
                     <td>{{ carga.motorista|title }}</td>
-                    {% endif %}
 
 
                     {% if carga.peso == 0 %}
@@ -1445,20 +1432,7 @@
 
 
 
-                    {% if carga.obs and carga.tac %}
-                    <td style="background-color: rgba(228, 37, 7, 0.3); opacity: 0.8;"><abbr class="text-warning"
-                            title="{{ carga.obs }}"><em><strong>{{ carga.motorista|title }}</strong></em></abbr>
-                    </td>
-                    {% elif carga.obs %}
-                    <td><abbr class="text-warning" title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
-                    </td>
-                    {% elif carga.tac %}
-                    <td style="background-color: rgba(228, 37, 7, 0.3); opacity: 0.8">
-                        <strong><em>{{ carga.motorista|title }}</strong></em></abbr>
-                    </td>
-                    {% else %}
                     <td>{{ carga.motorista|title }}</td>
-                    {% endif %}
 
 
                     {% if carga.peso == 0 %}

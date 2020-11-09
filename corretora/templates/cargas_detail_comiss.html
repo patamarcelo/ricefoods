@@ -154,6 +154,11 @@
                     {% if pedido.produto == "Arroz em Casca" %}
                     <td class="border_bottom" align=center><strong>{{ pedido.quantidade_pedido|div:50|floatformat:"0"}}
                             Scs </strong></td>
+                    
+                    {% elif pedido.produto == "Semente" %}
+                    <td class="border_bottom" align=center><strong>{{ pedido.quantidade_pedido|div:40|floatformat:"0"}}
+                            Scs </strong></td>
+                    
                     {% else %}
                     <td class="border_bottom" align=center><strong>{{ pedido.quantidade_pedido|div:30|floatformat:"0"}}
                             Fds </strong></td>
@@ -284,10 +289,16 @@
                         {% else %}
                         {% endif %}
                         <td><b>{{ carga.peso|intcomma }} Kg </b></td>
+                        {% if pedido.produto == "Semente" %}
+                        <td><b>{{ carga.peso|div:40|floatformat:"-2" }} Scs </b></td>
+                        {% else %}
                         <td><b>{{ carga.peso|div:50|floatformat:"-2" }} Scs </b></td>
+                        {% endif %}
                         {% if carga.valornf == None %}
                         <td><b>R$ &nbsp; - </b></td>
                         {% elif "CDA" in carga.pedido.cliente.nome %}
+                        <td><b>R$ {{ carga.valornf }}</b></td>
+                        {% elif carga.pedido.produto == "Semente" %}
                         <td><b>R$ {{ carga.valornf }}</b></td>
                         {% else %}
                         <td><b>R$ {{carga.valorcarga|floatformat:"2"}}</b></td>
@@ -333,11 +344,19 @@
                         </td>
                         <td align="center" class="border-top border-dark"><i><strong>{{ totalpeso.peso__sum|intcomma }}
                                     Kg</i><strong></td>
+
+                        {% for pedido in pedidos %}
+                        {% if pedido.produto == "Semente" %}
+                        <td align="center" class="border-top border-dark">
+                            <i><strong>{{ totalpeso.peso__sum|div:40|floatformat:"-2" }}
+                                    Scs</i><strong></td>
+                        {% else %}
                         <td align="center" class="border-top border-dark">
                             <i><strong>{{ totalpeso.peso__sum|div:50|floatformat:"-2" }}
                                     Scs</i><strong></td>
-                        {% for pedido in pedidos %}
-                        {% if "CDA" in pedido.cliente.nome %}
+                        {% endif %}
+                        
+                        {% if "CDA" in pedido.cliente.nome  or "Diamante" in pedido.cliente.nome|title %}
                         <td align="center" class="border-top border-dark"><i><strong>R$
                                     {{ totalnf.valornf__sum|intcomma }}
                             </i><strong></td>
@@ -460,11 +479,17 @@
                         {% else %}
                         {% endif %}
                         <td>{{ carga.peso|intcomma }}</td>
-                        <td>{{ carga.peso|div:50|floatformat:"-2" }}</td>
+                        {% if pedido.produto == "Semente" %}
+                        <td><b>{{ carga.peso|div:40|floatformat:"-2" }} Scs </b></td>
+                        {% else %}
+                        <td><b>{{ carga.peso|div:50|floatformat:"-2" }} Scs </b></td>
+                        {% endif %}
                         {% if carga.valornf == None %}
                         <td>R$ &nbsp; - </td>
                         {% elif "CDA" in carga.pedido.cliente.nome %}
                         <td>R$ {{ carga.valornf }}</td>
+                        {% elif carga.pedido.produto == "Semente" %}
+                        <td><b>R$ {{ carga.valornf }}</b></td>
                         {% else %}
                         <td>R$ {{carga.valorcarga|floatformat:"2"}}</td>
 
@@ -509,11 +534,17 @@
                     <td align="center" colspan="1" class="border-top border-dark rodape"><strong><i>TOTAIS</i></strong></td>
                     <td align="center" class="border-top border-dark rodape"><i><strong>{{ totalpeso.peso__sum|intcomma }}
                                 Kg</i><strong></td>
+                    {% for pedido in pedidos %}
+                    {% if pedido.produto == "Semente" %}
+                        <td align="center" class="border-top border-dark">
+                            <i><strong>{{ totalpeso.peso__sum|div:40|floatformat:"-2" }}
+                                    Scs</i><strong></td>
+                    {% else %}
                     <td align="center" class="border-top border-dark rodape">
                         <i><strong>{{ totalpeso.peso__sum|div:50|floatformat:"-2" }}
                                 Scs</i><strong></td>
-                    {% for pedido in pedidos %}
-                    {% if "CDA" in pedido.cliente.nome %}
+                    {% endif %}
+                    {% if "CDA" in pedido.cliente.nome or "Diamante" in pedido.cliente.nome|title %}
                     <td align="center" class="border-top border-dark rodape"><i><strong>R$ {{ totalnf.valornf__sum|intcomma }}
                         </i><strong></td>
                     {% else %}

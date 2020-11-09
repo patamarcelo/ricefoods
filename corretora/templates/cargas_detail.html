@@ -1250,7 +1250,7 @@
                     {% if pedido.carregado == 0 %}
                     <td class="border_bottom" align=center><strong> - </strong></td>
                     {% else %}
-                    <td class="border_bottom" align=center><strong><strong>{{ pedido.carregado|div:30|floatformat:"0"}}
+                    <td class="border_bottom" align=center><strong><strong>{{ pedido.carregado|div:40|floatformat:"0"}}
                                 Fds</strong></strong>
                     </td>
                     {% endif %}
@@ -1258,7 +1258,7 @@
                     <td class="border_bottom" align=center><strong> - </strong></td>
                     {% else %}
                     <td class="border_bottom" align=center><strong>{{ pedido.saldo|div:40|floatformat:"0" }}
-                            Fds</strong></td>
+                            Scs</strong></td>
                     {% endif %}
                 </tr>
 
@@ -1309,7 +1309,7 @@
                         {% else %}
                         {% endif %}
                         <th scope="col"><strong>Peso</strong></th>
-                        <th scope="col"><strong>Fardos</strong></th>
+                        <th scope="col"><strong>Sacos</strong></th>
                         <th scope="col"><strong>Valor Produto</strong></th>
                     </tr>
 

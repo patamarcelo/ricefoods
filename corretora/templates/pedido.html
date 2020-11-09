@@ -330,8 +330,11 @@
                     {% endif %}
                     <td align=center><input type="checkbox" name="comissao" value="{{ pedido.totalcomissaocasca|stringformat:"i" }}"
                             class="icms" align="center" style="size: 10px;"></td>
-                    {% if user.is_superuser %}
-                    {% if pedido.produto == 'Arroz em Casca' and pedido.totalcomissaocasca != None and pedido.carregado %}
+                    {% if user.is_superuser %}                   
+                    {% if pedido.produto == 'Arroz em Casca' or pedido.produto == 'Semente' and pedido.totalcomissaocasca != None and pedido.carregado %}
+                    {% if pedido.totalcomissaocasca == 0 or pedido.totalcomissaocasca == None %}
+                    <td class="text-center">-</td>
+                    {% else %}
                     {% if pedido.comissaorecebida > 0 %}
                     <td class="text-center"><a href="{% url 'detail_cargas_comiss' pedido.pk %}" target="_blank"
                             style='font-style:italic;  color:#f0ad4e;'><b>R$
@@ -343,10 +346,11 @@
                                 {{ pedido.totalcomissaocasca|floatformat:2 }}</b>
                         </a></td>
                     {% endif %}
+                    {% endif %}
                     {% else %}
                     <td class="text-center">-</td>
                     {% endif %}
-                    {% endif %}
+                    {% endif %}                    
                     {% if pedido.carregado %}
                     <td class="text-center">
                         <a class="btn btn-warning btn-xs" href="{% url 'upd_pedidos' pedido.pk %}">EDIT</a>

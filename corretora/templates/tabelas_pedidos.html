@@ -202,7 +202,10 @@
                     <td align=center class="text-success"><strong>{{ pedido.saldoprevisto }} Kg</strong></td>
                     {% endif %}
                     {% if user.is_superuser %}
-                    {% if pedido.produto == 'Arroz em Casca' and pedido.totalcomissaocasca != None and pedido.carregado %}
+                    {% if pedido.produto == 'Arroz em Casca' or pedido.produto == 'Semente' and pedido.totalcomissaocasca != None and pedido.carregado %}
+                    {% if pedido.totalcomissaocasca == 0 %}
+                    <td class="text-center">-</td>
+                    {% else %}
                     {% if pedido.comissaorecebida > 0 %}
                     <td class="text-center"><a href="{% url 'detail_cargas_comiss' pedido.pk %}" target="_blank"
                             style='font-style:italic;  color:#f0ad4e;'><b>R$
@@ -214,9 +217,10 @@
                                 {{ pedido.totalcomissaocasca|floatformat:2 }}</b>
                         </a></td>
                     {% endif %}
+                    {% endif %}
                     {% else %}
                     <td class="text-center">-</td>
-                    {% endif %}
+                    {% endif %}                    
                     {% endif %}
                     {% if pedido.carregado %}
                     <td align=center>

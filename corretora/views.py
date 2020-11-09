@@ -54,8 +54,9 @@ class CargasFiltradasView(LoginRequiredMixin, FilterView):
         context['agendatotal'] = filter.qs.filter(situacao='Agendado').filter(peso=0).values('veiculo').aggregate(Sum('veiculo'))            
         def get_total_comissao():
             total = 0                        
-            for carga in filter.qs.filter(pgcomissao=False).filter(situacao='Carregado').filter(pedido__produto='Arroz em Casca'):
-                total = total + carga.comissaocasca
+            for carga in filter.qs.filter(pgcomissao=False).filter(situacao='Carregado'):
+                if carga.comissaocasca != 0 and carga.comissaocasca != None:
+                    total = total + carga.comissaocasca
             return total
         context['comitotal'] = get_total_comissao()
         return context
