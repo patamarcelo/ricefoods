@@ -17,6 +17,12 @@
     {% load humanize %}
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
+    
+     <!-- Font Awesome CSS -->
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
     <!-- Google Fonts Roboto -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
     <!-- Bootstrap core CSS -->
@@ -179,7 +185,7 @@
             width=100>
             <thead class="borderless">
                 <tr align=center>
-
+                    <th scope="col"><a class="text-info fa fa-sort-desc"></a></th>
                     <th scope="col">Contrato</th>
                     <th scope="col">Situação</th>
                     <th scope="col">Data</th>
@@ -210,7 +216,7 @@
             <tbody>
                 {% for pedido in pedidos %}
                 <tr align=center>
-
+                    <td>{{ forloop.counter }}</td>
                     {% if pedido.carregado %}
                     <td><a class="text" href="{% url 'detail_cargas' pedido.pk %}" target="_blank"
                             style='font-style:italic; color: blanchedalmond; text-decoration: underline;'><strong>{{ pedido.contrato }}</strong></a>
