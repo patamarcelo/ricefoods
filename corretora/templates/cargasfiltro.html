@@ -339,6 +339,20 @@
             margin-left: 12px;
         }
 
+
+        table, th, td {
+            border: 1px solid black;
+        }
+        th {
+            cursor: pointer;
+        }
+
+        th:hover {
+            cursor: pointer;
+            color: blanchedalmond;
+            text-decoration: underline;
+        }
+
         
 
         
@@ -352,8 +366,8 @@
     <div class="container-fluid" align="center">
         <br />
         <div class="row">
-            <div class="col-3">
-                <h3><u> <strong><a href="{% url 'cargasfiltro' %}" style="color: blanchedalmond">Cargas | Filtro</a></strong></u></h3>
+            <div class="col-3" >
+                <h3 style="float: left;"><u> <strong><a href="{% url 'cargasfiltro' %}" style="color: blanchedalmond">Cargas | Filtro</a></strong></u></h3>
             </div>
             <div class="col-9">
                 <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
@@ -382,7 +396,7 @@
             </div>
         </div>
         <br>
-        <div class="container-fluid" style="margin-left: 20px;">
+        <div class="container-fluid" style="float: left; margin-left: 10px">
             <div class="row">
                 <div class="col-3-sm">
                     <a class="btn btn-primary btn-sm" href="{% url 'add_cargas' %}">Adicionar Cargas</a>
@@ -1698,12 +1712,13 @@
     })
     })
 
+    
 
+
+    
 </script>
 
-<script>
 
-</script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <!-- jQuery -->
