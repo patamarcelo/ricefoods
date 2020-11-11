@@ -4,35 +4,32 @@
 {% load crispy_forms_tags %}
 
 
-
+</div>
 <form method="POST" novalidate class="needs-validation">
     {% csrf_token %}
-    <div class="row align-items-center">
+    <div class="d-flex flex-row justify-content-start offset-1">
         <div class="col">
-            <div class="row">
-                <div class="container">
+            <div class="flex-row">
+                <div class="container justify-content-start">
                     <h4><span
-                            class="badge badge-dark p-1 m-1">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
+                            class="badge badge-dark ">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
                             -
                             {{carga.motorista|title}}</span>
                 </div>
                 <div class="container-fluid">
-                    <h5><span class="badge badge-warning p-1 m-1">{{carga.pedido.fornecedor.nome}}</span>
+                    <h5><span class="badge badge-warning">{{carga.pedido.fornecedor.nome}}</span>
                         &nbsp;&nbsp;<span
-                            class="badge badge-warning p-1 m-1">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
+                            class="badge badge-warning ">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
                 </div>
             </div>
             </h4>
         </div>
-        <div class="col" align=right>
-            <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-            <a class="btn btn-warning btn-sm" href="javascript:history.back()">Voltar</a>
-        </div>
+        
     </div>
     <br />
     <hr>
-    <div class="container">
-        <div class="form-row">
+    <div class="container offset-1">
+        <div class="form-row flex-row" style="margin: 6px;">
             <div class="col-lg-1 col-sm-2 form-group">
                 {{ form.chegada|as_crispy_field }}
             </div>
@@ -40,11 +37,13 @@
 
 
         {% buttons %}
-
-        <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-        <button type="button" class="btn btn-outline-warning btn-sm">
-            <a href="{% url 'cargas' %}">Cancelar</a>
-        </button>
+        <div class="d-flex flex-row justify-content-start">
+                <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                <button type="button" class="btn btn-outline-warning btn-sm">
+                    <a href="{% url 'cargas' %}">Cancelar</a>
+                </button>
+        </div>
+    </div>
 
 
 

@@ -322,9 +322,10 @@
             border-style: inset;
             padding: 10px 20px;  
             background-color: #2c2c2f; 
-            width: 93%;                                             
+            width: 93%;                                          
         }
 
+       
         .firstbox .badge {
             margin-bottom: 3px;            
         }
@@ -521,8 +522,8 @@
                 </div>
                 <div class="row">
 
-                    <div class="col firstbox"><i><h6><p onclick="Mudarestado('secondbox')" class="badge badge-info">Transportadoras</p><input type="checkbox" id="select-all" class="select-all"></h6></i>
-                        <div class="container secondbox" id="secondbox">
+                    <div class="col firstbox" id="badgetransp1"><i><h6><p onclick="Mudarestado('secondbox')" class="badge badge-info" id="badgetransp" name="badgettrans">Transportadoras</p><input type="checkbox" id="select-all" class="select-all"></h6></i>
+                        <div class="container secondbox" id="secondbox"  {% if '&transp=' in request.get_full_path %}{% else %} style="display: none"{% endif %}>
                             <div class="col-12 d-flex justify-content-center checkcheck">
                                 {% for choice in filter.form.transp|slice:"0:7" %}
                                 <label class="checkbox-inline  transpcheck">
@@ -1638,13 +1639,13 @@
     }
 
 
-    function Hidetransp(el) {
-        var display = document.getElementById(el).style.display;
-        if (display == "none")
-            document.getElementById(el).style.display = 'block';
-        else
-            document.getElementById(el).style.display = 'none';
-    }
+    $(document).ready('change', function Hidetransp(el) {
+        var e = document.getElementById(el).style.display;
+        if (e.style.display){
+        e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+        }
+        else {e.style.display='block'}
+        })
 
 
     $(document).ready(function () {
@@ -1727,6 +1728,16 @@
         .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
         .forEach(tr => tbody.appendChild(tr) );
     })));
+
+
+    $('#badgetransp').hover(
+        function() {
+            $('#badgetransp').removeClass('badge-info').addClass('badge-warning');
+        },
+        function() {
+            $('#badgetransp').removeClass('badge-warning').addClass('badge-info');
+        }
+        );
 
     
 
