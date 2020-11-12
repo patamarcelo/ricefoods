@@ -26,6 +26,13 @@ class CargasFilter(django_filters.FilterSet):
         field_name="pgcomissao",   label="Comissão",  choices=CHOICES2, method="filtrando_comissao"
     )
     
+    CHOICES3 = (('True', 'Contém'),('False', 'Não Contém'))
+    
+    
+    comcomissao = django_filters.ChoiceFilter(
+        label="Comissão ?",  choices=CHOICES3, method="com_sem_comissao"
+    )
+    
     
 
     transp = django_filters.ModelMultipleChoiceFilter(
@@ -134,3 +141,22 @@ class CargasFilter(django_filters.FilterSet):
                     qs.add(i.id)        
         expressa = "True" if value == "True" else "False"
         return queryset.filter(id__in=qs).filter(pgcomissao=expressa)
+    
+    def com_sem_comissao(self, queryset, name, value):
+        qs = set()
+        qs2 = set()
+        c = Carga.objects.all()
+        for i in c:
+            if i.comissaocasca != None:
+                if i.comissaocasca > 0:
+                    qs.add(i.id)        
+                else:
+                    qs2.add(i.id)
+            else:
+                qs2.add(i.id)
+        if value == "True":
+            return queryset.filter(id__in=qs)
+        elif value == "False":
+            return queryset.filter(id__in=qs2)
+        else:
+            return queryset

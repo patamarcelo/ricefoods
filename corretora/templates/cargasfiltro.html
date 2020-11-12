@@ -325,6 +325,9 @@
             width: 93%;                                          
         }
 
+        .firstbox {
+            margin-top: 12px;
+        }
        
         .firstbox .badge {
             margin-bottom: 3px;            
@@ -352,6 +355,20 @@
             cursor: pointer;
             color: blanchedalmond;
             text-decoration: underline;
+        }
+
+        #secondboxout,
+        #filtro {
+            overflow:hidden;
+            max-height: 2050px;
+            transition: max-height ease-in-out;
+            transition-duration: 120ms, 2s;
+        }
+
+        #secondboxout.hide,
+        #filtro.hide {
+            max-height: 0;
+            pointer-events: none;       
         }
 
         
@@ -410,7 +427,7 @@
                 <a class="btn btn-outline-warning btn-sm" href="javascript:history.back()">Voltar</a>
                 <div class="col-3-sm">
                     <button type="button" class="btn btn-outline-info btn-sm"
-                        onclick="Mudarestado('filtro')">Filtros</button>
+                        onclick="Ocultarfiltros('filtro')">Filtros</button>
                 </div>
 
             </div>
@@ -511,6 +528,10 @@
                     {% if user.is_superuser%}
                     <div class="col-2 form-group" data-toggle="tooltip" title="Valor NF" data-placement="bottom"
                         placeholder="Valor NF">
+                        {{ filter.form.comcomissao|as_crispy_field }}
+                    </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Valor NF" data-placement="bottom"
+                        placeholder="Valor NF">
                         {{ filter.form.pgcomissaoa|as_crispy_field }}
                     </div>
                     {% else %}
@@ -522,21 +543,23 @@
                 </div>
                 <div class="row">
 
-                    <div class="col firstbox" id="badgetransp1"><i><h6><p onclick="Mudarestado('secondbox')" class="badge badge-info" id="badgetransp" name="badgettrans">Transportadoras</p><input type="checkbox" id="select-all" class="select-all"></h6></i>
-                        <div class="container secondbox" id="secondbox"  {% if '&transp=' in request.get_full_path %}{% else %} style="display: none"{% endif %}>
-                            <div class="col-12 d-flex justify-content-center checkcheck">
-                                {% for choice in filter.form.transp|slice:"0:7" %}
-                                <label class="checkbox-inline  transpcheck">
-                                    {{ choice.tag }} {{ choice.choice_label }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                </label>{% endfor %}
-                            </div>
-                            
-                            <div class="col-12 d-flex justify-content-center checkcheck checkcheck2">
+                    <div class="col firstbox" id="badgetransp1"><i><h6><p onclick="Mudarestado('secondboxout')" class="badge badge-info" id="badgetransp" name="badgettrans">Transportadoras</p><input type="checkbox" id="select-all" class="select-all"></h6></i>
+                       <div class="container {% if '&transp=' in request.get_full_path %}{% else %} hide {% endif %}" id="secondboxout">
+                            <div class="container secondbox" id="secondbox">
+                                <div class="col-12 d-flex justify-content-center checkcheck">
+                                    {% for choice in filter.form.transp|slice:"0:7" %}
+                                    <label class="checkbox-inline  transpcheck">
+                                        {{ choice.tag }} {{ choice.choice_label }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </label>{% endfor %}
+                                </div>
                                 
-                                {% for choice in filter.form.transp|slice:"7:" %}
-                                <label class="checkbox-inline transpcheck">
-                                    {{ choice.tag }} {{ choice.choice_label }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                </label>{% endfor %}
+                                <div class="col-12 d-flex justify-content-center checkcheck checkcheck2">
+                                    
+                                    {% for choice in filter.form.transp|slice:"7:" %}
+                                    <label class="checkbox-inline transpcheck">
+                                        {{ choice.tag }} {{ choice.choice_label }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </label>{% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1630,22 +1653,38 @@
         }
     }
 
-    function Mudarestado(el) {
-        var display = document.getElementById(el).style.display;
-        if (display == "none")
-            document.getElementById(el).style.display = 'block';
-        else
-            document.getElementById(el).style.display = 'none';
+    // function Mudarestado(el) {
+    //     var display = document.getElementById(el).style.display;
+    //     if (display == "none")
+    //         document.getElementById(el).style.display = 'block';
+    //     else
+    //         document.getElementById(el).style.display = 'none';
+    // }
+
+
+    function Ocultarfiltros(el) {
+        if (document.getElementById("filtro").classList.contains('hide')) {
+            document.getElementById(el).classList.remove('hide');            
+        } else {
+            document.getElementById(el).classList.add('hide');            
+        }
     }
 
-
-    $(document).ready('change', function Hidetransp(el) {
-        var e = document.getElementById(el).style.display;
-        if (e.style.display){
-        e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+    function Mudarestado(el) {
+        if (document.getElementById("secondboxout").classList.contains('hide')) {
+            document.getElementById(el).classList.remove('hide');            
+        } else {
+            document.getElementById(el).classList.add('hide');            
         }
-        else {e.style.display='block'}
-        })
+    }
+
+    // $(document).ready('change', function Hidetransp(el) {
+    //     var e = document.getElementById(el).style.display;
+    //     if (e.style.display){
+    //     e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+    //     }
+    //     else {e.style.display='block'}
+    //     })
 
 
     $(document).ready(function () {
