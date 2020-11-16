@@ -198,7 +198,7 @@
                     <th scope="col">Frete</th>
                     <th scope="col">Quantidade</th>
                     <th scope="col">Quantidade Kg </th>
-                    <th scope="col"><input type="checkbox" value="0" id='select-all-carregado'></th>
+                    <td scope="col"><input type="checkbox" value="0" id='select-all-carregado'></td>
                     <th scope="col" class="text text-center">Carregado</th>
                     <th scope="col"><input type="checkbox" value="0" id='select-all-saldo'></th>
                     <th scope="col" class="text text-center">Saldo Real</th>
@@ -248,19 +248,8 @@
 
                     <td>{{ pedido.fornecedor.cidade|truncatechars:20 }}</td>
 
-                    {% if 'CDA - GO' in pedido.cliente.nome_fantasia|upper %}
-                    <td class="text-danger"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
-                    {% elif 'CDA - TO' in pedido.cliente.nome_fantasia|upper %}
-                    <td style=" color: olive;"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
-                    {% elif 'DIAMANTE - TO' in pedido.cliente.nome_fantasia|upper %}
-                    <td style=" color: #FFD700"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
-                    {% elif 'USTON' in pedido.cliente.nome_fantasia|upper %}
-                    <td class="text-primary"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
-                    {% elif 'APIT' in pedido.cliente.nome_fantasia|upper %}
-                    <td style="color: orange;"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
-                    {% else %}
-                    <td><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
-                    {% endif %}
+                    <td style="color: {{ pedido.cliente.color}}"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
+                    
 
                     <td>R$ {{ pedido.preco_produto|intcomma  }}</td>
                     <td> {{ pedido.produto  }} </td>

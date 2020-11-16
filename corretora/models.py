@@ -107,6 +107,7 @@ class Cliente(Base):
     endereco      = models.CharField('Endereço', max_length=50)
     cidade        = models.ForeignKey(Cidade, on_delete=models.PROTECT)
     estado        = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
+    color         = models.CharField('Cor', max_length=20, default='whitesmoke')
     obs           = models.TextField('Observação', max_length=125, blank=True)
 
     def mesanterior(self):

@@ -147,6 +147,7 @@
             width="100%">
             <thead class="borderless">
                 <tr>
+                    <th scope="col"><a class="text-info fa fa-sort-desc"></a></th>
                     <th scope="col">Nome</th>
                     <th scope="col">CPF/CNPJ</th>
                     <th scope="col">Insc. Estadual&nbsp;&nbsp;</th>
@@ -161,6 +162,7 @@
             <tbody>
                 {% for fornecedor in fornecedores %}
                 <tr>
+                    <td>{{ forloop.counter }}</td>                    
                     {% if fornecedor.obs %}
                     <td><abbr class="text-warning"
                             title="{{ fornecedor.obs }}"><em>{{ fornecedor.nome|title }}</em></abbr></td>

@@ -36,6 +36,7 @@ from django.shortcuts import render
 
 
 class CargasFiltradasView(LoginRequiredMixin, FilterView):
+    login_url = 'login'    
     model = Carga
     template_name = 'cargasfiltro.html'  
     paginate_by = 100
@@ -69,8 +70,7 @@ class CargasFiltradasView(LoginRequiredMixin, FilterView):
 
 
 class BasetwoView(LoginRequiredMixin, SuperuserRequiredMixin, TemplateView):
-    login_url = 'login'
-    redirect_field_name = 'index2'
+    login_url = 'login'    
     template_name = 'dashboard.html'
 
     def get_context_data(self, **kwargs):
@@ -115,8 +115,7 @@ class BasetwoView(LoginRequiredMixin, SuperuserRequiredMixin, TemplateView):
         return context
 
 class BaseView(LoginRequiredMixin, TemplateView):
-    login_url = 'login'
-    redirect_field_name = 'index2'
+    login_url = 'login'    
     template_name = 'basecorretora.html'
 
     def get_context_data(self, **kwargs):
@@ -163,8 +162,7 @@ class BaseView(LoginRequiredMixin, TemplateView):
 
 
 class PedidosView(LoginRequiredMixin, ListView):
-    login_url = 'login'
-    redirect_field_name = 'index2'
+    login_url = 'login'    
     models = Pedido
     paginate_by = 23
     ordering = ['situacao', 'cliente','-data','-id']
@@ -174,8 +172,7 @@ class PedidosView(LoginRequiredMixin, ListView):
 
 
 class CreatePedidosView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
-    login_url = 'login'
-    redirect_field_name = 'index2'
+    login_url = 'login'    
     model = Pedido
     template_name = 'pedido_form_add.html'
     success_message = "%(contrato)s - %(fornecedor)s - %(cliente)s inserido com sucesso!!"
@@ -192,7 +189,7 @@ class CreatePedidosView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
 class UpdatePedidosView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     login_url = 'login'
-    redirect_field_name = 'index2'
+    
     model = Pedido
     template_name = 'pedido_form.html'
     success_message = 'Pedido atualizado com sucesso!!'
@@ -205,7 +202,7 @@ class UpdatePedidosView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
 class DeletePedidosView(LoginRequiredMixin, DeleteView):
     login_url = 'login'
-    redirect_field_name = 'index2'
+    
     model = Pedido
     template_name = 'pedido_del.html'
     success_message = "Pedido excluído com sucesso!!"
@@ -219,7 +216,7 @@ class DeletePedidosView(LoginRequiredMixin, DeleteView):
 
 class FornecedoresView(LoginRequiredMixin, ListView):
     login_url = 'login'
-    redirect_field_name = 'index2'
+    
     models = Fornecedor
     ordering = ['nome']
     template_name = 'fornecedores.html'
@@ -228,7 +225,7 @@ class FornecedoresView(LoginRequiredMixin, ListView):
 
 class CreateFornecedoresView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     login_url = 'login'
-    redirect_field_name = 'index2'
+    
     model = Fornecedor
     template_name = 'fornecedor_form_add.html'
     success_message = "%(nome)s cadastrado com sucesso!!"
@@ -245,7 +242,7 @@ class CreateFornecedoresView(SuccessMessageMixin, LoginRequiredMixin, CreateView
 
 class UpdateFornecedoresView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     login_url = 'login'
-    redirect_field_name = 'index2'
+    
     model = Fornecedor
     template_name = 'fornecedor_form.html'
     success_message = 'Fornecedor atualizado com sucesso!!'
@@ -254,7 +251,7 @@ class UpdateFornecedoresView(SuccessMessageMixin, LoginRequiredMixin, UpdateView
 
 class DeleteFornecedoresView(LoginRequiredMixin, DeleteView):
     login_url = 'login'
-    redirect_field_name = 'index2'
+    
     model = Fornecedor
     template_name = 'fornecedor_del.html'
     success_message = "Fornecedor excluído com sucesso!!"
@@ -316,7 +313,7 @@ class ComissCargasView(LoginRequiredMixin, SuperuserRequiredMixin, ListView):
 
 class CargasView(LoginRequiredMixin, ListView):
     login_url = 'login'
-    redirect_field_name = 'index2'
+    
     models = Carga
     paginate_by = 23
     ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
@@ -331,7 +328,7 @@ class CargasView(LoginRequiredMixin, ListView):
 
 class CargasViewTerceiros(LoginRequiredMixin, ListView):
     login_url = 'login'
-    redirect_field_name = 'index2'
+    
     models = Carga
     ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
     template_name = 'cargasterceiros.html'
@@ -346,7 +343,7 @@ class CargasViewTerceiros(LoginRequiredMixin, ListView):
 
 class CreateCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     login_url = 'login'
-    redirect_field_name = 'index2'
+    
     model = Carga
     template_name = 'carga_form_add.html'
     success_message = "%(placa)s - %(motorista)s inseridos com sucesso!!"
@@ -363,7 +360,7 @@ class CreateCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
 class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     login_url = 'login'
-    redirect_field_name = 'index2'
+    
     model = Carga
     template_name = 'carga_age_form.html'
     success_message = "%(placa)s - %(motorista)s agendado com sucesso!!"
@@ -380,7 +377,7 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
 class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     login_url = 'login'
-    redirect_field_name = 'index2'
+    
     model = Carga
     template_name = 'carga_form.html'
     success_message = 'Dados atualizados com sucesso!!'
@@ -393,7 +390,7 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
 class UpdateclassCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     login_url = 'login'
-    redirect_field_name = 'index2'
+    
     model = Carga
     template_name = 'carga_class.html'
     success_message = 'Dados atualizados com sucesso!!'
@@ -405,7 +402,7 @@ class UpdateclassCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView)
 
 class UpdatechegadaCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     login_url = 'login'
-    redirect_field_name = 'index2'
+    
     model = Carga
     template_name = 'carga_chegada_form.html'
     success_message = 'Dados atualizados com sucesso!!'
@@ -417,7 +414,7 @@ class UpdatechegadaCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateVie
 
 class UpdatecomissCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     login_url = 'login'
-    redirect_field_name = 'index2'
+    
     model = Carga
     template_name = 'carga_comiss.html'
     success_message = 'Comissão atualizada com sucesso!!'
@@ -429,7 +426,7 @@ class UpdatecomissCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView
 
 class DeleteCargasView(LoginRequiredMixin, DeleteView):
     login_url = 'login'
-    redirect_field_name = 'index2'
+    
     model = Carga
     success_message = "Carga excluída com sucesso!!"
     template_name = 'carga_del.html'

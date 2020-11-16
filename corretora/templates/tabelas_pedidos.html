@@ -94,23 +94,7 @@
 
                     <td>{{ pedido.fornecedor.cidade|truncatechars:20 }}</td>
 
-                    {% if 'CDA - GO' in pedido.cliente.nome_fantasia|upper %}
-                    <td class="text-danger">
-                        <em><strong>{{ pedido.cliente|upper|truncatechars:10 }}</strong></em></td>
-                    {% elif 'CDA - TO' in pedido.cliente.nome_fantasia|upper %}
-                    <td style=" color: olive;"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
-                    {% elif 'DIAMANTE - TO' in pedido.cliente.nome_fantasia|upper %}
-                    <td style=" color: #FFD700"><em><strong>{{ pedido.cliente|upper }}</strong></em></td>
-                    {% elif 'USTON' in pedido.cliente.nome_fantasia|upper %}
-                    <td class="text-primary text-truncate">
-                        <em><strong>{{ pedido.cliente|upper|truncatechars:12 }}</strong></em></td>
-                    {% elif 'APIT' in pedido.cliente.nome_fantasia|upper %}
-                    <td class="text-truncate" style="color: orange;">
-                        <em><strong>{{ pedido.cliente|upper|truncatechars:14 }}</strong></em>
-                    </td>
-                    {% else %}
-                    <td><strong>{{ pedido.cliente|upper|truncatechars:14 }}</strong></td>
-                    {% endif %}
+                    <td style="color: {{ pedido.cliente.color}}"><em><strong>{{ pedido.cliente|upper|truncatechars:14  }}</strong></em></td>
 
                     <td>R$ {{ pedido.preco_produto|intcomma  }}</td>
                     <td> {{ pedido.produto  }} </td>

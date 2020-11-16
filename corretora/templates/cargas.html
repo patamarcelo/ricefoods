@@ -357,19 +357,9 @@
                         <td>{{ carga.pedido.fornecedor.nome|title|truncatechars:26 }}</td>
                         {% endif %}
                         <td>{{ carga.pedido.fornecedor.cidade|truncatechars:20 }}</td>
-                        {% if 'CDA - GO' in carga.pedido.cliente.nome_fantasia|upper %}
-                        <td class="text-danger"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
-                        {% elif 'CDA - TO' in carga.pedido.cliente.nome_fantasia|upper %}
-                        <td style=" color: olive;"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
-                        {% elif 'DIAMANTE - TO' in carga.pedido.cliente.nome_fantasia|upper %}
-                        <td style=" color: #FFD700"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
-                        {% elif 'USTON' in carga.pedido.cliente.nome_fantasia|upper %}
-                        <td class="text-primary"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
-                        {% elif 'APIT' in carga.pedido.cliente.nome_fantasia|upper %}
-                        <td style="color: orange;"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
-                        {% else %}
-                        <td>{{ carga.pedido.cliente|upper }}</td>
-                        {% endif %}
+                        
+                        <td style="color: {{ carga.pedido.cliente.color}}"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
+                        
                         {% if carga.pedido.produto == "Arroz em Casca" %}
                         {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}
                         <td align="center"><a class="text-success fa fa-list-alt" target="_blank"
