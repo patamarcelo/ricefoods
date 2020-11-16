@@ -39,6 +39,12 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/infinite.min.js"></script>
+
+    <!-- Infinite scrool down Mobile -->
+    
+    <!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" /> -->
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
      
 
 
@@ -47,6 +53,13 @@
         body {
             background-color: #363639;
             color: blanchedalmond;
+        }
+
+        .btn-xs {
+            padding: 5px 10px;
+            font-size: 10px;
+            line-height: 1.0;
+
         }
 
         .tabini {
@@ -77,13 +90,32 @@
 
         .boxoficial {
             padding: 10px;
+            
+            
         }
 
         .caixaexterna {
             /* width: 45%; */
+            
         }
 
-       
+        .cliente {
+            margin-bottom: 0px;     
+            margin-right: 6px;   
+                      
+        }
+
+        .right {
+            float:right
+        }
+
+        .index {
+            font-size: 10px;
+            color: whitesmoke;
+            text-decoration: bold ;
+        }
+
+        
 
         @media (min-width:300px) and  (max-width:1112px) {
             body  {                
@@ -98,18 +130,44 @@
 <body>
     
 
-    <div class="infinite-container">
+    <div class="infinite-container ">
         {% for carga in cargas %}
           <div class="infinite-item">
-            <div class="container caixaexterna">
+            <div class="container-fluid caixaexterna">
                 <div class="d-flex flex-column caixainterna">
                     <div class="d-flex flex-column boxoficial">
                         <div class="d-flex flex-column sombra{{carga.situacao|lower}}">
-                            <h6>{{ page_obj.start_index|add:forloop.counter0 }}</h6>
-                            <h6>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</h6>
-                            <h6>{{ carga.placa}} - {{ carga.motorista }}</h6>
-                        <p class="cliente" style="color: {{ carga.pedido.cliente.color}}">{{ carga.pedido.cliente }}</p>
-                        </div>
+                            <div class="d-flex flex-row">
+                                <div class="d-flex  flex-column col-8" style="overflow: auto;">                                    
+                                    
+                                    <h6 class="index"><strong>{{ page_obj.start_index|add:forloop.counter0 }}</strong></h6>
+                                    <h6>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</h6>
+                                    <h6>{{ carga.placa}} - {{ carga.motorista }}</h6>
+                                </div>
+                                <div class="d-flex  flex-column col">
+                                    <div class="d-flex flex-row justify-content-end ">
+                                        <div class="d-flex  justify-content-end">                                        
+                                            <p class="cliente" style="color: {{ carga.pedido.cliente.color}}">{{ carga.pedido.cliente }}</p>                                     
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-row justify-content-end">
+                                    
+                                        {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %}
+                                    
+                                            <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">EDIT</a>
+                                            <a class="btn btn-danger btn-xs" href="{% url 'del_cargas' carga.pk %}">DEL</a>
+                                    
+                                        {% elif carga.situacao == 'Carregado'  and carga.pedido.situacao == 'a' %}
+                                    
+                                            <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">EDIT</a>
+                                    
+                                        {% else %}
+                                                <p>-</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
                     </div>
                 </div>                
             </div>
@@ -119,11 +177,11 @@
     
       <div class="loading">
         <div class="container">
-        <div class="container">
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" style="width:100%;font-size: 15px;">Carregando...</div>
+            <div class="container">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" style="width:100%;font-size: 15px;">Carregando...</div>
+                </div>
             </div>
-        </div>
         </div>
       </div>
       
@@ -131,12 +189,8 @@
       {% if page_obj.has_next %}
         <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
       {% endif %}
+            
     
-    
-
-     
-        </div>
-    </div>
 </body>
 <br>
 <script>

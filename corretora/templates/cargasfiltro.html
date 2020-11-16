@@ -931,7 +931,7 @@
                         {% else %}
 
                         <tr>
-                            <td>{{ forloop.counter }}</td>
+                            <td>{{ page_obj.start_index|add:forloop.counter0 }}</td>
                             {% if carga.pedido.situacao == "a" %}
                             <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
                                     class="text-success">{{ carga.pedido }}</a></td>
