@@ -51,19 +51,21 @@
 
 <form method="POST">
     <div class="row align-items-center">
-        <div class="col">
-            <div class="row">
-                <div class="botoestop container">
-                    <h4> <span class="badge badge-primary p-1 m-1"> Pedido: {{carga.pedido}}
-                        </span>&nbsp;&nbsp;<span
-                            class="badge badge-dark p-1 m-1">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
-                            -
-                            {{carga.motorista|title}}</span>
-                </div>
-                <div class="botoestop container-fluid">
-                    <h5> <span class="badge badge-warning p-1 m-1">{{carga.pedido.fornecedor.nome}}</span>
-                        &nbsp;&nbsp;<span
-                            class="badge badge-warning p-1 m-1">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
+        <div class="d-flex flex-column col">
+            <div class="d-flex flex-row">
+                <div class="d-flex flex-column justify-content-start p-1 m-3">
+                    <div class="botoestop container">
+                        <h4> <span class="badge badge-primary p-1 m-1"> Pedido: {{carga.pedido}}
+                            </span>&nbsp;&nbsp;<span
+                                class="badge badge-dark p-1 m-1">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
+                                -
+                                {{carga.motorista|title}}</span>
+                    </div>
+                    <div class="botoestop container-fluid">
+                        <h5> <span class="badge badge-warning p-1 m-1">{{carga.pedido.fornecedor.nome}}</span>
+                            &nbsp;&nbsp;<span
+                                class="badge badge-success p-1 m-1">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
+                    </div>
                 </div>
             </div>
             </h4>

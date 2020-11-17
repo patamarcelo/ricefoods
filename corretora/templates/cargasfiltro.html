@@ -989,11 +989,11 @@
                             {% if carga.situacao == 'Agendado' and carga.chegada == True %}
 
                             <td><a class="text text-success" style='font-style:italic'
-                                    href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
+                                    href="{% url 'upd_chegada' carga.pk %}" target="_blank"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
                                     </strong></a></td>
                             {% else %}
                             <td><a class="text text-warning" style='font-style:italic'
-                                    href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</strong></a>
+                                    href="{% url 'upd_chegada' carga.pk %}" target="_blank"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</strong></a>
                             </td>
                             {% endif %}
                             {% else %}

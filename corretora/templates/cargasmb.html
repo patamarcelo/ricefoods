@@ -10,7 +10,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.6 shrink-to-fit=no">    
+    <meta name="viewport" content="width=device-width, initial-scale=3">    
 
     <title>Corretora | CargasMb</title>
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"> -->
@@ -117,11 +117,8 @@
 
         
 
-        @media (min-width:300px) and  (max-width:1112px) {
-            body  {                
-                zoom: 60%;
-            }
-        }
+      
+        
     </style>
     
 
@@ -147,7 +144,7 @@
                                 <div class="d-flex  flex-column col">
                                     <div class="d-flex flex-row justify-content-end ">
                                         <div class="d-flex  justify-content-end">                                        
-                                            <p class="cliente" style="color: {{ carga.pedido.cliente.color}}">{{ carga.pedido.cliente }}</p>                                     
+                                            <p class="cliente" style="color: {{ carga.pedido.cliente.color}}"><strong>{{ carga.pedido.cliente }}</strong></p>                                     
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row justify-content-end">
