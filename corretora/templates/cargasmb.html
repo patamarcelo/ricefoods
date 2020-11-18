@@ -10,7 +10,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=3">    
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
 
     <title>Corretora | CargasMb</title>
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"> -->
@@ -69,17 +69,17 @@
         }
 
         .sombracarregado {
-            border: 2px solid black;
+            /* border: 2px solid black; */
             padding: 10px;
-            box-shadow: 5px 5px 2px green;
+            box-shadow: 7px 7px 3px green;
             border-radius: 10px;
             background-color: #232424;
         }
         
         .sombraagendado {
-            border: 2px solid black;
+            /* border: 2px solid black; */
             padding: 10px;
-            box-shadow: 5px 5px 2px yellow;
+            box-shadow: 7px 7px 3px yellow;
             border-radius: 10px;
             background-color: #232424;
         }
@@ -111,13 +111,38 @@
 
         .index {
             font-size: 10px;
-            color: whitesmoke;
-            text-decoration: bold ;
+            color: whitesmoke;            
+            text-decoration: bold ; 
+            margin-bottom: 10px;           
         }
 
-        
+        p {
+            margin-bottom: 5px;
+            font-size: 12px;
+        }
+        .obs{
+            color:orange;
+            font-weight:italic;
+            font-weight: bold;
+            font-size: 11px;
+        }
 
-      
+        .notafiscal {
+            color:orange;            
+        }
+
+        .valornf {
+            color: #5cb85c
+        }
+
+        .fretemotorista {
+            color: whitesmoke;
+        }
+
+        .botoesacao {
+            margin-top: 10%;
+        }
+        
         
     </style>
     
@@ -133,21 +158,126 @@
             <div class="container-fluid caixaexterna">
                 <div class="d-flex flex-column caixainterna">
                     <div class="d-flex flex-column boxoficial">
-                        <div class="d-flex flex-column sombra{{carga.situacao|lower}}">
+                        <div class="d-flex flex-column sombra{{carga.situacao|lower}}" style="border: 2px solid {{carga.pedido.cliente.color}};">
                             <div class="d-flex flex-row">
-                                <div class="d-flex  flex-column col-8" style="overflow: auto;">                                    
+                                <div class="d-flex  flex-column col-8 motoristas">                                    
+                                    <h6 class="index"><strong>{{ page_obj.start_index|add:forloop.counter0 }} &emsp;&emsp;&emsp;&emsp;
+                                        {% if carga.ordem %}
+                                        <i class="text-success fas fa-check"></i>
+                                         {% else %}
+                                         <i class="text-danger fas fa-times"></i>
+                                         {% endif %}
+                                        &emsp;&emsp;&emsp;&emsp;
+                                        {% if 'dast' in carga.buonny|lower %}
+                                        <strong class="text-danger">{{ carga.buonny|title }}</strong>
+                                        {% elif 'sul' in carga.buonny|lower %}
+                                        <strong class="text-warning">{{ carga.buonny|title }}</strong>
+                                        {% elif 'nviado' in carga.buonny|lower or 'nviada' in carga.buonny|lower %}
+                                        <strong class="text-info">{{ carga.buonny|title }}</strong>
+                                        {% else %}
+                                        <strong class="text-success">{{ carga.buonny|title }}</strong>
+                                        {% endif %}
+                                    </strong></h6>
                                     
-                                    <h6 class="index"><strong>{{ page_obj.start_index|add:forloop.counter0 }}</strong></h6>
-                                    <h6>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</h6>
-                                    <h6>{{ carga.placa}} - {{ carga.motorista }}</h6>
+                                    
+                                    <p>{{ carga.data|date:"SHORT_DATE_FORMAT" }} - {{ carga.placa|slice:"0:3"}}-{{ carga.placa|slice:"3:"}} - {{ carga.motorista }} 
+                                        
+                                        {% if carga.peso == 0 %}
+                                        <i class="text-info">{{ carga.veiculo|intcomma }} Kg </i>
+                                        {% elif carga.peso < 18000 and carga.peso > 0  %}
+                                        <i style="color:darkorange">{{ carga.peso|intcomma }} Kg </i>
+                                        {% else %}
+                                        <i>{{ carga.peso|intcomma }} Kg </i>
+                                        {% endif %}
+
+                                    </p>
+                                    <p>
+                                        <span class="fretemotorista">
+                                        {% if carga.valor_mot == None %}
+                                        <i>R$ &nbsp;- </i>
+                                        {% else %}
+                                        <i>R$ {{ carga.valor_mot }}</i>
+                                        {% endif %}          
+                                        </span>
+                                        &nbsp;| 
+                                        &nbsp;
+
+                                        <span class="notafiscal">
+                                        {% if carga.notafiscal == None %}
+                                        <span class="text-danger"><strong>Sem NF</strong></span>
+                                        {% elif carga.notafiscal|length <= 4 %}
+                                        <span>
+                                            NF {{ carga.notafiscal }}
+                                        </span>
+                                        {% elif carga.notafiscal|length <= 6 %}
+                                        <span>
+                                            NF {{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                                        </span>
+                                        {% elif carga.notafiscal|length > 6 and carga.notafiscal|length < 8 %}
+                                        <span>
+                                            NF {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                                        </span>
+
+                                        {% elif carga.notafiscal|length == 8 %}
+                                        <span>
+                                            NF 0{{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                                        </span>
+                                        {% elif carga.notafiscal|length > 8 %}
+                                        <span>
+                                            NF {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                                        </span>
+                                        {% else %}
+                                        <span> NF {{carga.notasfiscal}}</span>
+                                        {% endif %} | &nbsp;
+                                        </span>                                    
+                                        
+                                        
+                                        
+                                        <span class="valornf">
+                                        {% if carga.valornf == None %}
+                                        <span >R$ &nbsp;&nbsp;&nbsp;&nbsp;- </span>
+                                        {% else %}
+                                        <span>R$ {{ carga.valornf }}</span>                                                                                    
+                                        {% endif %}
+                                        </span>
+                                    </p>
+                                    {% if carga.obs %}
+                                    <smal class="obs">Obs.: {{ carga.obs|title }}</smal>
+                                    {% else %}
+                                    {% endif %}
+                                    
                                 </div>
                                 <div class="d-flex  flex-column col">
                                     <div class="d-flex flex-row justify-content-end ">
                                         <div class="d-flex  justify-content-end">                                        
-                                            <p class="cliente" style="color: {{ carga.pedido.cliente.color}}"><strong>{{ carga.pedido.cliente }}</strong></p>                                     
+                                            <p class="cliente" style="color: whitesmoke">                                                
+                                                {% if carga.pedido.situacao == "a" %}
+                                                <span style="text-decoration: underline"><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
+                                                        class="text-success">{{ carga.pedido }}</a></span>
+                        
+                                                {% elif 'b' in carga.pedido.situacao %}
+                                                <span style="text-decoration: underline"><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
+                                                        class="text-danger"><strong>{{ carga.pedido }}</strong></a></span>
+                                                {% elif carga.pedido.situacao == 'c' %}
+                                                <span style="text-decoration: underline"><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
+                                                        class="text-info">{{ carga.pedido }}</a></span>
+                                                {% else %}
+                                                <span style="text-decoration: underline">{{ carga.pedido }}</span>
+                                                {% endif %}
+                                                
+                                                
+                                                
+                                                
+                                                {% if  'PALMARES' in carga.pedido.fornecedor.nome|upper %}
+                                                <span style="color: #aa46db;"><strong>Palmares</strong></span>
+                                                {% else %}
+                                                <span>{{ carga.pedido.fornecedor.nome|title|truncatechars:26 }}</span>
+                                                {% endif %} <i class="text-info"> > </i> 
+                                                <strong class="nomecliente" style="color: {{ carga.pedido.cliente.color}}"> {{ carga.pedido.cliente }}</strong>
+                                            </p>                                     
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-row justify-content-end">
+                                    <div class="d-flex flex-row justify-content-end botoesacao">
                                     
                                         {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %}
                                     
@@ -172,16 +302,16 @@
         {% endfor %}
     </div>
     
-      <div class="loading">
-        <div class="container">
-            <div class="container">
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" style="width:100%;font-size: 15px;">Carregando...</div>
-                </div>
+    <div class="loading">                
+        <div class="container-fluid">
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" style="width:100%;font-size: 15px;">Carregando...</div>
             </div>
         </div>
-      </div>
-      
+    </div>
+                
+        
+        
     
       {% if page_obj.has_next %}
         <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
