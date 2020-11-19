@@ -38,13 +38,13 @@
 
     @media (min-width:980px) {
         .botoestop {
-            margin-left: 15%;
+            margin-left: 12%;
         }
     }
 
     @media (min-width:980px) {
         .botoestop2 {
-            margin-right: 39%;
+            margin-right: 16%;
         }
     }
 
@@ -80,14 +80,16 @@
     {% csrf_token %}
     <div class="container">
         <div class="row">
-            <div class="col botoestop">
-                <h4><span class="badge badge-primary p-1 m-1"> Pedido&nbsp;
-                        {{ pedido.contrato }}</span>
-                </h4>
-
-                <h5><span class="badge badge-warning p-1 m-1">{{ pedido.fornecedor.nome }}</span>
-                    &nbsp;&nbsp;<span class="badge badge-success p-1 m-1">{{ pedido.cliente.nome_fantasia }}</span></h5>
-
+            <div class="d-flex flex-column botoestop">
+                <div class="d-flex justify-content-start">
+                    <h4><span class="badge badge-primary p-1 "> Pedido&nbsp;
+                            {{ pedido.contrato }}</span>
+                    </h4>
+                </div>
+                <div class="d-flex justify-content-start">
+                    <h5><span class="badge badge-warning p-1 ">{{ pedido.fornecedor.nome }}</span>
+                        &nbsp;&nbsp;<span class="badge badge-success p-1 m-1">{{ pedido.cliente.nome_fantasia }}</span></h5>
+                </div>
             </div>
 
             <div class="col" align=right>

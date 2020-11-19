@@ -27,6 +27,26 @@
             background-color: #0f0f0f !important;
             color: blanchedalmond !important;
         }
+    
+        @media (max-width:1024px) {
+           
+            .cargasnote {
+                display: none !important;
+            }
+            .cargasmb {
+                display: block !important;
+            }
+        }
+        @media (min-width:1024px) {
+            
+            .cargasnote {
+                display: block !important;
+            }
+            .cargasmb {
+                display: none !important;
+            }
+        }
+
 
     </style>
     <link href="{% static 'css/fontawesome-all.css' %}" rel="stylesheet">

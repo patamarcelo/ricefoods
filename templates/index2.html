@@ -32,6 +32,8 @@
         margin:0px 10px;
     } */
 
+    
+
 </style>
 <div class="container d-flex flex-column  justify-content-center">
     <div class="container">
@@ -84,17 +86,32 @@
                 </div>
             </div>
 
+            <div class="cargasnote">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-primary"
+                        onclick='window.location.href="{% url 'cargas' %}"'>Cargas</button>
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-            <div class="btn-group" >
-                <button type="button" class="btn btn-outline-primary"
-                    onclick='window.location.href="{% url 'cargas' %}"'>Cargas</button>
-                <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'add_age_cargas' %}" target="_blank">Agendar</a>
+                        <a class="dropdown-item" href="{% url 'cargasfiltro' %}" target="_blank">Cargas F.</a>
+                    </div>
+                </div>
+            </div>
+            <div class="cargasmb">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-primary"
+                        onclick='window.location.href="{% url 'cargasmb' %}"'>Cargas</button>
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{% url 'add_age_cargas' %}" target="_blank">Agendar</a>
-                    <a class="dropdown-item" href="{% url 'cargasfiltro' %}" target="_blank">Cargas F.</a>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'add_age_cargas' %}" target="_blank">Agendar</a>
+                        <a class="dropdown-item" href="{% url 'cargasfiltro' %}" target="_blank">Cargas F.</a>
+                    </div>
                 </div>
             </div>
         </div> 

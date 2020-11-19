@@ -315,7 +315,7 @@ class CargasView(LoginRequiredMixin, ListView):
     login_url = 'login'
     
     models = Carga
-    paginate_by = 23
+    paginate_by = 30
     ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
     template_name = 'cargas.html'
     queryset = Carga.objects.all()
@@ -330,7 +330,7 @@ class CargasmbView(LoginRequiredMixin, ListView):
     login_url = 'login'
     
     models = Carga
-    paginate_by = 23
+    paginate_by = 30
     ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
     template_name = 'cargasmb.html'
     queryset = Carga.objects.all()
