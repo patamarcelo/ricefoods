@@ -72,7 +72,7 @@
         .sombracarregado {
             /* border: 2px solid black; */
             padding: 10px;
-            box-shadow: 7px 7px 3px green;
+            box-shadow: 7px 2px 3px green;
             border-radius: 10px;
             background-color: #232424;
         }
@@ -80,9 +80,17 @@
         .sombraagendado {
             /* border: 2px solid black; */
             padding: 10px;
-            box-shadow: 7px 7px 3px yellow;
+            box-shadow: 7px 2px 3px yellow;
             border-radius: 10px;
             background-color: #232424;
+        }
+
+        .bordacarregado {
+            border: 1px solid green;
+        }
+        
+        .bordaagendado {
+            border: 1px solid yellow;
         }
 
         .caixainterna {
@@ -102,8 +110,12 @@
 
         .cliente {
             margin-bottom: 0px;     
-            margin-right: 6px;   
-                      
+            /* margin-right: 6px;    */                      
+        }
+        
+        .fornecedor {
+            margin-bottom: 0px;     
+            /* margin-right: 6px;    */                      
         }
 
         .right {
@@ -114,7 +126,11 @@
             font-size: 10px;
             color: whitesmoke;            
             text-decoration: bold ; 
-            margin-bottom: 10px;           
+            margin-bottom: 10px;
+        }
+        .numcontagem {
+            /* background-color: black;
+            border-radius: 10px;            */
         }
 
         p {
@@ -141,15 +157,22 @@
 
         .fretemotorista {
             color: whitesmoke;
+            font-weight: bold;    
         }
 
         .botoesacao {
-            margin-top: 8%;
+            margin-top: 1%;            
         }
 
         b {
             color: white;
         }
+ 
+        .botoesacao a:nth-last-child(1) {
+            margin-right: 0px !important;
+        }
+
+        
 
         
         
@@ -164,9 +187,9 @@
     <div class="infinite-container ">
         {% for carga in cargas %}
           <div class="infinite-item">            
-                <div class="d-flex caixainterna sombra{{carga.situacao|lower}}" style="border: 2px solid {{carga.pedido.cliente.color}};">                                                    
+                <div class="d-flex caixainterna sombra{{carga.situacao|lower}} borda{{carga.situacao|lower}} " style="box-shadow: 7px 0px 3px {{carga.pedido.cliente.color}};">                                                    
                         <div class="d-flex  flex-column col-8 motoristas ">                                    
-                            <h6 class="index"><strong>{{ page_obj.start_index|add:forloop.counter0 }} &emsp;&emsp;
+                            <h6 class="index"><strong><b class="numcontagem">{{ page_obj.start_index|add:forloop.counter0 }}</b> &emsp;&emsp;
                                 {% if carga.ordem %}
                                 <i class="text-success fas fa-check"></i>
                                     {% else %}
@@ -213,9 +236,9 @@
                                 {% else %}
                                 <i>R$ {{ carga.valor_mot }}</i>
                                 {% endif %}          
-                                </span>
                                 &nbsp;<b>|</b> 
                                 &nbsp;
+                               </span>
 
                                 <span class="notafiscal">
                                 {% if carga.notafiscal == None %}
@@ -266,6 +289,12 @@
                         <div class="d-flex flex-row justify-content-end ">
                            
                                 <p class="cliente" style="color: whitesmoke">                                                
+                                    <b><strong class="nomecliente" style="color: {{ carga.pedido.cliente.color}}"> {{ carga.pedido.cliente }}</strong></b>
+                                </p>                                                                
+                        </div>    
+                        <div class="d-flex flex-row justify-content-end ">
+                           
+                                <p class="cliente" style="color: whitesmoke">                                                
                                     {% if carga.pedido.situacao == "a" %}
                                     <span style="text-decoration: underline"><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
                                             class="text-success">{{ carga.pedido }}</a></span>
@@ -277,13 +306,12 @@
                                     <span style="text-decoration: underline"><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
                                             class="text-info">{{ carga.pedido }}</a></span>
                                     {% else %}
-                                    <span style="text-decoration: underline">{{ carga.pedido }}</span>
-                                    {% endif %} &nbsp; <b>|</b> &nbsp;           
-                                    <strong class="nomecliente" style="color: {{ carga.pedido.cliente.color}}"> {{ carga.pedido.cliente }}</strong>                                                                                                                                                                 
+                                    <span style="text-decoration: underline;">{{ carga.pedido }}</span>
+                                    {% endif %}
                                 </p>                                                                
                         </div>
                         <div class="d-flex flex-row justify-content-end align-items-end">                           
-                                <p class="cliente " style="color: whitesmoke">                                                                                                                                                                                                                                
+                                <p class="fornecedor" style="color: whitesmoke">                                                                                                                                                                                                                                
                                     {% if  'PALMARES' in carga.pedido.fornecedor.nome|upper %}
                                     <span style="color: #aa46db;"><strong>Palmares</strong></span>
                                     {% else %}
