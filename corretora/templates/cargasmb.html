@@ -95,6 +95,7 @@
 
         .caixainterna {
             margin: 15px;
+            padding-right: 5px;
         }
 
         .boxoficial {
@@ -116,6 +117,7 @@
         .fornecedor {
             margin-bottom: 0px;     
             /* margin-right: 6px;    */                      
+            white-space: nowrap;
         }
 
         .right {
@@ -142,6 +144,7 @@
             font-weight:italic;
             font-weight: bold;
             font-size: 11px;
+            white-space: normal;
         }
 
         .notafiscal {
@@ -152,7 +155,8 @@
         .valornf {
             color: #5cb85c;
             font-weight: bold;
-            font-style: italic;       
+            font-style: italic;    
+            white-space: nowrap;   
         }
 
         .fretemotorista {
@@ -172,6 +176,18 @@
             margin-right: 0px !important;
         }
 
+        .dadoscarga {
+            white-space: nowrap;
+        }
+
+
+        .dadospedido {
+            padding-right: 1%;
+        }
+
+        .motorista {
+            white-space: pre;
+        }
         
 
         
@@ -188,7 +204,7 @@
         {% for carga in cargas %}
           <div class="infinite-item">            
                 <div class="d-flex caixainterna sombra{{carga.situacao|lower}} borda{{carga.situacao|lower}} " style="box-shadow: 7px 0px 3px {{carga.pedido.cliente.color}};">                                                    
-                        <div class="d-flex  flex-column col-8 motoristas ">                                    
+                        <div class="d-flex  flex-column col-7 motoristas ">                                    
                             <h6 class="index"><strong><b class="numcontagem">{{ page_obj.start_index|add:forloop.counter0 }}</b> &emsp;&emsp;
                                 {% if carga.ordem %}
                                 <i class="text-success fas fa-check"></i>
@@ -218,7 +234,7 @@
                                 {% endif %}
 
                                 
-                                - {{ carga.placa|slice:"0:3"}}-{{ carga.placa|slice:"3:"}} - {{ carga.motorista }} - 
+                                - {{ carga.placa|slice:"0:3"}}-{{ carga.placa|slice:"3:"}} - <b class="motorista">{{ carga.motorista }}</b> - 
                                 
                                 {% if carga.peso == 0 %}
                                 <i class="text-warning">{{ carga.veiculo|intcomma }} Kg </i>
@@ -229,15 +245,15 @@
                                 {% endif %}
 
                             </p>
-                            <p>
+                            <p class="dadoscarga">
                                 <span class="fretemotorista">
                                 {% if carga.valor_mot == None %}
                                 <i>R$ &nbsp;- </i>
                                 {% else %}
                                 <i>R$ {{ carga.valor_mot }}</i>
                                 {% endif %}          
-                                &nbsp;<b>|</b> 
-                                &nbsp;
+                                <b>|</b> 
+                                
                                </span>
 
                                 <span class="notafiscal">
@@ -245,29 +261,29 @@
                                 <span class="text-danger"><strong>Sem NF</strong></span>
                                 {% elif carga.notafiscal|length <= 4 %}
                                 <span>
-                                    NF {{ carga.notafiscal }}
+                                     {{ carga.notafiscal }}
                                 </span>
                                 {% elif carga.notafiscal|length <= 6 %}
                                 <span>
-                                    NF {{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                                     {{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
                                 </span>
                                 {% elif carga.notafiscal|length > 6 and carga.notafiscal|length < 8 %}
                                 <span>
-                                    NF {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                                     {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
                                 </span>
 
                                 {% elif carga.notafiscal|length == 8 %}
                                 <span>
-                                    NF 0{{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                                     0{{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
                                 </span>
                                 {% elif carga.notafiscal|length > 8 %}
                                 <span>
-                                    NF {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
+                                     {{ carga.notafiscal|slice:"-9:-6" }}.{{ carga.notafiscal|slice:"-6:-3" }}.{{ carga.notafiscal|slice:"-3:" }}
                                 </span>
                                 {% else %}
-                                <span> NF {{carga.notasfiscal}}</span>
-                                {% endif %}  &nbsp;<b>|</b> 
-                                &nbsp;
+                                <span>  {{carga.notasfiscal}}</span>
+                                {% endif %}  <b>|</b> 
+                              
                                 </span>                                    
                                 
                                 
@@ -285,7 +301,7 @@
                             {% else %}
                             {% endif %}                        
                         </div>
-                    <div class="d-flex  flex-column col">                            
+                    <div class="d-flex  flex-column col dadospedido">                            
                         <div class="d-flex flex-row justify-content-end ">
                            
                                 <p class="cliente" style="color: whitesmoke">                                                
@@ -315,7 +331,7 @@
                                     {% if  'PALMARES' in carga.pedido.fornecedor.nome|upper %}
                                     <span style="color: #aa46db;"><strong>Palmares</strong></span>
                                     {% else %}
-                                    <span>{{ carga.pedido.fornecedor.nome|title|truncatechars:26 }}</span>
+                                    <span>{{ carga.pedido.fornecedor.nome|title|truncatechars:18 }}</span>
                                     {% endif %}                                     
                                 </p>                                                                
                         </div>
@@ -331,7 +347,7 @@
                                 <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}">EDIT</a>
                         
                             {% else %}
-                                    <p>-</p>
+                                  
                             {% endif %}
                         </div>
                     </div> 
