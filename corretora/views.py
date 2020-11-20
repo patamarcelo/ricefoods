@@ -372,6 +372,11 @@ class CreateCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
             return reverse('add_age_cargas')
         else:
             return reverse('cargas')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)        
+        context["pedidos"] = Pedido.objects.filter(situacao="a").all()
+        return context
 
 class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     login_url = 'login'
@@ -389,6 +394,11 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
             return reverse('add_age_cargas')
         else:
             return reverse('cargas')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)        
+        context["pedidos"] = Pedido.objects.filter(situacao="a").all()
+        return context
 
 class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     login_url = 'login'

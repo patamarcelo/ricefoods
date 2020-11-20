@@ -38,7 +38,7 @@
 
     @media (min-width:980px) {
         .botoestop {
-            margin-left: 34%;
+            margin-left: 0%;
         }
     }
 
@@ -67,18 +67,42 @@
         padding-bottom: 0px;
     }
 
+    .botoestop {
+       float: left;
+    }
+    
+    .continfo {
+       padding-left: 0px !important;
+    }
+
 </style>
 
 <form method="POST" novalidate class="needs-validation">
     {% csrf_token %}
-
-    <div class="row align-items-center">
-        <div class="col">
-            <h4><span class="badge badge-success botoestop"> Adiconar Carga</span></h4>
+    <div class="container-fluid col-10 justify-content-around">
+        <div class="row align-items-center">
+            <div class="col justify-content-start">
+                <h4><span class="badge badge-success botoestop"> Adiconar Carga</span></h4>
+            </div>
+            <div class="col sevea" align=right>
+                <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" />
+                <a class="btn btn-warning btn-sm botoestop2" href="{% url 'cargas' %}">Voltar</a>
+            </div>
         </div>
-        <div class="col sevea" align=right>
-            <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" />
-            <a class="btn btn-warning btn-sm botoestop2" href="{% url 'cargas' %}">Voltar</a>
+        <div class="row continfo">
+            <div class="d-flex container botoestop justify-content-start">
+                <h5>
+                    <span class="badge badge-warning p-1 m-1" id="fornecedorinfo"></span>                        
+                    &nbsp;&nbsp; <span class="badge badge-success p-1 m-1" id="clienteinfo"></span>
+                </h5>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="d-flex container botoestop justify-content-start">
+                <h5>
+                    <span class="badge badge-white bg-dark p-1 m-1" id="cidadeinfo"></span>
+                </h5>
+            </div>
         </div>
     </div>
 
@@ -246,5 +270,41 @@
     $(document).ready(function () {
         $('#id_data').mask('00/00/0000');
     })
+
+    $('#id_pedido').on('change', function() {
+        var idcontrato = ($(this).val()) 
+       
+        var contratos = { {% for p in pedidos %}  {{ p.id}}:  { contrato: "{{p.contrato}}" ,fornecedor: "{{ p.fornecedor.nome}}", cidadef: "{{p.fornecedor.cidade}}", cliente: "{{ p.cliente.nome_fantasia}}"}, {% endfor %} }
+        
+        // alert(idcontrato);                      
+        console.log(idcontrato)
+
+        for (i in contratos) {
+            if (i === idcontrato) {
+            var pedido = contratos[idcontrato]['contrato'] 
+            var fornecedor = contratos[idcontrato]['fornecedor'] 
+            var cidade = contratos[idcontrato]['cidadef'] 
+            var cliente = contratos[idcontrato]['cliente']             
+            console.log(pedido)
+            console.log(fornecedor)           
+            console.log(cidade)           
+            console.log(cliente)           
+            console.log(" ")                        
+            var elementfornecedor = document.getElementById("fornecedorinfo");
+            elementfornecedor.innerHTML = fornecedor;            
+            var elementcidade = document.getElementById("cidadeinfo");
+            elementcidade.innerHTML = cidade;            
+            var elementcliente = document.getElementById("clienteinfo");
+            elementcliente.innerHTML = cliente;            
+            } else if (idcontrato === "") {            
+            var elementfornecedor = document.getElementById("fornecedorinfo");
+            elementfornecedor.innerHTML = "";            
+            var elementcidade = document.getElementById("cidadeinfo");
+            elementcidade.innerHTML = "";
+            var elementcliente = document.getElementById("clienteinfo");
+            elementcliente.innerHTML = "";                        
+            }
+        }
+    });
 </script>
 {% endblock %}
