@@ -413,6 +413,11 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     success_url = reverse_lazy('cargas')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)        
+        context["pedidos"] = Pedido.objects.filter(situacao="a").all()
+        return context
+
 class UpdateclassCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     login_url = 'login'
     
