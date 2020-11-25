@@ -224,27 +224,43 @@
             var pedido = contratos[idcontrato]['contrato'] 
             var fornecedor = contratos[idcontrato]['fornecedor'] 
             var cidade = contratos[idcontrato]['cidadef'] 
-            var cliente = contratos[idcontrato]['cliente']             
+            var cliente = contratos[idcontrato]['cliente']                       
             console.log(pedido)
             console.log(fornecedor)           
             console.log(cidade)           
             console.log(cliente)           
-            console.log(" ")                        
-            var elementfornecedor = document.getElementById("fornecedorinfo");
-            elementfornecedor.innerHTML = fornecedor;            
-            var elementcidade = document.getElementById("cidadeinfo");
-            elementcidade.innerHTML = cidade;            
-            var elementcliente = document.getElementById("clienteinfo");
-            elementcliente.innerHTML = cliente;            
-            } else if (idcontrato === "") {            
-            var elementfornecedor = document.getElementById("fornecedorinfo");
-            elementfornecedor.innerHTML = "";            
-            var elementcidade = document.getElementById("cidadeinfo");
-            elementcidade.innerHTML = "";
-            var elementcliente = document.getElementById("clienteinfo");
-            elementcliente.innerHTML = "";                        
-            }
-        }
+            console.log(" ")
+                if (pedido === '900') {
+                    var elementfornecedor = document.getElementById("fornecedorinfo");
+                    elementfornecedor.innerHTML = "Escritório";            
+                    var elementcidade = document.getElementById("cidadeinfo");
+                    elementcidade.innerHTML = cidade;                                          
+                    var elementcliente = document.getElementById("clienteinfo");
+                    elementcliente.innerHTML = cliente;            
+                    } else if (pedido === '901') {            
+                    var elementfornecedor = document.getElementById("fornecedorinfo");
+                    elementfornecedor.innerHTML = "Escritório";  
+                    var elementcidade = document.getElementById("cidadeinfo");
+                    elementcidade.innerHTML = cidade;                                          
+                    var elementcliente = document.getElementById("clienteinfo");
+                    elementcliente.innerHTML = cliente;                                                 
+                    } else {
+                    var elementcidade = document.getElementById("cidadeinfo");
+                    elementcidade.innerHTML = cidade;                                          
+                    var elementcliente = document.getElementById("fornecedorinfo");
+                    elementcliente.innerHTML = fornecedor;            
+                    var elementcliente = document.getElementById("clienteinfo");
+                    elementcliente.innerHTML = cliente;            
+                    }                                      
+                } else if (idcontrato === "") {                    
+                    var elementcidade = document.getElementById("cidadeinfo");
+                    elementcidade.innerHTML = "";                                          
+                    var elementcliente = document.getElementById("fornecedorinfo");
+                    elementcliente.innerHTML = "";            
+                    var elementcliente = document.getElementById("clienteinfo");
+                    elementcliente.innerHTML = "";       
+                } 
+            }                             
     });
 
     

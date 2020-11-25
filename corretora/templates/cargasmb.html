@@ -231,7 +231,7 @@
                                     </strong>
                                 </h6>
                                 </div>
-                                    <div class="justify-content-end index" style="text-align: right !important;display: inline">
+                                    <div class="justify-content-end index" style="text-align: right !important;display: inline; font-size: 10px">
                                         {% if todays_date == carga.data|date:"Y-m-d" %}
                                         <i class="text-primary"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></i>
                                         {% elif todays_date > carga.data|date:"Y-m-d" and carga.situacao == 'Agendado' and carga.ordem == False %}
