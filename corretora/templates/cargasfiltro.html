@@ -553,18 +553,18 @@
                         {{ filter.form.valornf__lte|as_crispy_field }}
                     </div>
                     {% if user.is_superuser%}
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Valor NF" data-placement="bottom"
-                        placeholder="Valor NF">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Com Comissao?" data-placement="bottom"
+                        placeholder="Com Comissao?">
                         {{ filter.form.comcomissao|as_crispy_field }}
                     </div>
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Valor NF" data-placement="bottom"
-                        placeholder="Valor NF">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Comissao Paga?" data-placement="bottom"
+                        placeholder="Comissao Paga?">
                         {{ filter.form.pgcomissaoa|as_crispy_field }}
                     </div>
                     {% else %}
                     {% endif %}
-                    <div class="col-2 form-group" data-toggle="tooltip" title="Valor NF" data-placement="bottom"
-                    placeholder="Tipo">
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Produto" data-placement="bottom"
+                    placeholder="Produto">
                     {{ filter.form.pedido__produto__icontains|as_crispy_field }}
                     </div>
                 </div>
