@@ -83,7 +83,7 @@ class Fornecedor(Base):
     endereco      = models.CharField('Endereço', max_length=50)
     cidade        = models.ForeignKey(Cidade, on_delete=models.PROTECT)
     estado        = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
-    obs           = models.TextField('Observação', max_length=125, blank=True)
+    obs           = models.TextField('Observação', max_length=500, blank=True)
 
     
     class Meta:
@@ -108,7 +108,7 @@ class Cliente(Base):
     cidade        = models.ForeignKey(Cidade, on_delete=models.PROTECT)
     estado        = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
     color         = models.CharField('Cor', max_length=20, default='whitesmoke')
-    obs           = models.TextField('Observação', max_length=125, blank=True)
+    obs           = models.TextField('Observação', max_length=500, blank=True)
 
     def mesanterior(self):
         lastm = today.month - 1 if today.month > 1 else 12
@@ -383,6 +383,19 @@ class Cliente(Base):
             return self.carregadomesanterior
         else:
             return self.carregadomesanterior
+    
+    def carregadomesanteriortotal(self):
+        
+        today = datetime.date.today()
+        lastm = today.month - 1 if today.month > 1 else 12
+        lastmy = today.year if today.month > lastm else today.year -1
+        carregadomesanterior = Carga.objects.filter(data__year=lastmy, data__month=lastm).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+        self.carregadomesanterior = carregadomesanterior
+        if self.carregadomesanterior == None:
+            self.carregadomesanterior = 0
+            return self.carregadomesanterior
+        else:
+            return self.carregadomesanterior
 
     def carregadomesanteanterior(self):
         filt = self.nome_fantasia
@@ -396,6 +409,19 @@ class Cliente(Base):
             return self.carregadomesanteanterior
         else:
             return self.carregadomesanteanterior
+    
+    def carregadomesanteanteriortotal(self):
+        
+        today = datetime.date.today()
+        lastmm = today.month - 2 if today.month > 2 else 12
+        lastmmy = today.year if today.month > lastmm else today.year -1
+        carregadomesanteanterior = Carga.objects.filter(data__year=lastmmy, data__month=lastmm).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+        self.carregadomesanteanterior = carregadomesanteanterior
+        if self.carregadomesanteanterior == None:
+            self.carregadomesanteanterior = 0
+            return self.carregadomesanteanterior
+        else:
+            return self.carregadomesanteanterior
 
     def carregadomestresanterior(self):
         filt = self.nome_fantasia
@@ -403,6 +429,19 @@ class Cliente(Base):
         lastmm3 = today.month - 3 if today.month > 3 else 12
         lastmmy3 = today.year if today.month > lastmm3 else today.year -1
         carregadomestresanterior = Carga.objects.filter(data__year=lastmmy3, data__month=lastmm3).filter(pedido__cliente__nome_fantasia=filt).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+        self.carregadomestresanterior = carregadomestresanterior
+        if self.carregadomestresanterior == None:
+            self.carregadomestresanterior = 0
+            return self.carregadomestresanterior
+        else:
+            return self.carregadomestresanterior
+    
+    def carregadomestresanteriortotal(self):
+        
+        today = datetime.date.today()
+        lastmm3 = today.month - 3 if today.month > 3 else 12
+        lastmmy3 = today.year if today.month > lastmm3 else today.year -1
+        carregadomestresanterior = Carga.objects.filter(data__year=lastmmy3, data__month=lastmm3).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
         self.carregadomestresanterior = carregadomestresanterior
         if self.carregadomestresanterior == None:
             self.carregadomestresanterior = 0
@@ -441,7 +480,7 @@ class Cliente(Base):
             return self.carregadosemanatotal
         else:
             self.carregadosemanatotal = carregado + agendado
-            return self.carregadosemanatotal
+            return self.carregadosemanatotal 
 
     def agendadoordemsemana(self):
         filt = self.nome_fantasia
@@ -561,7 +600,7 @@ class Transportadora(Base):
     contato  = models.CharField('Contato', max_length=30, blank=True)
     telefone = models.CharField('Telefone', max_length=15, blank=True, help_text="digite apenas números")
     email    = models.EmailField('E-mail', max_length=30,blank=True)
-    obs      = models.TextField('Observação', max_length=125, blank=True)
+    obs      = models.TextField('Observação', max_length=500, blank=True)
 
     class Meta:
         ordering = ['criados','nome']
@@ -801,7 +840,7 @@ class Carga(Base):
     manchpic  = models.DecimalField('Manch/Pic', max_digits=4, decimal_places=2,null=True, blank=True)
     vermelhos = models.DecimalField('Vermelhos', max_digits=4, decimal_places=2,null=True, blank=True)
 
-    obs = models.TextField('Observação', max_length=125, blank=True) 
+    obs = models.TextField('Observação', max_length=500, blank=True) 
 
 
     def valorcarga(self):

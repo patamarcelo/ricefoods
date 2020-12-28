@@ -59,6 +59,13 @@
         color: whitesmoke;
     }
 
+    thead {
+        background-color: black !important;
+    }
+    table tfoot tr td {
+        height: 12px;
+    }
+
 </style>
 
 <div class="container-fluid">
@@ -312,6 +319,22 @@
                         </tr>
                         {% endfor %}
                     </tbody>
+                        <tfoot style="background-color: black; color: whitesmoke; font-size: 10px !important;">
+                            {% for c in clientes|slice:":1" %}
+                            <tr>
+                                <td colspan=""></td>                                                                    
+                                <td colspan=""></td>                                                                    
+                                <td colspan=""></td>                                                                    
+                                <td colspan=""></td>                                                                    
+                                <td colspan=""></td>                                                                    
+                                <td colspan=""></td>                                                                    
+                                <td class="text-center">{{c.carregadomestresanteriortotal|intcomma}} Kg</td>                                                                    
+                                <td class="text-center">{{c.carregadomesanteanteriortotal|intcomma}} Kg</td>                                                                    
+                                <td class="text-center">{{c.carregadomesanteriortotal|intcomma}} Kg</td>                                                                    
+                                <td class="text-center">{{c.carregadomestotal|intcomma}} Kg </td>                                                                    
+                            </tr>
+                            {% endfor %}
+                        </tfoot> 
                 </table>
             </div>
         </div>
