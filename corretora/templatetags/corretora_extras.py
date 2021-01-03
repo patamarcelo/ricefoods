@@ -66,9 +66,8 @@ def nome_mes(datemont):
 def nome_mes_anterior(datemont):
 
     numeromes = datetime.now().month
-    if numeromes == 1:
-        mesanterior == 12
-        return nomes.get(mesanterior)
+    if numeromes == 1:        
+        return nomes.get(12)
     else:
         mesanterior = numeromes - 1
         return nomes.get(mesanterior)
@@ -78,9 +77,8 @@ def nome_mes_anterior(datemont):
 def nome_mes_anteanterior(datemont):
 
     numeromes = datetime.now().month
-    if numeromes == 1:
-        mesanterior == 11
-        return nomes.get(mesanterior)
+    if numeromes == 1:        
+        return nomes.get(11)
     else:
         mesanterior = numeromes - 2
         return nomes.get(mesanterior)
@@ -90,9 +88,8 @@ def nome_mes_anteanterior(datemont):
 def nome_mes_tresanterior(datemont):
 
     numeromes = datetime.now().month
-    if numeromes == 1:
-        mestresanterior == 10
-        return nomes.get(mestresanterior)
+    if numeromes == 1:        
+        return nomes.get(10)
     else:
         mestresanterior = numeromes - 3
         return nomes.get(mestresanterior)
