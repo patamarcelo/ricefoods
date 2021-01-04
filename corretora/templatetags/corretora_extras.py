@@ -94,3 +94,12 @@ def nome_mes_tresanterior(datemont):
         mestresanterior = numeromes - 3
         return nomes.get(mestresanterior)
 
+@register.filter
+def nome_mes_quatroanterior(datemont):
+    numeromes = datetime.now().month
+    if numeromes == 1:        
+        return nomes.get(9)
+    else:
+        mesquatroanterior = numeromes - 4
+        return nomes.get(mesquatroanterior)
+

@@ -157,6 +157,9 @@
                         <tr align="center">
                             <th scope="col" class="text text-center"><strong>Clientes</strong></th>
                             <th scope="col" class="text-secondary text-center">
+                                <strong>{{0|nome_mes_quatroanterior}}</strong>
+                            </th>
+                            <th scope="col" class="text-secondary text-center">
                                 <strong>{{0|nome_mes_tresanterior}}</strong>
                             </th>
                             <th scope="col" class="text-secondary text-center">
@@ -170,10 +173,17 @@
                         </tr>
                     </thead>
                     <tbody align="center">
-                        {% for cliente in clientes %}
+                        {% for cliente in clientes %}                        
                         <tr align="center">
-                            {% if cliente.comissaoabertocasca > 0 or cliente.comissaosemanacasca > 0 or cliente.comissaomescasca > 0 or cliente.comissaomescascaanterior > 0 or cliente.comissaomescascaanteanterior > 0 %}
+                            {% if cliente.comissaoabertocasca > 0 or cliente.comissaosemanacasca > 0 or cliente.comissaomescasca > 0 or cliente.comissaomescascaanterior > 0 or cliente.comissaomescascaanteanterior > 0 or cliente.comissaomescascatresanterior > 0 or cliente.comissaomescascaquatroanterior > 0 %}
                             <td style="color: {{cliente.color}}"><em><strong>{{ cliente.nome_fantasia|upper }}</strong></em></td>
+                            
+                            {% if cliente.comissaomescascaquatroanterior == 0 %}
+                            <td align="center">- </td>
+                            {% else %}
+                            <td>R$ {{ cliente.comissaomescascaquatroanterior|floatformat:"2" }}</td>
+                            {% endif %}
+                            
                             {% if cliente.comissaomescascatresanterior == 0 %}
                             <td align="center">- </td>
                             {% else %}
