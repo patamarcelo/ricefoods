@@ -22,7 +22,7 @@
         }
     
     .chartss {
-        background-color: #9C9C9C;
+        background-color: #1c1c1c;
     }
     
 </style>
@@ -79,7 +79,7 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<script type="text/javascript">
+<script type="text/javascript">    
     function getRandomColor() {
                     var letters = "0123456789ABCDEF".split("");
                     var color = "#";
@@ -97,11 +97,10 @@
         data: {
             labels: ['{{0|nome_mes_tresanterior}}', '{{0|nome_mes_anteanterior}}', '{{0|nome_mes_anterior}}', '{{0|nome_mes}}'],
             datasets: [{% for cliente in clientes %}{% if cliente.carregadomes > 0 or cliente.carregadomesanterior > 0  or cliente.carregadomesanteanterior > 0 or cliente.carregadomestresanterior > 0 %}{
-                label: '{{ cliente.nome_fantasia }}',
-                labels: '{{ cliente.nome_fantasia }}',                
+                label: '{{ cliente.nome_fantasia|safe }}',                               
                 backgroundColor: '{{cliente.color}}',
-                borderColor: '#111111',
-                borderWidth: 1,
+                borderColor: 'whitesmoke',
+                borderWidth: 0.5,
                 data: [{{ cliente.carregadomestresanterior|safe }}, {{ cliente.carregadomesanteanterior|safe }}, {{ cliente.carregadomesanterior|safe }}, {{ cliente.carregadomes|safe }}]
             },{% endif %}{% endfor %}]            
         },
@@ -109,17 +108,28 @@
 
         // Configuration options go here
         options: {
+            layout: {
+                padding: {
+                top: 20,
+                }
+            },
             legend: {
-                display: true,                
+                display: true,          
+                fontColor: 'whitesmoke',  
+                    labels: {
+                        fontColor: 'whitesmoke',
+                    }    
             },
             title: {
                 display: true,
+                fontColor: 'whitesmoke',
                 text: 'Acompanhamento Carregamento',
             },
             scales: {
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
+                        fontColor: 'whitesmoke',
                         userCallback: function(value, index, values) {
                             value = value.toString();
                             value = value.split(/(?=(?:...)*$)/);
@@ -127,16 +137,28 @@
                             value = value + ' kg';
                             return value;
                             }
-                        }
+                        },
+                        gridLines: {
+                            color: "rgba(245,245,245,0.2)",
+                        },
                     }],
                 xAxes: [{
                     ticks: {
+                        fontColor: 'whitesmoke',
                         beginAtZero: true,
                         autoskip: true,
-                        labels: true,
-                        }
-                    }]
-                },
+                        labels: false,
+                    },
+                    gridLines: {
+                    color: "rgba(245,245,245,0.2)",
+                    },
+                }]
+            },
+            plugins: {
+                labels: {
+                render: 'value',                
+                }
+            },
             tooltips: {
                 callbacks: {
                 label: function (tooltipItem, data) {
@@ -144,8 +166,8 @@
                     return parseInt(tooltipValue).toLocaleString();
                 }
             }
-        }
-    }    
+        },
+    }   
 });
 </script>
 <script type="text/javascript">
@@ -193,7 +215,7 @@
                 // backgroundColor: getRandomColor(),
                 borderColor: 'rgba(235, 51, 19, 1)',
                 backgroundColor: 'rgba(235, 51, 19, 1)',
-                fontColor: '#111111',
+                fontColor: 'whitesmoke',
                 borderWidth: 2,
                 lineTension: 0.1,
                 fill: false,
@@ -205,23 +227,30 @@
             scales: {
             xAxes: [{
                 ticks: {
-                    display: false //this will remove only the label
-                }
+                    display: false, //this will remove only the label                    
+                },
+                gridLines: {
+                    color: "rgba(245,245,245,0.2)",
+                },
             }],
             yAxes: [{
                 ticks: {
+                    fontColor: 'whitesmoke',
                     userCallback: function(value, index, values) {
                             value = value.toString();
                             value = 'R$ ' + value;
                             return value;
                             }
-                }
+                },
+                gridLines: {
+                    color: "rgba(245,245,245,0.2)",
+                },
             }]
         },
             legend: {
             labels: {
                 // This more specific font property overrides the global property
-                fontColor: '#111111'
+                fontColor: 'whitesmoke'
             }
         }
         }
@@ -252,6 +281,7 @@
                 // backgroundColor: getRandomColor(),
                 borderColor: 'blue',
                 backgroundColor: 'blue',
+                fontColor: 'whitesmoke',
                 fill: false,
                 data: data1rus
             }],
@@ -262,22 +292,30 @@
             xAxes: [{
                 ticks: {
                     display: false //this will remove only the label
-                }
+                },
+                gridLines: {
+                    color: "rgba(245,245,245,0.2)",
+                },
             }],
             yAxes: [{
                 ticks: {
+                    fontColor: 'whitesmoke',
                     userCallback: function(value, index, values) {
                             value = value.toString();
                             value = 'R$ ' + value;
                             return value;
                             }
-                }
+                },
+                gridLines: {
+                    color: "rgba(245,245,245,0.2)",
+                },
             }]
         },
+            
             legend: {
             labels: {
                 // This more specific font property overrides the global property
-                fontColor: '#111111'
+                fontColor: 'whitesmoke',
             }
         }
         }
