@@ -2,6 +2,7 @@
 {% load humanize %}
 {% block content %}
 {% load mathfilters %}
+{% load  corretora_extras %}
 
 <style>
 
@@ -20,7 +21,27 @@
             }
         }
     
+    .chartss {
+        background-color: #9C9C9C;
+    }
+    
 </style>
+<div class="container">
+    <div class="row">
+        <div class="col" align=center>
+            <h2><strong><a class="badge badge-primary badge-pill"> Gráfico Carregamento</a></strong></h2>
+        </div>
+    </div>
+    <br>
+</div>
+
+<div>
+    <div class="container-fluid sombra chartss" >
+        <canvas id="graficocarregamento" width="400" height="100"></canvas>
+    </div>
+</div>
+<br>
+
 <div class="container">
     <div class="row">
         <div class="col" align=center>
@@ -52,11 +73,81 @@
 </div>
     <br>
 
+    
 
 
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script type="text/javascript">
+    function getRandomColor() {
+                    var letters = "0123456789ABCDEF".split("");
+                    var color = "#";
+                    for (var i = 0; i < 6; i++) {
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                }
+    var ctx = document.getElementById('graficocarregamento').getContext('2d');    
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: ['{{0|nome_mes_tresanterior}}', '{{0|nome_mes_anteanterior}}', '{{0|nome_mes_anterior}}', '{{0|nome_mes}}'],
+            datasets: [{% for cliente in clientes %}{% if cliente.carregadomes > 0 or cliente.carregadomesanterior > 0  or cliente.carregadomesanteanterior > 0 or cliente.carregadomestresanterior > 0 %}{
+                label: '{{ cliente.nome_fantasia }}',
+                labels: '{{ cliente.nome_fantasia }}',                
+                backgroundColor: '{{cliente.color}}',
+                borderColor: '#111111',
+                borderWidth: 1,
+                data: [{{ cliente.carregadomestresanterior|safe }}, {{ cliente.carregadomesanteanterior|safe }}, {{ cliente.carregadomesanterior|safe }}, {{ cliente.carregadomes|safe }}]
+            },{% endif %}{% endfor %}]            
+        },
+        
+
+        // Configuration options go here
+        options: {
+            legend: {
+                display: true,                
+            },
+            title: {
+                display: true,
+                text: 'Acompanhamento Carregamento',
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        userCallback: function(value, index, values) {
+                            value = value.toString();
+                            value = value.split(/(?=(?:...)*$)/);
+                            value = value.join('.');
+                            value = value + ' kg';
+                            return value;
+                            }
+                        }
+                    }],
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        autoskip: true,
+                        labels: true,
+                        }
+                    }]
+                },
+            tooltips: {
+                callbacks: {
+                label: function (tooltipItem, data) {
+                    var tooltipValue = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                    return parseInt(tooltipValue).toLocaleString();
+                }
+            }
+        }
+    }    
+});
+</script>
 <script type="text/javascript">
 
     function getRandomColor() {
@@ -102,7 +193,7 @@
                 // backgroundColor: getRandomColor(),
                 borderColor: 'rgba(235, 51, 19, 1)',
                 backgroundColor: 'rgba(235, 51, 19, 1)',
-                fontColor: 'rgba(235, 235, 205, 1)',
+                fontColor: '#111111',
                 borderWidth: 2,
                 lineTension: 0.1,
                 fill: false,
@@ -116,12 +207,21 @@
                 ticks: {
                     display: false //this will remove only the label
                 }
+            }],
+            yAxes: [{
+                ticks: {
+                    userCallback: function(value, index, values) {
+                            value = value.toString();
+                            value = 'R$ ' + value;
+                            return value;
+                            }
+                }
             }]
         },
             legend: {
             labels: {
                 // This more specific font property overrides the global property
-                fontColor: 'rgba(235, 235, 205, 1)'
+                fontColor: '#111111'
             }
         }
         }
@@ -163,12 +263,21 @@
                 ticks: {
                     display: false //this will remove only the label
                 }
+            }],
+            yAxes: [{
+                ticks: {
+                    userCallback: function(value, index, values) {
+                            value = value.toString();
+                            value = 'R$ ' + value;
+                            return value;
+                            }
+                }
             }]
         },
             legend: {
             labels: {
                 // This more specific font property overrides the global property
-                fontColor: 'rgba(235, 235, 205, 1)'
+                fontColor: '#111111'
             }
         }
         }
@@ -209,7 +318,7 @@
             legend: {
             labels: {
                 // This more specific font property overrides the global property
-                fontColor: 'rgba(235, 235, 205, 1)'
+                fontColor: '#111111'
             }
         }
         }

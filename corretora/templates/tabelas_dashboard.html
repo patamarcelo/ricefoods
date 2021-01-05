@@ -267,7 +267,7 @@
                     <tbody align="center">
                         {% for cliente in clientes %}
                         <tr align=" center">
-                            {% if cliente.agendadosemana > 0 or cliente.carregadosemana > 0 or cliente.agendadoordemsemana > 0 or cliente.agendadosemanaseguinte > 0 or cliente.carregadomes > 0 or cliente.carregadomesanterior > 0  or cliente.carregadomesanteanterior > 0 %}
+                            {% if cliente.agendadosemana > 0 or cliente.carregadosemana > 0 or cliente.agendadoordemsemana > 0 or cliente.agendadosemanaseguinte > 0 or cliente.carregadomes > 0 or cliente.carregadomesanterior > 0  or cliente.carregadomesanteanterior > 0 or cliente.carregadomestresanterior > 0 %}
                             
                             <td style="color: {{cliente.color}}"><em><strong>{{ cliente.nome_fantasia|upper }}</strong></em></td>
 
@@ -349,6 +349,8 @@
             </div>
         </div>
     </div>
+
+   
 
 
 </div>
