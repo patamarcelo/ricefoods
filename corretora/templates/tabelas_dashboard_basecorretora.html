@@ -156,8 +156,8 @@
                 <table
                     class="table tabledash table-round-corner table-striped table-borderless table-hover table-dark nowrap table-sm"
                     style="color: antiquewhite;">
-                    <caption><strong>Total Aberto - {% for cliente in clientes %}{% if 'ust' in cliente.nome|lower %}
-                            R$ {{ cliente.comissaoabertocascatotal|slice:"1"|floatformat:'2'}}
+                    <caption><strong><b class="text-warning">Total Aberto - {% for cliente in clientes %}{% if 'ust' in cliente.nome|lower %}
+                            R$ {{ cliente.comissaoabertocascatotal|slice:"1"|floatformat:'2'}}</b>
                             {% else %}
                             {% endif %}{% endfor %}</strong></caption>
                     <thead>
@@ -212,9 +212,9 @@
                 <table
                     class="table tabledash table-round-corner table-striped table-borderless table-hover table-dark nowrap table-sm"
                     style="color: antiquewhite;">
-                    <caption><strong>Semana Atual - {% for cliente in clientes %}{% if 'ust' in cliente.nome|lower %}
-                            {{ cliente.carregadosemanatotal|intcomma }} Kg &ensp;&ensp; / &ensp;&ensp;Mês Atual -
-                            {{ cliente.carregadomestotal|intcomma }} Kg
+                    <caption><strong><b class="text-warning">Semana Atual - {% for cliente in clientes %}{% if 'ust' in cliente.nome|lower %}
+                            {{ cliente.carregadosemanatotal|intcomma }} Kg</b> &ensp;&ensp; / &ensp;&ensp;<b class="text-success">Mês Atual -
+                            {{ cliente.carregadomestotal|intcomma }} Kg</b>
                             {% else %}
                             {% endif %}{% endfor %}</strong></caption>
                     <thead>

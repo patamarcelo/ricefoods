@@ -58,7 +58,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for pedido in pedidos|slice:":100" %}
+                {% for pedido in pedidos %}
 
                 <tr>
                     {% if pedido.carregado %}

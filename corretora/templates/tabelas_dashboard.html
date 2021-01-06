@@ -138,7 +138,7 @@
 
     {% if user.is_superuser %}
     <div class="d-flex flex-wrap flex-md-wrap flex-sm-wrap justify-content-start m-1 p-2">
-        <div class="col-lg-8 col-md-10 col-sm-12 col-12  tabini sombra  justify-content-between p-2 m-1 marcelopata2"
+        <div class="flex-grow-1  tabini sombra  justify-content-between p-2 m-1 marcelopata2"
             style="zoom:90%">
 
             <h5 align=left><strong><i>Comissões</i></strong><a><i class="fas fa-eye text-info" id="ocultm"
@@ -149,8 +149,8 @@
                 <table
                     class="table tabledash table-round-corner table-striped table-borderless table-hover table-dark nowrap table-sm cabecalho"
                     style="color: antiquewhite; ">
-                    <caption><strong>Total Aberto - {% for cliente in clientes %}{% if 'ust' in cliente.nome|lower %}
-                            R$ {{ cliente.comissaoabertocascatotal|slice:"1"|floatformat:'2'}}
+                    <caption><strong><b class="text-warning">Total Aberto - {% for cliente in clientes %}{% if 'ust' in cliente.nome|lower %}
+                            R$ {{ cliente.comissaoabertocascatotal|slice:"1"|floatformat:'2'}}</b>
                             {% else %}
                             {% endif %}{% endfor %}</strong></caption>
                     <thead>
@@ -240,9 +240,9 @@
                 <table
                     class="table tabledash table-striped table-borderless table-hover table-dark nowrap table-sm cabecalho"
                     style="color: antiquewhite;">
-                    <caption><strong>Semana Atual - {% for cliente in clientes %}{% if 'ust' in cliente.nome|lower %}
-                            {{ cliente.carregadosemanatotal|intcomma }} Kg &ensp;&ensp; / &ensp;&ensp;Mês Atual -
-                            {{ cliente.carregadomestotal|intcomma }} Kg
+                    <caption><strong><b class="text-warning">Semana Atual - {% for cliente in clientes %}{% if 'ust' in cliente.nome|lower %}
+                            {{ cliente.carregadosemanatotal|intcomma }} Kg </b>&ensp;&ensp; / &ensp;&ensp;<b class="text-success">Mês Atual -
+                            {{ cliente.carregadomestotal|intcomma }} Kg </b>
                             {% else %}
                             {% endif %}{% endfor %}</strong></caption>
                     <thead>

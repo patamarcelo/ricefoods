@@ -78,7 +78,8 @@
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js" integrity="sha512-SuxO9djzjML6b9w9/I07IWnLnQhgyYVSpHZx0JV97kGBfTIsUYlWflyuW4ypnvhBrslz1yJ3R+S14fdCWmSmSA==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
 <script type="text/javascript">    
     function getRandomColor() {
                     var letters = "0123456789ABCDEF".split("");
@@ -225,9 +226,11 @@
         // Configuration options go here
         options: {
             scales: {
-            xAxes: [{
+            xAxes: [{               
                 ticks: {
-                    display: false, //this will remove only the label                    
+                    display: true, //this will remove only the label                    
+                    fontColor: 'whitesmoke',
+                    
                 },
                 gridLines: {
                     color: "rgba(245,245,245,0.2)",
@@ -289,9 +292,10 @@
         // Configuration options go here
         options: {
             scales: {
-            xAxes: [{
+            xAxes: [{                
                 ticks: {
-                    display: false //this will remove only the label
+                    display: true, //this will remove only the label
+                    fontColor: 'whitesmoke',
                 },
                 gridLines: {
                     color: "rgba(245,245,245,0.2)",
