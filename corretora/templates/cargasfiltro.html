@@ -186,9 +186,12 @@
         input[type=number]:hover,
         input[type=checkbox]:hover,
         #id_ordering:hover,
+        #id_situacao:hover,
+        #id_comcomissao:hover,
+        #id_pgcomissaoa:hover,
         textarea:hover {
             background: #ffffff;
-            border: 2px solid #0275d8;
+            border: 3px solid #0275d8;            
         }
 
         .form-row {
@@ -395,6 +398,10 @@
             pointer-events: none;       
         }
 
+        .first_caixatexto {
+            margin-top: 12px;
+        }
+
         
 
         
@@ -470,7 +477,7 @@
 
         <form method="get" id="myform">
             <div class="form-group">
-                <div class="form-row caixatexto">
+                <div class="form-row caixatexto first_caixatexto">
                     <div class="col-2 form-group form-control-sm" data-toggle="tooltip" title="Motorista"
                         data-placement="bottom" placeholder="Motorista" autocomplete="on">
                         {{ filter.form.motorista__icontains|as_crispy_field }}

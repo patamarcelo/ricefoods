@@ -125,6 +125,23 @@
             text-decoration: underline;
         }
 
+        .time {
+        opacity: 0;
+        -webkit-animation: fadeIn 1000ms linear;
+        -moz-animation: fadeIn 1000ms linear;
+        -o-animation: fadeIn 1000ms linear;
+        animation: fadeIn 1000ms linear; 
+        -webkit-animation-fill-mode:forwards;
+        -moz-animation-fill-mode:forwards;
+        -o-animation-fill-mode:forwards;
+        animation-fill-mode:forwards;
+
+        -webkit-animation-direction:alternate;
+        animation-iteration-count:infinite;
+        animation-iteration-count:infinite;
+        -moz-animation-iteration-count:infinite;
+        -webkit-animation-iteration-count:infinite;
+        }
 
     </style>
     <!--Favicon-->
@@ -140,6 +157,11 @@
         <div class="col-9">
             <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
             <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'index2' %}">Inicio</a>
+        </div>
+        <div class="container-fluid" style="height: 15px;">
+            <div class="d-flex justify-content-end align-items-end mr-2 mt-2 time" >
+                <small>{% now "SHORT_DATETIME_FORMAT" %}</small>
+            </div>
         </div>
 
         <div class="container" align=center>
@@ -161,8 +183,7 @@
                 {% endif %}
             </div>
         </div>
-    </div>
-    <br>
+    </div>    
     <div class="container-fluid" style="margin-left: 5px;">
         <div class="row">
             <div class="col-3-sm">
@@ -380,8 +401,7 @@
         {% include 'paginacao.html' %}
 
         <p><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
-                {{ page_obj.paginator.count }} Itens <span
-                    style="float: right;">{% now "SHORT_DATETIME_FORMAT" %}</span></strong></p>
+                {{ page_obj.paginator.count }} Itens </strong></p>
 
     </div>
 
