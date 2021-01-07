@@ -118,7 +118,7 @@
             text-decoration: underline;
         }
 
-        .time {
+        b.time {
         opacity: 0;
         -webkit-animation: fadeIn 1000ms linear;
         -moz-animation: fadeIn 1000ms linear;
@@ -133,7 +133,17 @@
         animation-iteration-count:infinite;
         animation-iteration-count:infinite;
         -moz-animation-iteration-count:infinite;
-        -webkit-animation-iteration-count:infinite;
+        -webkit-animation-iteration-count:infinite;        
+        }
+
+        .onetime {
+            position: relative;
+            top: 30px;
+        }
+        
+        .onebotoestop {
+            position: relative;
+            top: 10px;
         }
 
     </style>
@@ -147,15 +157,15 @@
         <br />
         <div class="row">
             <div class="col-3">
-                <h3><u> <strong>Cargas</strong></u></h3>
+                <h3 class="ml-1"><u> <strong>Cargas</strong></u></h3>
             </div>
             <div class="col-9">
                 <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
                 <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'index2' %}">Inicio</a>
             </div>
-            <div class="container-fluid" style="height: 15px;">
-                <div class="d-flex justify-content-end align-items-end mr-2 mt-2 time" >
-                    <small>{% now "SHORT_DATETIME_FORMAT" %}</small>
+            <div class="container-fluid" style="height: 0px;">
+                <div class="d-flex justify-content-end align-items-end mr-2 mt-2 onetime" >
+                    <small>{% now "SHORT_DATE_FORMAT" %} <b class="time"> {% now "H:i" %}</b></small>
                 </div>
             </div>
             <div class="container" align="center">
@@ -180,7 +190,7 @@
             </div>
         </div>
         
-        <div class="container-fluid" style="margin-left: 10px">
+        <div class="container-fluid onebotoestop" style="margin-left: 10px">
             <div class="row">
                 <div class="col-3-sm">
                     <a class="btn btn-primary btn-sm" href="{% url 'add_cargas' %}">Adicionar Cargas</a>

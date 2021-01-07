@@ -33,11 +33,13 @@
         margin-top: 15px;
     }
 
-    @media (min-width:980px) {
+    /* @media (min-width:980px) {
         .botoestop {
             margin-left: 34%;
         }
     }
+
+     */
 
     @media (min-width:980px) {
         .botoestop2 {
@@ -88,33 +90,48 @@
         margin: 0.5px;
     }
 
+    .badge {
+        border-radius: 5px;
+    }
+
+    .situacaoativo {
+        position: absolute;
+        /* safari*/
+        
+        top: 45px;
+    }
+
 </style>
 
 <form method="POST" novalidate class="needs-validation">
     {% csrf_token %}
+    <div class="container-fluid d-flex flex-column">
+        <div class="row">
+            <div class="col">
+                <h4><Span class="badge badge-primary botoestop">Adicionar Pedido</Span></h4>
 
-    <div class="row">
-        <div class="col">
-            <h4><Span class="badge badge-primary botoestop">Adicionar Pedido</Span></h4>
-
-        </div>
-        <div class="col" align=right>
-            <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" />
-            <a class="btn btn-warning btn-sm botoestop2" href="{% url 'pedidos' %}">Voltar</a>
+            </div>
+            <div class="col" align=right>
+                <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" />
+                <a class="btn btn-warning btn-sm botoestop2" href="{% url 'pedidos' %}">Voltar</a>
+            </div>
         </div>
     </div>
 
     <br />
 
     <div class="container d-flex flex-column justify-content-center  col-lg-9 col formulario">
-        <h4 class="contrato"><span class="badge badge-info">Contrato</span></h4>
-        <div class="container d-flex flex-column  justify-content-center col-lg-12 ">
-            <div class="d-flex flex-row justify-content-between  form-row">
-                <div class="col-lg-1 col-sm-1 form-group">
+            
+            <div>
+                <h4 class="contrato mb-5" ><span class="badge badge-info">Contrato</span></h4>
+            </div>
+            <div class="d-flex flex-row justify-content-between situacaoativo form-row">
+        
+                <div class="ml-3 col-lg-1 col-sm-1 form-group " style="position: relative;">
                     {{ form.ativo|as_crispy_field }}
                 </div>
             </div>
-        </div>
+        
         <div class="container d-flex flex-column  justify-content-center col-lg-12 ">
             <div class="d-flex flex-row justify-content-between  form-row">
                 <div class="col-lg-4 col-md-4 col-sm-4 col-4 form-group" data-toggle="tooltip" title="Contrato"

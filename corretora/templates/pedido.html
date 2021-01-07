@@ -125,7 +125,7 @@
             text-decoration: underline;
         }
 
-        .time {
+        b.time {
         opacity: 0;
         -webkit-animation: fadeIn 1000ms linear;
         -moz-animation: fadeIn 1000ms linear;
@@ -143,6 +143,22 @@
         -webkit-animation-iteration-count:infinite;
         }
 
+        .onetime {
+            position: relative;
+            top: 30px;
+        }
+        
+        .onebotoestop {
+            position: relative;
+            top: 10px;
+            
+        }
+        
+        .pedidosbot {
+            position: relative;
+            left: 2%;
+        }
+
     </style>
     <!--Favicon-->
     <link rel="icon" href="{% static 'images/favicon.png' %}">
@@ -152,15 +168,15 @@
     <br />
     <div class="row">
         <div class="col-3">
-            <h3><u> <strong>Pedidos</strong></u></h3>
+            <h3 class="ml-2 pedidosbot"><u> <strong>Pedidos</strong></u></h3>
         </div>
         <div class="col-9">
             <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
             <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'index2' %}">Inicio</a>
         </div>
-        <div class="container-fluid" style="height: 15px;">
+        <div class="container-fluid onetime" style="height: 0px;">
             <div class="d-flex justify-content-end align-items-end mr-2 mt-2 time" >
-                <small>{% now "SHORT_DATETIME_FORMAT" %}</small>
+                <small>{% now "SHORT_DATE_FORMAT" %} <b class="time"> {% now "H:i" %}</b></small>
             </div>
         </div>
 
@@ -184,7 +200,7 @@
             </div>
         </div>
     </div>    
-    <div class="container-fluid" style="margin-left: 5px;">
+    <div class="container-fluid onebotoestop ml-2 " style="margin-left: 5px;">
         <div class="row">
             <div class="col-3-sm">
                 <a class="btn btn-primary btn-sm" href="{% url 'add_pedidos' %}">Adicionar Pedido</a>
