@@ -28,6 +28,16 @@
 
     }
 
+    .cargasnote {
+        position: relative;
+        left: -2%;
+    }
+
+    .pedidosnote {
+        position: relative;
+        right: 1%;
+    }
+
     /* .btn-group {
         margin:0px 10px;
     } */
@@ -74,7 +84,7 @@
     <div class="container d-flex ">        
         <div class="container d-inline-flex  justify-content-center">
             <div class="col-lg-3 col-md-5 col-sm-7 col-7 d-flex justify-content-around">
-                <div class="btn-group" >
+                <div class="btn-group pedidosnote" >
                     <button type="button" class="btn btn-outline-primary"
                         onclick='window.location.href="{% url 'pedidos' %}"'>Pedidos</button>
                     <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split"

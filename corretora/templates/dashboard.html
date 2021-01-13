@@ -99,6 +99,12 @@
             color: black;
         }
 
+        @media (min-width:980px) {
+            .botoescabecalho {
+                margin-right: 12.5%;
+            }
+        }
+
     </style>
     <!--Favicon-->
     <link rel="icon" href="{% static 'images/favicon.png' %}">
@@ -110,10 +116,10 @@
         <br />
         <div class="row">
             <div class="col-8">
-                <h1> <strong>Dashboard | Corretora</strong>
+                <h1 class="ml-3"> <strong>Dashboard | Corretora</strong>
                 </h1>
             </div>
-            <div class="col">
+            <div class="col botoescabecalho">
                 <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
                 <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'index2' %}">Inicio</a>
             </div>

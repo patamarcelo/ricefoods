@@ -801,15 +801,15 @@
                             {% if carga.situacao == 'Agendado' and carga.chegada == True %}
 
                             <td><a class="text text-success" style='font-style:italic'
-                                    href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
+                                    href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}
                                     </strong></a></td>
                             {% else %}
                             <td><a class="text text-warning" style='font-style:italic'
-                                    href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</strong></a>
+                                    href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</strong></a>
                             </td>
                             {% endif %}
                             {% else %}
-                            <td>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</td>
+                            <td>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</td>
                             {% endif %}
 
 
@@ -1352,28 +1352,17 @@
 
                     <td>{{ carga.situacao }}</td>
 
-
-
                     {% if carga.ordem %}
                     <td class="text-success"><em>Enviada</em></td>
                     {% else %}
                     <td class="text-danger"><em>Não Env.</em></td>
                     {% endif %}
 
-
                     <td>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</td>
 
-
-                    <td>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</td>
-
-
-
-
-
-
+                    <td>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</td>
 
                     <td>{{ carga.motorista|title }}</td>
-
 
                     {% if carga.peso == 0 %}
                     <td class="text-warning"><strong>{{ carga.veiculo|intcomma }}</strong></td>
@@ -1419,17 +1408,12 @@
                     </td>
                     {% endif %}
 
-
                     <td>{{ carga.pedido.fornecedor.nome|title }}</td>
 
                     <td>{{ carga.pedido.fornecedor.cidade.cidade }}</td>
 
                     <td>{{ carga.pedido.cliente|upper }}</td>
                     <td>{{ carga.pedido.produto }}</td>
-
-
-
-
 
                     {% if user.is_superuser%}
                     {% if carga.comissaocasca > 1 %}
@@ -1461,22 +1445,15 @@
 
                     <td>{{ carga.pedido }}</td>
 
-
-
                     {% if 'GDX' in carga.transp|upper %}
                     <td><strong>{{ carga.transp|title }}</strong></td>
                     {% else %}
                     <td style="background-color: rgba(102,0,102,0.3);font-weight: bold;">{{ carga.transp|title }}</td>
                     {% endif %}
 
-
                     
 
-
-
                     <td>{{ carga.situacao }}</td>
-
-
 
                     {% if carga.ordem %}
                     <td class="text-success"><em>Enviada</em></td>
@@ -1484,20 +1461,11 @@
                     <td class="text-danger"><em>Não Env.</em></td>
                     {% endif %}
 
-
                     <td>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</td>
-
 
                     <td>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</td>
 
-
-
-
-
-
-
                     <td>{{ carga.motorista|title }}</td>
-
 
                     {% if carga.peso == 0 %}
                     <td class="text-warning"><strong>{{ carga.veiculo|intcomma }}</strong></td>
@@ -1543,17 +1511,12 @@
                     </td>
                     {% endif %}
 
-
                     <td>{{ carga.pedido.fornecedor.nome|title }}</td>
 
                     <td>{{ carga.pedido.fornecedor.cidade.cidade }}</td>
 
                     <td>{{ carga.pedido.cliente|upper }}</td>
                     <td>{{ carga.pedido.produto }}</td>
-
-
-
-
 
                     {% if user.is_superuser%}
                     {% if carga.comissaocasca > 1 %}

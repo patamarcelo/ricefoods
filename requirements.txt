@@ -45,6 +45,7 @@ psycopg2-binary==2.8.5
 pylint==2.5.3
 PyPDF2==1.26.0
 python-dateutil==2.8.1
+python-decouple==3.4
 python-utils==2.4.0
 pytz==2019.3
 regex==2020.4.4

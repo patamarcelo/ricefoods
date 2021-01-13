@@ -6,9 +6,13 @@
 <style>
     .toolboxnumbercargas {
         position: relative;
-        top: 64px;
+        top: 66px;
         right: -30%;
     }
+
+    #icms {
+        height: 25px;
+    }    
 </style>
 
 <br />
@@ -119,15 +123,15 @@
                     {% if carga.situacao == 'Agendado' and carga.chegada == True %}
 
                     <td><a class="text text-success" style='font-style:italic' target="_blank"
-                            href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
+                            href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}
                             </strong></a></td>
                     {% else %}
                     <td><a class="text text-warning" style='font-style:italic' target="_blank"
-                            href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</strong></a>
+                            href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</strong></a>
                     </td>
                     {% endif %}
                     {% else %}
-                    <td>{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</td>
+                    <td>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</td>
                     {% endif %}
 
                     {% if carga.obs and carga.tac %}
