@@ -59,6 +59,16 @@ class CargasFilter(django_filters.FilterSet):
     data__lte = django_filters.DateFilter(
         field_name="data", label="Data <=", lookup_expr="lte"
     )
+    
+    data_agenda = django_filters.DateFilter(
+        field_name="data_agenda", label="Descarga =", lookup_expr="exact"
+    )
+    data_agenda__gte = django_filters.DateFilter(
+        field_name="data_agenda", label="Descarga >=", lookup_expr="gte"
+    )
+    data_agenda__lte = django_filters.DateFilter(
+        field_name="data_agenda", label="Descarga <=", lookup_expr="lte"
+    )
 
     notafiscal__icontains = django_filters.CharFilter(
         field_name="notafiscal", label="Nota Fiscal", lookup_expr="icontains"
@@ -119,6 +129,7 @@ class CargasFilter(django_filters.FilterSet):
             "motorista": ["icontains"],
             "placa": ["icontains"],
             "data": ["gte", "lte", "exact"],
+            "data_agenda": ["gte", "lte", "exact"],
             "valornf": ["gte", "lte", "icontains"],
             "notafiscal": ["icontains"],
             "pedido__fornecedor__nome": ["icontains"],

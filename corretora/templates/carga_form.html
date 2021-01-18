@@ -57,6 +57,12 @@
         padding-right: 0px;
     }
 
+    #id_data_agenda { 
+        background-color: rgba(226, 106, 106, 0.2); 
+        color: whitesmoke;
+        text-align: center;
+    }
+
 </style>
 </div>
 <form method="POST" novalidate class="needs-validation">
@@ -181,8 +187,19 @@
                     </div>
                 </div>
             </div>
-            <h4 class="classificacao"><span class="badge badge-info">Classificação</span></h4>
+            
+            <h4 class="produto mb-3 mt-4"><span class="badge badge-warning">Agendamento</span></h4>
+            <div class="container d-flex flex-column  justify-content-center col-3 text-left">
+                <div class="d-flex flex-row justify-content-between form-row text-center">
+                    <div class="col text-center  form-group" data-toggle="tooltip" title="Agendamento" data-placement="bottom">
+                        {{ form.data_agenda|as_crispy_field }}
+                    </div>                   
+                </div>
+            </div>
+            
+
             {% if carga.pedido.produto == "Arroz em Casca" %}
+            <h4 class="classificacao"><span class="badge badge-info">Classificação</span></h4>
             <div class="container d-flex flex-column  justify-content-center col-lg-9 ">
                 <div class="d-flex flex-row justify-content-between form-row">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-3   form-group" data-toggle="tooltip" title="Renda"
@@ -264,6 +281,10 @@
 
     $(document).ready(function () {
         $('#id_data').mask('00/00/0000');
+    })
+
+    $(document).ready(function () {
+        $('#id_data_agenda').mask('00/00/0000');
     })
 
 

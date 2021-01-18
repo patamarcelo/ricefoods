@@ -74,6 +74,11 @@
     .continfo {
        padding-left: 0px !important;
     }
+    #id_data_agenda { 
+        background-color: rgba(226, 106, 106, 0.2); 
+        color: whitesmoke;
+        text-align: center;
+    }
 
 </style>
 
@@ -192,6 +197,16 @@
                 </div>
             </div>
 
+            <h4 class="carga_agendamento mb-3 mt-4"><span class="badge badge-warning">Agendamento</span></h4>
+            <div class="container d-flex flex-column  justify-content-center col-lg-10">
+                <div class="d-flex flex-row justify-content-around form-row notas">
+                    <div class="col-sm-6 col-6 col-md-3 col-lg-3   form-group " data-toggle="tooltip"
+                        title="Agendamento" data-placement="bottom">
+                        {{ form.data_agenda|as_crispy_field }}
+                    </div>                    
+                </div>
+            </div>
+
             <h4 class="classificacao"><span class="badge badge-info">Classificação</span></h4>
             <br>
             <div class="container d-flex flex-column  justify-content-center col-lg-10">
@@ -269,6 +284,10 @@
 
     $(document).ready(function () {
         $('#id_data').mask('00/00/0000');
+    })
+    
+    $(document).ready(function () {
+        $('#id_data_agenda').mask('00/00/0000');
     })
 
     $('#id_pedido').on('change', function() {

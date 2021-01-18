@@ -30,6 +30,8 @@
     <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
     <!-- Your custom styles (optional) -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!--Favicon-->
+    <link rel="icon" href="{% static 'images/favicon.png' %}">
     
     
 </head>
@@ -175,7 +177,7 @@
                             
                             {% for carga in cargas %}
                             {% if 'Rus' in carga.pedido.cliente|title %}
-                            {% if carga.data|date:"SHORT_DATE_FORMAT" == v %}
+                            {% if carga.data_agenda|date:"SHORT_DATE_FORMAT" == v %}
                             
                             
                             <div id="dadosagendamento">

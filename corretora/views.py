@@ -304,7 +304,7 @@ class ComissCargasView(LoginRequiredMixin, SuperuserRequiredMixin, ListView):
 class CargasAgendamentoView(LoginRequiredMixin, ListView):
     login_url = 'login'    
     models = Carga    
-    ordering = ['-situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
+    ordering = ['-situacao','-data_agenda','-data','ordem','chegada','buonny','pedido__cliente'] 
     template_name = 'agendamento.html'
     queryset = Carga.objects.all()
     context_object_name = 'cargas' 
@@ -388,7 +388,7 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     template_name = 'carga_age_form.html'
     success_message = "%(placa)s - %(motorista)s agendado com sucesso!!"
     fields = ('ordem','tac','chegada','pedido','situacao','data','buonny','transp','placa','motorista','valor_mot',
-                'veiculo','obs')
+                'veiculo','data_agenda','obs')
 
     def get_success_url(self):
         if self.request.POST.get('save'):
@@ -410,7 +410,7 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     template_name = 'carga_form.html'
     success_message = 'Dados atualizados com sucesso!!'
     fields = ('ordem','tac','chegada','pedido','situacao','data','buonny','transp','placa','motorista','valor_mot','peso',
-                'veiculo','notafiscal','notafiscal2','valornf','renda','inteiro','impureza',
+                'veiculo','notafiscal','notafiscal2','valornf','data_agenda','renda','inteiro','impureza',
                 'umidade','gessado','bbranca','amarelo','manchpic','vermelhos',
                 'obs')
 

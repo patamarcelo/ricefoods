@@ -82,6 +82,11 @@
     .botoes {
         margin-top: 5px;
     }
+
+    #id_data_agenda { 
+        background-color: rgba(226, 106, 106, 0.2); 
+        color: whitesmoke;
+    }
 </style>
 
 
@@ -164,26 +169,22 @@
             </div>
         </div>
 
-
-
-        <div class="form-row flex-row justify-content-center">
-
-
-
-
+        <div class="form-row flex-row mt-3 justify-content-center">
             <div class="col form-group" data-toggle="tooltip" title="Placa" data-placement="bottom">
                 {{ form.placa|as_crispy_field }}
             </div>
             <div class="col form-group" data-toggle="tooltip" title="Motorista" data-placement="bottom">
                 {{ form.motorista|as_crispy_field }}
             </div>
-
-
-
             <div class="col form-group" data-toggle="tooltip" title="Valor frete" data-placement="bottom">
                 {{ form.valor_mot|as_crispy_field }}
             </div>
-
+        </div>
+        
+        <div class="form-row flex-row justify-content-start">          
+            <div class="col-4 form-group" data-toggle="tooltip" title="Agendamento" data-placement="bottom">
+                {{ form.data_agenda|as_crispy_field }}
+            </div>
         </div>
         <div class="form-row flex-row justify-content-center">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12  offset-sm form-group caixaobs" data-toggle="tooltip"
@@ -221,6 +222,11 @@
     $(document).ready(function () {
         $('#id_data').mask('00/00/0000');
     })
+
+    $(document).ready(function () {
+        $('#id_data_agenda').mask('00/00/0000');
+    })
+
 
 
     $('#id_pedido').on('change', function() {

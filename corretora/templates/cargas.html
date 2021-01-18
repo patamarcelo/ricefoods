@@ -201,6 +201,10 @@
                 <div class="col-3-sm">
                     <a class="btn btn-outline-warning btn-sm" href="javascript:history.back()">Voltar</a>
                 </div>
+                <div class="col-3-sm">
+                    <a class="btn btn-outline-primary btn-sm" href="{% url 'agendamento' %}"
+                        target="_blank">Descarga Ruston</a>
+                </div>
 
 
             </div>
@@ -236,6 +240,7 @@
                         <th scope="col">Fornecedor</th>
                         <th scope="col">Origem</th>
                         <th scope="col">Cliente</th>
+                        <th scope="col">Descarga</th>
                         <th scope="col" class="text text-center">Class.</th>
                         {% if user.is_superuser%}
                         <th scope="col" class="text text-center">Comiss.</th>
@@ -392,6 +397,12 @@
                         <td>{{ carga.pedido.fornecedor.cidade|truncatechars:20 }}</td>
                         
                         <td style="color: {{ carga.pedido.cliente.color}}"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
+                        {% if carga.data_agenda %}
+                        <td>{{ carga.data_agenda|date:"SHORT_DATE_FORMAT" }}</td>
+                        {% else %}
+                        <td align="center"><i class="text-warning fab fa-algolia"></i>
+                        {% endif %}
+                        
                         
                         {% if carga.pedido.produto == "Arroz em Casca" %}
                         {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}

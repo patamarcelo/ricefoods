@@ -460,6 +460,10 @@
                     <button type="button" class="btn btn-outline-info btn-sm"
                         onclick="Ocultarfiltros('filtro')">Filtros</button>
                 </div>
+                <div class="col-3-sm">
+                    <a class="btn btn-outline-primary btn-sm" href="{% url 'agendamento' %}"
+                        target="_blank">Descarga Ruston</a>
+                </div>
             </div>
         </div>
                 <div class="d-flex container-fluid" style="margin-left: 6px;">
@@ -574,6 +578,19 @@
                     placeholder="Produto">
                     {{ filter.form.pedido__produto__icontains|as_crispy_field }}
                     </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Descarga" data-placement="bottom"
+                        placeholder="Descarga">
+                        {{ filter.form.data_agenda|as_crispy_field }}
+                    </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Descarga" data-placement="bottom"
+                        placeholder="Descarga">
+                        {{ filter.form.data_agenda__gte|as_crispy_field }}
+
+                    </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Descarga" data-placement="bottom"
+                        placeholder="Descarga">
+                        {{ filter.form.data_agenda__lte|as_crispy_field }}
+                    </div>
                 </div>
                 <div class="row">
 
@@ -640,6 +657,7 @@
                     <th scope="col">Origem</th>
                     <th scope="col">Cliente</th>
                     <th scope="col">Produto</th>
+                    <th scope="col">Descarga</th>
                     <th scope="col" class="text text-center">Class.</th>
                     {% if user.is_superuser%}
                     <th scope="col" class="text text-center">Comiss.</th>
@@ -651,11 +669,11 @@
             <tbody>
                 {% if user.is_superuser%}
                 <tr>
-                    <th class="text text-info" scope="row" colspan="20" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
+                    <th class="text text-info" scope="row" colspan="21" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
                 </tr>
                 {% else %}
                 <tr>
-                    <th class="text text-info" scope="row" colspan="19" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
+                    <th class="text text-info" scope="row" colspan="20" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
                 </tr>
                 {% endif %}
             </tbody>
@@ -685,6 +703,7 @@
                             <th scope="col">Fornecedor</th>
                             <th scope="col">Origem</th>
                             <th scope="col">Cliente</th>
+                            <th scope="col">Descarga</th>
                             <th scope="col" class="text text-center">Class.</th>
                             {% if user.is_superuser%}
                             <th scope="col" class="text text-center">Comiss.</th>
@@ -696,11 +715,11 @@
                     <tbody>
                         {% if user.is_superuser%}
                         <tr>
-                            <th class="text text-danger" scope="row" colspan="19" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
+                            <th class="text text-danger" scope="row" colspan="20" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
                         </tr>
                         {% else %}
                         <tr>
-                            <th class="text text-danger" scope="row" colspan="18" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
+                            <th class="text text-danger" scope="row" colspan="19" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
                         </tr>
                         {% endif %}
             {% else %}
@@ -730,6 +749,7 @@
                             <th scope="col">Origem</th>
                             <th scope="col">Cliente</th>
                             <th scope="col">Produto</th>
+                            <th scope="col">Descarga</th>
                             <th scope="col" class="text text-center">Class.</th>
                             {% if user.is_superuser%}
                             <th scope="col" class="text text-center">Comiss.</th>
@@ -905,6 +925,14 @@
                             <td>{{ carga.pedido.cliente|upper }}</td>
                             {% endif %}
                             <td>{{ carga.pedido.produto }}</td>
+
+                            {% if carga.data_agenda %}
+                            <td>{{ carga.data_agenda|date:"SHORT_DATE_FORMAT" }}</td>
+                            {% else %}
+                            <td align="center"><i class="text-warning fab fa-algolia"></i></td>
+                            {% endif %} 
+                            
+
                             {% if carga.pedido.produto == "Arroz em Casca" %}
                             {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}
                             <td align="center"><a class="text-success fa fa-list-alt"
@@ -1116,6 +1144,11 @@
                             <td style="color: {{ carga.pedido.cliente.color}}"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
                             
                             <td>{{ carga.pedido.produto }}</td>
+                            {% if carga.data_agenda %}
+                            <td>{{ carga.data_agenda|date:"SHORT_DATE_FORMAT" }}</td>
+                            {% else %}
+                            <td align="center"><i class="text-warning fab fa-algolia"></i></td>
+                            {% endif %} 
                             {% if carga.pedido.produto == "Arroz em Casca" %}
                             {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}
                             <td align="center"><a class="text-success fa fa-list-alt"
@@ -1321,6 +1354,7 @@
                     <th scope="col">Origem</th>
                     <th scope="col">Cliente</th>
                     <th scope="col">Produto</th>
+                    <th scope="col">Descarga</th>
                     {% if user.is_superuser%}
                     <th scope="col" class="text text-center">Comiss.</th>
                     {% endif %}
@@ -1414,6 +1448,7 @@
 
                     <td>{{ carga.pedido.cliente|upper }}</td>
                     <td>{{ carga.pedido.produto }}</td>
+                    <td>{{ carga.data_agenda }}</td>
 
                     {% if user.is_superuser%}
                     {% if carga.comissaocasca > 1 %}
@@ -1517,7 +1552,11 @@
 
                     <td>{{ carga.pedido.cliente|upper }}</td>
                     <td>{{ carga.pedido.produto }}</td>
-
+                    {% if carga.data_agenda %}
+                    <td>{{ carga.data_agenda|date:"SHORT_DATE_FORMAT" }}</td>
+                    {% else %}
+                    <td> - </td>
+                    {% endif %} 
                     {% if user.is_superuser%}
                     {% if carga.comissaocasca > 1 %}
 
@@ -1720,6 +1759,12 @@
         $('#id_data').mask('00/00/0000');
         $('#id_data__gte').mask('00/00/0000');
         $('#id_data__lte').mask('00/00/0000');
+    })
+    
+    $(document).ready(function () {
+        $('#id_data_agenda').mask('00/00/0000');
+        $('#id_data_agenda__gte').mask('00/00/0000');
+        $('#id_data_agenda__lte').mask('00/00/0000');
     })
 
     $(document).ready(function () {

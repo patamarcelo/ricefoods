@@ -640,10 +640,10 @@ class Cliente(Base):
             total_count = 0
             filtdata = i
             filt_nome = self.nome_fantasia
-            carregado = Carga.objects.filter(data=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
-            carregado_count = Carga.objects.filter(data=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Carregado').values('peso').aggregate(pesot=Count('peso'))['pesot']
-            agendado = Carga.objects.filter(data=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Agendado').values('veiculo').aggregate(pesov=Sum('veiculo'))['pesov']
-            agendado_count = Carga.objects.filter(data=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Agendado').values('veiculo').aggregate(pesov=Count('veiculo'))['pesov']
+            carregado = Carga.objects.filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+            carregado_count = Carga.objects.filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Carregado').values('peso').aggregate(pesot=Count('peso'))['pesot']
+            agendado = Carga.objects.filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Agendado').values('veiculo').aggregate(pesov=Sum('veiculo'))['pesov']
+            agendado_count = Carga.objects.filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Agendado').values('veiculo').aggregate(pesov=Count('veiculo'))['pesov']
             if carregado and agendado:
                 total = carregado + agendado
                 total_count = carregado_count + agendado_count
@@ -885,13 +885,14 @@ class Carga(Base):
     )
 
     
-    chegada = models.BooleanField('Chegou', default=False)
-    ordem   = models.BooleanField('Ordem', default=False)
-    tac     = models.BooleanField('TAC', default=False)
-    pedido  = models.ForeignKey(Pedido, on_delete=models.PROTECT, limit_choices_to = {'situacao': 'a'})
-    data    = models.DateField(help_text="dd/mm/aaaa")
-    buonny  = models.CharField('Buonny', max_length=15)
-    transp  = models.ForeignKey(Transportadora, on_delete=models.PROTECT, default='GDX Log')
+    chegada     = models.BooleanField('Chegou', default=False)
+    ordem       = models.BooleanField('Ordem', default=False)
+    tac         = models.BooleanField('TAC', default=False)
+    pedido      = models.ForeignKey(Pedido, on_delete=models.PROTECT, limit_choices_to = {'situacao': 'a'})
+    data        = models.DateField(help_text="dd/mm/aaaa")
+    data_agenda = models.DateField('Data', null=True, blank=True, default=None, help_text="dd/mm/aaaa")
+    buonny      = models.CharField('Buonny', max_length=15)
+    transp      = models.ForeignKey(Transportadora, on_delete=models.PROTECT, default='GDX Log')
     
     situacao  = models.CharField('Situação', max_length=12, choices=STATUS_CHOICES, default='Agendado')
     placa     = NameField('Placa', max_length=7, help_text="Somente dígitos")
