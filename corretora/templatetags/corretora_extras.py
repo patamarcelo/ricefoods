@@ -3,11 +3,40 @@ from django import template
 register = template.Library()
 
 import calendar
+
+from datetime import timedelta 
 from datetime import datetime
+# import datetime
 
 import locale
 import time
 
+today = datetime.now()
+
+@register.filter
+def dias_da_semana(teste): 
+    dias_escritos=["Segunda-Feira","Terça-Feira","Quarta-Feira","Quinta-Feira","Sexta-Feira","Sábado","Domingo"]
+    semana_atual = {}
+    semana_seguinte = {}            
+    for i in range(7):
+        data_atual = today if today.weekday() == i else today - timedelta(days=today.weekday() - i)
+        dia_da_semana_numero = data_atual.weekday()
+        data_atual_timestamp = data_atual.timestamp()
+        day_fromtmsp = datetime.fromtimestamp(data_atual_timestamp)
+        data_atual_humana = day_fromtmsp.strftime("%d/%m/%Y") 
+        dia_escrito = dias_escritos[dia_da_semana_numero]
+        semana_atual[dia_escrito] = data_atual_humana                    
+    for i in range(7):
+        data_atual = (today + timedelta(days=7)) if today.weekday() == i else (today + timedelta(days=7)) - timedelta(days=today.weekday() - i)
+        dia_da_semana_numero = data_atual.weekday()
+        data_atual_timestamp = data_atual.timestamp()
+        day_fromtmsp = datetime.fromtimestamp(data_atual_timestamp)
+        data_atual_humana = day_fromtmsp.strftime("%d/%m/%Y") 
+        dia_escrito = dias_escritos[dia_da_semana_numero]
+        semana_seguinte[dia_escrito] = data_atual_humana           
+    
+    
+    return semana_atual, semana_seguinte
 
 @register.simple_tag(takes_context=True)
 def param_replace(context, **kwargs):

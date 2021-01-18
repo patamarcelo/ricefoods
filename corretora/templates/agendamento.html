@@ -1,0 +1,278 @@
+{% load bootstrap4 %}
+{% load bootstrap %}
+{% load humanize %}
+{% load static %}
+{% now "Y-m-d" as todays_date %}
+{% load crispy_forms_tags %}
+{% load  corretora_extras %}
+{% load widget_tweaks %}
+{% load mathfilters %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento</title>
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"> -->
+    {% bootstrap_css %}
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    
+</head>
+<style>
+
+    body {
+        background-color: #363639;
+        color: whitesmoke;
+    }
+    
+    .dadosmotoristas {
+        border-radius: 5px;
+        padding: 5px;
+        padding-left: 10px;
+        padding-bottom: 1px;
+        font-style: italic;        
+        -moz-box-shadow:    inset 0 0 5px #000000;
+        -webkit-box-shadow: inset 0 0 5px #000000;
+        box-shadow:         inset 0 0 5px #000000;
+    }
+
+    .badge-warning {
+        color: black !important;
+    }
+    
+    #dadosagendamento .bg-warning {
+        color: black !important;
+        font-weight: bold!important;
+        opacity: .7;
+    }
+    
+    #dadosagendamento2 .bg-warning {
+        color: black !important;
+        font-weight: bold!important;
+        opacity: .7;
+    }
+
+    .sombra {
+        -moz-box-shadow:    inset 0 0 5px #000000;
+        -webkit-box-shadow: inset 0 0 5px #000000;
+        box-shadow:         inset 0 0 5px #000000;
+    }
+
+    .secondbox {
+        padding-top: 0px;
+        border-style: inset;        
+        padding: 10px 20px;  
+        background-color: #2c2c2f;                                           
+    }
+
+    .resumodados {                
+        max-height: 20px;
+        border-radius: 3px;
+        margin-bottom: 5px;
+        padding: 0.5px 0px;
+        padding-bottom: 0px;
+    }
+
+    b.time {
+        opacity: 0;
+        -webkit-animation: fadeIn 1000ms linear;
+        -moz-animation: fadeIn 1000ms linear;
+        -o-animation: fadeIn 1000ms linear;
+        animation: fadeIn 1000ms linear; 
+        -webkit-animation-fill-mode:forwards;
+        -moz-animation-fill-mode:forwards;
+        -o-animation-fill-mode:forwards;
+        animation-fill-mode:forwards;
+
+        -webkit-animation-direction:alternate;
+        animation-iteration-count:infinite;
+        animation-iteration-count:infinite;
+        -moz-animation-iteration-count:infinite;
+        -webkit-animation-iteration-count:infinite;        
+        }
+
+        a { 
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        /* .onetime {
+            position: relative;
+            top: 1px;
+        } */
+
+</style>
+<body>        
+    <br>    
+    <div class="container mb-4">        
+        <div class="d-flex justify-content-center align-items-center">
+            <h2><span class="badge badge-primary" style="border-radius: 5px">Agendamento Descarga Ruston</span></h2>
+        </div>        
+    </div>
+    <div class="container d-flex flex-column pr-0">
+        <div class="d-flex  onetime justify-content-end" style="position:relative; right: -40px">            
+            <small>{% now "SHORT_DATE_FORMAT" %} <b class="time"> {% now "H:i" %}</b></small>            
+        </div>
+    </div>
+
+    <!-------------SEMANA ATUAL------------->
+    <div class="container d-flex">        
+            <div class="d-flex flex-row secondbox m-0 p-0 sombra">  
+                <div class="container-fluid">
+                    <div class="flex-row">
+                        <div class="d-flex flex-row mr-0 m-2 mb-0">
+                            <div class="container d-flex">     
+                                <div class="container">        
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <h4><span class="badge badge-success mt-3" style="border-radius: 5px">Semana Atual</span></h4>                
+                                    </div>
+                                </div>                    
+                            </div>                       
+                        </div>                   
+                    </div>
+                    <div class="d-flex flex-row m-2">
+                    {% for c in 0|dias_da_semana|slice:":1" %}
+                    {% for k, v in c.items %}                
+                        <div class="d-flex flex-column m-2">
+                            <h3 class="badge badge-warning bg-warning text-black">{{k}} - {{v}}</h3>
+                            {% for c in clientes %}
+                            {% if 'Rus' in c.nome %}
+                            {% for cc in c.previsao_dias_da_semana|slice:':1'%}
+                            {% for ccc in c.previsao_dias_da_semana|slice:'1:'%}
+                            {% for val,cha in cc.items %}
+                            {% for valc,chac in ccc.items %}
+                            {% if v == val %}
+                            {% if v == valc %}
+                            {% if cha > 0 %}
+                            <div class="resumodados bg-info" style="font-style: italic;">
+                                <span class="mb-1 pl-1" style="font-size: 13px; display: inline; float: left; font-weight: bold;">{{chac}} Carga{{chac|pluralize}}</span><span class="mb-1 pr-1" style="font-size: 13px; display: inline;float: right; font-weight: bold;">{{cha}} Kg</span>                            
+                            </div>                            
+                            {% endif %}
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                            {% endfor %}
+                            {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+    
+                            
+                            {% for carga in cargas %}
+                            {% if 'Rus' in carga.pedido.cliente|title %}
+                            {% if carga.data|date:"SHORT_DATE_FORMAT" == v %}
+                            
+                            
+                            <div id="dadosagendamento">
+                                <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas{% if carga.situacao == 'Agendado' %} bg-warning
+                                {% else %}{% endif %}" style="border-bottom: 1px solid black;background-color: {% if carga.situacao == 'Agendado' %}
+                                {% else %}rgb(0,128,0,0.2) {% endif %};">                                                
+                                    <p class="mb-1" style="font-size: 13px !important;"><a href="{% url 'upd_cargas' carga.pk %}" target="_blank">{{carga.motorista|title}}</a> <br> {{carga.placa|slice:":3"}} {{carga.placa|slice:"3:"}} <br> 
+                                        {% if carga.situacao == 'Agendado' %}{{carga.veiculo}} Kg {% else %}{{carga.peso}} Kg {% endif %}<br>{% if carga.notafiscal %}NF {{carga.notafiscal}}{%else%} Sem NF{%endif%}</p>                                
+                                </div>
+                            </div>
+                            {% else %}
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}                
+                            
+                        </div>            
+                    {% endfor %}            
+                    {% endfor %}                 
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+
+    <!-------------SEMANA SEGUINTE------------->
+    <div class="container d-flex mt-2">        
+        <div class="d-flex flex-row secondbox m-0 p-0 sombra">  
+            <div class="container-fluid">
+                <div class="flex-row">
+                    <div class="d-flex flex-row mr-0 m-2 mb-0">
+                        <div class="container d-flex">     
+                            <div class="container">        
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <h4><span class="badge badge-danger mt-3" style="border-radius: 5px">Semana Seguinte</span></h4>                
+                                </div>
+                            </div>                    
+                        </div>                       
+                    </div>                   
+                </div>
+                <div class="d-flex flex-row m-2">
+                {% for c in 0|dias_da_semana|slice:"1:" %}
+                {% for k, v in c.items %}                
+                    <div class="d-flex flex-column m-2">
+                        <h3 class="badge badge-warning bg-warning text-black">{{k}} - {{v}}</h3>
+                        {% for c in clientes %}
+                        {% if 'Rus' in c.nome %}
+                        {% for cc in c.previsao_dias_da_semana|slice:':1'%}
+                        {% for ccc in c.previsao_dias_da_semana|slice:'1:'%}
+                        {% for val,cha in cc.items %}
+                        {% for valc,chac in ccc.items %}
+                        {% if v == val %}
+                        {% if v == valc %}
+                        {% if cha > 0 %}
+                        <div class="resumodados bg-info" style="font-style: italic;">
+                            <span class="mb-1 pl-1" style="font-size: 13px; display: inline; float: left; font-weight: bold;">{{chac}} Carga{{chac|pluralize}}</span><span class="mb-1 pr-1" style="font-size: 13px; display: inline;float: right; font-weight: bold;">{{cha}} Kg</span>                            
+                        </div>                            
+                        {% endif %}
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                        {% endfor %}
+                        {% endfor %}
+                        {% endfor %}
+                        {% endif %}
+                        {% endfor %}
+
+                        
+                        {% for carga in cargas %}
+                        {% if 'Rus' in carga.pedido.cliente|title %}
+                        {% if carga.data|date:"SHORT_DATE_FORMAT" == v %}
+                        
+                        
+                        
+                        <div id="dadosagendamento2">
+                            <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas{% if carga.situacao == 'Agendado' %} bg-warning
+                            {% else %}{% endif %}" style="border-bottom: 1px solid black;background-color: {% if carga.situacao == 'Agendado' %}
+                            {% else %}rgb(0,128,0,0.2) {% endif %};">                                                
+                                <p class="mb-1" style="font-size: 13px !important;"><a href="{% url 'upd_cargas' carga.pk %}" target="_blank">{{carga.motorista|title}}</a> <br> {{carga.placa|slice:":3"}} {{carga.placa|slice:"3:"}} <br> 
+                                    {% if carga.situacao == 'Agendado' %}{{carga.veiculo}} Kg {% else %}{{carga.peso}} Kg {% endif %}<br>{% if carga.notafiscal %}NF {{carga.notafiscal}}{%else%} Sem NF{%endif%}</p>                                
+                            </div>
+                        </div>
+                        {% else %}
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}                
+                        
+                    </div>            
+                {% endfor %}            
+                {% endfor %}                 
+                </div>
+            </div>                
+        </div>
+    </div>
+</div>
+    
+    
+    
+    
+</body>
+</html>

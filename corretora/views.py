@@ -42,8 +42,6 @@ class CargasFiltradasView(LoginRequiredMixin, FilterView):
     paginate_by = 100
     filterset_class = CargasFilter
     ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
-    
-   
 
 
     def get_context_data(self, **kwargs):
@@ -61,13 +59,6 @@ class CargasFiltradasView(LoginRequiredMixin, FilterView):
             return total
         context['comitotal'] = get_total_comissao()
         return context
-
-
-
-  
-               
-    
-
 
 class BasetwoView(LoginRequiredMixin, SuperuserRequiredMixin, TemplateView):
     login_url = 'login'    
@@ -310,6 +301,18 @@ class ComissCargasView(LoginRequiredMixin, SuperuserRequiredMixin, ListView):
         context['totalaberto'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pgcomissao=False).filter(pedido_id=self.kwargs.get('pk')).values('vpcomissaoc').aggregate(Count('vpcomissaoc'))
         return context
 
+class CargasAgendamentoView(LoginRequiredMixin, ListView):
+    login_url = 'login'    
+    models = Carga    
+    ordering = ['-situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
+    template_name = 'agendamento.html'
+    queryset = Carga.objects.all()
+    context_object_name = 'cargas' 
+
+    def get_context_data(self, **kwargs):
+        context = super(CargasAgendamentoView, self).get_context_data(**kwargs)
+        context['clientes'] = Cliente.objects.order_by('-nome').all
+        return context
 
 class CargasView(LoginRequiredMixin, ListView):
     login_url = 'login'
