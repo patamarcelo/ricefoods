@@ -2,6 +2,7 @@
 {% load humanize %}
 {% load static %}
 {% now "Y-m-d" as todays_date %}
+{% load  corretora_extras %}
 
 
 <!DOCTYPE html>
@@ -397,7 +398,11 @@
                         <td>{{ carga.pedido.fornecedor.cidade|truncatechars:20 }}</td>
                         
                         <td style="color: {{ carga.pedido.cliente.color}}"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
-                        {% if carga.data_agenda %}
+                        
+                        
+                        {% if carga.data_intervalo_cargaedescarga > -2 %}
+                        <td style="background-color: rgba(139,0,0, 0.7);"><strong>{{ carga.data_agenda|date:"SHORT_DATE_FORMAT" }}</strong></td>
+                        {% elif carga.data_agenda %}
                         <td>{{ carga.data_agenda|date:"SHORT_DATE_FORMAT" }}</td>
                         {% else %}
                         <td align="center"><i class="text-warning fab fa-algolia"></i>

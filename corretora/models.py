@@ -964,6 +964,15 @@ class Carga(Base):
                 return (round(((self.peso / 1000) * float(self.pedido.preco_frete)) * 0.07,2 )) 
             else:
                 return (round(((self.veiculo / 1000) * float(self.pedido.preco_frete)) * 0.07,2 ))
+    
+
+    def data_intervalo_cargaedescarga(self):
+        if self.data_agenda:
+            intervalo = self.data - self.data_agenda
+            self.data_intervalo_cargaedescarga = intervalo
+            return self.data_intervalo_cargaedescarga.days
+        else:
+            pass
 
     class Meta:
         ordering = ['situacao', 'data']

@@ -926,11 +926,13 @@
                             {% endif %}
                             <td>{{ carga.pedido.produto }}</td>
 
-                            {% if carga.data_agenda %}
+                            {% if carga.data_intervalo_cargaedescarga > -2 %}
+                            <td style="background-color: rgba(139,0,0, 0.7);"><strong>{{ carga.data_agenda|date:"SHORT_DATE_FORMAT" }}</strong></td>
+                            {% elif carga.data_agenda %}
                             <td>{{ carga.data_agenda|date:"SHORT_DATE_FORMAT" }}</td>
                             {% else %}
-                            <td align="center"><i class="text-warning fab fa-algolia"></i></td>
-                            {% endif %} 
+                            <td align="center"><i class="text-warning fab fa-algolia"></i>
+                            {% endif %}
                             
 
                             {% if carga.pedido.produto == "Arroz em Casca" %}
@@ -1144,11 +1146,15 @@
                             <td style="color: {{ carga.pedido.cliente.color}}"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
                             
                             <td>{{ carga.pedido.produto }}</td>
-                            {% if carga.data_agenda %}
+                        
+                            {% if carga.data_intervalo_cargaedescarga > -2 %}
+                            <td style="background-color: rgba(139,0,0, 0.7);"><strong>{{ carga.data_agenda|date:"SHORT_DATE_FORMAT" }}</strong></td>
+                            {% elif carga.data_agenda %}
                             <td>{{ carga.data_agenda|date:"SHORT_DATE_FORMAT" }}</td>
                             {% else %}
-                            <td align="center"><i class="text-warning fab fa-algolia"></i></td>
-                            {% endif %} 
+                            <td align="center"><i class="text-warning fab fa-algolia"></i>
+                            {% endif %}
+                        
                             {% if carga.pedido.produto == "Arroz em Casca" %}
                             {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}
                             <td align="center"><a class="text-success fa fa-list-alt"
