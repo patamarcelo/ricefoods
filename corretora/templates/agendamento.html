@@ -247,7 +247,7 @@
                         
                         {% for carga in cargas %}
                         {% if 'Rus' in carga.pedido.cliente|title %}
-                        {% if carga.data|date:"SHORT_DATE_FORMAT" == v %}
+                        {% if carga.data_agenda|date:"SHORT_DATE_FORMAT" == v %}
                         
                         
                         
