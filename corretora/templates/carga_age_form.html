@@ -86,6 +86,7 @@
     #id_data_agenda { 
         background-color: rgba(226, 106, 106, 0.2); 
         color: whitesmoke;
+        
     }
 </style>
 
@@ -227,6 +228,21 @@
         $('#id_data_agenda').mask('00/00/0000');
     })
 
+    var data_carre = document.getElementById('id_data');
+    var data_agenda = document.getElementById('id_data_agenda');    
+        
+    data_carre.addEventListener('change', function() {            
+        if (data_carre.value.length < 4 ) {
+            data_agenda.value = data_carre.value;                
+        } else {
+        var dmy = data_carre.value.split("/")
+        var dia  = data_carre.value.split("/")[0] < 29 ? (parseInt(data_carre.value.split("/")[0],10)+ 2) : 1;
+        var mes  = dia > 2 ? data_carre.value.split("/")[1] : (parseInt(data_carre.value.split("/")[1],10)+ 1);
+        var ano  = data_carre.value.split("/")[2];
+        var joindate = ("0"+dia).slice(-2) + '/' + ("0"+mes).slice(-2) + '/' +  ano     
+        data_agenda.value = joindate;        
+        }
+    });
         
     document.querySelector("label[for=id_data_agenda]").innerHTML = "Data Descarga";
 
