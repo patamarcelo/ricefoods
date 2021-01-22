@@ -80,7 +80,7 @@
         padding-top: 0px;
         border-style: inset;        
         padding: 10px 20px;  
-        background-color: #2c2c2f;              
+        background-color: #2c2c2f;                      
     }
 
     .resumodados {                
@@ -151,8 +151,10 @@
                                 </div>                   
                             </div>
                             <div class="d-flex flex-row m-2">
-                            {% for c in 0|dias_da_semana|slice:":1" %}
-                            {% for k, v in c.items %}                
+                                {% for c in clientes %}
+                                {% if 'Rus' in c.nome %}
+                            {% for d in c.dias_da_semana_model_cliente|slice:":1" %}
+                            {% for k, v in d.items %}                
                                 <div class="d-flex flex-column m-2">
                                     <h3 class="badge badge-warning bg-warning text-black">{{k}} - {{v}}</h3>
                                     {% for c in clientes %}
@@ -196,6 +198,8 @@
                                 </div>            
                             {% endfor %}            
                             {% endfor %}                 
+                            {% endif %}                 
+                            {% endfor %}                 
                             </div>
                         </div>                
                     </div>
@@ -218,8 +222,10 @@
                             </div>                   
                         </div>
                         <div class="d-flex flex-row m-2">
-                        {% for c in 0|dias_da_semana|slice:"1:" %}
-                        {% for k, v in c.items %}                
+                            {% for c in clientes %}
+                            {% if 'Rus' in c.nome %}
+                            {% for d in c.dias_da_semana_model_cliente|slice:"1:" %}
+                            {% for k, v in d.items %}                
                             <div class="d-flex flex-column m-2">
                                 <h3 class="badge badge-warning bg-warning text-black">{{k}} - {{v}}</h3>
                                 {% for c in clientes %}
@@ -266,6 +272,8 @@
                                 
                             </div>            
                         {% endfor %}            
+                        {% endfor %}                 
+                        {% endif %}                 
                         {% endfor %}                 
                         </div>
                     </div>                
