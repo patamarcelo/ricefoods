@@ -320,10 +320,20 @@
             var date = new Date(data);  
             console.log(`Data Carregamento: ${date.getDay()}`)      
             var dateplustow = date.addDays(2)
+            var dateplussextacomvaga = date.addDays(3)
+            var totalagendadodiacomvaga = dicionarioDeDIasFormatado[dateplussextacomvaga]                        
+            var totalagendadodiacomvagasabado = dicionarioDeDIasFormatado[dateplustow]                        
+            console.log(`Sexta-Segunda ${dateplussextacomvaga}`)
             var dateplustwoday = dateplustow.getDay()                                
             console.log(`dia da semana descarga ${dateplustwoday}`)
-            if ((date.getDay() == 6)) {
-                var dateplustow_final = date.addDays(3)
+            if ((date.getDay() == 6 && totalagendadodiacomvagasabado < 8 )) {
+                var dateplustow_final = dateplustow
+                console.log('Ainda tem vaga segunda feira')
+            } else if  ((date.getDay() == 5 && totalagendadodiacomvaga < 8 )) {
+                var dateplustow_final = dateplustow.addDays(1)
+                console.log('Ainda tem vaga segunda feira')
+            } else if  ((date.getDay() == 5)) {
+                var dateplustow_final = dateplustow.addDays(2)                
             } else if ((dateplustwoday == 6)) {
                 var dateplustow_final = dateplustow.addDays(2)
             } else if ((dateplustwoday == 5)) {
