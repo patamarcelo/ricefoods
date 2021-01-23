@@ -345,35 +345,17 @@
             } else {
                 var dateplustow_final = dateplustow
             }     
-            console.log(`Dia Final depois do loopfor primeiro ${dateplustow_final}`)
-            var totalagendadodia = dicionarioDeDIasFormatado[dateplustow_final]                        
-            if ((totalagendadodia >= 8)) {
-                var dateplustow_final_final = dateplustow_final.addDays(1)
-                console.log(dateplustow_final_final)
-            } else {
-                var dateplustow_final_final = dateplustow_final
-                console.log(dateplustow_final_final)
-            }  
-            console.log(`Dia Final depois da Verificação ${dateplustow_final_final}`)
-            console.log(`Dia Final depois da Verificação ${dateplustow_final_final.getDay()}`)
             
-            var dateplustow_final_final_ok = dateplustow_final_final.getDay()                                
-            console.log(dateplustow_final_final_ok)
-            if ((dateplustow_final_final_ok == 6)) {
-                var dateplustow_final_validada = dateplustow_final_final.addDays(2)
-            } else if ((dateplustow_final_final_ok == 1)) {
-                var dateplustow_final_validada = dateplustow_final_final.addDays(0)
-            } else if ((dateplustow_final_final_ok == 5)) {
-                var dateplustow_final_validada = dateplustow_final_final.addDays(3)
-            } else if ((dateplustow_final_final_ok == 0)) {
-                var dateplustow_final_validada = dateplustow_final_final.addDays(1)
-            } else {
-                var dateplustow_final_validada = dateplustow_final_final
-            }     
+            var checktotalagend = dicionarioDeDIasFormatado[dateplustow_final]
+            var diadasemanaescolhido = dateplustow_final.getDay()
+            while (checktotalagend == 8 || diadasemanaescolhido == 6 || diadasemanaescolhido == 0) {
+                dateplustow_final = dateplustow_final.addDays(1);
+                var checktotalagend = dicionarioDeDIasFormatado[dateplustow_final]
+                var diadasemanaescolhido = dateplustow_final.getDay()
+            }
 
-
-            var dd = dateplustow_final_validada.getDate()
-            var mm = dateplustow_final_validada.getMonth()+1;
+            var dd = dateplustow_final.getDate()
+            var mm = dateplustow_final.getMonth()+1;
             if(dd<10) 
             {
                 dd='0'+dd;
@@ -381,7 +363,7 @@
             if(mm<10) {
                 mm='0'+mm;
             } 
-            var yy = dateplustow_final_validada.getFullYear();
+            var yy = dateplustow_final.getFullYear();
             age_date_final = dd+'/'+mm+'/'+yy;     
             console.log(`data final: ${age_date_final}`)       
             var numerodiasadd = 3
