@@ -348,7 +348,7 @@
             
             var checktotalagend = dicionarioDeDIasFormatado[dateplustow_final]
             var diadasemanaescolhido = dateplustow_final.getDay()
-            while (checktotalagend == 8 || diadasemanaescolhido == 6 || diadasemanaescolhido == 0) {
+            while (checktotalagend >= 8 || diadasemanaescolhido == 6 || diadasemanaescolhido == 0) {
                 dateplustow_final = dateplustow_final.addDays(1);
                 var checktotalagend = dicionarioDeDIasFormatado[dateplustow_final]
                 var diadasemanaescolhido = dateplustow_final.getDay()
