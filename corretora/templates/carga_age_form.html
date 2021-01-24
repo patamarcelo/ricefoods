@@ -319,43 +319,18 @@
             }
             var date = new Date(data);  
             console.log(`Data Carregamento: ${date.getDay()}`)      
-            var dateplustow = date.addDays(2)
-            var dateplussextacomvaga = date.addDays(3)
-            var totalagendadodiacomvaga = dicionarioDeDIasFormatado[dateplussextacomvaga]                        
-            var totalagendadodiacomvagasabado = dicionarioDeDIasFormatado[dateplustow]                        
-            console.log(`Sexta-Segunda ${dateplussextacomvaga}`)
-            var dateplustwoday = dateplustow.getDay()                                
-            console.log(`dia da semana descarga ${dateplustwoday}`)
-            if ((date.getDay() == 6 && totalagendadodiacomvagasabado < 8 )) {
-                var dateplustow_final = dateplustow
-                console.log('Ainda tem vaga segunda feira')
-            } else if  ((date.getDay() == 5 && totalagendadodiacomvaga < 8 )) {
-                var dateplustow_final = dateplustow.addDays(1)
-                console.log('Ainda tem vaga segunda feira')
-            } else if  ((date.getDay() == 5)) {
-                var dateplustow_final = dateplustow.addDays(2)                
-            } else if ((dateplustwoday == 6)) {
-                var dateplustow_final = dateplustow.addDays(2)
-            } else if ((dateplustwoday == 5)) {
-                var dateplustow_final = dateplustow.addDays(0)
-            } else if ((dateplustwoday == 4)) {
-                var dateplustow_final = dateplustow.addDays(0)
-            } else if ((dateplustwoday == 0)) {
-                var dateplustow_final = dateplustow.addDays(2)
-            } else {
-                var dateplustow_final = dateplustow
-            }     
-            
-            var checktotalagend = dicionarioDeDIasFormatado[dateplustow_final]
-            var diadasemanaescolhido = dateplustow_final.getDay()
+            var dateplustow = date.addDays(2)            
+                        
+            var checktotalagend = dicionarioDeDIasFormatado[dateplustow]
+            var diadasemanaescolhido = dateplustow.getDay()
             while (checktotalagend >= 8 || diadasemanaescolhido == 6 || diadasemanaescolhido == 0) {
-                dateplustow_final = dateplustow_final.addDays(1);
-                var checktotalagend = dicionarioDeDIasFormatado[dateplustow_final]
-                var diadasemanaescolhido = dateplustow_final.getDay()
+                dateplustow = dateplustow.addDays(1);
+                var checktotalagend = dicionarioDeDIasFormatado[dateplustow]
+                var diadasemanaescolhido = dateplustow.getDay()
             }
 
-            var dd = dateplustow_final.getDate()
-            var mm = dateplustow_final.getMonth()+1;
+            var dd = dateplustow.getDate()
+            var mm = dateplustow.getMonth()+1;
             if(dd<10) 
             {
                 dd='0'+dd;
@@ -363,7 +338,7 @@
             if(mm<10) {
                 mm='0'+mm;
             } 
-            var yy = dateplustow_final.getFullYear();
+            var yy = dateplustow.getFullYear();
             age_date_final = dd+'/'+mm+'/'+yy;     
             console.log(`data final: ${age_date_final}`)       
             var numerodiasadd = 3
@@ -382,22 +357,17 @@
                 return date;
             }
             var date = new Date(data);        
-            var dateplustow = date.addDays(7)
-            var dateplustwoday = dateplustow.getDay()                                
-            console.log(dateplustwoday)
-            if ((dateplustwoday == 6)) {
-                var dateplustow_final = dateplustow.addDays(2)
-            } else if ((dateplustwoday == 1)) {
-                var dateplustow_final = dateplustow.addDays(0)
-            } else if ((dateplustwoday == 2)) {
-                var dateplustow_final = dateplustow.addDays(0)
-            } else if ((dateplustwoday == 0)) {
-                var dateplustow_final = dateplustow.addDays(2)
-            } else {
-                var dateplustow_final = dateplustow
-            }        
-            var dd = dateplustow_final.getDate()
-            var mm = dateplustow_final.getMonth()+1;
+            var dateplustow = date.addDays(7)            
+            
+            var checktotalagend = dicionarioDeDIasFormatado[dateplustow]
+            var diadasemanaescolhido = dateplustow.getDay()
+            while (checktotalagend >= 8 || diadasemanaescolhido == 6 || diadasemanaescolhido == 0) {
+                dateplustow = dateplustow.addDays(1);
+                var checktotalagend = dicionarioDeDIasFormatado[dateplustow]
+                var diadasemanaescolhido = dateplustow.getDay()
+            }
+            var dd = dateplustow.getDate()
+            var mm = dateplustow.getMonth()+1;
             if(dd<10) 
             {
                 dd='0'+dd;
@@ -405,7 +375,7 @@
             if(mm<10) {
                 mm='0'+mm;
             } 
-            var yy = dateplustow_final.getFullYear();
+            var yy = dateplustow.getFullYear();
             age_date_final = dd+'/'+mm+'/'+yy;
             if (data_carre.value.length < 4 ) {
                 data_agenda.value = data_carre.value;                

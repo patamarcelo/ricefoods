@@ -374,43 +374,18 @@
             }
             var date = new Date(data);  
             console.log(`Data Carregamento: ${date.getDay()}`)      
-            var dateplustow = date.addDays(2)
-            var dateplussextacomvaga = date.addDays(3)
-            var totalagendadodiacomvaga = dicionarioDeDIasFormatado[dateplussextacomvaga]                        
-            var totalagendadodiacomvagasabado = dicionarioDeDIasFormatado[dateplustow]                        
-            console.log(`Sexta-Segunda ${dateplussextacomvaga}`)
-            var dateplustwoday = dateplustow.getDay()                                
-            console.log(`dia da semana descarga ${dateplustwoday}`)
-            if ((date.getDay() == 6 && totalagendadodiacomvagasabado < 8 )) {
-                var dateplustow_final = dateplustow
-                console.log('Ainda tem vaga segunda feira')
-            } else if  ((date.getDay() == 5 && totalagendadodiacomvaga < 8 )) {
-                var dateplustow_final = dateplustow.addDays(1)
-                console.log('Ainda tem vaga segunda feira')
-            } else if  ((date.getDay() == 5)) {
-                var dateplustow_final = dateplustow.addDays(2)                
-            } else if ((dateplustwoday == 6)) {
-                var dateplustow_final = dateplustow.addDays(2)
-            } else if ((dateplustwoday == 5)) {
-                var dateplustow_final = dateplustow.addDays(0)
-            } else if ((dateplustwoday == 4)) {
-                var dateplustow_final = dateplustow.addDays(0)
-            } else if ((dateplustwoday == 0)) {
-                var dateplustow_final = dateplustow.addDays(2)
-            } else {
-                var dateplustow_final = dateplustow
-            }     
-            
-            var checktotalagend = dicionarioDeDIasFormatado[dateplustow_final]
-            var diadasemanaescolhido = dateplustow_final.getDay()
+            var dateplustow = date.addDays(2)            
+                        
+            var checktotalagend = dicionarioDeDIasFormatado[dateplustow]
+            var diadasemanaescolhido = dateplustow.getDay()
             while (checktotalagend >= 8 || diadasemanaescolhido == 6 || diadasemanaescolhido == 0) {
-                dateplustow_final = dateplustow_final.addDays(1);
-                var checktotalagend = dicionarioDeDIasFormatado[dateplustow_final]
-                var diadasemanaescolhido = dateplustow_final.getDay()
+                dateplustow = dateplustow.addDays(1);
+                var checktotalagend = dicionarioDeDIasFormatado[dateplustow]
+                var diadasemanaescolhido = dateplustow.getDay()
             }
 
-            var dd = dateplustow_final.getDate()
-            var mm = dateplustow_final.getMonth()+1;
+            var dd = dateplustow.getDate()
+            var mm = dateplustow.getMonth()+1;
             if(dd<10) 
             {
                 dd='0'+dd;
@@ -418,7 +393,7 @@
             if(mm<10) {
                 mm='0'+mm;
             } 
-            var yy = dateplustow_final.getFullYear();
+            var yy = dateplustow.getFullYear();
             age_date_final = dd+'/'+mm+'/'+yy;     
             console.log(`data final: ${age_date_final}`)       
             var numerodiasadd = 3
@@ -437,22 +412,17 @@
                 return date;
             }
             var date = new Date(data);        
-            var dateplustow = date.addDays(7)
-            var dateplustwoday = dateplustow.getDay()                                
-            console.log(dateplustwoday)
-            if ((dateplustwoday == 6)) {
-                var dateplustow_final = dateplustow.addDays(2)
-            } else if ((dateplustwoday == 1)) {
-                var dateplustow_final = dateplustow.addDays(0)
-            } else if ((dateplustwoday == 2)) {
-                var dateplustow_final = dateplustow.addDays(0)
-            } else if ((dateplustwoday == 0)) {
-                var dateplustow_final = dateplustow.addDays(2)
-            } else {
-                var dateplustow_final = dateplustow
-            }        
-            var dd = dateplustow_final.getDate()
-            var mm = dateplustow_final.getMonth()+1;
+            var dateplustow = date.addDays(7)            
+            
+            var checktotalagend = dicionarioDeDIasFormatado[dateplustow]
+            var diadasemanaescolhido = dateplustow.getDay()
+            while (checktotalagend >= 8 || diadasemanaescolhido == 6 || diadasemanaescolhido == 0) {
+                dateplustow = dateplustow.addDays(1);
+                var checktotalagend = dicionarioDeDIasFormatado[dateplustow]
+                var diadasemanaescolhido = dateplustow.getDay()
+            }
+            var dd = dateplustow.getDate()
+            var mm = dateplustow.getMonth()+1;
             if(dd<10) 
             {
                 dd='0'+dd;
@@ -460,7 +430,107 @@
             if(mm<10) {
                 mm='0'+mm;
             } 
-            var yy = dateplustow_final.getFullYear();
+            var yy = dateplustow.getFullYear();
+            age_date_final = dd+'/'+mm+'/'+yy;
+            if (data_carre.value.length < 4 ) {
+                data_agenda.value = data_carre.value;                
+            } else {        
+            data_agenda.value = age_date_final;  
+            return age_date_final      
+            }        
+        }
+    });
+
+    var data_carre = document.getElementById('id_data');
+    var situacao_id = document.getElementById('id_situacao');
+
+    situacao_id.addEventListener('change', function() { 
+        var dicionarioDeDIas = {}
+        var dicionarioDeDIasFormatado = {}
+        {% for c in clientes %}
+        {% if 'Rus' in c.nome %}
+        {% for cc in c.previsao_dias_da_semana_somente_carregado|slice:"1:" %}
+        {% for val,cha in cc.items %}
+        dicionarioDeDIas["{{val}}"]="{{cha}}";
+        {% endfor %}
+        {% endfor %}
+        {% endif %}
+        {% endfor %}        
+        for (const [key, value] of Object.entries(dicionarioDeDIas)) { 
+            var dataString = key.split("/");          
+            var ndsdata = new Date(dataString[2], dataString[1]-1, dataString[0]);
+            
+            dicionarioDeDIasFormatado[ndsdata] = [value]
+            };            
+        var clienteinfonome = document.getElementById('clienteinfo').innerHTML;        
+        if ((clienteinfonome.includes('Ruston'))) {
+            var dataString = data_carre.value.split("/");          
+            var data = new Date(dataString[2], dataString[1]-1, dataString[0]);
+            
+            Date.prototype.addDays = function(days) {
+                var date = new Date(this.valueOf());
+                date.setDate(date.getDate() + days);
+                return date;
+            }
+            var date = new Date(data);  
+            console.log(`Data Carregamento: ${date.getDay()}`)      
+            var dateplustow = date.addDays(2)            
+                        
+            var checktotalagend = dicionarioDeDIasFormatado[dateplustow]
+            var diadasemanaescolhido = dateplustow.getDay()
+            while (checktotalagend >= 8 || diadasemanaescolhido == 6 || diadasemanaescolhido == 0) {
+                dateplustow = dateplustow.addDays(1);
+                var checktotalagend = dicionarioDeDIasFormatado[dateplustow]
+                var diadasemanaescolhido = dateplustow.getDay()
+            }
+
+            var dd = dateplustow.getDate()
+            var mm = dateplustow.getMonth()+1;
+            if(dd<10) 
+            {
+                dd='0'+dd;
+            } 
+            if(mm<10) {
+                mm='0'+mm;
+            } 
+            var yy = dateplustow.getFullYear();
+            age_date_final = dd+'/'+mm+'/'+yy;     
+            console.log(`data final: ${age_date_final}`)       
+            var numerodiasadd = 3
+            if (data_carre.value.length < 4 ) {
+                data_agenda.value = data_carre.value;                
+            } else {        
+            data_agenda.value = age_date_final;        
+            }
+        } else {
+            var dataString = data_carre.value.split("/");          
+            var data = new Date(dataString[2], dataString[1]-1, dataString[0]);
+            
+            Date.prototype.addDays = function(days) {
+                var date = new Date(this.valueOf());
+                date.setDate(date.getDate() + days);
+                return date;
+            }
+            var date = new Date(data);        
+            var dateplustow = date.addDays(7)            
+            
+            var checktotalagend = dicionarioDeDIasFormatado[dateplustow]
+            var diadasemanaescolhido = dateplustow.getDay()
+            while (checktotalagend >= 8 || diadasemanaescolhido == 6 || diadasemanaescolhido == 0) {
+                dateplustow = dateplustow.addDays(1);
+                var checktotalagend = dicionarioDeDIasFormatado[dateplustow]
+                var diadasemanaescolhido = dateplustow.getDay()
+            }
+            var dd = dateplustow.getDate()
+            var mm = dateplustow.getMonth()+1;
+            if(dd<10) 
+            {
+                dd='0'+dd;
+            } 
+            if(mm<10) {
+                mm='0'+mm;
+            } 
+            var yy = dateplustow.getFullYear();
             age_date_final = dd+'/'+mm+'/'+yy;
             if (data_carre.value.length < 4 ) {
                 data_agenda.value = data_carre.value;                

@@ -659,6 +659,50 @@ class Cliente(Base):
         self.previsao_dias_da_semana = previsao_dias_da_semana, previsao_dias_da_semana_count
         return self.previsao_dias_da_semana 
 
+    def previsao_dias_da_semana_somente_carregado(self):
+        previsao_dias_da_semana = {}
+        previsao_dias_da_semana_count = {}
+        def dias_da_semana():                  
+            today = datetime.datetime.now()   
+            duas_semanas = []
+            for i in range(7):
+                data_atual = today if today.weekday() == i else today - timedelta(days=today.weekday() - i)
+                dia_da_semana_numero = data_atual.weekday()
+                data_atual_timestamp = data_atual.timestamp()
+                day_fromtmsp = datetime.datetime.fromtimestamp(data_atual_timestamp)
+                data_atual_humana = day_fromtmsp.strftime("%Y-%m-%d") 
+                duas_semanas.append(data_atual_humana)        
+            for i in range(7):
+                data_atual = (today + timedelta(days=7)) if today.weekday() == i else (today + timedelta(days=7)) - timedelta(days=today.weekday() - i)
+                dia_da_semana_numero = data_atual.weekday()
+                data_atual_timestamp = data_atual.timestamp()
+                day_fromtmsp = datetime.datetime.fromtimestamp(data_atual_timestamp)
+                data_atual_humana = day_fromtmsp.strftime("%Y-%m-%d") 
+                duas_semanas.append(data_atual_humana)                                    
+            return duas_semanas
+        for i in dias_da_semana():
+            total = 0
+            total_count = 0
+            filtdata = i
+            filt_nome = self.nome_fantasia
+            carregado = Carga.objects.filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+            carregado_count = Carga.objects.filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Carregado').values('peso').aggregate(pesot=Count('peso'))['pesot']
+            agendado = Carga.objects.filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Agendado').values('veiculo').aggregate(pesov=Sum('veiculo'))['pesov']            
+            if carregado and agendado:
+                total = carregado + agendado
+                total_count = carregado_count
+            elif carregado:
+                total = carregado
+                total_count = carregado_count
+            elif agendado:
+                total = agendado
+                total_count = 0
+            data_regular = datetime.datetime.strptime(i, '%Y-%m-%d').strftime('%d/%m/%Y')
+            previsao_dias_da_semana[data_regular] = total
+            previsao_dias_da_semana_count[data_regular] = total_count
+        self.previsao_dias_da_semana_somente_carregado = previsao_dias_da_semana, previsao_dias_da_semana_count
+        return self.previsao_dias_da_semana_somente_carregado 
+
     def dias_da_semana_model_cliente(self): 
         today = datetime.datetime.now()
         dias_escritos=["Segunda-Feira","Terça-Feira","Quarta-Feira","Quinta-Feira","Sexta-Feira","Sábado","Domingo"]
