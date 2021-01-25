@@ -183,7 +183,7 @@ class UpdatePedidosView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     
     model = Pedido
     template_name = 'pedido_form.html'
-    success_message = 'Pedido atualizado com sucesso!!'
+    success_message = 'Pedido %(fornecedor)s -> %(cliente)s atualizado com sucesso!!'
     # fields = '__all__'
     fields = ('ativo','situacao','data','fornecedor','cliente','preco_produto','preco_frete',
                 'comissaoc','comissaof','prazopgto','modalidadepgto',
@@ -364,7 +364,7 @@ class CreateCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     
     model = Carga
     template_name = 'carga_form_add.html'
-    success_message = "%(placa)s - %(motorista)s inseridos com sucesso!!"
+    success_message = "%(placa)s - %(motorista)s Agendado com Sucesso!!"
     fields = '__all__'
     # success_url = reverse_lazy('corretora')
 
@@ -409,7 +409,7 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     
     model = Carga
     template_name = 'carga_form.html'
-    success_message = 'Dados atualizados com sucesso!!'
+    success_message = "%(motorista)s - %(placa)s alterado com Sucesso!!"
     fields = ('ordem','tac','chegada','pedido','situacao','data','buonny','transp','placa','motorista','valor_mot','peso',
                 'veiculo','notafiscal','notafiscal2','valornf','data_agenda','renda','inteiro','impureza',
                 'umidade','gessado','bbranca','amarelo','manchpic','vermelhos',
@@ -428,7 +428,7 @@ class UpdateclassCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView)
     
     model = Carga
     template_name = 'carga_class.html'
-    success_message = 'Dados atualizados com sucesso!!'
+    success_message = 'Classificação atualizada com sucesso!!'
     # fields = '__all__'
     fields = ('renda','inteiro','impureza',
                 'umidade','gessado','bbranca','amarelo','manchpic','vermelhos',
