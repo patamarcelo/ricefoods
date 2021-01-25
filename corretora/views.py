@@ -309,6 +309,32 @@ class CargasAgendamentoView(LoginRequiredMixin, ListView):
     queryset = Carga.objects.all()
     context_object_name = 'cargas' 
 
+    
+
+    def get_queryset(self):
+        queryset = Carga.objects.order_by('-situacao','data_agenda')
+        def dias_da_semana():                  
+            today = datetime.datetime.now()   
+            duas_semanas = []
+            for i in range(7):
+                data_atual = today if today.weekday() == i else today - timedelta(days=today.weekday() - i)
+                dia_da_semana_numero = data_atual.weekday()
+                data_atual_timestamp = data_atual.timestamp()
+                day_fromtmsp = datetime.datetime.fromtimestamp(data_atual_timestamp)
+                data_atual_humana = day_fromtmsp.strftime("%Y-%m-%d") 
+                duas_semanas.append(data_atual_humana)        
+            for i in range(7):
+                data_atual = (today + timedelta(days=7)) if today.weekday() == i else (today + timedelta(days=7)) - timedelta(days=today.weekday() - i)
+                dia_da_semana_numero = data_atual.weekday()
+                data_atual_timestamp = data_atual.timestamp()
+                day_fromtmsp = datetime.datetime.fromtimestamp(data_atual_timestamp)
+                data_atual_humana = day_fromtmsp.strftime("%Y-%m-%d") 
+                duas_semanas.append(data_atual_humana)                                    
+            return duas_semanas
+        filt1 = dias_da_semana()[0]
+        filt2 = dias_da_semana()[-1]
+        return queryset.filter(data_agenda__gte=filt1).filter(data_agenda__lte=filt2)
+
     def get_context_data(self, **kwargs):
         context = super(CargasAgendamentoView, self).get_context_data(**kwargs)
         context['clientes'] = Cliente.objects.order_by('-nome').all

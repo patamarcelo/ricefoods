@@ -13,6 +13,19 @@ import time
 
 today = datetime.now()
 
+class CounterNode(template.Node):
+
+  def __init__(self):
+    self.count = 0
+
+  def render(self, context):
+    self.count += 1
+    return self.count
+
+@register.tag
+def contador(parser, token):
+  return CounterNode()
+
 @register.filter
 def dias_da_semana(teste): 
     dias_escritos=["Segunda-Feira","Terça-Feira","Quarta-Feira","Quinta-Feira","Sexta-Feira","Sábado","Domingo"]

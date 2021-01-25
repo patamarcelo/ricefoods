@@ -121,6 +121,8 @@
             top: 1px;
         } */
 
+        
+        
 </style>
 <body>        
     <br>    
@@ -156,7 +158,8 @@
                                 {% for c in clientes %}
                                 {% if 'Rus' in c.nome %}
                             {% for d in c.dias_da_semana_model_cliente|slice:":1" %}
-                            {% for k, v in d.items %}                
+                            {% for k, v in d.items %} 
+                                          
                                 <div class="d-flex flex-column m-2">
                                     <h3 class="badge badge-warning bg-warning text-black">{{k}} - {{v}}</h3>
                                     {% for c in clientes %}
@@ -181,23 +184,29 @@
                                     {% endif %}
                                     {% endfor %}    
 
+                                     
                                     {% for carga in cargas %}
+                                    
                                     {% if 'Rus' in carga.pedido.cliente|title %}
                                     {% if carga.data_agenda|date:"SHORT_DATE_FORMAT" == v %}
-                                                                
+                                    
+                                    
+                                    
                                     <div id="dadosagendamento">
                                         <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas{% if carga.situacao == 'Agendado' %} bg-warning
                                         {% else %}{% endif %}" style="border-bottom: 1px solid black;background-color: {% if carga.situacao == 'Agendado' %}
                                         {% else %}rgb(0,128,0,0.2) {% endif %};">                                                
-                                            <p class="mb-1" style="font-size: 13px !important;"><a {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %} href="{% url 'upd_cargas' carga.pk %}" target="_blank"{% else %}{% endif %}>{{carga.motorista|title}}</a> <br> {{carga.placa|slice:":3"}} {{carga.placa|slice:"3:"}} <br> 
-                                                {% if carga.situacao == 'Agendado' %}{{carga.veiculo}} Kg {% else %}{{carga.peso}} Kg {% endif %}<br>{% if carga.notafiscal %}NF {{carga.notafiscal}}{%else%} Sem NF{%endif%}</p>                                
+                                            <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %} href="{% url 'upd_cargas' carga.pk %}" target="_blank"{% else %}{% endif %}>{{carga.motorista|title}}</a> <br> {{carga.placa|slice:":3"}} {{carga.placa|slice:"3:"}} <br> 
+                                                {% if carga.situacao == 'Agendado' %}{{carga.veiculo}} Kg {% else %}{{carga.peso}} Kg {% endif %}<br><span>{% if carga.notafiscal %}NF {{carga.notafiscal}}{%else%} Sem NF{%endif%}</p><small class="enumerateitem d-flex align-items-end justify-content-end mr-1 mb-1 ">{{forloop.counter}}</small>
                                         </div>
                                     </div>
                                     {% else %}
                                     {% endif %}
-                                    {% endif %}
-                                    {% endfor %}                                                    
-                                </div>            
+                                    {% endif %}                                    
+                                    {% endfor %}
+                                                                                       
+                                </div>        
+                                
                             {% endfor %}            
                             {% endfor %}                 
                             {% endif %}                 
@@ -263,8 +272,8 @@
                                     <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas{% if carga.situacao == 'Agendado' %} bg-warning
                                     {% else %}{% endif %}" style="border-bottom: 1px solid black;background-color: {% if carga.situacao == 'Agendado' %}
                                     {% else %}rgb(0,128,0,0.2) {% endif %};">                                                
-                                        <p class="mb-1" style="font-size: 13px !important;"><a {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %} href="{% url 'upd_cargas' carga.pk %}" target="_blank"{% else %}{% endif %}>{{carga.motorista|title}}</a> <br> {{carga.placa|slice:":3"}} {{carga.placa|slice:"3:"}} <br> 
-                                            {% if carga.situacao == 'Agendado' %}{{carga.veiculo}} Kg {% else %}{{carga.peso}} Kg {% endif %}<br>{% if carga.notafiscal %}NF {{carga.notafiscal}}{%else%} Sem NF{%endif%}</p>                                
+                                        <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %} href="{% url 'upd_cargas' carga.pk %}" target="_blank"{% else %}{% endif %}>{{carga.motorista|title}}</a> <br> {{carga.placa|slice:":3"}} {{carga.placa|slice:"3:"}} <br> 
+                                            {% if carga.situacao == 'Agendado' %}{{carga.veiculo}} Kg {% else %}{{carga.peso}} Kg {% endif %}<br><span>{% if carga.notafiscal %}NF {{carga.notafiscal}}{%else%} Sem NF{%endif%}</p>
                                     </div>
                                 </div>
                                 {% else %}
