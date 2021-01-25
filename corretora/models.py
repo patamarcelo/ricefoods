@@ -17,7 +17,7 @@ class NameField(models.CharField):
 
 class Base(models.Model):
     criados    = models.DateTimeField('Criação', auto_now_add=True)
-    modificado = models.DateField('Atualização', auto_now=True)
+    modificado = models.DateTimeField('Atualização', auto_now=True)
     ativo      = models.BooleanField('Ativo', default=True)
 
     class Meta:
