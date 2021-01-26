@@ -111,10 +111,10 @@ class BaseView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(BaseView, self).get_context_data(**kwargs)
-        context['pedidos'] = Pedido.objects.order_by('situacao','cliente','-data','-id').all
+        context['pedidos'] = Pedido.objects.order_by('situacao','cliente','-data','-id').all()[0:100]
         context['chart'] = Pedido.objects.order_by('data','id').all
         context['fornecedores'] = Fornecedor.objects.order_by('nome').all
-        context['cargas'] = Carga.objects.order_by('situacao','-data','ordem','chegada','buonny','pedido__cliente').all
+        context['cargas'] = Carga.objects.order_by('situacao','-data','ordem','chegada','buonny','pedido__cliente').all()[0:100]
         context['clientes'] = Cliente.objects.order_by('-nome').all
         
         today = datetime.date.today()

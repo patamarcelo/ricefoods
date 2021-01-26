@@ -116,13 +116,23 @@
             text-decoration: underline;
         }
 
-        /* .onetime {
-            position: relative;
-            top: 1px;
-        } */
+        
 
+        small {
+            font-size: 10px;
+            font-weight: bold;
+        }
         
         
+        
+        @media screen and (max-width: 1200px)  {
+            .principal-container {
+                zoom: 80%;                                
+                height: 100%;      
+                min-width: max-content;                          
+                white-space: nowrap;
+            }
+        }
 </style>
 <body>        
     <br>    
@@ -138,7 +148,7 @@
     </div>
 
     <!-------------SEMANA ATUAL------------->
-    <div class="container-fluid">        
+    <div class="container-fluid principal-container">        
         <div class="d-flex justify-content-center align-items-center">
             <div class="container d-flex justify-content-center">        
                     <div class="d-flex flex-row secondbox m-0 p-0 sombra">  
@@ -197,7 +207,7 @@
                                         {% else %}{% endif %}" style="border-bottom: 1px solid black;background-color: {% if carga.situacao == 'Agendado' %}
                                         {% else %}rgb(0,128,0,0.2) {% endif %};">                                                
                                             <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %} href="{% url 'upd_cargas' carga.pk %}" target="_blank"{% else %}{% endif %}>{{carga.motorista|title}}</a> <br> {{carga.placa|slice:":3"}} {{carga.placa|slice:"3:"}} <br> 
-                                                {% if carga.situacao == 'Agendado' %}{{carga.veiculo}} Kg {% else %}{{carga.peso}} Kg {% endif %}<br><span>{% if carga.notafiscal %}NF {{carga.notafiscal}}{%else%} Sem NF{%endif%}</p><small class="enumerateitem d-flex align-items-end justify-content-end mr-1 mb-1 ">{{forloop.counter}}</small>
+                                                {% if carga.situacao == 'Agendado' %}{{carga.veiculo}} Kg {% else %}{{carga.peso}} Kg {% endif %}<br><span>{% if carga.notafiscal %}NF {{carga.notafiscal}}{%else%} Sem NF{%endif%}</p><small class="enumerateitem d-flex align-items-end justify-content-end mr-1 mb-1 {% if carga.situacao == 'Carregado' %} text-success {% else %}{% endif %}">{{forloop.counter}}</small>
                                         </div>
                                     </div>
                                     {% else %}
