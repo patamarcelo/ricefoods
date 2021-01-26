@@ -643,9 +643,9 @@ class Cliente(Base):
             filtdata = i
             filt_nome = self.nome_fantasia
             carregado = Carga.objects.filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
-            carregado_count = Carga.objects.filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Carregado').values('peso').aggregate(pesot=Count('peso'))['pesot']
+            carregado_count = Carga.objects.order_by('placa').filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Carregado').values('peso').distinct('placa').count()
             agendado = Carga.objects.filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Agendado').values('veiculo').aggregate(pesov=Sum('veiculo'))['pesov']
-            agendado_count = Carga.objects.filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Agendado').values('veiculo').aggregate(pesov=Count('veiculo'))['pesov']
+            agendado_count = Carga.objects.order_by('placa').filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Agendado').values('veiculo').distinct('placa').count()
             if carregado and agendado:
                 total = carregado + agendado
                 total_count = carregado_count + agendado_count
@@ -688,7 +688,7 @@ class Cliente(Base):
             filtdata = i
             filt_nome = self.nome_fantasia
             carregado = Carga.objects.filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
-            carregado_count = Carga.objects.filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Carregado').values('peso').aggregate(pesot=Count('peso'))['pesot']
+            carregado_count = Carga.objects.order_by('placa').filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Carregado').values('peso').distinct('placa').count()
             agendado = Carga.objects.filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Agendado').values('veiculo').aggregate(pesov=Sum('veiculo'))['pesov']            
             if carregado and agendado:
                 total = carregado + agendado
