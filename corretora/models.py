@@ -5,6 +5,7 @@ from django.db.models import F, FloatField, Sum, Avg, Count
 
 from datetime import timedelta
 import datetime
+from simple_history.models import HistoricalRecords
 
 
 class NameField(models.CharField):
@@ -18,7 +19,8 @@ class NameField(models.CharField):
 class Base(models.Model):
     criados    = models.DateTimeField('Criação', auto_now_add=True)
     modificado = models.DateTimeField('Atualização', auto_now=True)
-    ativo      = models.BooleanField('Ativo', default=True)
+    ativo      = models.BooleanField('Ativo', default=True)    
+
 
     class Meta:
         abstract = True
@@ -989,7 +991,8 @@ class Carga(Base):
     manchpic  = models.DecimalField('Manch/Pic', max_digits=4, decimal_places=2,null=True, blank=True)
     vermelhos = models.DecimalField('Vermelhos', max_digits=4, decimal_places=2,null=True, blank=True)
 
-    obs = models.TextField('Observação', max_length=500, blank=True) 
+    obs     = models.TextField('Observação', max_length=500, blank=True)
+    history = HistoricalRecords()
 
 
     def valorcarga(self):
