@@ -390,7 +390,7 @@ class CreateCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     
     model = Carga
     template_name = 'carga_form_add.html'
-    success_message = "%(placa)s - %(motorista)s Agendado com Sucesso!!"
+    success_message = "%(placa)s - %(motorista)s Incluído com Sucesso!!"
     fields = '__all__'
     # success_url = reverse_lazy('corretora')
 
@@ -412,7 +412,7 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     
     model = Carga
     template_name = 'carga_age_form.html'
-    success_message = "%(placa)s - %(motorista)s agendado com sucesso!!"
+    success_message = "%(placa)s - %(motorista)s Agendado com sucesso!!"
     fields = ('ordem','tac','chegada','pedido','situacao','data','buonny','transp','placa','motorista','valor_mot',
                 'veiculo','data_agenda','obs')
 
@@ -435,7 +435,7 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     
     model = Carga
     template_name = 'carga_form.html'
-    success_message = "%(motorista)s - %(placa)s alterado com Sucesso!!"
+    success_message = "%(placa)s - %(motorista)s Alterado com Sucesso!!"
     fields = ('ordem','tac','chegada','pedido','situacao','data','buonny','transp','placa','motorista','valor_mot','peso',
                 'veiculo','notafiscal','notafiscal2','valornf','data_agenda','renda','inteiro','impureza',
                 'umidade','gessado','bbranca','amarelo','manchpic','vermelhos',
@@ -485,15 +485,16 @@ class UpdatecomissCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView
      
 
 
-class DeleteCargasView(LoginRequiredMixin, DeleteView):
+class DeleteCargasView(LoginRequiredMixin,SuccessMessageMixin, DeleteView):
     login_url = 'login'
     
     model = Carga
-    success_message = "Carga excluída com sucesso!!"
+    success_message = "%(placa)s - %(motorista)s Excluída com Sucesso!!"
     template_name = 'carga_del.html'
     success_url = reverse_lazy('cargas')
     
     def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
+        obj = self.get_object()
+        messages.success(self.request, self.success_message % obj.__dict__)        
         return super(DeleteCargasView, self).delete(request, *args, **kwargs)
     
