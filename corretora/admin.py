@@ -10,6 +10,9 @@ from django.db import models
 
 
 from django.db.models import Sum
+import locale
+
+locale.setlocale(locale.LC_MONETARY, "pt_BR.UTF-8")
 
 
 
@@ -228,11 +231,24 @@ class CargaAdmin(SimpleHistoryAdmin):
     raw_id_fields = ('pedido', )
     list_filter = ('ativo','situacao','pedido__fornecedor','pedido__cliente','pedido__situacao')
     search_fields = ['pedido__contrato','situacao','data','pedido__fornecedor__nome','placa','pedido__cliente__nome','pedido__tipo','motorista','peso','veiculo','buonny','notafiscal','notafiscal2','valornf']
-    history_list_display = ["situacao","get_data","peso","agendamento","notafiscal","pedido","motorista","placa","valornf"]
+    history_list_display = ["situacao","ordem","get_data","peso","agendamento","notafiscal","pedido","motorista","placa","valornf","valor_mot"]
+
+    def valor_mot(self,obj):
+        valor = obj.valor_mot
+        if valor:
+            valor = f'R$ {locale.currency(valor, grouping=True, symbol=None)}'
+            return valor
+    valor_mot.short_description = 'Preço'
 
     def get_data(self,obj):
         return date_format(obj.data, format='SHORT_DATE_FORMAT', use_l10n=True)
     get_data.short_description = 'Data'
+    
+    def ordem(self,obj):
+        if obj.ordem == True:
+            return 'Enviada'
+        else:
+            return "Não"        
     
     def agendamento(self,obj):
         if obj.data_agenda:
