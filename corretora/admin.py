@@ -10,9 +10,9 @@ from django.db import models
 
 
 from django.db.models import Sum
-import locale
 
-locale.setlocale(locale.LC_MONETARY, "pt_BR.UTF-8")
+
+
 
 
 
@@ -236,7 +236,7 @@ class CargaAdmin(SimpleHistoryAdmin):
     def valor_mot(self,obj):
         valor = obj.valor_mot
         if valor:
-            valor = f'R$ {locale.currency(valor, grouping=True, symbol=None)}'
+            valor = f'R$ {valor}'
             return valor
     valor_mot.short_description = 'Preço'
 
