@@ -3,12 +3,14 @@ from django.utils.formats import date_format
 
 
 from .models import *
+from simple_history.admin import SimpleHistoryAdmin
 
 from django.forms import TextInput, Textarea
 from django.db import models
 
 
 from django.db.models import Sum
+
 
 
 
@@ -206,15 +208,15 @@ class TransportadoraAdmin(admin.ModelAdmin):
         return date_format(obj.modificado, format='SHORT_DATE_FORMAT', use_l10n=True)
     get_modificado.short_description = 'Atualização'
 
-@admin.register(Carga)
-class CargaAdmin(admin.ModelAdmin):
-    list_display = ('pedido','get_data','buonny','tac','ordem','get_fornecedor','get_cidade_fornecedor','get_cliente','transp','situacao','placa','motorista','veiculo','notafiscal','get_modificado')
+# @admin.register(Carga)
+class CargaAdmin(SimpleHistoryAdmin):
+    list_display = ('placa','motorista','pedido','get_data','buonny','tac','ordem','get_fornecedor','get_cidade_fornecedor','get_cliente','transp','situacao','veiculo','notafiscal','get_modificado')
     fieldsets = (
     ('Agendamento', {
         'fields': ('pedido', ('data', 'buonny') )
     }),
     ('Carga', {
-        'fields': ('transp','situacao',('placa','motorista'),('peso','veiculo'),('notafiscal','notafiscal2','valornf'))
+        'fields': (('ordem','tac','chegada'),'transp','situacao',('placa','motorista'),('peso','veiculo'),('notafiscal','notafiscal2','valornf'))
     }),
     ('Classificação', {
         'fields': (('renda','inteiro','impureza', 'umidade'),('gessado','bbranca','amarelo'),('manchpic','vermelhos'))
@@ -223,14 +225,21 @@ class CargaAdmin(admin.ModelAdmin):
             'fields': ('obs',)
         }),
     )
-
+    raw_id_fields = ('pedido', )
     list_filter = ('ativo','situacao','pedido__fornecedor','pedido__cliente','pedido__situacao')
     search_fields = ['pedido__contrato','situacao','data','pedido__fornecedor__nome','placa','pedido__cliente__nome','pedido__tipo','motorista','peso','veiculo','buonny','notafiscal','notafiscal2','valornf']
-
+    history_list_display = ["situacao","get_data","peso","agendamento","notafiscal","pedido","motorista","placa","valornf"]
 
     def get_data(self,obj):
         return date_format(obj.data, format='SHORT_DATE_FORMAT', use_l10n=True)
     get_data.short_description = 'Data'
+    
+    def agendamento(self,obj):
+        if obj.data_agenda:
+            return date_format(obj.data_agenda, format='SHORT_DATE_FORMAT', use_l10n=True)
+        else:
+            return 'Sem Data'
+    agendamento.short_description = 'Data Agenda'
 
     def get_modificado(self,obj):
         return date_format(obj.modificado, format='SHORT_DATE_FORMAT', use_l10n=True)
@@ -248,7 +257,7 @@ class CargaAdmin(admin.ModelAdmin):
         return obj.pedido.cliente.nome_fantasia
     get_cliente.short_description = 'Cliente'
      
-
+admin.site.register(Carga, CargaAdmin)
     
     
     
