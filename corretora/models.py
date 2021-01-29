@@ -1048,7 +1048,7 @@ class Carga(Base):
             pass
 
     class Meta:
-        ordering = ['situacao', 'data']
+        ordering = ['situacao', '-data']
         verbose_name = 'Carga'
         verbose_name_plural = 'Cargas'
 

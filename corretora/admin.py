@@ -213,7 +213,7 @@ class TransportadoraAdmin(admin.ModelAdmin):
 
 # @admin.register(Carga)
 class CargaAdmin(SimpleHistoryAdmin):
-    list_display = ('placa','motorista','pedido','get_data','buonny','tac','ordem','get_fornecedor','get_cidade_fornecedor','get_cliente','transp','situacao','veiculo','notafiscal','get_modificado')
+    list_display = ('placa','motorista','situacao','pedido','get_data','buonny','tac','ordem','get_fornecedor','get_cidade_fornecedor','get_cliente','transp','veiculo','notafiscal','get_modificado')
     fieldsets = (
     ('Agendamento', {
         'fields': ('pedido', ('data', 'buonny') )
@@ -231,8 +231,16 @@ class CargaAdmin(SimpleHistoryAdmin):
     raw_id_fields = ('pedido', )
     list_filter = ('ativo','situacao','pedido__fornecedor','pedido__cliente','pedido__situacao')
     search_fields = ['pedido__contrato','situacao','data','pedido__fornecedor__nome','placa','pedido__cliente__nome','pedido__tipo','motorista','peso','veiculo','buonny','notafiscal','notafiscal2','valornf']
-    history_list_display = ["situacao","ordem","get_data","peso","agendamento","notafiscal","pedido","motorista","placa","valornf","valor_mot"]
+    history_list_display = ["situacao","ordem","get_data","peso","agendamento","notafiscal","pedido","motorista","placa","valornf","valor_mot","changed_fields"]
 
+    def changed_fields(self, obj):
+        if obj.prev_record:
+            delta = obj.diff_against(obj.prev_record)
+            camposalterados = str(delta.changed_fields)
+            return camposalterados
+        else:
+            return 'Sem Alterações'
+    
     def valor_mot(self,obj):
         valor = obj.valor_mot
         if valor:
