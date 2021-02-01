@@ -380,7 +380,7 @@
                         
             var checktotalagend = dicionarioDeDIas{{cliente.nome_fantasia|slice:"0:3"}}{{cliente.nome_fantasia|slice:"-2:"}}Formatado[dateplustow]
             var diadasemanaescolhido = dateplustow.getDay()
-            while (checktotalagend >= 8 || diadasemanaescolhido == 6 || diadasemanaescolhido == 0) {
+            while (checktotalagend >= {{cliente.veiculos_dia}} || diadasemanaescolhido == 6 || diadasemanaescolhido == 0) {
                 dateplustow = dateplustow.addDays(1);
                 var checktotalagend = dicionarioDeDIas{{cliente.nome_fantasia|slice:"0:3"}}{{cliente.nome_fantasia|slice:"-2:"}}Formatado[dateplustow]
                 var diadasemanaescolhido = dateplustow.getDay()
@@ -446,7 +446,7 @@
                         
             var checktotalagend = dicionarioDeDIas{{cliente.nome_fantasia|slice:"0:3"}}{{cliente.nome_fantasia|slice:"-2:"}}Formatado[dateplustow]
             var diadasemanaescolhido = dateplustow.getDay()
-            while (checktotalagend >= 8 || diadasemanaescolhido == 6 || diadasemanaescolhido == 0) {
+            while (checktotalagend >= {{cliente.veiculos_dia}} || diadasemanaescolhido == 6 || diadasemanaescolhido == 0) {
                 dateplustow = dateplustow.addDays(1);
                 var checktotalagend = dicionarioDeDIas{{cliente.nome_fantasia|slice:"0:3"}}{{cliente.nome_fantasia|slice:"-2:"}}Formatado[dateplustow]
                 var diadasemanaescolhido = dateplustow.getDay()

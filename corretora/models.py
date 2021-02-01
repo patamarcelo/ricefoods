@@ -111,7 +111,8 @@ class Cliente(Base):
     cidade        = models.ForeignKey(Cidade, on_delete=models.PROTECT)
     estado        = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
     color         = models.CharField('Cor', max_length=20, default='whitesmoke')    
-    dias_descarga = models.PositiveIntegerField('Descarga do Dia Carregamento', default=3)
+    dias_descarga = models.PositiveIntegerField('Desc. do Carr.', default=3,help_text="dias para a descarga do carregamento")
+    veiculos_dia = models.PositiveIntegerField('Veiculos Dia', default=10, help_text="máximo veículos descarga por dia")
     obs           = models.TextField('Observação', max_length=500, blank=True)
 
     def mesanterior(self):
