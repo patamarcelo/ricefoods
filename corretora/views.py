@@ -333,7 +333,7 @@ class CargasAgendamentoView(LoginRequiredMixin, ListView):
             return duas_semanas
         filt1 = dias_da_semana()[0]
         filt2 = dias_da_semana()[-1]
-        return queryset.filter(data_agenda__gte=filt1).filter(data_agenda__lte=filt2)
+        return queryset.filter(data_agenda__gte=filt1).filter(data_agenda__lte=filt2).filter(pedido__cliente__nome='Ruston')
 
     def get_context_data(self, **kwargs):
         context = super(CargasAgendamentoView, self).get_context_data(**kwargs)
