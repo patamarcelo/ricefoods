@@ -56,6 +56,7 @@ UF_CHOICES = (
 )
 
 
+
 class Cidade(Base):
     cidade = models.CharField('Cidade', max_length=40, unique=True)
     estado = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
@@ -743,6 +744,22 @@ class Cliente(Base):
 
 def set_default_cliente():
     return Cliente.objects.get_or_create(nome='Cliente Deletado')[0] #(objeto, boolean)
+
+class Datasemcarga(Base):
+    data_semcarga = models.DateField('Data', help_text="dd/mm/aaaa | Data Sem Descarga")
+    cliente       = models.ForeignKey(Cliente, on_delete=models.PROTECT)
+    obs           = models.TextField('Observação', max_length=500, blank=True)
+    history       = HistoricalRecords()
+
+    class Meta:
+        ordering = ['-data_semcarga']
+        verbose_name = 'Data Sem Descarga'
+        verbose_name_plural = 'Datas Sem Descarga'
+    
+    def __str__(self):
+        return f'{self.cliente}: Sem descarga dia {self.data_semcarga}'
+
+
 
 
 class Transportadora(Base):

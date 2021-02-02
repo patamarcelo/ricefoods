@@ -24,6 +24,44 @@ class CidadeAdmin(admin.ModelAdmin):
 
 
 
+class DatasemcargaAdmin(SimpleHistoryAdmin):
+    list_display = ('get_data', 'cliente','ativo','get_data_alterado','get_data_criado')
+    search_fields = ['data_semcarga', 'cliente']
+    list_filter = ('data_semcarga', 'cliente')
+    fieldsets = (
+        ('Data Sem Descarga', {
+            'fields': ('ativo','data_semcarga','cliente')
+        }),        
+        ('Observação', {
+            'fields': ('obs',)
+        }),    
+    )
+    history_list_display = ['data_semcarga','cliente','ativo','changed_fields']
+
+    def changed_fields(self, obj):
+        if obj.prev_record:
+            delta = obj.diff_against(obj.prev_record)
+            camposalterados = str(delta.changed_fields)
+            return camposalterados
+        else:
+            return 'Sem Alterações'
+    
+
+    def get_data(self,obj):
+        return date_format(obj.data_semcarga, format='SHORT_DATE_FORMAT', use_l10n=True)
+    get_data.short_description = 'Data S/ Desc.'
+    
+    def get_data_criado(self,obj):        
+        return obj.criados.strftime("%d/%m/%Y %H:%M:%S")
+    get_data_criado.short_description = 'Criado'
+    
+    def get_data_alterado(self,obj):        
+        return obj.modificado.strftime("%d/%m/%Y %H:%M:%S")
+    get_data_alterado.short_description = 'Atualização'
+
+admin.site.register(Datasemcarga, DatasemcargaAdmin)
+
+
 @admin.register(Fornecedor)
 class FornecedorAdmin(admin.ModelAdmin):
     list_display = ('nome','cpf_cnpj','get_insc','cidade','ativo','get_modificado') 
@@ -192,15 +230,6 @@ class PedidoAdmin(admin.ModelAdmin):
     def get_cidade(self,obj):
         return obj.fornecedor.cidade
     get_cidade.short_description = "Cidade"
-
-    
-   
-   
-    
-        
-
-    
-   
 
 @admin.register(Transportadora)
 class TransportadoraAdmin(admin.ModelAdmin):

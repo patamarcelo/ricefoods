@@ -428,6 +428,7 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)        
         context["pedidos"] = Pedido.objects.filter(situacao="a").all()
         context['clientes'] = Cliente.objects.order_by('-nome').all
+        context['datasemcarga'] = Datasemcarga.objects.all()
         return context
 
 class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
@@ -447,6 +448,7 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)        
         context["pedidos"] = Pedido.objects.filter(situacao="a").all()
         context['clientes'] = Cliente.objects.order_by('-nome').all
+        context['datasemcarga'] = Datasemcarga.objects.all()
         return context
 
 class UpdateclassCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
