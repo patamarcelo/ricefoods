@@ -12,7 +12,12 @@
 
     #icms {
         height: 25px;
-    }    
+    } 
+
+    .clicked {
+        background-color: #111111 !important;
+        color: whitesmoke !important;
+    }   
 </style>
 
 <br />
@@ -66,7 +71,7 @@
 
             <tbody class="align-text-bottom" id="tabelascargas10">
                 {% for carga in cargas|slice:":100" %}
-                <tr>
+                <tr class="simplehighlight">
 
                     {% if carga.pedido.situacao == "a" %}
                     <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
@@ -294,6 +299,10 @@
 
 </style>
 <script>
+
+    $(".simplehighlight").click(function() {
+            $(this).toggleClass('clicked');
+    });
 
     
     //Chama a função com click em qualquer checkbox

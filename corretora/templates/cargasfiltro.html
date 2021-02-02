@@ -84,11 +84,7 @@
             color: whitesmoke;
         }
 
-        td.selected,
-        td.selected:hover {
-            background-color: #111111;
-            color: whitesmoke;
-        }
+
 
         body {
             background-color: #363639;
@@ -403,7 +399,10 @@
         }
 
         
-
+        .clicked {
+            background-color: #111111 !important;
+            color: whitesmoke !important;
+        }
         
     </style>
     <!--Favicon-->
@@ -760,7 +759,7 @@
                     </thead>
                     <tbody>
                         {% for carga in object_list %}                        
-                        <tr>
+                        <tr class="simplehighlight">
                             <td>{{ page_obj.start_index|add:forloop.counter0 }}</td>
                             {% if carga.pedido.situacao == "a" %}
                             <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
@@ -1423,6 +1422,11 @@
 
 
 <script>
+
+    $(".simplehighlight").click(function() {
+            $(this).toggleClass('clicked');
+        });
+
     $(document).ready(function () {
         $('#cargas5').DataTable({
             "searching": false

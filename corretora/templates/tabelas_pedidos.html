@@ -19,6 +19,11 @@
         height: 25px;
     }
 
+    .clicked {
+        background-color: #111111 !important;
+        color: whitesmoke !important;
+    }
+
 </style>
 <br />
 <div class="container-fluid tabini sombra" align=center id="resumopedidos">
@@ -70,7 +75,7 @@
             <tbody>
                 {% for pedido in pedidos|slice:":100" %}
 
-                <tr>
+                <tr class="simplehighlight2">
                     {% if pedido.carregado %}
                     <td><a class="text" href="{% url 'detail_cargas' pedido.pk %}" target="_blank"
                             style='font-style:italic; color: blanchedalmond; text-decoration: underline;'><strong>{{ pedido.contrato }}</strong></a>
@@ -240,7 +245,10 @@
 
 
 <script>
-   
+    $(".simplehighlight2").click(function() {
+        $(this).toggleClass('clicked');
+    });
+
 
 
     $("#dtBasicExample").find("input:checkbox").on("change", function () {

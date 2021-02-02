@@ -76,11 +76,7 @@
             color: whitesmoke;
         }
 
-        td.selected,
-        td.selected:hover {
-            background-color: #111111;
-            color: whitesmoke;
-        }
+        
 
 
         body {
@@ -157,6 +153,11 @@
         .pedidosbot {
             position: relative;
             left: 2%;
+        }
+
+        .clicked {
+            background-color: #111111 !important;
+            color: whitesmoke !important;
         }
 
     </style>
@@ -252,7 +253,7 @@
             </thead>
             <tbody>
                 {% for pedido in pedidos %}
-                <tr align=center>
+                <tr align=center class="simplehighlight">
                     <td>{{ page_obj.start_index|add:forloop.counter0  }}</td>
                     {% if pedido.carregado %}
                     <td><a class="text" href="{% url 'detail_cargas' pedido.pk %}" target="_blank"
@@ -439,6 +440,11 @@
 <!-- MDBootstrap Datatables  -->
 <script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
 <script>
+
+    $(".simplehighlight").click(function() {
+            $(this).toggleClass('clicked');
+        });
+
 
     $(document).ready(function () {
         $('#dtBasicExample').DataTable({
