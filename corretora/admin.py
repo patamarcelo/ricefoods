@@ -116,7 +116,7 @@ class FornecedorAdmin(admin.ModelAdmin):
 
 @admin.register(Cliente)
 class ClienteAdmin(admin.ModelAdmin):
-    list_display = ('nome_fantasia','cpf_cnpj','get_insc','cidade','ativo','get_modificado','dias_descarga','veiculos_dia','color')
+    list_display = ('nome_fantasia','cpf_cnpj','get_insc','cidade','ativo','get_modificado','dias_descarga','veiculos_dia','descarga_sabado','color')
     fieldsets = (
         ('Situação', {
             'fields': ('ativo',)
@@ -128,7 +128,7 @@ class ClienteAdmin(admin.ModelAdmin):
             'fields': (('cidade', 'estado'), 'endereco','telefone', ('dias_descarga', 'veiculos_dia'))
         }),
         ('Observação', {
-            'fields': ('obs','color')
+            'fields': ('descarga_sabado','obs','color')
         }),
     )
     

@@ -103,18 +103,19 @@ def set_default_fornecedor():
        
 
 class Cliente(Base):
-    nome          = models.CharField('Nome', max_length=50)
-    nome_fantasia = models.CharField('Nome Fantasia', max_length=50)
-    cnpj_cpf      = models.CharField('CNPJ/CPF', max_length=14,  unique=True,  null=True, help_text="digite apenas números")
-    insc_estadual = models.CharField('Inscrição Estadual',  unique=True,  max_length=10, help_text="digite apenas números",null=True)
-    telefone      = models.CharField('Telefone',max_length=11, help_text="digite apenas números", null=True)
-    endereco      = models.CharField('Endereço', max_length=50)
-    cidade        = models.ForeignKey(Cidade, on_delete=models.PROTECT)
-    estado        = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
-    color         = models.CharField('Cor', max_length=20, default='whitesmoke')    
-    dias_descarga = models.PositiveIntegerField('Desc. do Carr.', default=3,help_text="dias para a descarga do carregamento")
-    veiculos_dia = models.PositiveIntegerField('Veiculos Dia', default=10, help_text="máximo veículos descarga por dia")
-    obs           = models.TextField('Observação', max_length=500, blank=True)
+    nome            = models.CharField('Nome', max_length=50)
+    nome_fantasia   = models.CharField('Nome Fantasia', max_length=50)
+    cnpj_cpf        = models.CharField('CNPJ/CPF', max_length=14,  unique=True,  null=True, help_text="digite apenas números")
+    insc_estadual   = models.CharField('Inscrição Estadual',  unique=True,  max_length=10, help_text="digite apenas números",null=True)
+    telefone        = models.CharField('Telefone',max_length=11, help_text="digite apenas números", null=True)
+    endereco        = models.CharField('Endereço', max_length=50)
+    cidade          = models.ForeignKey(Cidade, on_delete=models.PROTECT)
+    estado          = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
+    color           = models.CharField('Cor', max_length=20, default='whitesmoke')
+    dias_descarga   = models.PositiveIntegerField('Desc. do Carr.', default=3,help_text="dias para a descarga do carregamento")
+    veiculos_dia    = models.PositiveIntegerField('Veiculos Dia', default=10, help_text="máximo veículos descarga por dia")
+    descarga_sabado = models.BooleanField('Descarga Sábado', default=False)
+    obs             = models.TextField('Observação', max_length=500, blank=True)
 
     def mesanterior(self):
         lastm = today.month - 1 if today.month > 1 else 12
@@ -748,7 +749,7 @@ def set_default_cliente():
 class Datasemcarga(Base):
     data_semcarga = models.DateField('Data', help_text="dd/mm/aaaa | Data Sem Descarga")
     cliente       = models.ForeignKey(Cliente, on_delete=models.PROTECT)
-    obs           = models.TextField('Observação', max_length=500, blank=True)
+    obs           = models.TextField('Observação', max_length=2000, blank=True)
     history       = HistoricalRecords()
 
     class Meta:
