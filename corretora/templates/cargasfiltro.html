@@ -808,7 +808,7 @@
 
                             {% if todays_date == carga.data|date:"Y-m-d" %}
                             <td class="text-primary"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
-                            {% elif todays_date > carga.data|date:"Y-m-d" and carga.situacao == 'Agendado' and carga.ordem == False %}
+                            {% elif todays_date > carga.data|date:"Y-m-d" and carga.situacao == 'Agendado'  %}
                             <td class="text-danger"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
                             {% else %}
                             <td>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</td>
