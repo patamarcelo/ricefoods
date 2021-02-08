@@ -7,6 +7,7 @@ import calendar
 from datetime import timedelta 
 from datetime import datetime
 # import datetime
+import dateutil.relativedelta
 
 import locale
 import time
@@ -106,42 +107,31 @@ def nome_mes(datemont):
 
 @register.filter
 def nome_mes_anterior(datemont):
-
-    numeromes = datetime.now().month
-    if numeromes == 1:        
-        return nomes.get(12)
-    else:
-        mesanterior = numeromes - 1
-        return nomes.get(mesanterior)
+    monthdelta = dateutil.relativedelta.relativedelta(months=1)    
+    numeromes = datetime.now() - monthdelta    
+    numeromes = numeromes.month
+    return nomes.get(numeromes)
 
 
 @register.filter
-def nome_mes_anteanterior(datemont):
-
-    numeromes = datetime.now().month
-    if numeromes == 1:        
-        return nomes.get(11)
-    else:
-        mesanterior = numeromes - 2
-        return nomes.get(mesanterior)
+def nome_mes_anteanterior(datemont):    
+    monthdelta = dateutil.relativedelta.relativedelta(months=2)    
+    numeromes = datetime.now() - monthdelta    
+    numeromes = numeromes.month
+    return nomes.get(numeromes)
 
 
 @register.filter
 def nome_mes_tresanterior(datemont):
-
-    numeromes = datetime.now().month
-    if numeromes == 1:        
-        return nomes.get(10)
-    else:
-        mestresanterior = numeromes - 3
-        return nomes.get(mestresanterior)
+    monthdelta = dateutil.relativedelta.relativedelta(months=3)    
+    numeromes = datetime.now() - monthdelta    
+    numeromes = numeromes.month
+    return nomes.get(numeromes)
 
 @register.filter
-def nome_mes_quatroanterior(datemont):
-    numeromes = datetime.now().month
-    if numeromes == 1:        
-        return nomes.get(9)
-    else:
-        mesquatroanterior = numeromes - 4
-        return nomes.get(mesquatroanterior)
+def nome_mes_quatroanterior(datemont):    
+    monthdelta = dateutil.relativedelta.relativedelta(months=4)    
+    numeromes = datetime.now() - monthdelta    
+    numeromes = numeromes.month
+    return nomes.get(numeromes)
 
