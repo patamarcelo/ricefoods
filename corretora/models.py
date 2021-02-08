@@ -6,6 +6,7 @@ from django.db.models import F, FloatField, Sum, Avg, Count
 from datetime import timedelta
 import datetime
 from simple_history.models import HistoricalRecords
+import dateutil.relativedelta
 
 
 class NameField(models.CharField):
@@ -54,6 +55,21 @@ UF_CHOICES = (
     ('SP', 'São Paulo'),
     ('TO', 'Tocantins')
 )
+
+NOMES_DATAS = {
+    1: "Janeiro",
+    2: "Fevereiro",
+    3: "Março",
+    4: "Abril",
+    5: "Maio",
+    6: "Junho",
+    7: "Julho",
+    8: "Agosto",
+    9: "Setembro",
+    10: "Outubro",
+    11: "Novembro",
+    12: "Dezembro",
+}
 
 
 
@@ -489,6 +505,68 @@ class Cliente(Base):
         else:
             return self.carregadomestresanterior
     
+    def carregado_geral_por_cliente(self):
+        pesospordata = {}
+        pesospordata_ordenado = {}
+        filt = self.nome_fantasia
+        for i in range(0,6):
+            monthdelta = dateutil.relativedelta.relativedelta(months=i)
+            numeromes = datetime.datetime.now() - monthdelta
+            anoalterado =  numeromes.year
+            mesalterado =  numeromes.month            
+            chave_dict = f'{anoalterado}-{mesalterado}'
+            query_carregado = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(data__year=anoalterado, data__month=mesalterado).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+            pesocarregado_porcliente = query_carregado if query_carregado != None else 0
+            pesospordata[chave_dict] = pesocarregado_porcliente        
+        for k,v in pesospordata.items():
+            dict_element={k:v}
+            dict_element.update(pesospordata_ordenado)
+            pesospordata_ordenado=dict_element
+        self.carregado_geral_por_cliente = pesospordata_ordenado
+        print(self.carregado_geral_por_cliente)
+        return self.carregado_geral_por_cliente
+    
+    def carregado_geral_por_cliente_somentequatro(self):
+        pesospordata = {}
+        pesospordata_ordenado = {}
+        filt = self.nome_fantasia
+        for i in range(0,4):
+            monthdelta = dateutil.relativedelta.relativedelta(months=i)
+            numeromes = datetime.datetime.now() - monthdelta
+            anoalterado =  numeromes.year
+            mesalterado =  numeromes.month            
+            chave_dict = f'{anoalterado}-{mesalterado}'
+            query_carregado = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(data__year=anoalterado, data__month=mesalterado).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+            pesocarregado_porcliente = query_carregado if query_carregado != None else 0
+            pesospordata[chave_dict] = pesocarregado_porcliente        
+        for k,v in pesospordata.items():
+            dict_element={k:v}
+            dict_element.update(pesospordata_ordenado)
+            pesospordata_ordenado=dict_element
+        self.carregado_geral_por_cliente_somentequatro = pesospordata_ordenado
+        print(self.carregado_geral_por_cliente_somentequatro)
+        return self.carregado_geral_por_cliente_somentequatro
+    
+    def carregado_geral_por_geral(self):
+        pesospordata = {}
+        pesospordata_ordenado = {}        
+        for i in range(0,6):
+            monthdelta = dateutil.relativedelta.relativedelta(months=i)
+            numeromes = datetime.datetime.now() - monthdelta
+            anoalterado =  numeromes.year
+            mesalterado =  numeromes.month            
+            chave_dict = f'{anoalterado}-{mesalterado}'
+            query_carregado = Carga.objects.filter(data__year=anoalterado, data__month=mesalterado).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+            pesocarregado_porcliente = query_carregado if query_carregado != None else 0
+            pesospordata[chave_dict] = pesocarregado_porcliente        
+        for k,v in pesospordata.items():
+            dict_element={k:v}
+            dict_element.update(pesospordata_ordenado)
+            pesospordata_ordenado=dict_element
+        self.carregado_geral_por_geral = pesospordata_ordenado
+        print(f'Toais Carregados: {self.carregado_geral_por_geral}')
+        return self.carregado_geral_por_geral
+
     def carregadosemana(self):
         filt = self.nome_fantasia
         today = datetime.date.today()

@@ -114,11 +114,19 @@ def nome_mes_anterior(datemont):
 
 
 @register.filter
+def nome_mes_conforme_dict(datemont):
+    variavel = datemont
+    print(variavel)
+    numerodomes = datemont.split('-')[-1]        
+    print(f'Numero do mes: {numerodomes} - {type(numerodomes)}')
+    return nomes.get(int(numerodomes))
+
+@register.filter
 def nome_mes_anteanterior(datemont):    
     monthdelta = dateutil.relativedelta.relativedelta(months=2)    
     numeromes = datetime.now() - monthdelta    
     numeromes = numeromes.month
-    return nomes.get(numeromes)
+    return nomes.get(numeromes) 
 
 
 @register.filter

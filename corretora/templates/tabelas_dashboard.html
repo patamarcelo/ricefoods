@@ -253,15 +253,12 @@
                             <th scope="col" class="text-warning text-center"><strong>Agendado</strong></th>
                             <th scope="col" class="text-info text-center"><strong>Total</strong></th>
                             <th scope="col" class="text-warning text-center"><strong>Semana Seguinte</strong></th>
-                            <th scope="col" class="text-secondary text-center">
-                                <strong>{{0|nome_mes_tresanterior}}</strong>
+                            {% for c in clientes|slice:":1" %}
+                            {% for key, value in c.carregado_geral_por_geral.items %}                           
+                            <th scope="col" class="text-secondary text-center"><strong>{{key|nome_mes_conforme_dict}}</strong>
                             </th>
-                            <th scope="col" class="text-secondary text-center">
-                                <strong>{{0|nome_mes_anteanterior}}</strong>
-                            </th>
-                            <th scope="col" class="text-secondary text-center"><strong>{{0|nome_mes_anterior}}</strong>
-                            </th>
-                            <th scope="col" class="text-success text-center"><strong>{{0|nome_mes}}</strong></th>
+                            {% endfor %}
+                            {% endfor %}                            
                         </tr>
                     </thead>
                     <tbody align="center">
@@ -300,29 +297,13 @@
                             <td>{{ cliente.agendadosemanaseguinte }} Kg</td>
                             {% endif %}
 
-                            {% if cliente.carregadomestresanterior == 0 %}
-                            <td>-</td>
+                            {% for key, value in cliente.carregado_geral_por_cliente.items %}
+                            {% if value > 0 %}
+                            <td>{{value}} Kg</td>
                             {% else %}
-                            <td>{{ cliente.carregadomestresanterior }} Kg</td>
-                            {% endif %}
-
-                            {% if cliente.carregadomesanteanterior == 0 %}
                             <td>-</td>
-                            {% else %}
-                            <td>{{ cliente.carregadomesanteanterior }} Kg</td>
                             {% endif %}
-
-                            {% if cliente.carregadomesanterior == 0 %}
-                            <td>-</td>
-                            {% else %}
-                            <td>{{ cliente.carregadomesanterior }} Kg</td>
-                            {% endif %}
-
-                            {% if cliente.carregadomes == 0 %}
-                            <td>-</td>
-                            {% else %}
-                            <td>{{ cliente.carregadomes }} Kg</td>
-                            {% endif %}
+                            {% endfor %}
                             {% else %}
                             {% endif %}
 
@@ -338,10 +319,9 @@
                                 <td colspan=""></td>                                                                    
                                 <td colspan=""></td>                                                                    
                                 <td colspan=""></td>                                                                    
-                                <td class="text-center">{{c.carregadomestresanteriortotal|intcomma}} Kg</td>                                                                    
-                                <td class="text-center">{{c.carregadomesanteanteriortotal|intcomma}} Kg</td>                                                                    
-                                <td class="text-center">{{c.carregadomesanteriortotal|intcomma}} Kg</td>                                                                    
-                                <td class="text-center">{{c.carregadomestotal|intcomma}} Kg </td>                                                                    
+                                {% for key, value in c.carregado_geral_por_geral.items %}
+                                <td class="text-center">{{value|intcomma}} Kg</td>       
+                                {% endfor %}
                             </tr>
                             {% endfor %}
                         </tfoot> 

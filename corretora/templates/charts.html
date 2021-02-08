@@ -102,7 +102,7 @@
                 backgroundColor: '{{cliente.color}}',
                 borderColor: 'whitesmoke',
                 borderWidth: 0.5,
-                data: [{{ cliente.carregadomestresanterior|safe }}, {{ cliente.carregadomesanteanterior|safe }}, {{ cliente.carregadomesanterior|safe }}, {{ cliente.carregadomes|safe }}]
+                data: [{% for key, value in cliente.carregado_geral_por_cliente_somentequatro.items %} {% if value > 0 %} {{ value|safe }},{% else %} {% endif %} {% endfor %}]
             },{% endif %}{% endfor %}]            
         },
         
