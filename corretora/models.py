@@ -509,7 +509,7 @@ class Cliente(Base):
         pesospordata = {}
         pesospordata_ordenado = {}
         filt = self.nome_fantasia
-        for i in range(0,6):
+        for i in range(0,7):
             monthdelta = dateutil.relativedelta.relativedelta(months=i)
             numeromes = datetime.datetime.now() - monthdelta
             anoalterado =  numeromes.year
@@ -550,7 +550,7 @@ class Cliente(Base):
     def carregado_geral_por_geral(self):
         pesospordata = {}
         pesospordata_ordenado = {}        
-        for i in range(0,6):
+        for i in range(0,7):
             monthdelta = dateutil.relativedelta.relativedelta(months=i)
             numeromes = datetime.datetime.now() - monthdelta
             anoalterado =  numeromes.year
@@ -566,6 +566,18 @@ class Cliente(Base):
         self.carregado_geral_por_geral = pesospordata_ordenado
         print(f'Toais Carregados: {self.carregado_geral_por_geral}')
         return self.carregado_geral_por_geral
+
+    def carregamento_ultimos_meses(self):
+        filt = self.nome_fantasia
+        monthdelta = dateutil.relativedelta.relativedelta(months=7)
+        numeromes = datetime.datetime.now() - monthdelta
+        anoalterado =  numeromes.year
+        mesalterado =  numeromes.month
+        query_carregado = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(data__year__gte=anoalterado, data__month__gte=mesalterado).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+        pesocarregado_porcliente = query_carregado if query_carregado != None else 0
+        self.carregamento_ultimos_meses = pesocarregado_porcliente
+        return self.carregamento_ultimos_meses
+
 
     def carregadosemana(self):
         filt = self.nome_fantasia

@@ -143,3 +143,24 @@ def nome_mes_quatroanterior(datemont):
     numeromes = numeromes.month
     return nomes.get(numeromes)
 
+@register.filter
+def nome_mes_cincoanterior(datemont):    
+    monthdelta = dateutil.relativedelta.relativedelta(months=5)    
+    numeromes = datetime.now() - monthdelta    
+    numeromes = numeromes.month
+    return nomes.get(numeromes)
+
+@register.filter
+def nome_mes_seisanterior(datemont):    
+    monthdelta = dateutil.relativedelta.relativedelta(months=6)    
+    numeromes = datetime.now() - monthdelta    
+    numeromes = numeromes.month
+    return nomes.get(numeromes)
+
+@register.filter
+def nome_mes_seteanterior(datemont):    
+    monthdelta = dateutil.relativedelta.relativedelta(months=7)    
+    numeromes = datetime.now() - monthdelta    
+    numeromes = numeromes.month
+    return nomes.get(numeromes)
+

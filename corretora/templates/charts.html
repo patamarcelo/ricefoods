@@ -41,6 +41,7 @@
     </div>
 </div>
 <br>
+<br>
 
 <div class="container">
     <div class="row">
@@ -96,13 +97,13 @@
 
         // The data for our dataset
         data: {
-            labels: ['{{0|nome_mes_tresanterior}}', '{{0|nome_mes_anteanterior}}', '{{0|nome_mes_anterior}}', '{{0|nome_mes}}'],
-            datasets: [{% for cliente in clientes %}{% if cliente.carregadomes > 0 or cliente.carregadomesanterior > 0  or cliente.carregadomesanteanterior > 0 or cliente.carregadomestresanterior > 0 %}{
+            labels: ['{{0|nome_mes_seisanterior}}','{{0|nome_mes_cincoanterior}}','{{0|nome_mes_quatroanterior}}','{{0|nome_mes_tresanterior}}', '{{0|nome_mes_anteanterior}}', '{{0|nome_mes_anterior}}', '{{0|nome_mes}}'],
+            datasets: [{% for cliente in clientes %}{% if cliente.carregamento_ultimos_meses > 0 %}{
                 label: '{{ cliente.nome_fantasia|safe }}',                               
                 backgroundColor: '{{cliente.color}}',
                 borderColor: 'whitesmoke',
                 borderWidth: 0.5,
-                data: [{% for key, value in cliente.carregado_geral_por_cliente_somentequatro.items %} {% if value > 0 %} {{ value|safe }},{% else %} {% endif %} {% endfor %}]
+                data: [{% for key, value in cliente.carregado_geral_por_cliente.items %} {% if value > 0 %} {{ value|safe }},{% else %} 0,{% endif %} {% endfor %}]
             },{% endif %}{% endfor %}]            
         },
         
