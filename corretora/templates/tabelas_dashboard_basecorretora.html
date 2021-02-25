@@ -106,7 +106,7 @@
                     </thead>
                     <tbody align="center">
                         {% for cliente in clientes %}
-                        <tr align=" center">
+                        <tr align=" center" class="simplehighlight">
                             {% if cliente.locaiscarrega > 0 %}
                             <td style="color: {{cliente.color}}"><em><strong>{{ cliente.nome_fantasia|upper }}</strong></em></td>
                             {% else %}
@@ -172,7 +172,7 @@
                     </thead>
                     <tbody align="center">
                         {% for cliente in clientes %}
-                        <tr align="center">
+                        <tr align="center" class="simplehighlight">
                             {% if cliente.comissaoabertocasca > 0 or cliente.comissaosemanacasca > 0 or cliente.comissaomescasca > 0%}
                             <td style="color: {{cliente.color}}"><em><strong>{{ cliente.nome_fantasia|upper }}</strong></em></td>
                             {% if cliente.comissaosemanacasca == 0 %}
@@ -229,7 +229,7 @@
                     </thead>
                     <tbody align="center">
                         {% for cliente in clientes %}
-                        <tr align=" center">
+                        <tr align=" center" class="simplehighlight">                        
                             {% if cliente.agendadosemana > 0 or cliente.carregadosemana > 0 or cliente.agendadoordemsemana > 0 or cliente.agendadosemanaseguinte > 0 %}
                             <td style="color: {{cliente.color}}"><em><strong>{{ cliente.nome_fantasia|upper }}</strong></em></td>
                             {% if cliente.carregadosemana == 0 %}

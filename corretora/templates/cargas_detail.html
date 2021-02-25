@@ -75,6 +75,14 @@
             font-weight: bold;
         }
 
+
+        .clicked {
+            background-color: #111111 !important;
+            color: whitesmoke !important;
+            background-color: #a9a9a9 !important;
+            color: black !important;
+        }
+
     </style>
     <style>
         .table-hover>tbody>tr:not(.nothover):hover>td,
@@ -336,7 +344,7 @@
                     {% for pedido in pedidos %}
                     {% if carga.situacao == 'Carregado' %}
 
-                    <tr align="center" class="corpodados">
+                    <tr align="center" class="corpodados simplehighlight">                        
                         <td>{{ forloop.parentloop.counter }}</td>
                         <td>{{ carga.pedido }}</td>
                         <td>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</td>
@@ -678,7 +686,7 @@
                     {% for pedido in pedidos %}
                     {% if carga.situacao == 'Carregado' %}
 
-                    <tr align="center">
+                    <tr align="center" class="simplehighlight">
                         <td>{{ forloop.parentloop.counter }}</b></td>
                         <td><b>{{ carga.pedido }}</b></td>
                         <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
@@ -1065,7 +1073,7 @@
                     {% for pedido in pedidos %}
                     {% if carga.situacao == 'Carregado' %}
 
-                    <tr align="center">
+                    <tr align="center" class="simplehighlight">
                         <td>{{ forloop.parentloop.counter }}</b></td>
                         <td><b>{{ carga.pedido }}</b></td>
                         <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
@@ -1321,7 +1329,7 @@
                     {% for pedido in pedidos %}
                     {% if carga.situacao == 'Carregado' %}
 
-                    <tr align="center">
+                    <tr align="center" class="simplehighlight">
                         <td>{{ forloop.parentloop.counter }}</b></td>
                         <td><b>{{ carga.pedido }}</b></td>
                         <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
@@ -1462,6 +1470,12 @@
 <!-- MDBootstrap Datatables  -->
 <script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
 <script>
+    
+    $(".simplehighlight").click(function() {
+        $(this).toggleClass('clicked');
+    });
+    
+    
     $(document).ready(function () {
         $('#cargas').DataTable({
             "order": [[3, "asc"]]

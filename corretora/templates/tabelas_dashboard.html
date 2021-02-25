@@ -94,7 +94,7 @@
                     </thead>
                     <tbody align="center">
                         {% for cliente in clientes %}
-                        <tr align=" center">
+                        <tr align=" center" class="simplehighlight">
                             {% if cliente.locaiscarrega > 0 %}
                             
                             <td style="color: {{cliente.color}}"><em><strong>{{ cliente.nome_fantasia|upper }}</strong></em></td>
@@ -174,7 +174,7 @@
                     </thead>
                     <tbody align="center">
                         {% for cliente in clientes %}                        
-                        <tr align="center">
+                        <tr align=" center" class="simplehighlight">
                             {% if cliente.comissaoabertocasca > 0 or cliente.comissaosemanacasca > 0 or cliente.comissaomescasca > 0 or cliente.comissaomescascaanterior > 0 or cliente.comissaomescascaanteanterior > 0 or cliente.comissaomescascatresanterior > 0 or cliente.comissaomescascaquatroanterior > 0 %}
                             <td style="color: {{cliente.color}}"><em><strong>{{ cliente.nome_fantasia|upper }}</strong></em></td>
                             
@@ -253,17 +253,22 @@
                             <th scope="col" class="text-warning text-center"><strong>Agendado</strong></th>
                             <th scope="col" class="text-info text-center"><strong>Total</strong></th>
                             <th scope="col" class="text-warning text-center"><strong>Semana Seguinte</strong></th>
+                            {% now "Y-n" as current_month %}                            
                             {% for c in clientes|slice:":1" %}
                             {% for key, value in c.carregado_geral_por_geral.items %}                           
-                            <th scope="col" class="text-secondary text-center"><strong>{{key|nome_mes_conforme_dict}}</strong>
+                            {% if key == current_month %}
+                            <th scope="col" class="text-success text-center"><strong>{{key|nome_mes_conforme_dict}}</strong></th>
+                            {% else %}
+                                <th scope="col" class="text-secondary text-center"><strong>{{key|nome_mes_conforme_dict}}</strong>
                             </th>
+                            {% endif %}
                             {% endfor %}
                             {% endfor %}                            
                         </tr>
                     </thead>
                     <tbody align="center">
                         {% for cliente in clientes %}
-                        <tr align=" center">                            
+                        <tr align=" center" class="simplehighlight">                            
                             {% if cliente.carregamento_ultimos_meses >  0 %}
                             <td style="color: {{cliente.color}}"><em><strong>{{ cliente.nome_fantasia|upper }}</strong></em></td>
 
