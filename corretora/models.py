@@ -863,7 +863,7 @@ class Transportadora(Base):
     obs      = models.TextField('Observação', max_length=500, blank=True)
 
     class Meta:
-        ordering = ['criados','nome']
+        ordering = ['nome']
         verbose_name = 'Transportadora'
         verbose_name_plural = 'Transportadoras'
 
@@ -1040,8 +1040,9 @@ class Pedido(Base):
         return self.contrato   
 
 
-
-
+def get_default_transp_name():
+    return Transportadora.objects.get(nome="GDX Log")
+DEFAULT_TRANSP_FORM = 'GDX Log'
 
 class Carga(Base):
     STATUS_CHOICES = (
@@ -1073,7 +1074,7 @@ class Carga(Base):
     data        = models.DateField(help_text="dd/mm/aaaa")
     data_agenda = models.DateField('Data', null=True, blank=True, default=None, help_text="dd/mm/aaaa")
     buonny      = models.CharField('Buonny', max_length=15)
-    transp      = models.ForeignKey(Transportadora, on_delete=models.PROTECT, default='GDX Log')
+    transp      = models.ForeignKey(Transportadora, on_delete=models.PROTECT, default=get_default_transp_name)
     
     situacao  = models.CharField('Situação', max_length=12, choices=STATUS_CHOICES, default='Agendado')
     placa     = NameField('Placa', max_length=7, help_text="Somente dígitos")
