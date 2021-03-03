@@ -203,8 +203,12 @@ class Cliente(Base):
     def comissaomescascaanterior(self):
         filt = self.nome_fantasia
         today = datetime.date.today()
-        lastm = today.month - 1 if today.month > 1 else 12
-        lastmy = today.year if today.month > lastm else today.year -1
+        
+        monthdelta = dateutil.relativedelta.relativedelta(months=1)            
+        lastms = datetime.datetime.now() - monthdelta  
+        lastm = lastms.month              
+        lastmy = lastms.year
+        
         comimesanteriorcascacda = Carga.objects.filter(data__year=lastmy, data__month=lastm).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
         comimesanteriorcasca = Carga.objects.filter(data__year=lastmy, data__month=lastm).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
         comimesanteriorsemente = Carga.objects.filter(data__year=lastmy, data__month=lastm).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Semente').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum(F('valornf') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
@@ -236,8 +240,12 @@ class Cliente(Base):
     def comissaomescascaanteanterior(self):
         filt = self.nome_fantasia
         today = datetime.date.today()
-        lastmm = today.month - 2 if today.month > 2 else 11
-        lastmmy = today.year if today.month > lastmm else today.year -1
+
+        monthdelta = dateutil.relativedelta.relativedelta(months=2)            
+        lastmms = datetime.datetime.now() - monthdelta  
+        lastmm = lastmms.month      
+        lastmmy = lastmms.year
+        
         comimesanteanteriorcascacda = Carga.objects.filter(data__year=lastmmy, data__month=lastmm).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
         comimesanteanteriorcasca = Carga.objects.filter(data__year=lastmmy, data__month=lastmm).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
         comimesanteanteriorsemente = Carga.objects.filter(data__year=lastmmy, data__month=lastmm).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Semente').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum(F('valornf') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
@@ -269,8 +277,12 @@ class Cliente(Base):
     def comissaomescascatresanterior(self):
         filt = self.nome_fantasia
         today = datetime.date.today()
-        lastmm3 = today.month - 3 if today.month > 3 else 10
-        lastmmy3 = today.year if today.month > lastmm3 else today.year -1
+        
+        monthdelta = dateutil.relativedelta.relativedelta(months=3)            
+        lastmms3 = datetime.datetime.now() - monthdelta  
+        lastmm3 = lastmms3.month              
+        lastmmy3 = lastmms3.year
+        
         comimescascatresanteriorcda = Carga.objects.filter(data__year=lastmmy3, data__month=lastmm3).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
         comimestresanteriorcasca = Carga.objects.filter(data__year=lastmmy3, data__month=lastmm3).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
         comimestresanteriorsemente = Carga.objects.filter(data__year=lastmmy3, data__month=lastmm3).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Semente').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum(F('valornf') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
@@ -301,8 +313,12 @@ class Cliente(Base):
     def comissaomescascaquatroanterior(self):
         filt = self.nome_fantasia
         today = datetime.date.today()
-        lastmm3 = today.month - 4 if today.month > 4 else 9
-        lastmmy3 = today.year if today.month > lastmm3 else today.year -1
+
+        monthdelta = dateutil.relativedelta.relativedelta(months=4)            
+        lastmms3 = datetime.datetime.now() - monthdelta          
+        lastmm3 = lastmms3.month              
+        lastmmy3 = lastmms3.year
+
         comimescascatresanteriorcda = Carga.objects.filter(data__year=lastmmy3, data__month=lastmm3).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
         comimestresanteriorcasca = Carga.objects.filter(data__year=lastmmy3, data__month=lastmm3).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
         comimestresanteriorsemente = Carga.objects.filter(data__year=lastmmy3, data__month=lastmm3).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Semente').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum(F('valornf') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
@@ -329,6 +345,78 @@ class Cliente(Base):
             else:
                 self.comissaomescascaquatroanterior = comimestresanteriorcasca
                 return self.comissaomescascaquatroanterior
+
+    def comissaomescascacincoanterior(self):
+        filt = self.nome_fantasia
+        today = datetime.date.today()
+
+        monthdelta = dateutil.relativedelta.relativedelta(months=5)            
+        lastmms5 = datetime.datetime.now() - monthdelta  
+        lastmm5 = lastmms5.month      
+        lastmmy5 = lastmms5.year
+        
+        comimescascacincoanteriorcda = Carga.objects.filter(data__year=lastmmy5, data__month=lastmm5).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+        comimescincoanteriorcasca = Carga.objects.filter(data__year=lastmmy5, data__month=lastmm5).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+        comimescincoanteriorsemente = Carga.objects.filter(data__year=lastmmy5, data__month=lastmm5).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Semente').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum(F('valornf') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+
+
+        if 'CDA' in filt:
+            if comimescascacincoanteriorcda == None:
+                self.comissaomescascacincoanterior = 0
+                return self.comissaomescascacincoanterior            
+            else:
+                self.comissaomescascacincoanterior = comimescascacincoanteriorcda
+                return self.comissaomescascacincoanterior
+        elif 'iamant' in filt:
+            if comimescincoanteriorsemente == None:
+                self.comissaomescascacincoanterior = 0
+                return self.comissaomescascacincoanterior            
+            else:
+                self.comissaomescascacincoanterior = comimescincoanteriorsemente
+                return self.comissaomescascacincoanterior
+        else:
+            if comimescincoanteriorcasca == None:
+                self.comissaomescascacincoanterior = 0
+                return self.comissaomescascacincoanterior
+            else:
+                self.comissaomescascacincoanterior = comimescincoanteriorcasca
+                return self.comissaomescascacincoanterior
+
+    def comissaomescascaseisanterior(self):
+        filt = self.nome_fantasia
+        today = datetime.date.today()
+
+        monthdelta = dateutil.relativedelta.relativedelta(months=6)            
+        lastmms6 = datetime.datetime.now() - monthdelta  
+        lastmm6 = lastmms6.month              
+        lastmmy6 = lastmms6.year
+        
+        comimescascaseisanteriorcda = Carga.objects.filter(data__year=lastmmy6, data__month=lastmm6).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+        comimesseisanteriorcasca = Carga.objects.filter(data__year=lastmmy6, data__month=lastmm6).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+        comimesseisanteriorsemente = Carga.objects.filter(data__year=lastmmy6, data__month=lastmm6).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Semente').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum(F('valornf') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+
+
+        if 'CDA' in filt:
+            if comimescascaseisanteriorcda == None:
+                self.comissaomescascaseisanterior = 0
+                return self.comissaomescascaseisanterior            
+            else:
+                self.comissaomescascaseisanterior = comimescascaseisanteriorcda
+                return self.comissaomescascaseisanterior
+        elif 'iamant' in filt:
+            if comimesseisanteriorsemente == None:
+                self.comissaomescascaseisanterior = 0
+                return self.comissaomescascaseisanterior            
+            else:
+                self.comissaomescascaseisanterior = comimesseisanteriorsemente
+                return self.comissaomescascaseisanterior
+        else:
+            if comimesseisanteriorcasca == None:
+                self.comissaomescascaseisanterior = 0
+                return self.comissaomescascaseisanterior
+            else:
+                self.comissaomescascaseisanterior = comimesseisanteriorcasca
+                return self.comissaomescascaseisanterior
             
     
     
