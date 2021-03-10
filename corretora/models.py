@@ -478,6 +478,50 @@ class Cliente(Base):
         return self.comissaoabertocascatotal
 
 
+    
+    def comissao_geral_por_cliente(self):
+        comissaopordata = {}
+        comissaopordata_ordenado = {}
+        filt = self.nome_fantasia
+        for i in range(0,7):
+            monthdelta = dateutil.relativedelta.relativedelta(months=i)
+            numeromes = datetime.datetime.now() - monthdelta
+            anoalterado =  numeromes.year
+            mesalterado =  numeromes.month            
+            chave_dict = f'{anoalterado}-{mesalterado}'
+            if 'CDA' in filt:
+                query_carregado = Carga.objects.filter(data__year=anoalterado, data__month=mesalterado).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']        
+            elif 'iamante' in filt:
+                query_carregado = Carga.objects.filter(data__year=anoalterado, data__month=mesalterado).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Semente').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum(F('valornf') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+            else:
+                query_carregado = Carga.objects.filter(data__year=anoalterado, data__month=mesalterado).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']            
+            pesocarregado_porcliente = query_carregado if query_carregado != None else 0
+            comissaopordata[chave_dict] = pesocarregado_porcliente        
+        for k,v in comissaopordata.items():
+            dict_element={k:v}
+            dict_element.update(comissaopordata_ordenado)
+            comissaopordata_ordenado=dict_element
+        self.comissao_geral_por_cliente = comissaopordata_ordenado        
+        return self.comissao_geral_por_cliente
+
+    def comissao_ultimos_meses(self):
+        filt = self.nome_fantasia
+        monthdelta = dateutil.relativedelta.relativedelta(months=7)
+        numeromes = datetime.datetime.now() - monthdelta
+        anoalterado =  numeromes.year
+        mesalterado =  numeromes.month
+        if 'CDA' in filt:
+            query_comissao = Carga.objects.filter(data__year__gte=anoalterado, data__month__gte=mesalterado).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']        
+        elif 'iamante' in filt:
+            query_comissao = Carga.objects.filter(data__year__gte=anoalterado, data__month__gte=mesalterado).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Semente').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum(F('valornf') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+        else:
+            query_comissao = Carga.objects.filter(data__year__gte=anoalterado, data__month__gte=mesalterado).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+        comissao_porcliente = query_comissao if query_comissao != None else 0
+        self.comissao_ultimos_meses = comissao_porcliente                
+        return self.comissao_ultimos_meses
+
+
+
 
         # if comiabertototalcda == None and comiabertototal == None:
         #         self.comissaoabertocascatotal = 0

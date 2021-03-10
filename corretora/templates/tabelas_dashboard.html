@@ -156,89 +156,51 @@
                     <thead>
                         <tr align="center">
                             <th scope="col" class="text text-center"><strong>Clientes</strong></th>
-                            <th scope="col" class="text-secondary text-center">
-                                <strong>{{0|nome_mes_seisanterior}}</strong>
+                            {% now "Y-n" as current_month %}       
+                            {% for c in clientes|slice:":1" %}
+                            {% for key, value in c.carregado_geral_por_geral.items %}                           
+                            {% if key == current_month %}
+                            <th scope="col" class="text-success text-center"><strong>{{key|nome_mes_conforme_dict}}</strong></th>
+                            {% else %}
+                                <th scope="col" class="text-secondary text-center"><strong>{{key|nome_mes_conforme_dict}}</strong>
                             </th>
-                            <th scope="col" class="text-secondary text-center">
-                                <strong>{{0|nome_mes_cincoanterior}}</strong>
-                            </th>
-                            <th scope="col" class="text-secondary text-center">
-                                <strong>{{0|nome_mes_quatroanterior}}</strong>
-                            </th>
-                            <th scope="col" class="text-secondary text-center">
-                                <strong>{{0|nome_mes_tresanterior}}</strong>
-                            </th>
-                            <th scope="col" class="text-secondary text-center">
-                                <strong>{{0|nome_mes_anteanterior}}</strong>
-                            </th>
-                            <th scope="col" class="text-secondary text-center"><strong>{{0|nome_mes_anterior}}</strong>
-                            </th>
-                            <th scope="col" class="text-success text-center"><strong>Semana</strong></th>
-                            <th scope="col" class="text-primary text-center"><strong>{{0|nome_mes}}</strong></th>
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}                                
+                            <th scope="col" class="text-primary text-center"><strong>Semana</strong></th>
                             <th scope="col" class="text-warning text-center"><strong>Aberto</strong></th>
                         </tr>
                     </thead>
                     <tbody align="center">
                         {% for cliente in clientes %}                        
                         <tr align=" center" class="simplehighlight">
-                            {% if cliente.comissaoabertocasca > 0 or cliente.comissaosemanacasca > 0 or cliente.comissaomescasca > 0 or cliente.comissaomescascaanterior > 0 or cliente.comissaomescascaanteanterior > 0 or cliente.comissaomescascatresanterior > 0 or cliente.comissaomescascaquatroanterior > 0 or cliente.comissaomescascacincoanterior > 0 or cliente.comissaomescascaseisanterior > 0 %}
+                           {% if cliente.comissao_ultimos_meses %}
                             <td style="color: {{cliente.color}}"><em><strong>{{ cliente.nome_fantasia|upper }}</strong></em></td>
-                            
-                            {% if cliente.comissaomescascaseisanterior == 0 %}
-                            <td align="center">- </td>
-                            {% else %}
-                            <td>R$ {{ cliente.comissaomescascaseisanterior|floatformat:"2" }}</td>
-                            {% endif %}
-                            
-                            {% if cliente.comissaomescascacincoanterior == 0 %}
-                            <td align="center">- </td>
-                            {% else %}
-                            <td>R$ {{ cliente.comissaomescascacincoanterior|floatformat:"2" }}</td>
-                            {% endif %}
-                            
-                            {% if cliente.comissaomescascaquatroanterior == 0 %}
-                            <td align="center">- </td>
-                            {% else %}
-                            <td>R$ {{ cliente.comissaomescascaquatroanterior|floatformat:"2" }}</td>
-                            {% endif %}
-                            
-                            {% if cliente.comissaomescascatresanterior == 0 %}
-                            <td align="center">- </td>
-                            {% else %}
-                            <td>R$ {{ cliente.comissaomescascatresanterior|floatformat:"2" }}</td>
-                            {% endif %}
 
-                            {% if cliente.comissaomescascaanteanterior == 0 %}
-                            <td align="center">- </td>
+                            {% for key, value in cliente.comissao_geral_por_cliente.items %}
+                            {% if value > 0 %}
+                            <td>R$ {{value|floatformat:"2"}}</td>
                             {% else %}
-                            <td>R$ {{ cliente.comissaomescascaanteanterior|floatformat:"2" }}</td>
+                            <td>-</td>
                             {% endif %}
-
-                            {% if cliente.comissaomescascaanterior == 0 %}
-                            <td align="center">- </td>
-                            {% else %}
-                            <td>R$ {{ cliente.comissaomescascaanterior|floatformat:"2" }}</td>
-                            {% endif %}
+                            {% endfor %}
 
                             {% if cliente.comissaosemanacasca == 0 %}
                             <td align="center">- </td>
                             {% else %}
                             <td>R$ {{ cliente.comissaosemanacasca|floatformat:"2" }}</td>
                             {% endif %}
-
-                            {% if cliente.comissaomescasca == 0 %}
-                            <td align="center">- </td>
-                            {% else %}
-                            <td>R$ {{ cliente.comissaomescasca|floatformat:"2" }}</td>
-                            {% endif %}
-
+                            
                             {% if cliente.comissaoabertocasca == 0 %}
                             <td align="center">- </td>
                             {% else %}
                             <td class="text text-warning"><strong><i>R$
                                         {{ cliente.comissaoabertocasca|floatformat:"2" }}</strong></i></td>
                             {% endif %}
+                            {% else %}
                             {% endif %}
+                            
+                            
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -326,6 +288,7 @@
                             <td>-</td>
                             {% endif %}
                             {% endfor %}
+
                             {% else %}
                             {% endif %}
 
