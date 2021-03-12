@@ -285,7 +285,7 @@
                         {% if 'GDX' in carga.transp|upper %}
                         <td class="copy-data" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}">{{ carga.transp|title }}</td>
                         {% else %}
-                        <td style="background-color: #660066;">{{ carga.transp|title }}</td>
+                        <td class="copy-data" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}" style="background-color: #660066;">{{ carga.transp|title }}</td>
                         {% endif %}
                         {% if 'dast' in carga.buonny|lower %}
                         <td class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>
@@ -490,10 +490,6 @@
                     {{ page_obj.paginator.count }} Itens </strong></p>
         </div>
     </div>
-
-    <button class="btn" data-clipboard-text="Just because you can doesn't mean you should — clipboard.js">
-        Copy to clipboard
-    </button>
 </body>
 <br>
 <script>

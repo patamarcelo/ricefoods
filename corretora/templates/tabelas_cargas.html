@@ -92,9 +92,9 @@
                     {% endif %}
 
                     {% if 'GDX' in carga.transp|upper %}
-                    <td>{{ carga.transp|title }}</td>
+                    <td class="copy-data" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}">{{ carga.transp|title }}</td>
                     {% else %}
-                    <td style="background-color: #660066;">{{ carga.transp|title }}</td>
+                    <td class="copy-data" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}" style="background-color: #660066;">{{ carga.transp|title }}</td>
                     {% endif %}
                     {% if 'dast' in carga.buonny|lower %}
                     <td class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>
@@ -300,9 +300,14 @@
         background-color: #a9a9a9;
         color: black;
     }
+    .copy-data {
+            cursor: grabbing;
+        }
 
 </style>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
 <script>
+    new ClipboardJS('.copy-data');
 
     $(".simplehighlight").click(function() {
             $(this).toggleClass('clicked');

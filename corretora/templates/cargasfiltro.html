@@ -33,12 +33,15 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- MDBootstrap Datatables  -->
     <link href="{% static 'css/addons/datatables.min.css' %}" rel="stylesheet">
-
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
 
 
 
 
     <style>
+        .copy-data {
+            cursor: grabbing;
+        }
         .btn-xs {
             padding: 5px 10px;
             font-size: 10px;
@@ -777,9 +780,9 @@
 
 
                             {% if 'GDX' in carga.transp|upper %}
-                            <td>{{ carga.transp|title }}</td>
+                            <td class="copy-data" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}">{{ carga.transp|title }}</td>
                             {% else %}
-                            <td style="background-color: #660066;">{{ carga.transp|title }}</td>
+                            <td class="copy-data" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}" style="background-color: #660066;">{{ carga.transp|title }}</td>
                             {% endif %}
 
                             {% if 'dast' in carga.buonny|lower %}
@@ -1583,6 +1586,10 @@
             $('#badgetransp').removeClass('badge-warning').addClass('badge-info');
         }
         );
+    
+    
+    
+    new ClipboardJS('.copy-data');
 
     
 
