@@ -45,6 +45,7 @@
     <!-- <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" /> -->
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
      
 
 
@@ -195,7 +196,9 @@
         }
         
 
-        
+        .copy-data {
+            cursor: grabbing;
+        }
         
     </style>
     
@@ -208,7 +211,7 @@
     <div class="infinite-container ">
         {% for carga in cargas %}
           <div class="infinite-item">            
-                <div class="d-flex caixainterna sombra{{carga.situacao|lower}} borda{{carga.situacao|lower}} " style="box-shadow: 7px 0px 3px {{carga.pedido.cliente.color}};">                                                    
+                <div class="d-flex caixainterna sombra{{carga.situacao|lower}} borda{{carga.situacao|lower}} copy-data" style="box-shadow: 7px 0px 3px {{carga.pedido.cliente.color}};" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}">                                                    
                         <div class="d-flex  flex-column col-7 motoristas justify-content-around ">
                             <div class="d-flex flex-row">
                                 <div class="col" style="padding-left: 0px">
@@ -402,7 +405,11 @@
 <!-- MDBootstrap Datatables  -->
 <script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
 <script>
-   
+    
+    new ClipboardJS('.copy-data');
+
+    
+
     window.setTimeout(function () {
         $(".alert").fadeTo(500, 0).slideUp(500, function () {
             $(this).remove();
