@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- MDBootstrap Datatables  -->
     <link href="{% static 'css/addons/datatables.min.css' %}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
     <style>
         .btn-xs {
             padding: 5px 10px;
@@ -147,6 +148,10 @@
         .clicked {
             background-color: #111111 !important;
             color: whitesmoke !important;
+        }
+
+        .copy-data {
+            cursor: grabbing;
         }
 
     </style>
@@ -278,7 +283,7 @@
                         {% endif %}
 
                         {% if 'GDX' in carga.transp|upper %}
-                        <td>{{ carga.transp|title }}</td>
+                        <td class="copy-data" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}">{{ carga.transp|title }}</td>
                         {% else %}
                         <td style="background-color: #660066;">{{ carga.transp|title }}</td>
                         {% endif %}
@@ -485,6 +490,10 @@
                     {{ page_obj.paginator.count }} Itens </strong></p>
         </div>
     </div>
+
+    <button class="btn" data-clipboard-text="Just because you can doesn't mean you should — clipboard.js">
+        Copy to clipboard
+    </button>
 </body>
 <br>
 <script>
@@ -503,7 +512,14 @@
 <script type="text/javascript"></script>
 <!-- MDBootstrap Datatables  -->
 <script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
+
+
+
+
+
+
 <script>
+    new ClipboardJS('.copy-data');
 
     $(".simplehighlight").click(function() {
         $(this).toggleClass('clicked');
@@ -549,4 +565,13 @@
         .forEach(tr => tbody.appendChild(tr) );
     })));
 
+    // new ClipboardJS('.copy', {
+    //     text: function(trigger) {
+    //         elem = $(trigger).data('clipboard-element');
+    //         var htmlBlock = document.querySelector(elem);
+    //         return htmlBlock.innerHTML;
+    //     }
+    // });
+
+    
 </script>
