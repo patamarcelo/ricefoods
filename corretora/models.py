@@ -1056,7 +1056,8 @@ class Pedido(Base):
     quantidade_pedido = models.PositiveIntegerField('Quant. Pedido', help_text="Peso em Kg")
     
 
-    obs = models.TextField('Observação', max_length=500, blank=True)    
+    obs     = models.TextField('Observação', max_length=500, blank=True)
+    history = HistoricalRecords()
 
 
     
@@ -1163,7 +1164,7 @@ class Pedido(Base):
             return self.quantidade_pedido - self.carregado - self.previsto
     
     class Meta:
-        ordering = ['data', 'cliente','situacao']
+        ordering = ['-data','situacao','cliente']
         verbose_name = 'Pedido'
         verbose_name_plural = 'Pedidos' 
 
@@ -1174,7 +1175,7 @@ class Pedido(Base):
 
 def get_default_transp_name():
     return Transportadora.objects.get(nome="GDX Log")
-DEFAULT_TRANSP_FORM = 'GDX Log'
+
 
 class Carga(Base):
     STATUS_CHOICES = (

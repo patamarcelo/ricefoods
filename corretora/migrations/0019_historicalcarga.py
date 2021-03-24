@@ -56,7 +56,7 @@ class Migration(migrations.Migration):
                 ('history_type', models.CharField(choices=[('+', 'Created'), ('~', 'Changed'), ('-', 'Deleted')], max_length=1)),
                 ('history_user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to=settings.AUTH_USER_MODEL)),
                 ('pedido', models.ForeignKey(blank=True, db_constraint=False, limit_choices_to={'situacao': 'a'}, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='+', to='corretora.Pedido')),
-                ('transp', models.ForeignKey(blank=True, db_constraint=False, default='GDX Log', null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='+', to='corretora.Transportadora')),
+                ('transp', models.ForeignKey(blank=True, db_constraint=False, default=corretora.models.get_default_transp_name, null=True, on_delete=django.db.models.deletion.DO_NOTHING, related_name='+', to='corretora.Transportadora')),
             ],
             options={
                 'verbose_name': 'historical Carga',

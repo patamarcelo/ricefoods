@@ -168,7 +168,7 @@ class Migration(migrations.Migration):
                 ('vermelhos', models.DecimalField(blank=True, decimal_places=2, max_digits=4, null=True, verbose_name='Vermelhos')),
                 ('obs', models.TextField(blank=True, max_length=125, verbose_name='Observação')),
                 ('pedido', models.ForeignKey(limit_choices_to={'situacao': 'a'}, on_delete=django.db.models.deletion.PROTECT, to='corretora.Pedido')),
-                ('transp', models.ForeignKey(default='GDX Log', on_delete=django.db.models.deletion.PROTECT, to='corretora.Transportadora')),
+                ('transp', models.ForeignKey(default=corretora.models.get_default_transp_name, on_delete=django.db.models.deletion.PROTECT, to='corretora.Transportadora')),
             ],
             options={
                 'verbose_name': 'Carga',

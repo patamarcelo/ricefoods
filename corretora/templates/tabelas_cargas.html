@@ -92,9 +92,9 @@
                     {% endif %}
 
                     {% if 'GDX' in carga.transp|upper %}
-                    <td class="copy-data" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}">{{ carga.transp|title }}</td>
+                    <td class="copy-data" title="Copiar {{carga.placa}} - {{carga.motorista|title}}" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}">{{ carga.transp|title }}</td>
                     {% else %}
-                    <td class="copy-data" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}" style="background-color: #660066;">{{ carga.transp|title }}</td>
+                    <td class="copy-data" title="Copiar {{carga.placa}} - {{carga.motorista|title}}" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}" style="background-color: #660066;">{{ carga.transp|title }}</td>
                     {% endif %}
                     {% if 'dast' in carga.buonny|lower %}
                     <td class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>

@@ -157,8 +157,8 @@ class ClienteAdmin(admin.ModelAdmin):
             return f'{insc[0:3]}/{insc[3:]}'
     get_insc.short_description = "Insc. Estadual"
 
-@admin.register(Pedido)
-class PedidoAdmin(admin.ModelAdmin):
+# @admin.register(Pedido)
+class PedidoAdmin(SimpleHistoryAdmin):
     list_display = ('contrato','situacao','get_data','fornecedor','get_cidade','cliente','get_preco','produto','renda','inteiro','variedade','tipo','get_peso_tipo','get_peso_total' ,'ativo','get_modificado')
     fieldsets = (
         ('Situação', {
@@ -189,8 +189,17 @@ class PedidoAdmin(admin.ModelAdmin):
     ]
     
     # fields = ['contrato','situacao','data','fornecedor','cliente',('produto','preco_produto'),'quantidade_pedido',('renda','inteiro','impureza', 'umidade'),('variedade','tipo')]
-    list_filter = ('ativo','situacao','tipo',)
+    list_filter = ('ativo','situacao','tipo','produto','cliente__nome_fantasia','fornecedor__nome')
     search_fields = ['contrato','quantidade_pedido','produto','situacao','data','fornecedor__nome','cliente__nome','preco_produto', 'variedade','tipo','quantidade_pedido']
+    history_list_display = ["quantidade_pedido","preco_frete","changed_fields_pedido"]
+
+    def changed_fields_pedido(self, obj):
+        if obj.prev_record:
+            delta = obj.diff_against(obj.prev_record)
+            camposalterados = str(delta.changed_fields)
+            return camposalterados
+        else:
+            return 'Sem Alterações'
 
     def get_modificado(self,obj):
         return date_format(obj.modificado, format='SHORT_DATE_FORMAT', use_l10n=True)
@@ -231,6 +240,8 @@ class PedidoAdmin(admin.ModelAdmin):
         return obj.fornecedor.cidade
     get_cidade.short_description = "Cidade"
 
+admin.site.register(Pedido, PedidoAdmin)
+
 @admin.register(Transportadora)
 class TransportadoraAdmin(admin.ModelAdmin):
     list_display = ('nome','contato','email','telefone','cidade','estado','ativo','get_modificado')
@@ -258,7 +269,7 @@ class CargaAdmin(SimpleHistoryAdmin):
         }),
     )
     raw_id_fields = ('pedido', )
-    list_filter = ('ativo','situacao','pedido__fornecedor','pedido__cliente','pedido__situacao')
+    list_filter = ('situacao','pedido__produto','pedido__tipo','pedido__cliente','pedido__situacao','pedido__fornecedor')
     search_fields = ['pedido__contrato','situacao','data','pedido__fornecedor__nome','placa','pedido__cliente__nome','pedido__tipo','motorista','peso','veiculo','buonny','notafiscal','notafiscal2','valornf']
     history_list_display = ["situacao","ordem","get_data","peso","agendamento","notafiscal","pedido","motorista","placa","valornf","valor_mot","changed_fields"]
 
