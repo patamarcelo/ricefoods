@@ -200,6 +200,9 @@
                     <i type="submit" style="color:green" class="fas fa-lg fa-file-excel" id="btnExport"></i>
                     <i type="submit" style="color:black" class="fas fa-lg fa-file-pdf" id="pdf" onclick="createPDF()"
                         target="_blank"></i>
+                    {% for carga in cargas|slice:":1" %}
+                    <a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank" style="color:green" class="fas fa-lg fa-list-alt"></a>                    
+                    {% endfor %}
                 </div>
 
             </div>

@@ -506,7 +506,7 @@ class Cliente(Base):
 
     def comissao_ultimos_meses(self):
         filt = self.nome_fantasia
-        monthdelta = dateutil.relativedelta.relativedelta(months=7)
+        monthdelta = dateutil.relativedelta.relativedelta(months=6)
         numeromes = datetime.datetime.now() - monthdelta
         anoalterado =  numeromes.year
         mesalterado =  numeromes.month
@@ -517,7 +517,8 @@ class Cliente(Base):
         else:
             query_comissao = Carga.objects.filter(data__year__gte=anoalterado, data__month__gte=mesalterado).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
         comissao_porcliente = query_comissao if query_comissao != None else 0
-        self.comissao_ultimos_meses = comissao_porcliente                
+        self.comissao_ultimos_meses = comissao_porcliente  
+        print(type(self.comissao_ultimos_meses))              
         return self.comissao_ultimos_meses
 
 
@@ -701,7 +702,7 @@ class Cliente(Base):
 
     def carregamento_ultimos_meses(self):
         filt = self.nome_fantasia
-        monthdelta = dateutil.relativedelta.relativedelta(months=7)
+        monthdelta = dateutil.relativedelta.relativedelta(months=6)
         numeromes = datetime.datetime.now() - monthdelta
         anoalterado =  numeromes.year
         mesalterado =  numeromes.month
