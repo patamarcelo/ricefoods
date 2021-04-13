@@ -459,7 +459,7 @@
 
                 <a class="btn btn-outline-warning btn-sm" href="javascript:history.back()">Voltar</a>
                 <div class="col-3-sm">
-                    <button type="button" class="btn btn-outline-info btn-sm"
+                    <button id="btn_filtro" type="button" class="btn btn-outline-info btn-sm"
                         onclick="Ocultarfiltros('filtro')">Filtros</button>
                 </div>
                 <div class="col-3-sm">
@@ -1008,7 +1008,7 @@
                             {% if pesototal.peso__sum == None %}                    
                             {% else %}
                             <div class="col titulototal">
-                                <p ><strong>Carregado <i class="pesostitulo" style="color: whitesmoke;"><br/>{{ pesototal.peso__sum }} Kg</i></strong></p>
+                                <p ><strong>Carregado <i class="pesostitulo" style="color: whitesmoke;"><br/>{{ pesototal.peso__sum }}  Kg</i></strong></p>
                             </div>  
                            
                             {% endif %}  
@@ -1473,6 +1473,8 @@
         }
     }
 
+    
+
     function Mudarestado(el) {
         if (document.getElementById("secondboxout").classList.contains('hide')) {
             document.getElementById(el).classList.remove('hide');            
@@ -1618,4 +1620,8 @@
 
 <script type="text/javascript">
 
+</script>
+<script>
+    const alternarDestaque = () => $('#filtro').toggleClass('hide')
+    $('#btn_filtro').on('mouseenter', alternarDestaque)
 </script>

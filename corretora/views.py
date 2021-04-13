@@ -14,6 +14,7 @@ from easy_pdf.views import PDFTemplateResponseMixin
 import datetime
 # Graficos
 import json
+from json import dumps
 # Graficos
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -49,7 +50,7 @@ class CargasFiltradasView(LoginRequiredMixin, FilterView):
         context['cargas'] = Carga.objects.all
         queryset = self.get_queryset()
         filter = CargasFilter(self.request.GET, queryset=queryset)                
-        context['pesototal'] = filter.qs.filter(situacao='Carregado').filter(peso__gt=0).values('peso').aggregate(Sum('peso'))
+        context['pesototal'] = filter.qs.filter(situacao='Carregado').filter(peso__gt=0).values('peso').aggregate(Sum(F'peso'))
         context['agendatotal'] = filter.qs.filter(situacao='Agendado').filter(peso=0).values('veiculo').aggregate(Sum('veiculo'))            
         def get_total_comissao():
             total = 0                        
@@ -449,6 +450,31 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         context["pedidos"] = Pedido.objects.filter(situacao="a").all()
         context['clientes'] = Cliente.objects.order_by('-nome').all
         context['datasemcarga'] = Datasemcarga.objects.all()
+        context['pedidos_json'] = json.dumps(
+            [
+                {
+                    'id': obj.id,
+                    'contrato': obj.contrato,
+                    'fornecedor': obj.fornecedor.nome,
+                    'cidadef': obj.fornecedor.cidade.cidade,
+                    'cliente': obj.cliente.nome_fantasia
+                    
+                }
+                for obj in Pedido.objects.filter(situacao="a").all()
+            ]
+        )
+        context['agenda_json'] = json.dumps(
+            [
+                {
+                    'nome': obj.nome_fantasia,
+                    'prev_dias': obj.previsao_dias_da_semana(),
+                    'dias_descarga': obj.dias_descarga,
+                    'veiculos_dia': obj.veiculos_dia,
+                    'descarga_sabado': obj.descarga_sabado
+                }
+                for obj in Cliente.objects.order_by('-nome').all()
+            ]
+        )
         return context
 
 class UpdateclassCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
