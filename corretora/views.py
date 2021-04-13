@@ -430,6 +430,31 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         context["pedidos"] = Pedido.objects.filter(situacao="a").all()
         context['clientes'] = Cliente.objects.order_by('-nome').all
         context['datasemcarga'] = Datasemcarga.objects.all()
+        context['pedidos_json'] = json.dumps(
+            [
+                {
+                    'id': obj.id,
+                    'contrato': obj.contrato,
+                    'fornecedor': obj.fornecedor.nome,
+                    'cidadef': obj.fornecedor.cidade.cidade,
+                    'cliente': obj.cliente.nome_fantasia
+                    
+                }
+                for obj in Pedido.objects.filter(situacao="a").all()
+            ]
+        )
+        context['agenda_json'] = json.dumps(
+            [
+                {
+                    'nome': obj.nome_fantasia,
+                    'prev_dias': obj.previsao_dias_da_semana(),
+                    'dias_descarga': obj.dias_descarga,
+                    'veiculos_dia': obj.veiculos_dia,
+                    'descarga_sabado': obj.descarga_sabado
+                }
+                for obj in Cliente.objects.order_by('-nome').all()
+            ]
+        )
         return context
 
 class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
