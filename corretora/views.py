@@ -427,9 +427,6 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)        
-        context["pedidos"] = Pedido.objects.filter(situacao="a").all()
-        context['clientes'] = Cliente.objects.order_by('-nome').all
-        context['datasemcarga'] = Datasemcarga.objects.all()
         context['pedidos_json'] = json.dumps(
             [
                 {
@@ -472,9 +469,6 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)        
-        context["pedidos"] = Pedido.objects.filter(situacao="a").all()
-        context['clientes'] = Cliente.objects.order_by('-nome').all
-        context['datasemcarga'] = Datasemcarga.objects.all()
         context['pedidos_json'] = json.dumps(
             [
                 {
