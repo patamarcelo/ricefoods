@@ -444,7 +444,7 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
             [
                 {
                     'nome': obj.nome_fantasia,
-                    'prev_dias': obj.previsao_dias_da_semana(),
+                    'prev_dias': obj.previsao_dias_da_semana_dois(),
                     'dias_descarga': obj.dias_descarga,
                     'veiculos_dia': obj.veiculos_dia,
                     'descarga_sabado': obj.descarga_sabado
@@ -486,7 +486,7 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
             [
                 {
                     'nome': obj.nome_fantasia,
-                    'prev_dias': obj.previsao_dias_da_semana(),
+                    'prev_dias': obj.previsao_dias_da_semana_dois(),
                     'dias_descarga': obj.dias_descarga,
                     'veiculos_dia': obj.veiculos_dia,
                     'descarga_sabado': obj.descarga_sabado

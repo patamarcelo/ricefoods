@@ -842,27 +842,20 @@ class Cliente(Base):
         locais = Pedido.objects.filter(cliente__nome_fantasia=filt).filter(situacao='a').filter(ativo=True).values('contrato').aggregate(quanti=Count('contrato'))['quanti']
         self.locaiscarrega = locais
         return self.locaiscarrega 
-
+    
     def previsao_dias_da_semana(self):
         previsao_dias_da_semana = {}
         previsao_dias_da_semana_count = {}
         def dias_da_semana():                  
             today = datetime.datetime.now()   
             duas_semanas = []
-            for i in range(7):
+            for i in range(14):
                 data_atual = today if today.weekday() == i else today - timedelta(days=today.weekday() - i)
                 dia_da_semana_numero = data_atual.weekday()
                 data_atual_timestamp = data_atual.timestamp()
                 day_fromtmsp = datetime.datetime.fromtimestamp(data_atual_timestamp)
                 data_atual_humana = day_fromtmsp.strftime("%Y-%m-%d") 
                 duas_semanas.append(data_atual_humana)        
-            for i in range(7):
-                data_atual = (today + timedelta(days=7)) if today.weekday() == i else (today + timedelta(days=7)) - timedelta(days=today.weekday() - i)
-                dia_da_semana_numero = data_atual.weekday()
-                data_atual_timestamp = data_atual.timestamp()
-                day_fromtmsp = datetime.datetime.fromtimestamp(data_atual_timestamp)
-                data_atual_humana = day_fromtmsp.strftime("%Y-%m-%d") 
-                duas_semanas.append(data_atual_humana)                                    
             return duas_semanas
         for i in dias_da_semana():
             total = 0
@@ -886,6 +879,42 @@ class Cliente(Base):
             previsao_dias_da_semana[data_regular] = total
             previsao_dias_da_semana_count[data_regular] = total_count
         self.previsao_dias_da_semana = previsao_dias_da_semana, previsao_dias_da_semana_count
+        return self.previsao_dias_da_semana 
+    
+    
+    def previsao_dias_da_semana_dois(self):
+        previsao_dias_da_semana = {}
+        previsao_dias_da_semana_count = {}
+        def dias_da_semana():                  
+            today = datetime.datetime.now()   
+            duas_semanas = []
+            for i in range(14):
+                data_atual = today if today.weekday() == i else today - timedelta(days=today.weekday() - i)
+                dia_da_semana_numero = data_atual.weekday()
+                data_atual_timestamp = data_atual.timestamp()
+                day_fromtmsp = datetime.datetime.fromtimestamp(data_atual_timestamp)
+                data_atual_humana = day_fromtmsp.strftime("%Y-%m-%d") 
+                duas_semanas.append(data_atual_humana)                           
+            print(f'Duas Semanas: {duas_semanas}')
+            return duas_semanas
+        for i in dias_da_semana():
+            total = 0
+            total_count = 0
+            filtdata = i
+            filt_nome = self.nome_fantasia
+            carregado = 0
+            carregado_count = Carga.objects.order_by('placa').filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Carregado').values('peso').distinct('placa').count()
+            agendado = 0
+            agendado_count = Carga.objects.order_by('placa').filter(data_agenda=filtdata).filter(pedido__cliente__nome_fantasia=filt_nome).filter(situacao='Agendado').values('veiculo').distinct('placa').count()
+            
+            total = carregado + agendado
+            total_count = carregado_count + agendado_count
+            
+            data_regular = datetime.datetime.strptime(i, '%Y-%m-%d').strftime('%d/%m/%Y')
+            previsao_dias_da_semana[data_regular] = total
+            previsao_dias_da_semana_count[data_regular] = total_count
+        self.previsao_dias_da_semana = previsao_dias_da_semana, previsao_dias_da_semana_count
+
         return self.previsao_dias_da_semana 
 
     def previsao_dias_da_semana_somente_carregado(self):
