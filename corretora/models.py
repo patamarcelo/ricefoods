@@ -89,7 +89,8 @@ class Cidade(Base):
 PROD_CHOICES = (
     ('Arroz em Casca', 'Arroz em Casca'),
     ('Arroz Beneficiado', 'Arroz Beneficiado'),
-    ('Semente', 'Semente')
+    ('Semente', 'Semente'),
+    ('Acucar', 'Açucar')
 )
 
 
