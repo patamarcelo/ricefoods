@@ -707,7 +707,8 @@ class Cliente(Base):
         numeromes = datetime.datetime.now() - monthdelta
         anoalterado =  numeromes.year
         mesalterado =  numeromes.month
-        query_carregado = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(data__year__gte=anoalterado, data__month__gte=mesalterado).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
+        diaalterado =  numeromes.replace(day=1)
+        query_carregado = Carga.objects.filter(pedido__cliente__nome_fantasia=filt).filter(data__gte=diaalterado).filter(situacao='Carregado').values('peso').aggregate(pesot=Sum('peso'))['pesot']
         pesocarregado_porcliente = query_carregado if query_carregado != None else 0
         self.carregamento_ultimos_meses = pesocarregado_porcliente
         return self.carregamento_ultimos_meses
@@ -1301,7 +1302,7 @@ class Carga(Base):
 
 
     def icms(self):
-        if self.pedido.cliente.estado == 'SP':
+        if self.pedido.cliente.estado == 'SP' or self.pedido.cliente.estado == 'PR':
             if self.peso:
                 return (round(((self.peso / 1000) * float(self.pedido.preco_frete)) * 0.12,2 )) 
             else:
