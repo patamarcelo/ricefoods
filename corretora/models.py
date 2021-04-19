@@ -1285,6 +1285,8 @@ class Carga(Base):
         if self.peso:
             if self.pedido.produto == 'Arroz em Casca':
                 if 'CDA' in self.pedido.cliente.nome:
+                    if self.notafiscal and self.notafiscal2:
+                        return (round((((float(self.valornf) - (float(self.valornf) * 0.022589053)) * float(self.pedido.comissaoc / 100))),2))
                     if self.valornf != None:
                         return (round((((float(self.valornf) - (float(self.valornf) * 0.07)) * float(self.pedido.comissaoc / 100))),2))
                     else:
