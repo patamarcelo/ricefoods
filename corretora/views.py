@@ -424,9 +424,34 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
             return reverse('add_age_cargas')
         else:
             return reverse('cargas')
+    
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)        
+        def dias_da_semana():                  
+            today = datetime.datetime.now()   
+            duas_semanas = []
+            for i in range(14):
+                data_atual = today if today.weekday() == i else today - timedelta(days=today.weekday() - i)
+                dia_da_semana_numero = data_atual.weekday()
+                data_atual_timestamp = data_atual.timestamp()
+                day_fromtmsp = datetime.datetime.fromtimestamp(data_atual_timestamp)
+                data_atual_humana = day_fromtmsp.strftime("%Y-%m-%d") 
+                duas_semanas.append(data_atual_humana)                           
+            print(f'Duas Semanas: {duas_semanas}')
+            return duas_semanas
+        
+        context = super().get_context_data(**kwargs)   
+        context['dias_semanas_json'] = json.dumps(dias_da_semana())  
+        context['query_cargas_json'] = json.dumps(
+            [
+                {
+                    'cliente': obj.pedido.cliente.nome_fantasia,
+                    'data_agenda' : obj.data_agenda.strftime("%Y-%m-%d"),
+                    'placa': obj.placa
+                }
+                for obj in Carga.objects.order_by('placa').filter(data_agenda__gte=dias_da_semana()[0]).distinct('placa')
+            ]
+        )
         context['pedidos_json'] = json.dumps(
             [
                 {
@@ -444,7 +469,7 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
             [
                 {
                     'nome': obj.nome_fantasia,
-                    'prev_dias': obj.previsao_dias_da_semana_dois(),
+                    # 'prev_dias': obj.previsao_dias_da_semana_dois(),
                     'dias_descarga': obj.dias_descarga,
                     'veiculos_dia': obj.veiculos_dia,
                     'descarga_sabado': obj.descarga_sabado
@@ -468,7 +493,30 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('cargas')
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)        
+        def dias_da_semana():                  
+            today = datetime.datetime.now()   
+            duas_semanas = []
+            for i in range(14):
+                data_atual = today if today.weekday() == i else today - timedelta(days=today.weekday() - i)
+                dia_da_semana_numero = data_atual.weekday()
+                data_atual_timestamp = data_atual.timestamp()
+                day_fromtmsp = datetime.datetime.fromtimestamp(data_atual_timestamp)
+                data_atual_humana = day_fromtmsp.strftime("%Y-%m-%d") 
+                duas_semanas.append(data_atual_humana)                           
+            print(f'Duas Semanas: {duas_semanas}')
+            return duas_semanas
+        context = super().get_context_data(**kwargs)  
+        context['dias_semanas_json'] = json.dumps(dias_da_semana())  
+        context['query_cargas_json'] = json.dumps(
+            [
+                {
+                    'cliente': obj.pedido.cliente.nome_fantasia,
+                    'data_agenda' : obj.data_agenda.strftime("%Y-%m-%d"),
+                    'placa': obj.placa
+                }
+                for obj in Carga.objects.order_by('placa').filter(data_agenda__gte=dias_da_semana()[0]).distinct('placa')
+            ]
+        )      
         context['pedidos_json'] = json.dumps(
             [
                 {
@@ -486,7 +534,7 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
             [
                 {
                     'nome': obj.nome_fantasia,
-                    'prev_dias': obj.previsao_dias_da_semana_dois(),
+                    # 'prev_dias': obj.previsao_dias_da_semana_dois(),
                     'dias_descarga': obj.dias_descarga,
                     'veiculos_dia': obj.veiculos_dia,
                     'descarga_sabado': obj.descarga_sabado
