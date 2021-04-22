@@ -51,7 +51,23 @@ class CargasFiltradasView(LoginRequiredMixin, FilterView):
         queryset = self.get_queryset()
         filter = CargasFilter(self.request.GET, queryset=queryset)                
         context['pesototal'] = filter.qs.filter(situacao='Carregado').filter(peso__gt=0).values('peso').aggregate(Sum(F'peso'))
-        context['agendatotal'] = filter.qs.filter(situacao='Agendado').filter(peso=0).values('veiculo').aggregate(Sum('veiculo'))            
+        context['agendatotal'] = filter.qs.filter(situacao='Agendado').filter(peso=0).values('veiculo').aggregate(Sum('veiculo'))   
+        context['motoristas_autocomplete_json'] = json.dumps(
+            [
+                {
+                    'motorista': obj.motorista
+                }
+                for obj in Carga.objects.order_by('motorista').distinct('motorista').all()   
+            ]
+        )     
+        context['placas_autocomplete_json'] = json.dumps(
+            [
+                {
+                    'placa': obj.placa
+                }
+                for obj in Carga.objects.order_by('placa').distinct('placa').all()   
+            ]
+        )     
         def get_total_comissao():
             total = 0                        
             for carga in filter.qs.filter(pgcomissao=False).filter(situacao='Carregado'):
