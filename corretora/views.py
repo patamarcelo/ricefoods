@@ -452,6 +452,16 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
                 for obj in Carga.objects.order_by('placa').filter(data_agenda__gte=dias_da_semana()[0]).distinct('placa')
             ]
         )
+        context['query_cargas_json_carregado'] = json.dumps(
+            [
+                {
+                    'cliente': obj.pedido.cliente.nome_fantasia,
+                    'data_agenda' : obj.data_agenda.strftime("%Y-%m-%d"),
+                    'placa': obj.placa
+                }
+                for obj in Carga.objects.order_by('placa').filter(situacao='Carregado').filter(data_agenda__gte=dias_da_semana()[0]).distinct('placa')
+            ]
+        )
         context['pedidos_json'] = json.dumps(
             [
                 {
@@ -517,6 +527,16 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
                 for obj in Carga.objects.order_by('placa').filter(data_agenda__gte=dias_da_semana()[0]).distinct('placa')
             ]
         )      
+        context['query_cargas_json_carregado'] = json.dumps(
+            [
+                {
+                    'cliente': obj.pedido.cliente.nome_fantasia,
+                    'data_agenda' : obj.data_agenda.strftime("%Y-%m-%d"),
+                    'placa': obj.placa
+                }
+                for obj in Carga.objects.order_by('placa').filter(situacao='Carregado').filter(data_agenda__gte=dias_da_semana()[0]).distinct('placa')
+            ]
+        )
         context['pedidos_json'] = json.dumps(
             [
                 {

@@ -211,6 +211,102 @@ $(document).ready(function () {
       }
     });
   });
+  $("#id_situacao").on("change", function () {
+    var jsonData = loadJson("#jsonDataAgenda");
+    console.log(jsonData);
+    var clienteinfonome = document.getElementById("clienteinfo").innerHTML;
+
+    var jsonCargas = loadJson("#jsonCargasCarregado");
+    function agruparPor(objetoArray, propriedade) {
+      return objetoArray.reduce(function (acc, obj) {
+        let key = obj[propriedade];
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push(obj);
+        return acc;
+      }, {});
+    }
+    var grupodePessoas = agruparPor(jsonCargas, "cliente");
+    var clientesName = Object.entries(grupodePessoas);
+    var resultadoAgendamentoJS = {};
+    for (var key in clientesName) {
+      var obj = clientesName[key];
+      datasAgendados = obj[1];
+      const resultado = {};
+      count = 1;
+      datasAgendados.forEach((item) => {
+        if (resultado.hasOwnProperty(item.data_agenda)) {
+          count += 1;
+          resultado[item.data_agenda] = count;
+        } else {
+          resultado[item.data_agenda] = 1;
+        }
+      });
+      resultadoAgendamentoJS[obj[0]] = resultado;
+    }
+
+    jsonData.forEach((e, i, array) => {
+      if (clienteinfonome === e.nome) {
+        var nome = e.nome;
+        var dias_descarga = e.dias_descarga;
+        var veiculos_dia = e.veiculos_dia;
+        // var prev_dias_peso = e.prev_dias[0];
+        var descarga_sabado = e.descarga_sabado;
+        // var prev_dias_quant_agendado = e.prev_dias[1];
+        var clientesDatas = {};
+        for (var key of Object.keys(resultadoAgendamentoJS)) {
+          if (key === clienteinfonome) {
+            console.log(key);
+            newobj = resultadoAgendamentoJS[key];
+            let entries = Object.entries(newobj);
+            for (var [prop, val] of entries) {
+              prop = moment(prop, "YYYY-MM-DD").format("DD/MM/YYYY");
+              console.log(prop, val);
+              clientesDatas[prop] = val;
+            }
+          }
+        }
+        var prev_dias_quant_agendado = clientesDatas;
+        console.log(clientesDatas);
+        console.log(`Clientes e  separados!!`);
+        console.log(array);
+        console.log(nome);
+        console.log(dias_descarga);
+        console.log(veiculos_dia);
+        console.log(prev_dias_quant_agendado);
+        console.log(typeof prev_dias_quant_agendado);
+        console.log(descarga_sabado);
+
+        dataDescarga = AddNewDays(data_carre.value, e.dias_descarga);
+        console.log(`Data Descarga: ${dataDescarga}`);
+
+        diasemanadescarga = getWeekDay(dataDescarga);
+        console.log(`Dia da Semana da descarga: ${diasemanadescarga}`);
+
+        totalmotagenda = totalAgendadosAgora(
+          prev_dias_quant_agendado,
+          dataDescarga
+        );
+        console.log(`Total Agendado até o momento: ${totalmotagenda}`);
+
+        while (
+          totalmotagenda >= veiculos_dia ||
+          (descarga_sabado == false && diasemanadescarga == 6) ||
+          diasemanadescarga == 0
+        ) {
+          dataDescarga = AddNewDays(dataDescarga, 1);
+          diasemanadescarga = getWeekDay(dataDescarga);
+          totalmotagenda = totalAgendadosAgora(
+            prev_dias_quant_agendado,
+            dataDescarga
+          );
+        }
+        console.log(`After loop While: ${dataDescarga}`);
+        data_agenda.value = dataDescarga;
+      }
+    });
+  });
 });
 
 function formatDate(date) {
