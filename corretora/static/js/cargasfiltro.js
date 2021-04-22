@@ -91,9 +91,7 @@ function createPDF() {
   var win = window.open("", "", "_blank", "height=700,width=700");
 
   win.document.write("<html><head>");
-  win.document.write(
-    "<title>{% for pedido in pedidos %}{{ pedido.contrato }} | {{ pedido.fornecedor.nome|title}}{% endfor%} </title>"
-  ); // <title> FOR PDF HEADER.
+  win.document.write("<title> Cargas  </title>"); // <title> FOR PDF HEADER.
   win.document.write(style); // ADD STYLE INSIDE THE HEAD TAG.
   win.document.write("</head>");
   win.document.write("<body>");
