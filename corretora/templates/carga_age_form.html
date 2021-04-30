@@ -34,10 +34,8 @@
         margin-bottom: 10px;
     }
 
-
-    .ad-carga h4 {
-        margin-left: 10px;
-    }
+    
+  
 
     .savea {
         margin-right: 10px;
@@ -60,12 +58,50 @@
         .botoestop {
             margin-left: 14.5%;
         }
+        .ad-carga h4 {
+            margin-left: 10px;
+        }
     }
 
     @media (min-width:980px) {
         .botoestop2 {
             margin-right: 36%;
         }
+    }
+
+    @media (max-width: 590px) {
+        .btn-dark {
+            display: none !important;
+        }
+
+        .topmobilebut {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+        .savea{
+            display: flex;
+            flex-direction: row;
+            
+            margin-bottom: 5px;
+            padding: 0px !important;
+        }
+        .btn-primary {
+            margin-left: 0px !important;
+        }
+        .botoestop {
+            margin: 0px !important;    
+            padding: 0px !important;
+        }
+
+        .btn-sm{
+            white-space: nowrap;
+        }
+
+        .badge-success {
+            margin-bottom: 0px !important;
+        }
+
+        
     }
 
     .formulario {
@@ -97,7 +133,7 @@
 <form method="POST" novalidate class="needs-validation ">
     {% csrf_token %}
     <div class="container">
-        <div class="form-row align-items-end">
+        <div class="form-row align-i    tems-end topmobilebut">
             <div class="col ad-carga botoestop">
                 <h4 style="float:left;"><span class="badge badge-success"> Adiconar Carga</span></h4>
             </div>            
@@ -107,7 +143,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="d-flex container botoestop justify-content-start">
+            <div class="d-flex container-fluid botoestop justify-content-start">
                 <h5>
                     <span class="badge badge-warning p-1 m-1" id="fornecedorinfo"></span>                        
                     &nbsp;&nbsp; <span class="badge badge-success p-1 m-1" id="clienteinfo"></span>
@@ -115,7 +151,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="d-flex container botoestop justify-content-start">
+            <div class="d-flex container-fluid botoestop justify-content-start">
                 <h5>
                      <span class="badge badge-white bg-dark p-1 m-1" id="cidadeinfo"></span>
                 </h5>
@@ -204,7 +240,7 @@
                 title="Salvar" data-placement="top" />
             <input type="submit" class="btn btn-success btn-sm" name="save_and_continue" value="Salvar e Continuar"
                 data-toggle="tooltip" title="Salvar e Continuar" data-placement="top" />
-            <button type="button" class="btn btn-outline-warning btn-sm">
+            <button type="button" class="btn btn-warning btn-sm">
                 <a href="{% url 'cargas' %}" data-toggle="tooltip" title="Cancelar" data-placement="top">Cancelar</a>
             </button>
         </div>
