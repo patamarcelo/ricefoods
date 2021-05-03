@@ -511,15 +511,17 @@ class Cliente(Base):
         numeromes = datetime.datetime.now() - monthdelta
         anoalterado =  numeromes.year
         mesalterado =  numeromes.month
+        diaalterado =  numeromes.replace(day=1)
         if 'CDA' in filt:
-            query_comissao = Carga.objects.filter(data__year__gte=anoalterado, data__month__gte=mesalterado).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']        
+            query_comissao = Carga.objects.filter(data__gte=diaalterado).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('valornf') - (F('valornf') * 0.07)) * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']        
         elif 'iamante' in filt:
-            query_comissao = Carga.objects.filter(data__year__gte=anoalterado, data__month__gte=mesalterado).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Semente').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum(F('valornf') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+            query_comissao = Carga.objects.filter(data__gte=diaalterado).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Semente').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum(F('valornf') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
         else:
-            query_comissao = Carga.objects.filter(data__year__gte=anoalterado, data__month__gte=mesalterado).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
+            query_comissao = Carga.objects.filter(data__gte=diaalterado).filter(pedido__cliente__nome_fantasia=filt).filter(pedido__produto='Arroz em Casca').filter(situacao='Carregado').values('peso').aggregate(somacomi=Sum((F('peso') / 50) * F('pedido__preco_produto') * (F('pedido__comissaoc') / 100), output_field=FloatField()))['somacomi']
         comissao_porcliente = query_comissao if query_comissao != None else 0
         self.comissao_ultimos_meses = comissao_porcliente  
-        print(type(self.comissao_ultimos_meses))              
+        print(f'Cliente: {filt} - {self.comissao_ultimos_meses}')
+        print(type(self.comissao_ultimos_meses))               
         return self.comissao_ultimos_meses
 
 
