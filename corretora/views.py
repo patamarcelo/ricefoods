@@ -614,11 +614,14 @@ class UpdateAjaxOrdemView(LoginRequiredMixin, UpdateView):
     def get(self, request):
         id1 = request.GET.get("id", None)
         ordem1 = request.GET.get("name")
-        Carga.objects.filter(id=id1).update(ordem=ordem1)
+        
         obj = get_object_or_404(Carga, id=id1)
-        
-        user = {"id": obj.pk, "name": obj.ordem}
-        
+        obj.ordem = ordem1
+        obj.save()
+        obj1 = get_object_or_404(Carga, id=id1)
+
+        user = {"id": obj1.pk, "name": obj1.ordem}
+
         data = {"user": user}
         return JsonResponse(data)
 
