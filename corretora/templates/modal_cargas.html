@@ -1,4 +1,7 @@
 <!-- Modal -->
+<style>
+
+</style>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content bg-dark">
@@ -9,12 +12,17 @@
         </div>
         <form id="updateUser" action="" data-validate-username-url="{% url 'cargas_ajax_update' %}">
         <div class="modal-body">
-            <h5> <em  id="updatePlacaUser"></em></h5>
-            
-            <input class="form-control" id="form-id" type="hidden" name="formId"/>
 
-            <input class="form-control" id="form-name" type="checkbox" name="formName" />
-            
+          
+          <input class="form-control" id="form-id" type="hidden" name="formId"/>
+          <div class="container-fluid d-inline-flex flex-row  align-items-center">
+            <div class="col-2 align-self-center">
+              <input class="form-control" id="form-name" type="checkbox" name="formName" />
+            </div>
+            <div class="align-self-end">
+              <h5> <em  id="updatePlacaUser"></em></h5>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-sm  btn-primary" >Salvar</button>
