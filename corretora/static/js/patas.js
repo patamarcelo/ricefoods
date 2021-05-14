@@ -362,3 +362,77 @@ function formatDate(date) {
 //   }
 //   console.log(clientesDatas);
 // });
+
+$("form#updateUser").submit(function () {
+  var urlform = $("[data-validate-username-url]").attr(
+    "data-validate-username-url"
+  );
+  var idInput = $('input[name="formId"]').val().trim();
+  var nameInput = $('input[name="formName"]').is(":checked");
+
+  if (nameInput === true) {
+    var valName = "True";
+  } else {
+    var valName = "False";
+  }
+  // Create Ajax Call
+  $.ajax({
+    url: urlform,
+    data: {
+      id: idInput,
+      name: valName,
+    },
+    dataType: "json",
+    success: function (data) {
+      if (data.user) {
+        updateToUserTabel(data.user);
+        console.log(data.user);
+      }
+    },
+  });
+  $("form#updateUser").trigger("reset");
+  $("#myModal").modal("hide");
+  return false;
+});
+
+function updateToUserTabel(user) {
+  tr_id = "#user-" + user.id;
+  ordem = user.name;
+  console.log(ordem);
+  name = $(tr_id)
+    .find("td[ordem-carregamento]")
+    .toggleClass("text-success")
+    .toggleClass("text-danger");
+  if (ordem === true) {
+    console.log("Marcelo");
+    var aElement = $(tr_id).find("td[ordem-carregamento]");
+    aElement.text("Enviada");
+    aElement.attr("ordem-carregamento", "True");
+  } else {
+    var aElement = $(tr_id).find("td[ordem-carregamento]");
+    aElement.text("Não Env.");
+    aElement.attr("ordem-carregamento", "False");
+  }
+}
+
+// Update Django Ajax Call
+function editUser(id) {
+  if (id) {
+    tr_id = "#user-" + id;
+    console.log(tr_id);
+    name = $(tr_id).find("td[ordem-carregamento]").attr("ordem-carregamento");
+    mot = $(tr_id).find("td[updatemotoristaUser]").attr("updatemotoristaUser");
+    placa = $(tr_id).find("td[updatePlacaUser]").attr("updatePlacaUser");
+    nplaca = placa.slice(0, 3) + " " + placa.slice(3);
+
+    var placaform = document.getElementById("updatePlacaUser");
+    placaform.innerHTML = nplaca + " - " + " " + mot;
+
+    $("#form-id").val(id);
+    if (name === "True") {
+      $("#form-name").attr("checked", true);
+    } else {
+      $("#form-name").attr("checked", false);
+    }
+  }
+}

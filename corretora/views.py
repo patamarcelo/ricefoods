@@ -7,6 +7,11 @@ from django.views.generic import FormView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.urls import reverse
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+
+
+
 
 from django.db.models import F, FloatField, Sum, Avg, Count
 from easy_pdf.views import PDFTemplateResponseMixin
@@ -601,6 +606,22 @@ class UpdatechegadaCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateVie
     # fields = '__all__'
     fields = ('chegada',)
     success_url = reverse_lazy('cargas')
+
+class UpdateAjaxOrdemView(LoginRequiredMixin, UpdateView):
+    model = Carga
+    fields = ('ordem',)
+
+    def get(self, request):
+        id1 = request.GET.get("id", None)
+        ordem1 = request.GET.get("name")
+        Carga.objects.filter(id=id1).update(ordem=ordem1)
+        obj = get_object_or_404(Carga, id=id1)
+        
+        user = {"id": obj.pk, "name": obj.ordem}
+        
+        data = {"user": user}
+        return JsonResponse(data)
+
 
 
 

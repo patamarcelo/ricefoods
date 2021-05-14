@@ -3,6 +3,8 @@
 {% load static %}
 {% now "Y-m-d" as todays_date %}
 {% load  corretora_extras %}
+{% load crispy_forms_tags %}
+
 
 
 <!DOCTYPE html>
@@ -36,6 +38,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
     <link href="{% static 'css/advise.css' %}" rel="stylesheet">
     <script src="{% static 'js/showadvise.js' %}"></script>   
+    
 
     <style>
         .btn-xs {
@@ -159,6 +162,10 @@
             cursor: grabbing;
         }
 
+        [ordem-carregamento] {
+            cursor: pointer
+        }
+
     </style>
     <!--Favicon-->
     <link rel="icon" href="{% static 'images/favicon.png' %}">
@@ -278,7 +285,7 @@
                 </thead>
                 <tbody>
                     {% for carga in cargas %}
-                    <tr class="simplehighlight">
+                    <tr class="simplehighlight" id="user-{{carga.pk|stringformat:"i"}}">
                         <td>{{ page_obj.start_index|add:forloop.counter0 }}</td>
                         {% if carga.pedido.situacao == "a" %}
                         <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
@@ -318,9 +325,9 @@
 
 
                         {% if carga.ordem %}
-                        <td class="text-success"><em>Enviada</em></td>
+                        <td class="text-success userName" updatemotoristaUser="{{carga.motorista|title}}" updatePlacaUser="{{carga.placa}}" ordem-carregamento="{{carga.ordem}}" onClick="editUser({{carga.pk|stringformat:"i"}})" data-toggle="modal" data-target="#myModal")"><em>Enviada</em></td>
                         {% else %}
-                        <td class="text-danger"><em>Não Env.</em></td>
+                        <td class="text-danger userName" updatemotoristaUser="{{carga.motorista|title}}" updatePlacaUser="{{carga.placa}}" ordem-carregamento="{{carga.ordem}}" onClick="editUser({{carga.pk|stringformat:"i"}})" data-toggle="modal" data-target="#myModal")"><em>Não Env.</em></td>
                         {% endif %}
 
                         {% if todays_date == carga.data|date:"Y-m-d" %}
@@ -502,11 +509,13 @@
                     {{ page_obj.paginator.count }} Itens </strong></p>
         </div>
     </div>
+    
+    {% include 'modal_cargas.html' %}
+  
 </body>
 <br>
+<script src="{% static 'js/patas.js' %}"></script>   
 <script>
-
-
 </script>
 <!-- jQuery -->
 <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
