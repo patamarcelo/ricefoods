@@ -1,0 +1,23 @@
+input[type='checkbox'] {    
+    height: 15px !important;
+    width: 7%;
+    align-self: center;
+  }
+  
+  h5 {
+    white-space: nowrap;
+    align-self: center;
+    margin-bottom: 0px;
+  }
+
+  .modal-body {
+    display: flex;
+    align-content: center;
+    justify-content: flex-start;
+    height: 90px !important;
+    padding: 15px;
+  }
+
+  .modal-footer {
+    padding: 5px;
+  }
