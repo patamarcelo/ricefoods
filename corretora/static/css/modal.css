@@ -1,4 +1,4 @@
-input[type='checkbox'] {    
+.modal input[type='checkbox'] {    
     height: 15px !important;
     width: 7%;
     align-self: center;
