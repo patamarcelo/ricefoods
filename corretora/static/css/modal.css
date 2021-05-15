@@ -21,3 +21,7 @@ input[type='checkbox'] {
   .modal-footer {
     padding: 5px;
   }
+
+  [ordem-carregamento] {
+    cursor: pointer
+  }

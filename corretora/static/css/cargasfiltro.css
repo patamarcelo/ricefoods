@@ -97,6 +97,7 @@ table {
 }
 
 
+
 #select-all {
     margin-right: 4px;            
     width: 12px !important;
@@ -225,6 +226,10 @@ label {
 .titulototaldireita, .titulototaldireita > p {
     margin-bottom: 0px;
     padding: 0px;
+}
+
+.titulototaldireita {
+    padding-right: 20px;
 }
 
 .pesostitulo {            

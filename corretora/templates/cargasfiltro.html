@@ -39,6 +39,8 @@
 
     
 
+    
+
 
 
     
@@ -47,6 +49,15 @@
 
 </head>
 
+<style>
+    .tooltip .tooltiptext{
+        height: 90px !important;
+    }
+
+    .tooltip-inner {
+        width: 10px;
+    }
+</style>
 <body>
     <div id="clickeadvise" class="clickeadvise" style="display: none; z-index:10">        
         <h3> <span class="badge badge-pill bg-success"> <i class="fa fa-copy" aria-hidden="true"></i></span>
@@ -400,7 +411,7 @@
                     </thead>
                     <tbody>
                         {% for carga in object_list %}                        
-                        <tr class="simplehighlight">
+                        <tr class="simplehighlight" id="user-{{carga.pk|stringformat:"i"}}">
                             <td>{{ page_obj.start_index|add:forloop.counter0 }}</td>
                             {% if carga.pedido.situacao == "a" %}
                             <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
@@ -442,9 +453,9 @@
 
 
                             {% if carga.ordem %}
-                            <td class="text-success"><em>Enviada</em></td>
+                            <td class="text-success userName" updatemotoristaUser="{{carga.motorista|title}}" updatePlacaUser="{{carga.placa}}" ordem-carregamento="{{carga.ordem}}" onClick="editUser({{carga.pk|stringformat:"i"}})" data-toggle="modal" data-target="#myModal")"><em>Enviada</em></td>
                             {% else %}
-                            <td class="text-danger"><em>Não Env.</em></td>
+                            <td class="text-danger userName" updatemotoristaUser="{{carga.motorista|title}}" updatePlacaUser="{{carga.placa}}" ordem-carregamento="{{carga.ordem}}" onClick="editUser({{carga.pk|stringformat:"i"}})" data-toggle="modal" data-target="#myModal")"><em>Não Env.</em></td>
                             {% endif %}
 
                             {% if todays_date == carga.data|date:"Y-m-d" %}
@@ -1045,38 +1056,48 @@
     <div style="display: none" id="jsonMotoristas" data-json="{{ motoristas_autocomplete_json }}"></div>
     <div style="display: none" id="jsonPlacas" data-json="{{ placas_autocomplete_json }}"></div>
 
+    
+    
+    {% include 'modal_cargas.html' %}
+
 </body>
 <br>
 <script>
 
 </script>
+
+<!-- Personal CSS  -->
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+<link href="{% static 'css/advise.css' %}" rel="stylesheet">
+<script src="{% static 'js/showadvise.js' %}"></script>   
+
 <!-- jQuery -->
-<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<!-- <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script> -->
 <!-- Bootstrap tooltips -->
 <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
 <!-- Bootstrap core JavaScript -->
 <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+
 <!-- Your custom scripts (optional) -->
-<script type="text/javascript"></script>
-<!-- MDBootstrap Datatables  -->
-<script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<!-- jQuery -->
-<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-<!--Autocomplete-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script type="text/javascript"></script>
+
+
+
+
+
+<!-- Optional theme -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
-<!-- Personal CSS  -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
-<link href="{% static 'css/advise.css' %}" rel="stylesheet">
-<script src="{% static 'js/showadvise.js' %}"></script>   
+
+<script src="{% static 'js/patas.js' %}"></script>   
+
+
 
 <!-- jQuery Masks-->
 <script type="text/javascript" src="{% static 'js/cargasfiltro.js' %}"></script>

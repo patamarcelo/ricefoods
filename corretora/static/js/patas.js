@@ -363,7 +363,8 @@ function formatDate(date) {
 //   console.log(clientesDatas);
 // });
 
-$("form#updateUser").submit(function () {
+$("form#updateUser").on("submit", function (event) {
+  event.preventDefault();
   var urlform = $("[data-validate-username-url]").attr(
     "data-validate-username-url"
   );
@@ -404,7 +405,6 @@ function updateToUserTabel(user) {
     .toggleClass("text-success")
     .toggleClass("text-danger");
   if (ordem === true) {
-    console.log("Marcelo");
     var aElement = $(tr_id).find("td[ordem-carregamento]");
     aElement.text("Enviada");
     aElement.attr("ordem-carregamento", "True");
