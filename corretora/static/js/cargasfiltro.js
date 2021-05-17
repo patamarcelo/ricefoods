@@ -157,8 +157,9 @@ $("#badgetransp").hover(
 
 new ClipboardJS(".copy-data");
 
-const alternarDestaque = () => $("#filtro").toggleClass("hide");
-$("#btn_filtro").on("mouseenter", alternarDestaque);
+// Alterar destaque entrando e saindo com o Mouse
+// const alternarDestaque = () => $("#filtro").toggleClass("hide");
+// $("#btn_filtro").on("mouseenter", alternarDestaque);
 
 function loadJson(selector) {
   return JSON.parse(document.querySelector(selector).getAttribute("data-json"));

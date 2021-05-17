@@ -5,6 +5,9 @@
 
 
 <style>
+    body {
+        background-color: black;
+    }
     #id_obs {
         height: 100px;
     }
@@ -65,6 +68,8 @@
         border: 0.2px solid #ccc;
         padding: 20px;
         padding-bottom: 0px;
+        background-color: #363639;
+        color: blanchedalmond;
     }
 
     .botoestop {
@@ -84,34 +89,38 @@
 
 <form method="POST" novalidate class="needs-validation">
     {% csrf_token %}
-    <div class="container-fluid col-10 justify-content-around">
+    <div class="container-fluid col-10 justify-content-around p-0">
         <div class="row align-items-center">
             <div class="col justify-content-start">
                 <h4><span class="badge badge-success botoestop"> Adiconar Carga</span></h4>
             </div>
-            <div class="col sevea" align=right>
-                <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" />
-                <a class="btn btn-warning btn-sm botoestop2" href="{% url 'cargas' %}">Voltar</a>
+            <div class="d-flex flex-column justify-content-end pr-4">       
+                <div class="row">
+                    <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" />
+                </div>
+                <div class="row">
+                    <a class="btn btn-warning btn-sm" href="{% url 'cargas' %}">Voltar</a>
+                </div>
             </div>
         </div>
         <div class="row continfo">
             <div class="d-flex container botoestop justify-content-start">
                 <h5>
                     <span class="badge badge-warning p-1 m-1" id="fornecedorinfo"></span>                        
-                    &nbsp;&nbsp; <span class="badge badge-success p-1 m-1" id="clienteinfo"></span>
+                    &nbsp;&nbsp; <span class="badge badge-primary p-1 m-1" id="clienteinfo"></span>
                 </h5>
             </div>
         </div>
         <div class="row ">
             <div class="d-flex container botoestop justify-content-start">
                 <h5>
-                    <span class="badge badge-white bg-dark p-1 m-1" id="cidadeinfo"></span>
+                    <span class="badge badge-white bg-success p-1 m-1" id="cidadeinfo"></span>
                 </h5>
             </div>
         </div>
     </div>
 
-    <br />
+    
     <div class="container d-flex flex-column justify-content-center  col-lg-10 col-md-12 col-sm-12 col-12 formulario">
         <div class="d-flex flex-column justify-content-around" style="margin: 10px;">
             <div class="d-flex flex-row justify-content-start form-row" style="margin-bottom: 20px;">

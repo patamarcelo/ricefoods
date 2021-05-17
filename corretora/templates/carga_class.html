@@ -32,10 +32,12 @@
     }
 
     .formulario {
-        margin-top: 20px;
+        margin-top: 10px;
         border: 0.2px solid #ccc;
         padding: 20px;
         padding-bottom: 20px;
+        background-color: #363639;
+        color: blanchedalmond;
     }
 
     input[type=text],
@@ -47,34 +49,53 @@
         margin-top: 0px !important;
     }
 
+    h4 {
+        display:inline-block;
+    }
+
+    body {
+        background-color: black;
+    }
+    
+
+
 </style>
 
 <form method="POST">
-    <div class="row align-items-center">
-        <div class="d-flex flex-column col">
-            <div class="d-flex flex-row">
-                <div class="d-flex flex-column justify-content-start p-1 m-3">
-                    <div class="botoestop container">
-                        <h4> <span class="badge badge-primary p-1 m-1"> Pedido: {{carga.pedido}}
-                            </span>&nbsp;&nbsp;<span
-                                class="badge badge-dark p-1 m-1">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
-                                -
-                                {{carga.motorista|title}}</span>
+    
+        
+            <div class="d-flex justify-content-around col-11">
+                
+                    <div class="flex-column justify-content-start">
+                        <div class="flex-row justify-content-start">
+                            <div class="d-flex justify-content-start">
+                            <h4> <span class="badge badge-primary p-1 m-1"> Pedido: {{carga.pedido}}
+                                </span></h4>
+                                <h4>&nbsp;&nbsp;<span
+                                    class="badge badge-dark p-1 m-1">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
+                                    -
+                                {{carga.motorista|title}}</span></h4>
+                            </div>
+                        </div>
+                        <div class="flex-row align-content-start">
+                            <div class="d-flex justify-content-start">
+                                <h5> <span class="badge badge-warning p-1 m-1">{{carga.pedido.fornecedor.nome}}</span>
+                                    &nbsp;&nbsp;<span
+                                        class="badge badge-success p-1 m-1">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
+                            </div>
+                        </div>   
                     </div>
-                    <div class="botoestop container-fluid" style="position: relative; left: -3%;">
-                        <h5> <span class="badge badge-warning p-1 m-1">{{carga.pedido.fornecedor.nome}}</span>
-                            &nbsp;&nbsp;<span
-                                class="badge badge-success p-1 m-1">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
+                    <div class="flex-column justify-content-end">       
+                            <div class="row">
+                                <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                            </div>                                     
+                            <div class="row">
+                                <a class="btn btn-warning btn-sm " href="javascript:history.back()">Voltar</a>
+                            </div>
                     </div>
                 </div>
-            </div>
-            </h4>
-        </div>
-        <div class="col" align=right>
-            <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-            <a class="btn btn-warning btn-sm botoestop2" href="javascript:history.back()">Voltar</a>
-        </div>
-    </div>
+        
+    
 
     {% csrf_token %}
     <div
