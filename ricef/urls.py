@@ -59,6 +59,7 @@ urlpatterns = [
     path('corretora/cargas/<int:pk>/update/chegada', UpdatechegadaCargasView.as_view(), name='upd_chegada'), 
     path('corretora/cargas/<int:pk>/delete', DeleteCargasView.as_view(), name='del_cargas'),
     path('corretora/cargas/update', UpdateAjaxOrdemView.as_view(), name="cargas_ajax_update"),
+    path('corretora/cargas/updatechegada', UpdateAjaxChegadaView.as_view(), name="cargas_ajax_update_chegada"),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

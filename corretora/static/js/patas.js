@@ -396,6 +396,10 @@ $("form#updateUser").on("submit", function (event) {
   return false;
 });
 
+function updateForm() {
+  $("form#updateUser").trigger("reset");
+}
+
 function updateToUserTabel(user) {
   tr_id = "#user-" + user.id;
   ordem = user.name;
@@ -434,5 +438,93 @@ function editUser(id) {
     } else {
       $("#form-name").attr("checked", false);
     }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+//UpdateUserChegada
+$("form#updateUserChegada").on("submit", function (event) {
+  event.preventDefault();
+  var urlform = $("[data-validate-username-url-chegada]").attr(
+    "data-validate-username-url-chegada"
+  );
+  console.log(urlform)
+  var idInput = $('input[name="formIdChegada"]').val().trim();
+  var nameInput = $('input[name="formNameChegada"]').is(":checked");
+
+  if (nameInput === true) {
+    var valName = "True";
+  } else {
+    var valName = "False";
+  }
+  // Create Ajax Call
+  $.ajax({
+    url: urlform,
+    data: {
+      id: idInput,
+      name: valName,
+    },
+    dataType: "json",
+    success: function (data) {
+      if (data.user) {
+        updateToUserTabelChegada(data.user);
+        console.log(data.user);
+      }
+    },
+  });
+  $("form#updateUserChegada").trigger("reset");
+  $("#myModalChegada").modal("hide");
+  return false;
+});
+
+function updateFormChegada() {
+  $("form#updateUserChegada").trigger("reset");
+}
+
+function editUserChegada(id) {
+  if (id) {
+    tr_id = "#user-" + id;
+    console.log(tr_id);
+    name = $(tr_id).find("td[ordem-chegada]").attr("ordem-chegada");
+    mot = $(tr_id).find("td[updatemotoristaUserChegada]").attr("updatemotoristaUserChegada");
+    placa = $(tr_id).find("td[updatePlacaUserChegada]").attr("updatePlacaUserChegada");
+    nplaca = placa.slice(0, 3) + " " + placa.slice(3);
+
+    var placaform = document.getElementById("updatePlacaUserChegada");
+    placaform.innerHTML = nplaca + " - " + " " + mot;
+
+    $("#form-id-chegada").val(id);
+    if (name === "True") {
+      $("#form-name-chegada").attr("checked", true);
+    } else {
+      $("#form-name-chegada").attr("checked", false);
+    }
+  }
+}
+
+
+
+function updateToUserTabelChegada(user) {
+  tr_id = "#user-" + user.id;
+  ordem = user.name;
+  console.log(ordem);
+  name = $(tr_id)
+    .find("td[ordem-chegada]")
+    .toggleClass("text-success")
+    .toggleClass("text-warning");
+  if (ordem === true) {
+    var aElement = $(tr_id).find("td[ordem-chegada]");
+    aElement.attr("ordem-chegada", "True");
+  } else {
+    var aElement = $(tr_id).find("td[ordem-chegada]");
+    aElement.attr("ordem-chegada", "False");
   }
 }

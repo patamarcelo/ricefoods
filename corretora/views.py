@@ -625,6 +625,25 @@ class UpdateAjaxOrdemView(LoginRequiredMixin, UpdateView):
         data = {"user": user}
         return JsonResponse(data)
 
+class UpdateAjaxChegadaView(LoginRequiredMixin, UpdateView):
+    model = Carga
+    fields = ('chegada',)
+
+    def get(self, request):
+        id1 = request.GET.get("id", None)
+        chegada1 = request.GET.get("name")
+        
+        obj = get_object_or_404(Carga, id=id1)
+        obj.chegada = chegada1
+        print(obj.chegada)
+        obj.save()
+        obj1 = get_object_or_404(Carga, id=id1)
+
+        user = {"id": obj1.pk, "name": obj1.chegada}
+
+        data = {"user": user}
+        return JsonResponse(data)
+
 
 
 

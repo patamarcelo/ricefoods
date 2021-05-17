@@ -17,9 +17,10 @@
 
     .dropdown-item:hover {
         background-color: #0275d8 !important;
-        background: linear-gradient(135deg, #0275d8 0%, #32dac3 100%) !important;
-        color: whitesmoke !important;
+        background: linear-gradient(135deg, #d8c302 0%, #d6d1a4 100%) !important;
+        /* color: whitesmoke !important; */
         border-radius: 2px !important;
+        color: black !important;
     }
 
     .dropdown-menu {
@@ -62,7 +63,7 @@
     </div>
     {% else %}
     <div class="container" align=center>
-        <div class="col-lg-5 col-md-7 col-sm-9 col-11 alert alert-primary" role="alert">
+        <div class="col-lg-5 col-md-7 col-sm-9 col-11 alert" role="alert" style="color: black; background: linear-gradient(135deg, #d8c302 0%, #d6d1a4 100%) !important; border-radius: 20px !important;">
             Seja Bem Vindo(a) {{ user.get_full_name|title }}!!
         </div>
     </div>

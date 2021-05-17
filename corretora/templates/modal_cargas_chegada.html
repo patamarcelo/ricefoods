@@ -1,0 +1,32 @@
+{% load static %}
+<!-- CSS Modal Custom -->
+<link href="{% static 'css/modal.css' %}" rel="stylesheet">
+
+<!-- Modal -->
+<div class="modal fade" id="myModalChegada" tabindex="-1" role="dialog" aria-labelledby="myModalLabelChegada">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content bg-dark">
+      <div class="modal-header">
+          
+          <h4> <em class="badge badge-primary" id="myModalLabelChegada">Motorista Chegou ?</em></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      
+      </div>
+      <form id="updateUserChegada" action="" data-validate-username-url-chegada="{% url 'cargas_ajax_update_chegada' %}">
+      
+        <div class="modal-body">
+
+          <input class="form-control" id="form-id-chegada" type="hidden" name="formIdChegada"/>
+          <input class="form-control" id="form-name-chegada" type="checkbox" name="formNameChegada" />
+          <h5 class="updatePlacaUser"> <em  id="updatePlacaUserChegada"></em></h5>
+          
+      
+        </div>
+      <div class="modal-footer">
+          <button type="submit" class="btn btn-sm  btn-primary" >Salvar</button>
+          <button type="button" class="btn btn-sm btn-warning" onclick="updateFormChegada()" data-dismiss="modal">Fechar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>

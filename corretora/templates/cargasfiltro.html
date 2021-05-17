@@ -458,21 +458,22 @@
                             <td>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</td>
                             {% endif %}
 
-                            {% if carga.situacao == 'Agendado' and carga.ordem == False %}
-                            {% if carga.situacao == 'Agendado' and carga.chegada == True %}
+                              
+                        {% if carga.situacao == 'Agendado' %}
+                        {% if carga.situacao == 'Agendado' and carga.chegada == True %}
 
-                            <td><a class="text text-success" style='font-style:italic'
-                                    href="{% url 'upd_chegada' carga.pk %}" target="_blank"><strong>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}
-                                    </strong></a></td>
-                            {% else %}
-                            <td><a class="text text-warning" style='font-style:italic'
-                                    href="{% url 'upd_chegada' carga.pk %}" target="_blank"><strong>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</strong></a>
-                            </td>
-                            {% endif %}
-                            {% else %}
-                            <td>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</td>
-                            {% endif %}
-
+                        <td updatemotoristaUserChegada="{{carga.motorista|title}}" updatePlacaUserChegada="{{carga.placa}}" ordem-chegada="{{carga.chegada}}" onClick="editUserChegada({{carga.pk|stringformat:"i"}})" 
+                        data-toggle="modal" data-target="#myModalChegada")" class="text text-success"><a style='font-style:italic'><strong>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}
+                                </strong></a></td>
+                        {% else %}
+                        <td updatemotoristaUserChegada="{{carga.motorista|title}}" updatePlacaUserChegada="{{carga.placa}}" ordem-chegada="{{carga.chegada}}" onClick="editUserChegada({{carga.pk|stringformat:"i"}})" 
+                        data-toggle="modal" data-target="#myModalChegada")" class="text text-warning"><a style='font-style:italic'
+                                ><strong>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</strong></a>
+                        </td>
+                        {% endif %}
+                        {% else %}
+                        <td>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</td>
+                        {% endif %}
 
 
 
@@ -1051,6 +1052,7 @@
     
     
     {% include 'modal_cargas.html' %}
+    {% include 'modal_cargas_chegada.html' %}
 
 </body>
 <br>
