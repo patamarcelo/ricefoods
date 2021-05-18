@@ -203,7 +203,7 @@
         <h3> <span class="badge badge-pill bg-success"> <i class="fa fa-copy" aria-hidden="true"></i></span>
             <span class="badge badge-pill bg-success" id="cargasmotcopy"></span></h3>
     </div>
-    <header class="container">
+    <header class="container p-0">
         <br />
         <div class="row">
             {% if 'add/age' in request.get_full_path %}
@@ -270,6 +270,7 @@
             </div>
             {% endif %}
 
+        </div>
         </div>
 
         {% block content %}
