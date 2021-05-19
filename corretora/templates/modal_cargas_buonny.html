@@ -1,0 +1,55 @@
+{% load static %}
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.1.1/dist/js/autoComplete.min.js"></script>
+
+
+
+<!-- CSS Modal Custom -->
+<link href="{% static 'css/modal.css' %}" rel="stylesheet">
+
+<!-- Modal -->
+<div class="modal fade" id="myModalBuonny" tabindex="-1" role="dialog" aria-labelledby="myModalLabelBuonny">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content bg-dark">
+      <div class="modal-header">
+          
+          <h4> <em class="badge badge-info" id="myModalLabelBuonny">Buonny</em></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      
+      </div>
+      <form id="updateUserBuonny" action="" data-validate-username-url-Buonny="{% url 'cargas_ajax_update_buonny' %}">
+      
+        <div class="modal-body">
+          <div class="container">
+            <div class="row mb-2">
+              <h5 class="updatePlacaUser"> <em  id="updatePlacaUserBuonny"></em></h5>
+            </div>
+              <input class="form-control" id="form-id-Buonny" type="hidden" name="formIdBuonny"/>
+            <div class="row">
+              <input class="form-control w-50" id="form-name-Buonny" type="text" name="formNameBuonny" />
+            </div>
+          </div>
+          
+          
+      
+        </div>
+      <div class="modal-footer mt-2">
+          <button type="submit" class="btn btn-sm  btn-primary" >Salvar</button>
+          <button type="button" class="btn btn-sm btn-warning" onclick="updateFormBuonny()" data-dismiss="modal">Fechar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+  
+
+  const buonnyAc = ['Cadastro', 'Consulta', 'Enviado']
+  $("#form-name-Buonny").autocomplete({
+    source: buonnyAc,
+  });
+</script>

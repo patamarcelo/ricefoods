@@ -304,15 +304,24 @@
                         {% else %}
                         <td class="copy-data"  title="Copiar {{carga.placa}} - {{carga.motorista|title}}" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}" style="background-color: #660066;">{{ carga.transp|title }}</td>
                         {% endif %}
-                        {% if 'dast' in carga.buonny|lower %}
-                        <td class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>
+
+                        {% if 'das' in  carga.buonny|lower %}
+                        <td updatemotoristaUserBuonny="{{carga.motorista|title}}" updatePlacaUserBuonny="{{carga.placa}}" updateBuonnyUserBuonny="{{carga.buonny}}" onClick="editUserBuonny({{carga.pk|stringformat:"i"}})" 
+                        data-toggle="modal" data-target="#myModalBuonny")" class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>
                         {% elif 'sul' in carga.buonny|lower %}
-                        <td class="text-warning"><strong>{{ carga.buonny|title }}</strong></td>
+                        <td updatemotoristaUserBuonny="{{carga.motorista|title}}" updatePlacaUserBuonny="{{carga.placa}}" updateBuonnyUserBuonny="{{carga.buonny}}" onClick="editUserBuonny({{carga.pk|stringformat:"i"}})" 
+                        data-toggle="modal" data-target="#myModalBuonny")"  class="text-warning"><strong>{{ carga.buonny|title }}</strong></td>
                         {% elif 'nviado' in carga.buonny|lower or 'nviada' in carga.buonny|lower %}
-                        <td class="text-info"><strong>{{ carga.buonny|title }}</strong></td>
+                        <td updatemotoristaUserBuonny="{{carga.motorista|title}}" updatePlacaUserBuonny="{{carga.placa}}" updateBuonnyUserBuonny="{{carga.buonny}}" onClick="editUserBuonny({{carga.pk|stringformat:"i"}})" 
+                        data-toggle="modal" data-target="#myModalBuonny")" class="text-info"><strong>{{ carga.buonny|title }}</strong></td>
                         {% else %}
-                        <td class="text-success"><strong>{{ carga.buonny|title }}</strong></td>
+                        <td updatemotoristaUserBuonny="{{carga.motorista|title}}" updatePlacaUserBuonny="{{carga.placa}}" updateBuonnyUserBuonny="{{carga.buonny}}" onClick="editUserBuonny({{carga.pk|stringformat:"i"}})" 
+                        data-toggle="modal" data-target="#myModalBuonny")" class="text-success"><strong>{{ carga.buonny|title }}</strong></td>
                         {% endif %}
+
+                        
+                        
+                        
                         {% if carga.situacao == 'Agendado' %}
                         <td class="text-warning"><strong>{{ carga.situacao }}</strong></td>
                         {% elif carga.situacao == 'Carregado' %}
@@ -514,10 +523,13 @@
     
     {% include 'modal_cargas.html' %}
     {% include 'modal_cargas_chegada.html' %}
+    {% include 'modal_cargas_buonny.html' %}
   
 </body>
 <br>
+
 <script src="{% static 'js/patas.js' %}"></script>   
+
 <script>
 </script>
 <!-- jQuery -->
@@ -588,3 +600,4 @@
     })));
     
 </script>
+

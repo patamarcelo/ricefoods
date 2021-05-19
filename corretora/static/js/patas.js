@@ -528,3 +528,96 @@ function updateToUserTabelChegada(user) {
     aElement.attr("ordem-chegada", "False");
   }
 }
+
+
+
+
+
+
+
+//UpdateUserBuonny
+$("form#updateUserBuonny").on("submit", function (event) {
+  event.preventDefault();
+  var urlform = $("[data-validate-username-url-Buonny]").attr(
+    "data-validate-username-url-Buonny"
+  );
+  console.log(urlform)
+  var idInput = $('input[name="formIdBuonny"]').val().trim();
+  var nameInput = $('input[name="formNameBuonny"]').val().trim();
+
+  
+  // Create Ajax Call
+  $.ajax({
+    url: urlform,
+    data: {
+      id: idInput,
+      name: nameInput,
+    },
+    dataType: "json",
+    success: function (data) {
+      if (data.user) {
+        updateToUserTabelBuonny(data.user);
+        console.log(data.user);
+      }
+    },
+  });
+  $("form#updateUserBuonny").trigger("reset");
+  $("#myModalBuonny").modal("hide");
+  return false;
+});
+
+function updateFormBuonny() {
+  $("form#updateUserBuonny").trigger("reset");
+}
+
+
+
+function editUserBuonny(id) {
+  if (id) {
+    
+    tr_id = "#user-" + id;
+    console.log(tr_id);
+    buonny = $(tr_id).find("td[updateBuonnyUserBuonny]").attr("updateBuonnyUserBuonny");
+    mot = $(tr_id).find("td[updatemotoristaUserBuonny]").attr("updatemotoristaUserBuonny");
+    placa = $(tr_id).find("td[updatePlacaUserBuonny]").attr("updatePlacaUserBuonny");
+    nplaca = placa.slice(0, 3) + " " + placa.slice(3);
+
+    var placaform = document.getElementById("updatePlacaUserBuonny");
+    placaform.innerHTML = nplaca + " - " + " " + mot;
+
+    $("#form-id-Buonny").val(id);
+    $("#form-name-Buonny").val(buonny);
+  }
+}
+
+
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
+function updateToUserTabelBuonny(user) {
+  var tr_id = "#user-" + user.id;
+  var buonny = user.buonny
+  var bElement = $(tr_id).find("td[updateBuonnyUserBuonny]");
+  bElement.attr("updateBuonnyUserBuonny", buonny);
+  
+  if (typeof buonny === 'string') {
+    bElement.text(capitalize(buonny));
+  } else {
+    bElement.text(buonny);
+  };
+
+  bElement.removeAttr("class");
+  
+  if (buonny.includes('dast')) {
+    bElement.addClass("text-danger");
+  } else if (buonny.includes('sul')) {
+    bElement.addClass("text-warning");
+  } else if (buonny.includes('nviad')) {
+    bElement.addClass("text-info");
+  } else {
+    bElement.addClass("text-success"); 
+  } 
+}
+
+

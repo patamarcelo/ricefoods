@@ -644,6 +644,25 @@ class UpdateAjaxChegadaView(LoginRequiredMixin, UpdateView):
         data = {"user": user}
         return JsonResponse(data)
 
+class UpdateAjaxBuonnyView(LoginRequiredMixin, UpdateView):
+    model = Carga
+    fields = ('buonny',)
+
+    def get(self, request):
+        id1 = request.GET.get("id", None)
+        buonny1 = request.GET.get("name")
+        
+        obj = get_object_or_404(Carga, id=id1)
+        obj.buonny = buonny1
+        print(obj.buonny)
+        obj.save()
+        obj1 = get_object_or_404(Carga, id=id1)
+
+        user = {"id": obj1.pk, "buonny": obj1.buonny}
+
+        data = {"user": user}
+        return JsonResponse(data)
+
 
 
 
