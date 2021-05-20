@@ -3,7 +3,7 @@
 {% block content %}
 {% load crispy_forms_tags %}
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <style>
     #id_obs {
         height: 100px;
@@ -34,8 +34,8 @@
     .formulario {
         margin-top: 10px;
         border: 0.2px solid #ccc;
-        padding: 20px;
-        padding-bottom: 20px;
+        padding: 15px;
+        /* padding-bottom: 20px; */
         background-color: #363639;
         color: blanchedalmond;
     }
@@ -56,6 +56,9 @@
     body {
         background-color: black;
     }
+
+    .btn-sm {
+    }
     
 
 
@@ -63,38 +66,30 @@
 
 <form method="POST">
     
-        
-            <div class="d-flex justify-content-around col-11">
-                
-                    <div class="flex-column justify-content-start">
-                        <div class="flex-row justify-content-start">
-                            <div class="d-flex justify-content-start">
-                            <h4> <span class="badge badge-primary p-1 m-1"> Pedido: {{carga.pedido}}
-                                </span></h4>
-                                <h4>&nbsp;&nbsp;<span
-                                    class="badge badge-dark p-1 m-1">{{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}
-                                    -
-                                {{carga.motorista|title}}</span></h4>
+            <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-start col-lg-8 col-12 p-0">                
+                        <div class="flex-column justify-content-start">
+                            <div class="flex-row justify-content-start">
+                                <div class="d-flex justify-content-start">
+                                <h5> <span class="badge badge-primary p-1 ">{{carga.pedido}}
+                                    </span></h5>
+                                    <h5>&nbsp;&nbsp;<span
+                                        class="badge badge-secondary p-1 ">{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}
+                                        -
+                                    {{carga.motorista|title}}</span></h5>
+                                </div>
                             </div>
+                            <div class="flex-row align-content-start">
+                                <div class="d-flex justify-content-start">
+                                    <h5> <span class="badge badge-warning p-1">{{carga.pedido.fornecedor.nome}}</span>
+                                        &nbsp;&nbsp;<span
+                                            class="badge badge-success p-1">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
+                                </div>
+                            </div>   
                         </div>
-                        <div class="flex-row align-content-start">
-                            <div class="d-flex justify-content-start">
-                                <h5> <span class="badge badge-warning p-1 m-1">{{carga.pedido.fornecedor.nome}}</span>
-                                    &nbsp;&nbsp;<span
-                                        class="badge badge-success p-1 m-1">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
-                            </div>
-                        </div>   
+                        
                     </div>
-                    <div class="flex-column justify-content-end">       
-                            <div class="row">
-                                <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                            </div>                                     
-                            <div class="row">
-                                <a class="btn btn-warning btn-sm " href="javascript:history.back()">Voltar</a>
-                            </div>
-                    </div>
-                </div>
-        
+            </div>
     
 
     {% csrf_token %}
@@ -159,15 +154,27 @@
     {% buttons %}
     <div class="container botoes">
         <div class="d-flex flex-row justify-content-center align-content-center">
-            <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" data-toggle="tooltip"
-                title="Salvar" data-placement="top" />
+            <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" rel="tooltip" data-toggle="tooltip"
+                title="Salvar" data-placement="top"/>
 
             <button type="button" class="btn btn-outline-warning btn-sm">
-                <a href="{% url 'cargas' %}" data-toggle="tooltip" title="Cancelar" data-placement="top">Cancelar</a>
+                <a href="{% url 'cargas' %}" rel="tooltip" data-toggle="tooltip" title="Cancelar" data-placement="top" onClick="window.close();">Cancelar</a>
             </button>
         </div>
     </div>
 
     {% endbuttons %}
 </form>
+
+<script type="text/javascript">
+    $(function () {
+        $("[rel='tooltip']").tooltip();
+    });
+
+    function closeW(){
+    setTimeout(function(){
+        window.close();
+    },500);
+}
+</script>
 {% endblock %}

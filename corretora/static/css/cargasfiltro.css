@@ -141,16 +141,17 @@ table {
 
 }
 
-input[type=text]:hover,
-input[type=number]:hover,
-input[type=checkbox]:hover,
+.form-group input:hover,
+input[type="text"]:hover,
+input[type="number"]:hover,
+input[type="checkbox"]:hover,
 #id_ordering:hover,
 #id_situacao:hover,
 #id_comcomissao:hover,
 #id_pgcomissaoa:hover,
 textarea:hover {
-    background: #ffffff;
-    border: 3px solid #0275d8;            
+    background: #ffffff !important;
+    border: 3px solid #0275d8 !important;            
 }
 
 .form-row {

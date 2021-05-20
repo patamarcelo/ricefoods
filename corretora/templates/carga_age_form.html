@@ -166,8 +166,8 @@
                 <div class="d-flex justify-content-between col-lg-8 col-12 p-0">            
                             <h4 class="mb-0 align-self-center"><span class="badge badge-success"> Adiconar Carga</span></h4>
                     <div class="d-flex justify-content-end">
-                        <input type="submit" class="btn btn-primary btn-sm " name='save' value="Salvar" />
-                        <a class="btn btn-warning btn-sm mr-0" href="{% url 'cargas' %}">Voltar</a>
+                        <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" style="padding-top: 6px;padding-bottom: 6px;"/>
+                        <a class="btn btn-warning btn-sm mr-0" href="{% url 'cargas' %}" style="padding-top: 6px;padding-bottom: 6px;">Voltar</a>
                     </div>
                 </div>
             </div>
@@ -253,9 +253,9 @@
         <div class="d-flex flex-row justify-content-center align-content-center">
             <input type="submit" class="btn btn-primary btn-sm" name='save' value="Salvar" data-toggle="tooltip"
                 title="Salvar" data-placement="top" />
-            <input type="submit" class="btn btn-success btn-sm" name="save_and_continue" value="Salvar e Continuar"
+            <input type="submit" class="btn btn-success btn-sm p-2" name="save_and_continue" value="Salvar e Continuar"
                 data-toggle="tooltip" title="Salvar e Continuar" data-placement="top" />
-            <button type="button" class="btn btn-warning btn-sm">
+            <button type="button" class="btn btn-outline-warning btn-sm">
                 <a href="{% url 'cargas' %}" data-toggle="tooltip" title="Cancelar" data-placement="top">Cancelar</a>
             </button>
         </div>
