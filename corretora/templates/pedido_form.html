@@ -100,11 +100,11 @@
 
 <form method="POST" novalidate class="needs-validation">
     {% csrf_token %}
-    <div class="container">
-        <div class="row">
-            <div class="d-flex flex-column botoestop">
+    <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-between col-lg-9 col-12 p-0">
+            <div class="d-flex flex-column">
                 <div class="d-flex justify-content-start">
-                    <h4><span class="badge badge-primary p-1 "> Pedido&nbsp;
+                    <h4><span class="badge badge-primary p-1 ">
                             {{ pedido.contrato }}</span>
                     </h4>
                 </div>
@@ -114,22 +114,21 @@
                 </div>
             </div>
 
-            <div class="col" align=right>
+            <div class="d-flex align-items-end justify-content-end p-0">
                 <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                <a class="btn btn-warning btn-sm botoestop2" href="javascript:history.back()">Voltar</a>
+                <a class="btn btn-warning btn-sm mr-0" href="javascript:history.back()">Voltar</a>
             </div>
         </div>
     </div>
-    <br />
 
     <div class="container d-flex flex-column justify-content-center  col-lg-9 col-md-12 col-sm-12 col-12 formulario" id="formulariopedido">
 
         <div class="container d-flex flex-column  justify-content-center col-lg-11 ">
-            <div>
+            <div class="d-flex justify-content-center">
                 <h4 class="contrato mb-5 mt-5" ><span class="badge badge-info">Contrato</span></h4>
             </div>
             <div class="d-flex flex-row justify-content-between situacaoativo  form-row">
-                <div class="col-lg-1 col-sm-1 form-group">
+                <div class="col-lg-1 col-sm-1 form-group" rel="tooltip" data-toggle="tooltip" title="Ativo?">
                     {{ form.ativo|as_crispy_field }}
                 </div>
             </div>
@@ -138,16 +137,16 @@
             <div class="d-flex flex-row justify-content-between form-row">
 
 
-                <div class="col-lg-2 col-md-6 col-sm-6 col-6  form-group">
+                <div class="col-lg-2 col-md-6 col-sm-6 col-6  form-group" rel="tooltip" data-toggle="tooltip" title="Situação">
                     {{ form.situacao|as_crispy_field }}
                 </div>
-                <div class="col-lg-2 col-md-6 col-sm-6 col-6  form-group">
+                <div class="col-lg-2 col-md-6 col-sm-6 col-6  form-group" rel="tooltip" data-toggle="tooltip" title="Data">
                     {{ form.data|as_crispy_field }}
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-6  form-group">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-6  form-group" rel="tooltip" data-toggle="tooltip" title="Fornecedor">
                     {{ form.fornecedor|as_crispy_field }}
                 </div>
-                <div class="col-lg-2 col-md-6 col-sm-6 col-6  form-group">
+                <div class="col-lg-2 col-md-6 col-sm-6 col-6  form-group" rel="tooltip" data-toggle="tooltip" title="Cliente">
                     {{ form.cliente|as_crispy_field }}
                 </div>
             </div>
@@ -155,41 +154,41 @@
         <h4 class="produto" ><span class="badge badge-info">Mercadoria</span></h4>
         <div class="container d-flex flex-column  justify-content-center col-lg-11 ">
             <div class="d-flex flex-row justify-content-between form-row">
-                <div class="col-lg-3 col-md-3 col-sm-6 col-6 form-group">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-6 form-group" rel="tooltip" data-toggle="tooltip" title="Quantidade">
                     {{ form.quantidade_pedido|as_crispy_field }}
 
                 </div>
-                <div class="col-lg-2 col-md-3 col-sm-6 col-6  form-group">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6  form-group" rel="tooltip" data-toggle="tooltip" title="Preço">
                     {{ form.preco_produto|as_crispy_field }}
                 </div>
 
 
-                <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6" rel="tooltip" data-toggle="tooltip" title="Comissão C">
                     {{ form.comissaoc|as_crispy_field }}
                 </div>
-                <div class="col-lg-2 col-md-3 col-sm-6 col-6">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6" rel="tooltip" data-toggle="tooltip" title="Comissão F">
                     {{ form.comissaof|as_crispy_field }}
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-6">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-6" rel="tooltip" data-toggle="tooltip" title="Produto">
                     {{ form.produto|as_crispy_field }}
                 </div>
 
-                <div class="col-lg-2 col-md-3 col-sm-6 col-6 form-group">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6 form-group" rel="tooltip" data-toggle="tooltip" title="Tipo">
                     {{ form.tipo|as_crispy_field }}
 
                 </div>
-                <div class="col-lg-2 col-md-3 col-sm-6 col-6 form-group">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6 form-group" rel="tooltip" data-toggle="tooltip" title="Preço Frete">
                     {{ form.preco_frete|as_crispy_field }}
 
                 </div>
-                <div class="col-lg-2 col-md-3 col-sm-6 col-6 form-group">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-6 form-group" rel="tooltip" data-toggle="tooltip" title="Variedade">
                     {{ form.variedade|as_crispy_field }}
 
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-6 form-group">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-6 form-group" rel="tooltip" data-toggle="tooltip" title="Prazo Pgto.">
                     {{ form.prazopgto|as_crispy_field }}
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-6 form-group">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-6 form-group" rel="tooltip" data-toggle="tooltip" title="Mod. Pgto.">
                     {{ form.modalidadepgto|as_crispy_field }}
                 </div>
             </div>
@@ -197,50 +196,50 @@
         <h4 class="classificacao"><span class="badge badge-info">Classificação</span></h4>
         <div class="container d-flex  col-12 form-inline" style="padding-right: 100px;">
             <div class="col-6 d-flex flex-column  align-items-end classiboto ">
-                <div class="row  form-group " data-toggle="tooltip" title="Renda" data-placement="bottom">
+                <div class="row  form-group " rel="tooltip" data-toggle="tooltip" title="Renda" data-placement="bottom">
                     {{ form.renda|as_crispy_field }}
 
                 </div>
-                <div class="row  form-group" data-toggle="tooltip" title="Inteiro" data-placement="bottom">
+                <div class="row  form-group" rel="tooltip" data-toggle="tooltip" title="Inteiro" data-placement="bottom">
                     {{ form.inteiro|as_crispy_field }}
 
                 </div>
-                <div class="row  form-group" data-toggle="tooltip" title="Impureza" data-placement="bottom">
+                <div class="row  form-group" rel="tooltip" data-toggle="tooltip" title="Impureza" data-placement="bottom">
                     {{ form.impureza|as_crispy_field }}
 
                 </div>
 
 
-                <div class="row  form-group" data-toggle="tooltip" title="Umidade" data-placement="bottom">
+                <div class="row  form-group" rel="tooltip" data-toggle="tooltip" title="Umidade" data-placement="bottom">
                     {{ form.umidade|as_crispy_field }}
 
                 </div>
             </div>
             <div class="col-6 d-flex flex-column  align-items-end classiboto ">
-                <div class="row form-group" data-toggle="tooltip" title="Gessado" data-placement="bottom">
+                <div class="row form-group" rel="tooltip" data-toggle="tooltip" title="Gessado" data-placement="bottom">
                     {{ form.gessado|as_crispy_field }}
 
                 </div>
-                <div class="row form-group" data-toggle="tooltip" title="B.Branca" data-placement="bottom">
+                <div class="row form-group" rel="tooltip" data-toggle="tooltip" title="B.Branca" data-placement="bottom">
                     {{ form.bbranca|as_crispy_field }}
 
                 </div>
-                <div class="row form-group" data-toggle="tooltip" title="Amarelo" data-placement="bottom">
+                <div class="row form-group" rel="tooltip" data-toggle="tooltip" title="Amarelo" data-placement="bottom">
                     {{ form.amarelo|as_crispy_field }}
 
                 </div>
-                <div class="row form-group" data-toggle="tooltip" title="Manch/Pic" data-placement="bottom">
+                <div class="row form-group" rel="tooltip" data-toggle="tooltip" title="Manch/Pic" data-placement="bottom">
                     {{ form.manchpic|as_crispy_field }}
 
                 </div>
-                <div class="row form-group" data-toggle="tooltip" title="Vermelhos" data-placement="bottom">
+                <div class="row form-group" rel="tooltip" data-toggle="tooltip" title="Vermelhos" data-placement="bottom">
                     {{ form.vermelhos|as_crispy_field }}
                 </div>
             </div>
         </div>
         <div class="container d-flex flex-column  justify-content-center col-lg-11 ">
             <div class="d-flex flex-row justify-content-center  form-row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12" rel="tooltip" data-toggle="tooltip" title="Obs.">
                     {{ form.obs|as_crispy_field }}
                 </div>
             </div>
@@ -250,8 +249,8 @@
     {% buttons %}
     <div class="conatiner botoes">
         <div class="d-flex flex-row justify-content-center align-content-center">
-            <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-            <button type="button" class="btn btn-outline-warning btn-sm">
+            <button type="submit" class="btn btn-primary btn-sm" rel="tooltip" data-toggle="tooltip" title="Salvar" data-placement="top">Salvar</button>
+            <button type="button" class="btn btn-outline-warning btn-sm" rel="tooltip" data-toggle="tooltip" title="Cancelar" data-placement="top">
                 <a href="{% url 'pedidos' %}">Cancelar</a>
             </button>
         </div>
@@ -264,6 +263,12 @@
 </form>
 
 <script>
+
+
+    $(function () {
+        $("[rel='tooltip']").tooltip();
+    });
+
     $(document).ready(function () {
         $('#id_data').mask('00/00/0000');
     })
