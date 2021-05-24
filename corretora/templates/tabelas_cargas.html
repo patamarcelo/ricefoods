@@ -206,7 +206,7 @@
                     {% else %}
                     <td>{{carga.notasfiscal}}</td>
                     {% endif %}
-                    <td align=center><input type="checkbox" name="icms" value="{{ carga.icms|stringformat:"i" }}"
+                    <td align=center><input type="checkbox" name="icms" value="{{ carga.icms|stringformat:"f" }}"
                             class="icms" style="size: 10px;"></td>
                     <td>R$ {{ carga.icms|floatformat:2 }} </td>
                     {% if  'PALMARES' in carga.pedido.fornecedor.nome|upper %}
@@ -321,7 +321,14 @@
         var total = 0;
         $("#tabelascargas10").find(':checkbox').each(function () {
             if ($(this).is(":checked")) {
-                total=total+parseInt($(this).val());
+
+                console.log($(this).val())
+                console.log(typeof parseFloat($(this).val()))
+                
+            
+
+                total=total+parseFloat($(this).val());
+                console.log(total)
             }        
         })
             var total1 = (total).toLocaleString('pt-BR');            

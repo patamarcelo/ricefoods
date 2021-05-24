@@ -96,12 +96,16 @@
     .produto {
         padding-bottom: 20px;
     }
+
+    #div_id_comissaoc > label {
+        white-space: nowrap;
+    }
 </style>
 
 <form method="POST" novalidate class="needs-validation">
     {% csrf_token %}
     <div class="d-flex justify-content-center">
-        <div class="d-flex justify-content-between col-lg-9 col-12 p-0">
+        <div class="d-flex justify-content-between col-lg-10 col-12 p-0">
             <div class="d-flex flex-column">
                 <div class="d-flex justify-content-start">
                     <h4><span class="badge badge-primary p-1 ">
@@ -121,7 +125,7 @@
         </div>
     </div>
 
-    <div class="container d-flex flex-column justify-content-center  col-lg-9 col-md-12 col-sm-12 col-12 formulario" id="formulariopedido">
+    <div class="container d-flex flex-column justify-content-center  col-lg-10 col-md-12 col-sm-12 col-12 formulario" id="formulariopedido">
 
         <div class="container d-flex flex-column  justify-content-center col-lg-11 ">
             <div class="d-flex justify-content-center">
@@ -137,16 +141,16 @@
             <div class="d-flex flex-row justify-content-between form-row">
 
 
-                <div class="col-lg-2 col-md-6 col-sm-6 col-6  form-group" rel="tooltip" data-toggle="tooltip" title="Situação">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-4  form-group" rel="tooltip" data-toggle="tooltip" title="Situação">
                     {{ form.situacao|as_crispy_field }}
                 </div>
-                <div class="col-lg-2 col-md-6 col-sm-6 col-6  form-group" rel="tooltip" data-toggle="tooltip" title="Data">
+                <div class="col-lg-2 col-md-6 col-sm-6 col-4  form-group" rel="tooltip" data-toggle="tooltip" title="Data">
                     {{ form.data|as_crispy_field }}
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-6  form-group" rel="tooltip" data-toggle="tooltip" title="Fornecedor">
+                <div class="col form-group" rel="tooltip" data-toggle="tooltip" title="Fornecedor">
                     {{ form.fornecedor|as_crispy_field }}
                 </div>
-                <div class="col-lg-2 col-md-6 col-sm-6 col-6  form-group" rel="tooltip" data-toggle="tooltip" title="Cliente">
+                <div class="flex-shrink-1  form-group" rel="tooltip" data-toggle="tooltip" title="Cliente">
                     {{ form.cliente|as_crispy_field }}
                 </div>
             </div>
@@ -173,7 +177,7 @@
                     {{ form.produto|as_crispy_field }}
                 </div>
 
-                <div class="col-lg-2 col-md-3 col-sm-6 col-6 form-group" rel="tooltip" data-toggle="tooltip" title="Tipo">
+                <div class="flex-grow-1 form-group" rel="tooltip" data-toggle="tooltip" title="Tipo">
                     {{ form.tipo|as_crispy_field }}
 
                 </div>
