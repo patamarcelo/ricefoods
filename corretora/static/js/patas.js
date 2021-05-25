@@ -363,7 +363,7 @@ function formatDate(date) {
 //   console.log(clientesDatas);
 // });
 
-$("form#updateUser#savebtn").on("click", function (event) {
+$("form#updateUser").on("submit", function (event) {
   event.preventDefault();
   var urlform = $("[data-validate-username-url]").attr(
     "data-validate-username-url"
