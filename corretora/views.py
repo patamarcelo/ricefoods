@@ -136,7 +136,7 @@ class BaseView(LoginRequiredMixin, TemplateView):
         context['pedidos'] = Pedido.objects.order_by('situacao','cliente','-data','-id')[:100]
         context['chart'] = Pedido.objects.order_by('data','id').all
         context['fornecedores'] = Fornecedor.objects.order_by('nome').all
-        context['cargas'] = Carga.objects.order_by('situacao','-data','ordem','chegada','buonny','pedido__cliente').all().filter(situacao='Agendado')
+        context['cargas'] = Carga.objects.order_by('situacao','-data','ordem','chegada','buonny','pedido__cliente')[:100]
         context['clientes'] = Cliente.objects.order_by('-nome').all
         
         # today = datetime.date.today()
