@@ -29,3 +29,10 @@
   [updateBuonnyUserBuonny] {
     cursor: pointer
   }
+
+
+  .modal input[type='checkbox']:focus, .modal .btn:focus  {    
+    outline: 10px auto -webkit-focus-ring-color;
+    outline-offset: -6px;
+  }
+  
