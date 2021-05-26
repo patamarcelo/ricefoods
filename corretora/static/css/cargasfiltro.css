@@ -142,14 +142,20 @@ table {
 }
 
 .form-group input:hover,
+.form-group input:focus,
 input[type="text"]:hover,
 input[type="number"]:hover,
 input[type="checkbox"]:hover,
 #id_ordering:hover,
+#id_ordering:focus,
 #id_situacao:hover,
+#id_situacao:focus,
 #id_comcomissao:hover,
+#id_comcomissao:focus,
 #id_pgcomissaoa:hover,
-textarea:hover {
+#id_pgcomissaoa:focus,
+textarea:hover,
+textarea:focus {
     background: #ffffff !important;
     border: 3px solid #0275d8 !important;            
 }

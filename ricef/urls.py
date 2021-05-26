@@ -45,6 +45,10 @@ urlpatterns = [
     path('corretora/fornecedores/<int:pk>/delete', DeleteFornecedoresView.as_view(), name='del_fornecedores'),
 
     path('corretora/cargas/', CargasView.as_view(), name='cargas'), 
+    
+    path('corretora/tabelacargas/', CargasTabelaTesteView.as_view(), name='tabelacargas'), 
+    path('corretora/tabelapedidos/', CargasTabelaPedidosView.as_view(), name='tabelapedidos'), 
+    
     path('corretora/cargasmb/', CargasmbView.as_view(), name='cargasmb'), 
     path('corretora/cargasterceiros/', CargasViewTerceiros.as_view(), name='cargasterceiros'), 
     path('corretora/agendamento', CargasAgendamentoView.as_view(), name='agendamento'), 

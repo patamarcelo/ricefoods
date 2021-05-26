@@ -41,7 +41,8 @@
     <div class="ml-0 container flex-wrap justify-content-center align-content-end">
         <div class="row d-flex flex-row align-items-end">
             <div class="col-6 align-self-end mt-1" align=left>
-                <h4 style="margin:0px ; text-decoration: underline;"><strong>Resumo Pedidos</strong></h4>
+                <h4 style="margin:0px ; text-decoration: underline;"><strong>Resumo Pedidos</strong>
+                    <i class="fas fa-xs fa-sync-alt text-success ml-3" onClick="refreshTabelaPedidos()" style="cursor: pointer" id="lock-refresh-pedidos"></i></h4>
             </div>
             <div class="col-2 toolboxnumberpedidos">
                 <input class="form-control input-sm" type="text" id="pedidossaldos" onclick="AddValor()" placeholder="Peso em Kg">
@@ -255,60 +256,7 @@
 
 
 <script>
-    $(".simplehighlight2").click(function() {
-        $(this).toggleClass('clicked');
-    });
-
-
-
-    $("#dtBasicExample").find("input:checkbox").on("change", function () {
-        //Atribui o valor do input p/ variável 'valor'
-        
-        var total = 0;
-        $("#dtBasicExample").find(':checkbox').each(function () {
-            if ($(this).is(":checked")) {
-                total=total+parseInt($(this).val());
-            }        
-        })
-            var total1 = (total).toLocaleString('pt-BR');            
-        
-            if (total1 == 0) {
-                $("#pedidossaldos").val('Peso em Kg');
-            } else {
-            $("#pedidossaldos").val(total1);
-            }
-        
-    });
-
-     
-    document.getElementById('select-all-carregado').onclick = function () {        
-        var checkboxes = document.getElementById('pedidos10').querySelectorAll('input[type="checkbox"][name=carregado]');
-        for (var checkbox of checkboxes) {
-            checkbox.checked = this.checked;
-        }        
-    }
-
-    document.getElementById('select-all-saldo').onclick = function () {        
-        var checkboxes = document.getElementById('pedidos10').querySelectorAll('input[type="checkbox"][name=saldo]');
-        for (var checkbox of checkboxes) {
-            checkbox.checked = this.checked;
-        }        
-    }
-
-    document.getElementById('select-all-previsto').onclick = function () {        
-        var checkboxes = document.getElementById('pedidos10').querySelectorAll('input[type="checkbox"][name=previsto]');
-        for (var checkbox of checkboxes) {
-            checkbox.checked = this.checked;
-        }        
-    }
-
-    document.getElementById('select-all-saldoprevisto').onclick = function () {        
-        var checkboxes = document.getElementById('pedidos10').querySelectorAll('input[type="checkbox"][name=saldoprevisto]');
-        for (var checkbox of checkboxes) {
-            checkbox.checked = this.checked;
-        }        
-    }
-
+    
 
 </script>
 {% endblock %}

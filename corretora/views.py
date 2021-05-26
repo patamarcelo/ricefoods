@@ -377,6 +377,25 @@ class CargasView(LoginRequiredMixin, ListView):
         context['clientes'] = Cliente.objects.order_by('-nome').all
         return context
 
+class CargasTabelaTesteView(LoginRequiredMixin, ListView):
+    login_url = 'login'
+    
+    models = Carga
+    
+    ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
+    template_name = 'tabelas_cargas.html'
+    queryset = Carga.objects.all()
+    context_object_name = 'cargas' 
+
+class CargasTabelaPedidosView(LoginRequiredMixin, ListView):
+    login_url = 'login'
+    models = Pedido
+    ordering = ['situacao','cliente','-data','-id'] 
+    template_name = 'tabelas_pedidos.html'
+    queryset = Pedido.objects.all()
+    context_object_name = 'pedidos' 
+
+
 class CargasmbView(LoginRequiredMixin, ListView):
     login_url = 'login'
     

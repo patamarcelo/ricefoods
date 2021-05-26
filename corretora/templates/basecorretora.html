@@ -2,13 +2,15 @@
 {% load static %}
 {% load mathfilters %}
 
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
-    <meta http-equiv="refresh" content="1200">
+    
 
     {% bootstrap_css %}
     {% if 'add/age' in request.get_full_path %}
@@ -57,6 +59,8 @@
 
     <!-- Momento JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    
 
 
 
@@ -314,24 +318,17 @@
     <script type="text/javascript"></script>
     <!-- MDBootstrap Datatables  -->
     <script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
+
+    <!-- Personal CSS  -->
+    
+    <link href="{% static 'css/advise.css' %}" rel="stylesheet">
+    <script src="{% static 'js/showadvise.js' %}"></script>   
+    
     
 
 
     <script>
         
-        $(document).ready(function () {
-            $('#dtBasicExample').DataTable({
-                "order": [[1, "asc"]]
-            });
-            $('.dataTables_length').addClass('bs-select');
-        });
-        $(document).ready(function () {
-            $('#dtBasicExample2').DataTable({
-                "order": [[3, "asc"]]
-            });
-            $('.dataTables_length').addClass('bs-select');
-        });
-
 
 
         $("table tbody").on("click", "td", function () {
@@ -343,8 +340,6 @@
                 $(this).remove();
             });
         }, 3000);
-
-
 
 
     </script>

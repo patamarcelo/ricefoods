@@ -4,6 +4,11 @@
 {% load static %}
 {% now "Y-m-d" as todays_date %}
 
+
+ <!-- Font Awesome -->
+ <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+ 
+
 <style>
     .toolboxnumbercargas {
         position: relative;
@@ -22,6 +27,14 @@
         color: whitesmoke !important;
     }  
 
+    tr input[type="checkbox"], td input[type="checkbox"] {
+        -ms-transform: scale(2); /* IE */
+        -moz-transform: scale(2); /* FF */
+        -webkit-transform: scale(2); /* Safari and Chrome */
+        -o-transform: scale(2); /* Opera */
+        transform: scale(2);
+        padding: 10px;
+    }
 
 </style>
 
@@ -29,10 +42,15 @@
 <div class="container-fluid tabini sombra" align=center id="resumocargas">
     <br />
     <div class="ml-0 container flex-wrap justify-content-center align-content-end">
+        
+        
+        
         <div class="row d-flex flex-row align-items-end">
             <div class="col-6 align-self-end mt-1" align=left>
-                <h4 style="margin:0px ; text-decoration: underline;"><strong>Resumo Cargas</strong></h4>
+                <h4 style="margin:0px ; text-decoration: underline;"><strong>Resumo Cargas</strong>
+                <i class="fas fa-xs fa-sync-alt text-success ml-3" onClick="refreshTabelaCargas()" style="cursor: pointer" id="lock-refresh"></i></h4>
             </div>
+            
             <div class="col-2 toolboxnumbercargas">
                 <input class="form-control input-sm" type="text" id="icms" onclick="AddValor()" placeholder="Peso em Kg">
             </div>
@@ -292,6 +310,10 @@
 <br>
 
 
+<!-- Personal CSS  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+<link href="{% static 'css/advise.css' %}" rel="stylesheet">
+<script src="{% static 'js/showadvise.js' %}"></script>   
 
 <style>
     .cg-aprox {
@@ -359,11 +381,7 @@
         }
         
     }
-
-</script>
-<!-- Personal CSS  -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
-<link href="{% static 'css/advise.css' %}" rel="stylesheet">
-<script src="{% static 'js/showadvise.js' %}"></script>   
+    
+    </script>
 
 {% endblock %}
