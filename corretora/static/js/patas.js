@@ -141,11 +141,11 @@ $(document).ready(function () {
       var obj = clientesName[key];
       datasAgendados = obj[1];
       const resultado = {};
-      count = 1;
+      
       datasAgendados.forEach((item) => {
         if (resultado.hasOwnProperty(item.data_agenda)) {
-          count += 1;
-          resultado[item.data_agenda] = count;
+          
+          resultado[item.data_agenda] = resultado[item.data_agenda] += 1;
         } else {
           resultado[item.data_agenda] = 1;
         }
@@ -238,6 +238,7 @@ $(document).ready(function () {
       }
     });
   });
+  
   $("#id_situacao").on("change", function () {
     var jsonSemDescarga = loadJson("#jsonDataSemDescarga");
 
@@ -260,20 +261,24 @@ $(document).ready(function () {
     var clientesName = Object.entries(grupodePessoas);
     var resultadoAgendamentoJS = {};
     for (var key in clientesName) {
+      console.log(key)
       var obj = clientesName[key];
+      console.log(obj)
       datasAgendados = obj[1];
       const resultado = {};
-      count = 1;
+      
       datasAgendados.forEach((item) => {
+        console.log(item.data_agenda)
         if (resultado.hasOwnProperty(item.data_agenda)) {
-          count += 1;
-          resultado[item.data_agenda] = count;
+          
+          resultado[item.data_agenda] = resultado[item.data_agenda] += 1 ;
         } else {
           resultado[item.data_agenda] = 1;
         }
       });
       resultadoAgendamentoJS[obj[0]] = resultado;
     }
+    console.log(resultadoAgendamentoJS)
 
     jsonData.forEach((e, i, array) => {
       if (clienteinfonome === e.nome) {
@@ -286,7 +291,9 @@ $(document).ready(function () {
         var clientesDatas = {};
         for (var key of Object.keys(resultadoAgendamentoJS)) {
           if (key === clienteinfonome) {
-            console.log(key);
+            console.log(`Chave: ${key}`);
+            console.log(`Nome ${clienteinfonome}`);
+            console.log(`é igual ????${key === clienteinfonome}`)
             newobj = resultadoAgendamentoJS[key];
             let entries = Object.entries(newobj);
             for (var [prop, val] of entries) {
