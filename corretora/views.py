@@ -527,6 +527,15 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
                 for obj in Cliente.objects.order_by('-nome').all()
             ]
         )
+        context['data_sem_json'] = json.dumps(
+            [
+                {
+                    obj.cliente.nome_fantasia : obj.data_semcarga.strftime("%Y-%m-%d")
+                    
+                }
+                for obj in Datasemcarga.objects.order_by('-cliente__nome_fantasia').all()
+            ]
+        )
         return context
 
 class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
@@ -600,6 +609,15 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
                     'descarga_sabado': obj.descarga_sabado
                 }
                 for obj in Cliente.objects.order_by('-nome').all()
+            ]
+        )
+        context['data_sem_json'] = json.dumps(
+            [
+                {
+                    obj.cliente.nome_fantasia : obj.data_semcarga.strftime("%Y-%m-%d")
+                    
+                }
+                for obj in Datasemcarga.objects.order_by('-cliente__nome_fantasia').all()
             ]
         )
         return context

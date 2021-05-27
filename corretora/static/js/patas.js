@@ -116,6 +116,9 @@ $(document).ready(function () {
   }
 
   $("#id_data").on("change", function () {
+    var jsonSemDescarga = loadJson("#jsonDataSemDescarga");
+    
+    
     var jsonData = loadJson("#jsonDataAgenda");
     console.log(jsonData);
     var clienteinfonome = document.getElementById("clienteinfo").innerHTML;
@@ -171,6 +174,26 @@ $(document).ready(function () {
             }
           }
         }
+        let clientesDataSemDescarga = [];
+        for (var key in jsonSemDescarga) {
+          // skip loop if the property is from prototype
+          if (!jsonSemDescarga.hasOwnProperty(key)) continue;
+      
+          var obj = jsonSemDescarga[key];
+          for (var prop in obj) {
+              // skip loop if the property is from prototype
+              if (!obj.hasOwnProperty(prop)) continue;
+              dataSem = moment(obj[prop], "YYYY-MM-DD").format("DD/MM/YYYY");
+              clienteSem = prop
+              if (clienteinfonome === clienteSem) {
+                
+                clientesDataSemDescarga.push(dataSem)
+              }
+          }
+        }
+
+        console.log(clientesDataSemDescarga)
+
         var prev_dias_quant_agendado = clientesDatas;
         console.log(clientesDatas);
         console.log(`Clientes e  separados!!`);
@@ -193,11 +216,15 @@ $(document).ready(function () {
           dataDescarga
         );
         console.log(`Total Agendado até o momento: ${totalmotagenda}`);
+        console.log(clientesDataSemDescarga.includes(dataDescarga))
+        console.log(clientesDataSemDescarga)
+        console.log(dataDescarga)
 
         while (
           totalmotagenda >= veiculos_dia ||
           (descarga_sabado == false && diasemanadescarga == 6) ||
           diasemanadescarga == 0
+          || clientesDataSemDescarga.includes(dataDescarga)
         ) {
           dataDescarga = AddNewDays(dataDescarga, 1);
           diasemanadescarga = getWeekDay(dataDescarga);
@@ -212,6 +239,8 @@ $(document).ready(function () {
     });
   });
   $("#id_situacao").on("change", function () {
+    var jsonSemDescarga = loadJson("#jsonDataSemDescarga");
+
     var jsonData = loadJson("#jsonDataAgenda");
     console.log(jsonData);
     var clienteinfonome = document.getElementById("clienteinfo").innerHTML;
@@ -267,6 +296,25 @@ $(document).ready(function () {
             }
           }
         }
+
+        let clientesDataSemDescarga = [];
+        for (var key in jsonSemDescarga) {
+          // skip loop if the property is from prototype
+          if (!jsonSemDescarga.hasOwnProperty(key)) continue;
+      
+          var obj = jsonSemDescarga[key];
+          for (var prop in obj) {
+              // skip loop if the property is from prototype
+              if (!obj.hasOwnProperty(prop)) continue;
+              dataSem = moment(obj[prop], "YYYY-MM-DD").format("DD/MM/YYYY");
+              clienteSem = prop
+              if (clienteinfonome === clienteSem) {
+                
+                clientesDataSemDescarga.push(dataSem)
+              }
+          }
+        }
+
         var prev_dias_quant_agendado = clientesDatas;
         console.log(clientesDatas);
         console.log(`Clientes e  separados!!`);
@@ -289,11 +337,15 @@ $(document).ready(function () {
           dataDescarga
         );
         console.log(`Total Agendado até o momento: ${totalmotagenda}`);
+        console.log(clientesDataSemDescarga.includes(dataDescarga))
+        console.log(clientesDataSemDescarga)
+        console.log(dataDescarga)
 
         while (
           totalmotagenda >= veiculos_dia ||
           (descarga_sabado == false && diasemanadescarga == 6) ||
           diasemanadescarga == 0
+          || clientesDataSemDescarga.includes(dataDescarga)
         ) {
           dataDescarga = AddNewDays(dataDescarga, 1);
           diasemanadescarga = getWeekDay(dataDescarga);
