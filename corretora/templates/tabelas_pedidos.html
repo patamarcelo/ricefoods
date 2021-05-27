@@ -34,11 +34,34 @@
         transform: scale(2);
         padding: 10px;
     }
+
+
+    b.time {
+        opacity: 0;
+        -webkit-animation: fadeIn 1000ms linear;
+        -moz-animation: fadeIn 1000ms linear;
+        -o-animation: fadeIn 1000ms linear;
+        animation: fadeIn 1000ms linear; 
+        -webkit-animation-fill-mode:forwards;
+        -moz-animation-fill-mode:forwards;
+        -o-animation-fill-mode:forwards;
+        animation-fill-mode:forwards;
+
+        animation-direction:alternate;
+        -webkit-animation-direction:alternate;
+        animation-iteration-count:infinite;
+        animation-iteration-count:infinite;
+        -moz-animation-iteration-count:infinite;
+        -webkit-animation-iteration-count:infinite;
+        }
 </style>
 <br />
 <div class="container-fluid tabini sombra" align=center id="resumopedidos">
     <br />
     <div class="ml-0 container flex-wrap justify-content-center align-content-end">
+        <div class="d-flex justify-content-start">
+            <small>Última Atualização: <b class="time"> {% now "H:i:s" %}</b></small>
+        </div>
         <div class="row d-flex flex-row align-items-end">
             <div class="col-6 align-self-end mt-1" align=left>
                 <h4 style="margin:0px ; text-decoration: underline;"><strong>Resumo Pedidos</strong>
