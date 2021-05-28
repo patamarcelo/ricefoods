@@ -124,7 +124,7 @@
             </thead>
 
             <tbody class="align-text-bottom" id="tabelascargas10">
-                {% for carga in cargas|slice:":200" %}
+                {% for carga in cargas|slice:":100" %}
                 <tr class="simplehighlight" id="user-{{carga.pk|stringformat:"i"}}">
 
                     {% if carga.pedido.situacao == "a" %}

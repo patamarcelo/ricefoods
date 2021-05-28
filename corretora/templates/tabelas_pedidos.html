@@ -107,7 +107,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for pedido in pedidos %}
+                {% for pedido in pedidos|slice:":100" %}
 
                 <tr class="simplehighlight2">
                     {% if pedido.carregado %}
