@@ -60,6 +60,13 @@
     <!-- Momento JS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
+    <!-- Personal CSS  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+<link href="{% static 'css/advise.css' %}" rel="stylesheet">
+<script src="{% static 'js/showadvise.js' %}"></script>   
+
+
+
     
 
 
@@ -203,10 +210,7 @@
 </head>
 
 <body>
-    <div id="clickeadvise" class="clickeadvise" style="display: none; z-index:10">        
-        <h3> <span class="badge badge-pill bg-success"> <i class="fa fa-copy" aria-hidden="true"></i></span>
-            <span class="badge badge-pill bg-success" id="cargasmotcopy"></span></h3>
-    </div>
+    
     <header class="container p-0">
         <br />
         <div class="row">
@@ -286,7 +290,7 @@
     <div class="container-fluid">
 
         {% include 'tabelas.html' %}
-
+        
 
 
         {% endblock %}
@@ -295,7 +299,8 @@
 
 
 
-
+        
+        
 
     </div>
     {% bootstrap_javascript jquery='full' %}
@@ -319,10 +324,6 @@
     <!-- MDBootstrap Datatables  -->
     <script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
 
-    <!-- Personal CSS  -->
-    
-    <link href="{% static 'css/advise.css' %}" rel="stylesheet">
-    <script src="{% static 'js/showadvise.js' %}"></script>   
     
     
 
@@ -343,6 +344,7 @@
 
 
     </script>
+    
 
 </body>
 

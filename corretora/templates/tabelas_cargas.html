@@ -7,6 +7,11 @@
 
  <!-- Font Awesome -->
  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+ <!-- Personal CSS  -->
+    
+<link href="{% static 'css/advise.css' %}" rel="stylesheet">
+
+
  
 
 <style>
@@ -57,6 +62,10 @@
         }
 
 </style>
+<div id="clickeadvise" class="clickeadvise" style="display: none; z-index:10">        
+    <h3> <span class="badge badge-pill bg-success"> <i class="fa fa-copy" aria-hidden="true"></i></span>
+        <span class="badge badge-pill bg-success" id="cargasmotcopy"></span></h3>
+</div>
 
 <br />
 <div class="container-fluid tabini sombra" align=center id="resumocargas">
@@ -116,7 +125,7 @@
 
             <tbody class="align-text-bottom" id="tabelascargas10">
                 {% for carga in cargas|slice:":200" %}
-                <tr class="simplehighlight">
+                <tr class="simplehighlight" id="user-{{carga.pk|stringformat:"i"}}">
 
                     {% if carga.pedido.situacao == "a" %}
                     <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
@@ -137,15 +146,24 @@
                     {% else %}
                     <td class="copy-data" title="Copiar {{carga.placa}} - {{carga.motorista|title}}" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}" style="background-color: #660066;">{{ carga.transp|title }}</td>
                     {% endif %}
-                    {% if 'dast' in carga.buonny|lower %}
-                    <td class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>
+
+
+                    {% if 'das' in  carga.buonny|lower %}
+                    <td updatemotoristaUserBuonny="{{carga.motorista|title}}" updatePlacaUserBuonny="{{carga.placa}}" updateBuonnyUserBuonny="{{carga.buonny}}" onClick="editUserBuonny({{carga.pk|stringformat:"i"}})" 
+                    data-toggle="modal" data-target="#myModalBuonny")" class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>
                     {% elif 'sul' in carga.buonny|lower %}
-                    <td class="text-warning"><strong>{{ carga.buonny|title }}</strong></td>
+                    <td updatemotoristaUserBuonny="{{carga.motorista|title}}" updatePlacaUserBuonny="{{carga.placa}}" updateBuonnyUserBuonny="{{carga.buonny}}" onClick="editUserBuonny({{carga.pk|stringformat:"i"}})" 
+                    data-toggle="modal" data-target="#myModalBuonny")"  class="text-warning"><strong>{{ carga.buonny|title }}</strong></td>
                     {% elif 'nviado' in carga.buonny|lower or 'nviada' in carga.buonny|lower %}
-                    <td class="text-info"><strong>{{ carga.buonny|title }}</strong></td>
+                    <td updatemotoristaUserBuonny="{{carga.motorista|title}}" updatePlacaUserBuonny="{{carga.placa}}" updateBuonnyUserBuonny="{{carga.buonny}}" onClick="editUserBuonny({{carga.pk|stringformat:"i"}})" 
+                    data-toggle="modal" data-target="#myModalBuonny")" class="text-info"><strong>{{ carga.buonny|title }}</strong></td>
                     {% else %}
-                    <td class="text-success"><strong>{{ carga.buonny|title }}</strong></td>
+                    <td updatemotoristaUserBuonny="{{carga.motorista|title}}" updatePlacaUserBuonny="{{carga.placa}}" updateBuonnyUserBuonny="{{carga.buonny}}" onClick="editUserBuonny({{carga.pk|stringformat:"i"}})" 
+                    data-toggle="modal" data-target="#myModalBuonny")" class="text-success"><strong>{{ carga.buonny|title }}</strong></td>
                     {% endif %}
+
+
+
                     {% if carga.situacao == 'Agendado' %}
                     <td class="text-warning"><strong>{{ carga.situacao }}</strong></td>
                     {% elif carga.situacao == 'Carregado' %}
@@ -155,9 +173,9 @@
                     {% endif %}
 
                     {% if carga.ordem %}
-                    <td class="text-success"><em>Enviada</em></td>
+                    <td class="text-success userName" updatemotoristaUser="{{carga.motorista|title}}" updatePlacaUser="{{carga.placa}}" ordem-carregamento="{{carga.ordem}}" onClick="editUser({{carga.pk|stringformat:"i"}})" data-toggle="modal" data-target="#myModal")"><em>Enviada</em></td>
                     {% else %}
-                    <td class="text-danger"><em>Não Env.</em></td>
+                    <td class="text-danger userName" updatemotoristaUser="{{carga.motorista|title}}" updatePlacaUser="{{carga.placa}}" ordem-carregamento="{{carga.ordem}}" onClick="editUser({{carga.pk|stringformat:"i"}})" data-toggle="modal" data-target="#myModal")"><em>Não Env.</em></td>
                     {% endif %}
 
                     {% if todays_date == carga.data|date:"Y-m-d" %}
@@ -172,12 +190,13 @@
                     {% if carga.situacao == 'Agendado' %}
                     {% if carga.situacao == 'Agendado' and carga.chegada == True %}
 
-                    <td><a class="text text-success" style='font-style:italic' target="_blank"
-                            href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}
+                    <td updatemotoristaUserChegada="{{carga.motorista|title}}" updatePlacaUserChegada="{{carga.placa}}" ordem-chegada="{{carga.chegada}}" onClick="editUserChegada({{carga.pk|stringformat:"i"}})" 
+                    data-toggle="modal" data-target="#myModalChegada")" class="text text-success"><a style='font-style:italic'><strong>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}
                             </strong></a></td>
                     {% else %}
-                    <td><a class="text text-warning" style='font-style:italic' target="_blank"
-                            href="{% url 'upd_chegada' carga.pk %}"><strong>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</strong></a>
+                    <td updatemotoristaUserChegada="{{carga.motorista|title}}" updatePlacaUserChegada="{{carga.placa}}" ordem-chegada="{{carga.chegada}}" onClick="editUserChegada({{carga.pk|stringformat:"i"}})" 
+                    data-toggle="modal" data-target="#myModalChegada")" class="text text-warning"><a style='font-style:italic'
+                            ><strong>{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</strong></a>
                     </td>
                     {% endif %}
                     {% else %}
@@ -329,13 +348,10 @@
     </div>
 
 </div>
+
 <br>
 
 
-<!-- Personal CSS  -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
-<link href="{% static 'css/advise.css' %}" rel="stylesheet">
-<script src="{% static 'js/showadvise.js' %}"></script>   
 
 <style>
     .cg-aprox {
@@ -351,6 +367,7 @@
         }
 
 </style>
+<script src="{% static 'js/showadvise.js' %}"></script>   
 <script>
     new ClipboardJS('.copy-data');
 

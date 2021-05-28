@@ -489,7 +489,7 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
                     'data_agenda' : obj.data_agenda.strftime("%Y-%m-%d"),
                     'placa': obj.placa
                 }
-                for obj in Carga.objects.order_by('placa').filter(data_agenda__gte=dias_da_semana()[0]).distinct('placa')
+                for obj in Carga.objects.order_by('data_agenda').filter(data_agenda__gte=dias_da_semana()[0])
             ]
         )
         context['query_cargas_json_carregado'] = json.dumps(
@@ -573,7 +573,7 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
                     'data_agenda' : obj.data_agenda.strftime("%Y-%m-%d"),
                     'placa': obj.placa
                 }
-                for obj in Carga.objects.order_by('placa').filter(data_agenda__gte=dias_da_semana()[0]).distinct('placa')
+                for obj in Carga.objects.order_by('data_agenda').filter(data_agenda__gte=dias_da_semana()[0])
             ]
         )      
         context['query_cargas_json_carregado'] = json.dumps(

@@ -164,7 +164,6 @@ $(document).ready(function () {
         var clientesDatas = {};
         for (var key of Object.keys(resultadoAgendamentoJS)) {
           if (key === clienteinfonome) {
-            console.log(key);
             newobj = resultadoAgendamentoJS[key];
             let entries = Object.entries(newobj);
             for (var [prop, val] of entries) {
@@ -193,7 +192,6 @@ $(document).ready(function () {
         }
 
         console.log(clientesDataSemDescarga)
-
         var prev_dias_quant_agendado = clientesDatas;
         console.log(clientesDatas);
         console.log(`Clientes e  separados!!`);
@@ -278,7 +276,6 @@ $(document).ready(function () {
       });
       resultadoAgendamentoJS[obj[0]] = resultado;
     }
-    console.log(resultadoAgendamentoJS)
 
     jsonData.forEach((e, i, array) => {
       if (clienteinfonome === e.nome) {

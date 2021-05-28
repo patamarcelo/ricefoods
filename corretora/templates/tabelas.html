@@ -3,11 +3,28 @@
 {% block content %}
 {% load static %}
 
+<style>
+.modal-backdrop {
+    z-index: -1 !important;
+    background-color: #363639 !important;
+}
+
+
+
+.modal {
+    background-color:  rgba(0, 0, 0, 0.5) !important;
+}
+
+body:not(.modal-open){
+    padding-right: 0px !important;
+}
+</style>
 <!--Resumo Fornecedores-->
 
 
 
 {% include 'tabelas_dashboard_basecorretora.html' %}
+
 
 
 <!--Tabela de pedidos-->
@@ -19,7 +36,6 @@
 </div>
 <div id="ajaxpedidos" ></div>
 
-
 <!--Tabela das cargas-->
 <div id="waitcargas" data-carga-url="{% url 'tabelacargas' %}">
     <div class="d-flex justify-content-center mt-4">
@@ -30,9 +46,13 @@
 
 
 
-
+{% include 'modal_cargas.html' %}
+{% include 'modal_cargas_chegada.html' %}
+{% include 'modal_cargas_buonny.html' %}
+        
 {% endblock %}
 
 {% block js %}
 <script src="{% static 'js/tabelasbasecorretora.js' %}"></script>   
+<script src="{% static 'js/patas.js' %}"></script>   
 {% endblock %}    
