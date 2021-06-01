@@ -87,18 +87,19 @@
 </style>
 
 <div class="container-fluid" id="resumos">
-
-    <div class="d-flex flex-row">
-        <div class="flex-column justify-content-start align-items-start align-self-start">
-                <h4 style="margin:0px ; text-decoration: underline;"><strong>Resumo tabelas</strong>
-                <i class="fas fa-xs fa-sync-alt text-success ml-3" onClick="refreshTabelasDashboard()" style="cursor: pointer" id="lock-refresh-tabelasdash"></i></h4>
-            
+    
+    <div class="container-fluid col-12 col-md-8 col-lg-11 col-sm-10">
+        <div class="d-flex flex-row">
+            <div class="flex-column justify-content-start align-items-start align-self-start">
+                    <h4 style="margin:0px ; text-decoration: underline;"><strong>Resumo Tabelas</strong>
+                    <i class="fas fa-xs fa-sync-alt text-success ml-3" onClick="refreshTabelasDashboard()" style="cursor: pointer" id="lock-refresh-tabelasdash"></i></h4>
+                
+            </div>
+        </div>
+        <div class="d-flex flex-row  justify-content-start">
+                <small class="m-0">Última Atualização: <b class="time"> {% now "H:i:s" %}</b></small>
         </div>
     </div>
-    <div class="d-flex flex-row  justify-content-start">
-            <small class="m-0">Última Atualização: <b class="time"> {% now "H:i:s" %}</b></small>
-    </div>
-
     
     <div class="d-flex flex-row flex-wrap flex-md-wrap flex-sm-wrap justify-content-around m-1 p-2 topo">
 
