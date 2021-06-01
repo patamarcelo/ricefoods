@@ -48,6 +48,7 @@ urlpatterns = [
     
     path('corretora/tabelacargas/', CargasTabelaTesteView.as_view(), name='tabelacargas'), 
     path('corretora/tabelapedidos/', CargasTabelaPedidosView.as_view(), name='tabelapedidos'), 
+    path('corretora/tabeladash/', ResumoTabelasAjaxView.as_view(), name='tabeladashboarbase'), 
     
     path('corretora/cargasmb/', CargasmbView.as_view(), name='cargasmb'), 
     path('corretora/cargasterceiros/', CargasViewTerceiros.as_view(), name='cargasterceiros'), 

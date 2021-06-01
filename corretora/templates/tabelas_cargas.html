@@ -73,19 +73,20 @@
     <div class="ml-0 container flex-wrap justify-content-center align-content-end">
         
         
-        <div class="d-flex justify-content-start">
-            <small>Última Atualização: <b class="time"> {% now "H:i:s" %}</b></small>
-        </div>
+        
         <div class="row d-flex flex-row align-items-end">
             <div class="col-6 align-self-end mt-1" align=left>
                 <h4 style="margin:0px ; text-decoration: underline;"><strong>Resumo Cargas</strong>
                 <i class="fas fa-xs fa-sync-alt text-success ml-3" onClick="refreshTabelaCargas()" style="cursor: pointer" id="lock-refresh"></i></h4>
             </div>
-            
             <div class="col-2 toolboxnumbercargas">
                 <input class="form-control input-sm" type="text" id="icms" onclick="AddValor()" placeholder="Peso em Kg">
             </div>
-
+        </div>
+        <div class="row d-flex flex-row align-items-end" style="padding-left: 15px;">
+            <div class="d-flex justify-content-start">
+                <small class="m-0">Última Atualização: <b class="time"> {% now "H:i:s" %}</b></small>
+            </div>
         </div>
 
     </div>

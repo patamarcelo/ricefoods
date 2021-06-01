@@ -1,7 +1,10 @@
 {% load bootstrap4 %}
 {% load humanize %}
 {% block content %}
+{% load mathfilters %}
 {% load static %}
+{% now "Y-m-d" as todays_date %}
+{% load  corretora_extras %}
 
 <style>
 .modal-backdrop {
@@ -23,7 +26,17 @@ body:not(.modal-open){
 
 
 
-{% include 'tabelas_dashboard_basecorretora.html' %}
+
+
+<!--Tabela de pedidos-->
+
+<div id="waittabeladash" data-tabeladash-url="{% url 'tabeladashboarbase' %}">
+    <div class="d-flex justify-content-center mt-4">
+        <h3><i class="fas fa-lg fa-spinner fa-spin text-success"></i></h3>
+    </div>
+</div>
+<div id="ajaxtabeladash" ></div>
+
 
 
 

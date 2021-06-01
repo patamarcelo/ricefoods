@@ -1,3 +1,63 @@
+///////////////////JS AJAX TABELAS/////////////////////////////////////////////
+setInterval(function () {
+  refreshTabelasDashboard();
+}, 900000); // 15 Minutos
+var urltabeladash = $("#waittabeladash").attr("data-tabeladash-url");
+function refreshTabelasDashboard() {
+  $("#lock-refresh-tabelasdash")
+    .addClass("fa-spin")
+    .delay(6000)
+    .queue("fx", function () {
+      $(this).removeClass("fa-spin");
+    });
+  // Whatever here.
+  $.ajax({
+    url: urltabeladash,
+    beforeSend: function () {
+      $("#waittabeladash").show();
+    },
+    complete: function () {
+      $("#waittabeladash").hide();
+    },
+    success: function (data) {
+      console.log(data);
+      document.getElementById("ajaxtabeladash").innerHTML = data;
+
+      setTimeout(function () {
+        document.getElementById("contratodash").classList.remove("hide");
+        document.getElementById("cargasdash").classList.remove("hide");
+        document.getElementById("comidash").classList.remove("hide");
+      }, 300);
+
+      setTimeout(function () {
+        document.getElementById("tabelascargas").classList.remove("hide");
+      }, 200);
+
+      setTimeout(function () {
+        document.getElementById("tabelaspedidos").classList.remove("hide");
+      }, 250);
+
+      setTimeout(function () {
+        document.getElementById("comidash").classList.add("hide");
+        document.getElementById("ocultar").className =
+          "fas fa-eye-slash text-danger";
+      }, 2000);
+    },
+  });
+}
+
+function ocultarmostrar(el, el2) {
+  if (document.getElementById("comidash").classList.contains("hide")) {
+    document.getElementById(el).classList.remove("hide");
+    document.getElementById(el2).className = "fas fa-eye text-info";
+  } else {
+    document.getElementById(el).classList.add("hide");
+    document.getElementById(el2).className = "fas fa-eye-slash text-danger";
+  }
+}
+
+///////////////////JS AJAX CARGAS/////////////////////////////////////////////
+
 setInterval(function () {
   refreshTabelaCargas();
 }, 900000); // 15 Minutos
@@ -181,3 +241,4 @@ new ClipboardJS(".copy-data");
 
 setInterval(refreshTabelaCargas(), 100);
 setInterval(refreshTabelaPedidos(), 100);
+setInterval(refreshTabelasDashboard(), 100);

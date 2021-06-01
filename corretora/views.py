@@ -377,6 +377,22 @@ class CargasView(LoginRequiredMixin, ListView):
         context['clientes'] = Cliente.objects.order_by('-nome').all
         return context
 
+class ResumoTabelasAjaxView(LoginRequiredMixin, TemplateView):
+    login_url = 'login'    
+    template_name = 'tabelas_dashboard_basecorretora.html'
+    
+
+    def get_context_data(self, **kwargs):
+        context = super(ResumoTabelasAjaxView, self).get_context_data(**kwargs)
+        context['pedidos'] = Pedido.objects.order_by('situacao','cliente','-data','-id')[:100]
+        context['chart'] = Pedido.objects.order_by('data','id').all
+        context['fornecedores'] = Fornecedor.objects.order_by('nome').all
+        context['cargas'] = Carga.objects.order_by('situacao','-data','ordem','chegada','buonny','pedido__cliente')[:100]
+        context['clientes'] = Cliente.objects.order_by('-nome').all
+
+        return context
+
+
 class CargasTabelaTesteView(LoginRequiredMixin, ListView):
     login_url = 'login'
     

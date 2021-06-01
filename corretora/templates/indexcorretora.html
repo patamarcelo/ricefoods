@@ -40,16 +40,18 @@
         }
 
 </style>
-<small style="float: right;">Olá {{ user.first_name|title }}, {% now "SHORT_DATE_FORMAT" %} <b class="time"> {% now "H:i" %}</b></small>
+<small class="ml-0">Olá {{ user.first_name|title }}, {% now "SHORT_DATE_FORMAT" %} </small>
 <br />
-<div class="container botoesfixo">
+<div class="container botoesfixo ml-0 pl-0">
     {% if user.is_superuser %}
     {% if request.get_full_path ==  "/corretora/dashboard" %}
     {% else %}
-    <a class="btn btn-success btn-sm" href="{% url 'dashboard' %}" target="_blank">Painel</a>
-    {% endif %}
-    {% endif %}
+    <a class="btn btn-success btn-sm ml-0" href="{% url 'dashboard' %}" target="_blank">Painel</a>
     <a class="btn btn-primary btn-sm" href="{% url 'pedidos' %}" target="_blank">Pedidos</a>
+    {% endif %}
+    {% else %}
+    <a class="btn btn-primary btn-sm ml-0" href="{% url 'pedidos' %}" target="_blank">Pedidos</a>
+    {% endif %}
     <a class="text text-success fas fa-clipboard-list fa-lg" href="{% url 'add_pedidos' %}" target="_blank"></a>
     <a class="btn btn-primary btn-sm" href="{% url 'cargas' %}" target="_blank">Cargas</a>
     <a class="text text-success fas fa-truck-moving fa-lg" href="{% url 'add_age_cargas' %}" target="_blank"></a>
