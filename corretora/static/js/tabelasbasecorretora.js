@@ -1,7 +1,7 @@
 ///////////////////JS AJAX TABELAS/////////////////////////////////////////////
 setInterval(function () {
   refreshTabelasDashboard();
-}, 900000); // 15 Minutos
+}, 720000); // 12 Minutos
 var urltabeladash = $("#waittabeladash").attr("data-tabeladash-url");
 function refreshTabelasDashboard() {
   $("#lock-refresh-tabelasdash")
@@ -137,11 +137,22 @@ function refreshTabelaCargas() {
           checkbox.checked = this.checked;
         }
       };
+
+      $(".copy-data").on("click", function () {
+        const t = 800;
+        const t1 = 400;
+        const t2 = 990;
+
+        const valueeeee = $(this).attr("data-clipboard-text");
+        var elementtextadv = document.getElementById("cargasmotcopy");
+        elementtextadv.innerHTML = valueeeee;
+        $("#clickeadvise").slideToggle(t1).delay(t2).slideToggle(t);
+      });
     },
   });
 }
 
-//tabelapedidos-------------------------//tabelapedidos-------------------------//tabelapedidos-------------------------//tabelapedidos-------------------------
+///////////////////JS AJAX PEDIDOS/////////////////////////////////////////////
 
 setInterval(function () {
   refreshTabelaPedidos();
@@ -238,6 +249,7 @@ function refreshTabelaPedidos() {
 }
 
 new ClipboardJS(".copy-data");
+///////////////////INICIAR CARREGAMENTO AJAX DE TODAS/////////////////////////////////////////////
 
 setInterval(refreshTabelaCargas(), 100);
 setInterval(refreshTabelaPedidos(), 100);
