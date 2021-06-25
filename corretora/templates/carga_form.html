@@ -4,6 +4,8 @@
 {% load crispy_forms_tags %}
 {% load static %}
 <script src="{% static 'js/patas.js' %}"></script>   
+<script src="{% static 'js/cargaeditform.js' %}"></script>   
+
 
 
 
@@ -83,7 +85,7 @@
 </style>
 
 </div>
-<form method="POST" novalidate class="needs-validation">
+<form method="POST" novalidate class="needs-validation" id="cargaeditform">
     {% csrf_token %}
     <div class="container">
         <div class="d-flex  flex-column col-11 caixaquadrada">

@@ -435,14 +435,15 @@
                         {% endif %}
 
                         {% if  'PALMARES' in carga.pedido.fornecedor.nome|upper %}
-                        <td style="background-color: #9400d3;">Palmares
+                        <td data-fornecedor-nome="{{carga.pedido.fornecedor.nome|title}}" data-nfiscal="{{carga.notafiscal}}" style="background-color: #9400d3;">Palmares
                         </td>
                         {% else %}
-                        <td>{{ carga.pedido.fornecedor.nome|title|truncatechars:26 }}</td>
+                        <td data-fornecedor-nome="{{carga.pedido.fornecedor.nome|title}}" data-nfiscal="{{carga.notafiscal}}" >{{ carga.pedido.fornecedor.nome|title|truncatechars:26 }}</td>
                         {% endif %}
                         <td>{{ carga.pedido.fornecedor.cidade|truncatechars:20 }}</td>
                         
-                        <td style="color: {{ carga.pedido.cliente.color}}"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
+                        <td data-cliente-nome="{{carga.pedido.cliente|upper}}"
+                        style="color: {{ carga.pedido.cliente.color}}"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
                         
                         
                         {% if carga.data_intervalo_cargaedescarga > -2 %}
@@ -456,15 +457,62 @@
                         
                         {% if carga.pedido.produto == "Arroz em Casca" %}
                         {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}
-                        <td align="center"><a class="text-success fa fa-list-alt" target="_blank"
-                                href="{% url 'upd_class' carga.pk %}"></a>
-                            {% elif carga.renda or carga.inteiro or carga.impureza or carga.umidade %}
-                        <td align="center"><a class="text-warning fa fa-list-alt" target="_blank"
-                                href="{% url 'upd_class' carga.pk %}"></a>
+
+                        <td align="center" 
+                        data-ajax-renda="{{carga.renda}}"
+                        data-ajax-inteiro="{{carga.inteiro}}"
+                        data-ajax-impureza="{{carga.impureza}}"
+                        data-ajax-umidade="{{carga.umidade}}"
+                        data-ajax-gessado="{{carga.gessado}}"
+                        data-ajax-bbranca="{{carga.bbranca}}"
+                        data-ajax-amarelo="{{carga.amarelo}}"
+                        data-ajax-manchpic="{{carga.manchpic}}"
+                        data-ajax-vermelhos="{{carga.vermelhos}}"
+                        data-ajax-obs="{{carga.obs}}"
+
+                        onClick="editUserClassificacao({{carga.pk|stringformat:"i"}})" 
+                        data-toggle="modal" data-target="#myModalClassificacao")" class="text-success">                        
+                        
+                        <a class="text-success fa fa-list-alt"></a>
+                        
+                        {% elif carga.renda or carga.inteiro or carga.impureza or carga.umidade %}
+                        
+                        <td align="center"
+                        data-ajax-renda="{{carga.renda}}"
+                        data-ajax-inteiro="{{carga.inteiro}}"
+                        data-ajax-impureza="{{carga.impureza}}"
+                        data-ajax-umidade="{{carga.umidade}}"
+                        data-ajax-gessado="{{carga.gessado}}"
+                        data-ajax-bbranca="{{carga.bbranca}}"
+                        data-ajax-amarelo="{{carga.amarelo}}"
+                        data-ajax-manchpic="{{carga.manchpic}}"
+                        data-ajax-vermelhos="{{carga.vermelhos}}"
+                        data-ajax-obs="{{carga.obs}}"
+                        
+                        onClick="editUserClassificacao({{carga.pk|stringformat:"i"}})" 
+                        data-toggle="modal" data-target="#myModalClassificacao")" class="text-success"
+                        >
+                            <a class="text-warning fa fa-list-alt"></a>
                         </td>
                         {% else %}
-                        <td align="center"><a class="text-danger fa fa-list-alt" target="_blank"
-                                href="{% url 'upd_class' carga.pk %}"></a>
+
+                        <td align="center"
+                        data-ajax-renda="{{carga.renda}}"
+                        data-ajax-inteiro="{{carga.inteiro}}"
+                        data-ajax-impureza="{{carga.impureza}}"
+                        data-ajax-umidade="{{carga.umidade}}"
+                        data-ajax-gessado="{{carga.gessado}}"
+                        data-ajax-bbranca="{{carga.bbranca}}"
+                        data-ajax-amarelo="{{carga.amarelo}}"
+                        data-ajax-manchpic="{{carga.manchpic}}"
+                        data-ajax-vermelhos="{{carga.vermelhos}}"
+                        data-ajax-obs="{{carga.obs}}"
+
+                        onClick="editUserClassificacao({{carga.pk|stringformat:"i"}})" 
+                        data-toggle="modal" data-target="#myModalClassificacao")" class="text-success"
+                        >
+                            <a class="text-danger fa fa-list-alt"></a>
+                        
                             {% endif %}
                             {% else %}
                         <td align="center"><b> - </b></td>
@@ -524,11 +572,13 @@
     {% include 'modal_cargas.html' %}
     {% include 'modal_cargas_chegada.html' %}
     {% include 'modal_cargas_buonny.html' %}
+    {% include 'modal_cargas_classificacao.html' %}
   
 </body>
 <br>
 
 <script src="{% static 'js/patas.js' %}"></script>   
+<script src="{% static 'js/pataajaxclass.js' %}"></script>   
 
 <script>
 </script>

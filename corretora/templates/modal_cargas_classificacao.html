@@ -1,0 +1,111 @@
+{% load static %}
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.1.1/dist/js/autoComplete.min.js"></script>
+
+
+
+<!-- CSS Modal Custom -->
+<link href="{% static 'css/modal.css' %}" rel="stylesheet">
+<style>
+  .modal-body {
+    height: auto !important;
+  }
+
+  input:focus, textarea:focus {
+    border: 2px solid rgb(0, 255, 255) !important;
+  }
+</style>
+
+<!-- Modal -->
+<div class="modal fade" id="myModalClassificacao" tabindex="-1" role="dialog" aria-labelledby="myModalLabelClassificacao">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content bg-dark">
+      <div class="modal-header pb-1">
+          
+        <div class="container-fluid"> 
+          <div class="row">   
+            <h4> <em class="badge badge-info" id="myModalLabelClassificacao">Classificação</em></h4>
+          </div>
+          <div class="row">   
+            <h4 class="updatePlacaUser ml-1 mr-2 "> <em class="badge badge-warning" id="updateFornecedorClassificacao"></em></h4>
+          
+          
+            <h4 class="updatePlacaUser ml-1"> <em class="badge badge-success"  id="updateClienteClassificacao"></em></h4>
+          </div>
+          
+        </div>
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form id="updateUserClassificacao" action="" data-validate-username-url-Classificacao="{% url 'cargas_ajax_update_classificacao' %}">
+      
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <h5 class="updatePlacaUser ml-2 mr-2"> <em class="badge badge-secondary"  id="updatePlacaUserClassificacao"></em></h5>              
+              <h5 class="updatePlacaUser ml-1"> <em class="badge badge-primary"  id="updateNfiscalClassificacao"></em></h5>
+            </div>
+              <input class="form-control" id="form-id-Classificacao" type="hidden" name="formIdClassificacao"/>
+            <div class="row">
+              <div class="col-3">
+                <small id="hint_id_renda" class="form-text text-white">Renda</small>
+                <input class="form-control" id="form-name-renda" type="text" name="formNameRenda" maxlength="5" style="margin: 1px;" />
+              </div>
+              <div class="col-3">
+                <small id="hint_id_inteiro" class="form-text text-white">Inteiro</small>
+                <input class="form-control" id="form-name-inteiro" type="text" name="formNameInteiro" maxlength="5" style="margin: 1px;" />
+              </div>
+              <div class="col-3">
+                <small id="hint_id_impureza" class="form-text text-white">Impureza</small>
+                <input class="form-control" id="form-name-impureza" type="text" name="formNameImpureza" maxlength="5" style="margin: 1px;" />
+              </div>
+              <div class="col-3">
+                <small id="hint_id_umidade" class="form-text text-white">Umidade</small>
+                <input class="form-control" id="form-name-umidade" type="text" name="formNameUmidade" maxlength="5" style="margin: 1px;" />
+              </div>
+              </div>
+              <div class="row mb-2 mt-2">
+              <div class="col">
+                <small id="hint_id_gessado" class="form-text text-white">Gessado</small>
+                <input class="form-control" id="form-name-gessado" type="text" name="formNameGessado" maxlength="5" style="margin: 1px;" />
+              </div>
+              <div class="col">
+                <small id="hint_id_bbranca" class="form-text text-white">B.Branca</small>
+                <input class="form-control" id="form-name-bbranca" type="text" name="formNameBbranca" maxlength="5" style="margin: 1px;" />
+              </div>
+              <div class="col">
+                <small id="hint_id_amarelo" class="form-text text-white">Amarelo</small>
+                <input class="form-control" id="form-name-amarelo" type="text" name="formNameAmarelo" maxlength="5" style="margin: 1px;" />
+              </div>
+              <div class="col">
+                <small id="hint_id_manchpic" class="form-text text-white">Manch.Pic</small>
+                <input class="form-control" id="form-name-manchpic" type="text" name="formNameManchpic" maxlength="5" style="margin: 1px;" />
+              </div>
+              <div class="col">
+                <small id="hint_id_vermehlos" class="form-text text-white">Vermelhos</small>
+                <input class="form-control" id="form-name-vermelhos" type="text" name="formNameVermelhos" maxlength="5" style="margin: 1px;" />
+              </div>
+            </div>
+            <div class="row mt-2">              
+              <div class="col-12">
+                <small id="hint_id_obs" class="form-text text-white">Obs</small>
+                <textarea class="form-control" id="form-name-obs" type="text" name="formNameObs" ></textarea>  
+              </div>
+            </div>
+            
+          </div>
+          
+
+        </div>        
+      <div class="modal-footer mt-2" style="padding-right: 30px;">
+          <button type="submit" class="btn btn-sm  btn-primary" >Salvar</button>
+          <button type="button" class="btn btn-sm btn-warning" onclick="updateFormClassificacao()" data-dismiss="modal">Fechar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

@@ -385,7 +385,7 @@
                     {% else %}
                     <td align=center class="text-success"><strong>{{ pedido.saldoprevisto }} Kg</strong></td>
                     {% endif %}
-                    <td align=center><input type="checkbox" name="comissao" value="{{ pedido.totalcomissaocasca|stringformat:"i" }}"
+                    <td align=center><input type="checkbox" name="comissao" value="{{ pedido.totalcomissaocasca|stringformat:"f" }}"
                             class="icms" align="center" style="size: 10px;"></td>
                     {% if user.is_superuser %}                   
                     {% if pedido.produto == 'Arroz em Casca' or pedido.produto == 'Semente' and pedido.totalcomissaocasca != None and pedido.carregado %}

@@ -716,6 +716,45 @@ class UpdateAjaxBuonnyView(LoginRequiredMixin, UpdateView):
         data = {"user": user}
         return JsonResponse(data)
 
+class UpdateAjaxClassificacaoView(LoginRequiredMixin, UpdateView):
+    model = Carga
+    fields = ('renda','inteiro','impureza',
+                'umidade','gessado','bbranca','amarelo','manchpic','vermelhos',
+                'obs')
+
+    def get(self, request):
+        id1 = request.GET.get("id", None)
+        renda1 = request.GET.get("renda")
+        inteiro1 = request.GET.get("inteiro")
+        impureza1 = request.GET.get("impureza")
+        umidade1 = request.GET.get("umidade")
+        gessado1 = request.GET.get("gessado")
+        bbranca1 = request.GET.get("bbranca")
+        amarelo1 = request.GET.get("amarelo")
+        manchpic1 = request.GET.get("manchpic")
+        vermelhos1 = request.GET.get("vermelhos")
+        obs1 = request.GET.get("obs")
+        
+        obj = get_object_or_404(Carga, id=id1)
+        obj.renda = float((renda1.replace(",", "."))) if renda1 else None
+        obj.inteiro = float((inteiro1.replace(",", "."))) if inteiro1 else None
+        obj.impureza = float((impureza1.replace(",", "."))) if impureza1 else None
+        obj.umidade = float((umidade1.replace(",", "."))) if umidade1 else None
+        obj.gessado = float((gessado1.replace(",", "."))) if gessado1 else None
+        obj.bbranca = float((bbranca1.replace(",", "."))) if bbranca1 else None        
+        obj.amarelo = float((amarelo1.replace(",", "."))) if amarelo1 else None        
+        obj.manchpic = float((manchpic1.replace(",", "."))) if manchpic1 else None        
+        obj.vermelhos = float((vermelhos1.replace(",", "."))) if vermelhos1 else None        
+        obj.obs = obs1 
+
+        obj.save()
+        
+        obj1 = get_object_or_404(Carga, id=id1)
+        data = {"id": obj1.pk, "renda": obj1.renda, "inteiro": obj1.inteiro, "impureza": obj1.impureza, "umidade": obj1.umidade, "gessado": obj1.gessado, "bbranca": obj1.bbranca, "amarelo": obj1.amarelo, "manchpic": obj1.manchpic, "vermelhos": obj1.vermelhos, "obs": obj1.obs }
+
+        print(data)
+        return JsonResponse(data)
+
 
 
 
