@@ -4,7 +4,7 @@ function loadJson(selector) {
 	);
 }
 
-$("input").on({
+$("#updateUserClassificacao input").on({
 	"keyup": function (event) {
 	$(event.target).val(function (index, value ) {
 			return value.replace(/\D/g, "")
