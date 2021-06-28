@@ -444,6 +444,7 @@ $("form#updateUser").on("submit", function (event) {
       if (data.user) {
         updateToUserTabel(data.user);
         console.log(data.user);
+        $.notify(`"${nplaca} - ${mot} | Status da Ordem atualizado com sucesso!!"`, 'success');
       }
     },
   });
@@ -468,13 +469,13 @@ function updateToUserTabel(user) {
     var aElement = $(tr_id).find("td[ordem-carregamento]");
     aElement.text("Enviada");
     aElement.attr("ordem-carregamento", "True");
-    aElement.setAttribute("style", "font-style: italic; font-weight: bold;");
+    
     
   } else {
     var aElement = $(tr_id).find("td[ordem-carregamento]");
     aElement.text("Não Env.");
     aElement.attr("ordem-carregamento", "False");
-    aElement.setAttribute("style", "font-style: italic; font-weight: bold;");
+    
     
   }
 }
@@ -537,6 +538,7 @@ $("form#updateUserChegada").on("submit", function (event) {
       if (data.user) {
         updateToUserTabelChegada(data.user);
         console.log(data.user);
+        $.notify(`"${nplaca} - ${mot} | Chegada atualizada com sucesso!!"`, 'success');
       }
     },
   });
@@ -618,6 +620,7 @@ $("form#updateUserBuonny").on("submit", function (event) {
       if (data.user) {
         updateToUserTabelBuonny(data.user);
         console.log(data.user);
+        $.notify(`"${nplaca} - ${mot} | Buonny atualizada com sucesso!!"`, 'success');
       }
     },
   });
