@@ -35,4 +35,13 @@
     outline: 10px auto -webkit-focus-ring-color;
     outline-offset: -2px;
   }
+
+  #myModalClassificacao small {
+    margin-left: 0px;
+    padding-left: 3px;
+  }
+  
+  #myModalClassificacao textarea {
+    font-size: 11px;
+  }
   

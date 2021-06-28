@@ -468,10 +468,14 @@ function updateToUserTabel(user) {
     var aElement = $(tr_id).find("td[ordem-carregamento]");
     aElement.text("Enviada");
     aElement.attr("ordem-carregamento", "True");
+    aElement.setAttribute("style", "font-style: italic; font-weight: bold;");
+    
   } else {
     var aElement = $(tr_id).find("td[ordem-carregamento]");
     aElement.text("Não Env.");
     aElement.attr("ordem-carregamento", "False");
+    aElement.setAttribute("style", "font-style: italic; font-weight: bold;");
+    
   }
 }
 

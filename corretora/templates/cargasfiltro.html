@@ -559,7 +559,7 @@
                             {% endif %}
                             <td>{{ carga.pedido.fornecedor.cidade.cidade|truncatechars:18 }}</td>
                             
-                            <td data-cliente-nome="{{carga.pedido.cliente|upper}}" style="color: {{ carga.pedido.cliente.color}}"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
+                            <td data-cliente-nome="{{carga.pedido.cliente|upper}}" data-cliente-color="{{carga.pedido.cliente.color}}" style="color: {{ carga.pedido.cliente.color}}"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
                             
                             <td>{{ carga.pedido.produto }}</td>
                         

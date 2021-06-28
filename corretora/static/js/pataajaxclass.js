@@ -137,6 +137,11 @@ function editUserClassificacao(id) {
 			.attr("data-ajax-vermelhos");
 		var obs = $(tr_id).find("td[data-ajax-obs]").attr("data-ajax-obs");
 
+		var clienteColor = $(tr_id).find("td[data-cliente-color]").attr("data-cliente-color");
+		console.log(clienteColor);
+		console.log(typeof clienteColor);
+		console.log('Marcelo PAta')
+
 		nplaca = placa.slice(0, 3) + " " + placa.slice(3);
 		var placaform = document.getElementById("updatePlacaUserClassificacao");
 		var nfiscalform = document.getElementById("updateNfiscalClassificacao");
@@ -154,6 +159,7 @@ function editUserClassificacao(id) {
 		}
 		fornecedorform.innerHTML = fornecedor;
 		clienteform.innerHTML = cliente;
+		clienteform.style.backgroundColor = clienteColor;
 
 		console.log(id);
 		console.log(impureza);
