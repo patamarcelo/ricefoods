@@ -444,7 +444,7 @@ $("form#updateUser").on("submit", function (event) {
       if (data.user) {
         updateToUserTabel(data.user);
         console.log(data.user);
-        $.notify(`"${nplaca} - ${mot} | Status da Ordem atualizado com sucesso!!"`, 'success');
+        $.notify(`${nplaca} - ${mot} | Status da Ordem atualizado com sucesso!!`, 'success');
       }
     },
   });
@@ -463,19 +463,21 @@ function updateToUserTabel(user) {
   console.log(ordem);
   name = $(tr_id)
     .find("td[ordem-carregamento]")
-    .toggleClass("text-success")
-    .toggleClass("text-danger");
   if (ordem === true) {
     var aElement = $(tr_id).find("td[ordem-carregamento]");
     aElement.text("Enviada");
     aElement.attr("ordem-carregamento", "True");
-    
+    aElement.addClass('font-italic');
+    aElement.addClass('text-success');
+    aElement.removeClass('text-danger');
     
   } else {
     var aElement = $(tr_id).find("td[ordem-carregamento]");
     aElement.text("Não Env.");
     aElement.attr("ordem-carregamento", "False");
-    
+    aElement.addClass('font-italic');
+    aElement.addClass('text-danger');
+    aElement.removeClass('text-success');
     
   }
 }
@@ -538,7 +540,7 @@ $("form#updateUserChegada").on("submit", function (event) {
       if (data.user) {
         updateToUserTabelChegada(data.user);
         console.log(data.user);
-        $.notify(`"${nplaca} - ${mot} | Chegada atualizada com sucesso!!"`, 'success');
+        $.notify(`${nplaca} - ${mot} | Chegada atualizada com sucesso!!`, 'success');
       }
     },
   });
@@ -580,14 +582,17 @@ function updateToUserTabelChegada(user) {
   console.log(ordem);
   name = $(tr_id)
     .find("td[ordem-chegada]")
-    .toggleClass("text-success")
-    .toggleClass("text-warning");
   if (ordem === true) {
     var aElement = $(tr_id).find("td[ordem-chegada]");
     aElement.attr("ordem-chegada", "True");
+    aElement.addClass('text-success');
+    aElement.removeClass('text-danger');
+    
   } else {
     var aElement = $(tr_id).find("td[ordem-chegada]");
     aElement.attr("ordem-chegada", "False");
+    aElement.addClass('text-danger');
+    aElement.removeClass('text-success');
   }
 }
 
@@ -620,7 +625,7 @@ $("form#updateUserBuonny").on("submit", function (event) {
       if (data.user) {
         updateToUserTabelBuonny(data.user);
         console.log(data.user);
-        $.notify(`"${nplaca} - ${mot} | Buonny atualizada com sucesso!!"`, 'success');
+        $.notify(`${nplaca} - ${mot} | Buonny atualizada com sucesso!!`, 'success');
       }
     },
   });

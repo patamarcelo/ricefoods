@@ -69,7 +69,7 @@ $("form#updateUserClassificacao").on("submit", function (event) {
 		success: function (data) {
 			if (data) {
 				updateToUserTabelClassificacao(data);
-				$.notify(`"${nplaca} - ${mot} - NF ${formatNumber(nfiscal)} | Classificação atualizada com sucesso!!"`, 'success');
+				$.notify(`${nplaca} - ${mot} - NF ${formatNumber(nfiscal)} | Classificação atualizada com sucesso!!`, 'success');
 			}
 		},
 	});
