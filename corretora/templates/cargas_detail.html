@@ -95,6 +95,11 @@
             background-color: white;
         }
 
+        .placa-format {
+            text-align: center;
+            
+        }
+
     </style>
     <!--Favicon-->
     <link rel="icon" href="{% static 'images/favicon.png' %}">
@@ -351,8 +356,8 @@
                         <td>{{ carga.transp|title }}</td>
                         <td>{{ carga.pedido.fornecedor.nome|title }}
                             </td>
-                        <td>
-                                {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</td>
+                        <td class="placa-format">
+                                {{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</td>
                         <td>{{ carga.motorista|title }}</td>
                         <td>{{ carga.peso|intcomma }} </td>
                         {% if carga.valornf == None or carga.valornf == 0 %}
@@ -692,8 +697,8 @@
                         <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
                         <td><b>{{ carga.pedido.fornecedor.nome|title|truncatechars:28 }}
                             </b></td>
-                        <td><b>
-                                {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</b></td>
+                        <td class="placa-format"><b>
+                                {{ carga.placa|upper|slice:":3"}}  {{ carga.placa|upper|slice:"3:"}}</b></td>
                         <td><b>{{ carga.motorista|title }}</b></td>
                         <td><b>{{ carga.peso|intcomma }} Kg </b></td>
                         {% if carga.valornf == None or carga.valornf == 0 %}
@@ -1085,8 +1090,8 @@
 
                         <td><b>{{ carga.pedido.cliente.nome_fantasia|upper|truncatechars:38 }}
                             </b></td>
-                        <td><b>
-                                {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</b></td>
+                        <td class="placa-format"><b>
+                                {{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</b></td>
                         <td><b>{{ carga.motorista|title }}</b></td>
 
 
@@ -1341,8 +1346,8 @@
 
                         <td><b>{{ carga.pedido.cliente.nome_fantasia|upper|truncatechars:38 }}
                             </b></td>
-                        <td><b>
-                                {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</b></td>
+                        <td class="placa-format"><b>
+                                {{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</b></td>
                         <td><b>{{ carga.motorista|title }}</b></td>
 
 

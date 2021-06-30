@@ -81,6 +81,7 @@ window.onload = function () {
 
 $(document).ready(function () {
   var data_carre = document.getElementById("id_data");
+  var data_carre_init = document.getElementById("id_data").defaultValue;
   var data_agenda = document.getElementById("id_data_agenda");
   var id_pedido = document.getElementById("id_pedido");
 
@@ -244,6 +245,20 @@ $(document).ready(function () {
     console.log(jsonData);
     var clienteinfonome = document.getElementById("clienteinfo").innerHTML;
 
+    var currentSit = document.getElementById("id_situacao").value;
+
+    if (currentSit == "Carregado") {
+      var formtoday = new Date();
+      var dd = String(formtoday.getDate()).padStart(2, '0');
+      var mm = String(formtoday.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = formtoday.getFullYear();
+      var formtoday = dd + '/' + mm + '/' + yyyy;
+    } else {
+      formtoday = data_carre_init
+    }
+    
+    document.getElementById("id_data").value = formtoday
+
     var jsonCargas = loadJson("#jsonCargasCarregado");
     function agruparPor(objetoArray, propriedade) {
       return objetoArray.reduce(function (acc, obj) {
@@ -330,7 +345,7 @@ $(document).ready(function () {
         console.log(typeof prev_dias_quant_agendado);
         console.log(descarga_sabado);
 
-        dataDescarga = AddNewDays(data_carre.value, e.dias_descarga);
+        dataDescarga = AddNewDays(formtoday, e.dias_descarga);
         console.log(`Data Descarga: ${dataDescarga}`);
 
         diasemanadescarga = getWeekDay(dataDescarga);
