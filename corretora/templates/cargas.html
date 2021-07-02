@@ -457,7 +457,7 @@
                         
                         
                         {% if carga.pedido.produto == "Arroz em Casca" %}
-                        {% if carga.renda and carga.inteiro and carga.impureza >= 0 and carga.umidade  and carga.gessado >= 0 and carga.bbranca >= 0 and carga.amarelo >= 0 and carga.manchpic >= 0 and carga.vermelhos >= 0 %}
+                        {% if carga.renda != None and carga.inteiro != None and carga.impureza != None and carga.umidade  != None and carga.gessado  != None and carga.bbranca  != None and carga.amarelo  != None and carga.manchpic  != None and carga.vermelhos != None %}
 
                         <td align="center" 
                         data-ajax-renda="{{carga.renda}}"
@@ -472,11 +472,11 @@
                         data-ajax-obs="{{carga.obs}}"
 
                         onClick="editUserClassificacao({{carga.pk|stringformat:"i"}})" 
-                        data-toggle="modal" data-target="#myModalClassificacao")" class="text-success">                        
+                        data-toggle="modal" data-target="#myModalClassificacao")" >                        
                         
                         <a class="text-success fa fa-list-alt"></a>
                         
-                        {% elif carga.renda or carga.inteiro or carga.impureza or carga.umidade %}
+                        {% elif carga.renda != None or carga.inteiro != None or carga.impureza  != None or carga.umidade  != None or carga.gessado  != None or carga.bbranca  != None or carga.amarelo  != None or carga.manchpic  != None or carga.vermelhos != None %}
                         
                         <td align="center"
                         data-ajax-renda="{{carga.renda}}"
@@ -491,7 +491,7 @@
                         data-ajax-obs="{{carga.obs}}"
                         
                         onClick="editUserClassificacao({{carga.pk|stringformat:"i"}})" 
-                        data-toggle="modal" data-target="#myModalClassificacao")" class="text-success"
+                        data-toggle="modal" data-target="#myModalClassificacao")" 
                         >
                             <a class="text-warning fa fa-list-alt"></a>
                         </td>
@@ -510,7 +510,7 @@
                         data-ajax-obs="{{carga.obs}}"
 
                         onClick="editUserClassificacao({{carga.pk|stringformat:"i"}})" 
-                        data-toggle="modal" data-target="#myModalClassificacao")" class="text-success"
+                        data-toggle="modal" data-target="#myModalClassificacao")" 
                         >
                             <a class="text-danger fa fa-list-alt"></a>
                         
