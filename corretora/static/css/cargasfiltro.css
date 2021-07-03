@@ -271,7 +271,7 @@ label {
     }
 }
 
-p.agendado {
+i.agendado {
 opacity: 0;
 -webkit-animation: fadeIn 1000ms linear;
 -moz-animation: fadeIn 1000ms linear;

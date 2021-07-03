@@ -508,11 +508,11 @@
                             {% endif %}
                             
                             {% if carga.peso == 0 %}
-                            <td class="text-warning"><strong>{{ carga.veiculo|intcomma }} Kg </strong></td>
+                            <td class="text-warning pesoagendado" data-pesoAgendado="{{carga.veiculo|stringformat:"i"}}" ><strong>{{ carga.veiculo|intcomma }} Kg </strong></td>
                             {% elif carga.peso < 18000 and carga.peso > 0  %}
-                            <td style="color:darkorange"><i>{{ carga.peso|intcomma }} Kg </i></td>
+                            <td class="pesocarregado" data-pesoCarregado="{{carga.peso|stringformat:"i"}}"  style="color:darkorange"><i>{{ carga.peso|intcomma }} Kg </i></td>
                             {% else %}
-                            <td>{{ carga.peso|intcomma }} Kg </td>
+                            <td class="pesocarregado" data-pesoCarregado="{{carga.peso|stringformat:"i"}}" >{{ carga.peso|intcomma }} Kg </td>
                             {% endif %}
 
                             {% if carga.notafiscal == None %}
@@ -684,7 +684,7 @@
                             <div class="col titulototal">
                                 {% if pesototal.peso__sum == None %}                    
                                 {% else %}
-                                <p ><strong>Carregado <i style="color: whitesmoke;"><br/> {{ pesototal.peso__sum }} Kg</i></strong></p>
+                                <p ><strong>Carregado <br/> <i class="pesostitulo" style="color: whitesmoke;" id="totalPesoCarregadoJsID"></i></strong></p>
                             </div>  
                             {% if user.is_superuser%}
                             {% if comitotal == 0 %}
@@ -705,20 +705,20 @@
                             {% if pesototal.peso__sum == None %}                    
                             {% else %}
                             <div class="col titulototal">
-                                <p ><strong>Carregado <i class="pesostitulo" style="color: whitesmoke;"><br/>{{ pesototal.peso__sum }}  Kg</i></strong></p>
+                                <p ><strong>Carregado <br/> <i class="pesostitulo" style="color: whitesmoke;" id="totalPesoCarregadoJsID"></i></strong></p>
                             </div>  
                            
                             {% endif %}  
                             <div class="col titulototal">
                                 {% if agendatotal.veiculo__sum == None %}                    
                                 {% else %}
-                                <p class="agendado"><strong>Agendado <i class="text text-warning pesostitulo" ><br/>{{ agendatotal.veiculo__sum }} Kg</i></strong></p>
+                                <p class=""><strong>Agendado <br/><i class="text text-warning pesostitulo agendado" id="totalPesoAgendadoID" ><br/></i></strong></p>
                                 {% endif %}        
                             </div>             
                             {% if pesototal.peso__sum == None and agendatotal.peso__sum == None %}
                             {% else %}
                             <div class="col titulototal">                                
-                                <p ><strong>Total <i class="text text-info pesostitulo"><br/>{{ pesototal.peso__sum|addition:agendatotal.veiculo__sum }} Kg</i></strong></p>
+                                <p ><strong>Total <br/><i class="text text-info pesostitulo" id="pesoTotalHtml"></i></strong></p>
                             </div>  
                             {% endif %}
                             {% if user.is_superuser%}
@@ -1060,7 +1060,7 @@
                             <div class="col titulototal">
                                 {% if pesototal.peso__sum == None %}                    
                                 {% else %}
-                                <p ><strong>Carregado: <i>{{ pesototal.peso__sum }} Kg</i></strong></p>
+                                <p ><strong>Carregado: <i id="totalPesoCarregadoJsExcel"></i></strong></p>
                                 {% endif %}  
                             </div>  
                             
@@ -1072,19 +1072,19 @@
                             <div class="col titulototal">
                                 {% if agendatotal.veiculo__sum == None %}                    
                                 {% else %}
-                                <p><strong>Agendado: <i >{{ agendatotal.veiculo__sum }} Kg</i></strong></p>
+                                <p><strong>Agendado: <i id="AgendadoTotalExcel"></i></strong></p>
                                 {% endif %}        
                             </div>             
                             <div class="col titulototal">
                                 {% if pesototal.peso__sum == None %}                    
                                 {% else %}
-                                <p ><strong>Carregado: <i>{{ pesototal.peso__sum }} Kg</i></strong></p>
+                                <p ><strong>Carregado: <i id="totalPesoCarregadoJsExcel"></i></strong></p>
                                 {% endif %}  
                             </div>  
                             {% if pesototal.peso__sum == None and agendatotal.peso__sum == None %}
                             {% else %}
                             <div class="col titulototal">                                
-                                <p ><strong>Total: <i >{{ pesototal.peso__sum|addition:agendatotal.veiculo__sum }} Kg</i></strong></p>
+                                <p ><strong>Total: <i id="PesoTotalExcel"></i></strong></p>
                             </div>  
                             {% endif %}
                         </div>
