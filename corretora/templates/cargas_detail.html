@@ -221,7 +221,7 @@
                         target="_blank"></i>
                     {% for carga in cargas|slice:":1" %}
                         {% if user.is_superuser %}
-                    <a href; margin-top: 12px;="{% url 'detail_cargas_comiss' carga.pedido.pk %}" style="color:green; margin-top: 12px;" class="fas fa-lg fa-usd"></a>                    
+                    <a href="{% url 'detail_cargas_comiss' carga.pedido.pk %}" style="color:green; margin-top: 12px;" class="fas fa-lg fa-usd"></a>                    
                         {% endif %}
                     {% endfor %}
 
