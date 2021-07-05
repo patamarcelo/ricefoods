@@ -216,9 +216,14 @@
                     <h2><span class="badge badge-success badge-pill">
                             Relatório Carregamento
                         </span></h2>
-                    <i type="submit" style="color:green" class="fas fa-lg fa-file-excel" id="btnExport"></i>
-                    <i type="submit" style="color:black" class="fas fa-lg fa-file-pdf" id="pdf" onclick="createPDF()"
+                    <i type="submit" style="color:green; margin-right: 5px; margin-top: 12px;" class="fas fa-lg fa-file-excel" id="btnExport"></i>
+                    <i type="submit" style="color:black; margin-right: 5px; margin-top: 12px;" class="fas fa-lg fa-file-pdf" id="pdf" onclick="createPDF()"
                         target="_blank"></i>
+                    {% for carga in cargas|slice:":1" %}
+                        {% if user.is_superuser %}
+                    <a href; margin-top: 12px;="{% url 'detail_cargas_comiss' carga.pedido.pk %}" style="color:green; margin-top: 12px;" class="fas fa-lg fa-usd"></a>                    
+                        {% endif %}
+                    {% endfor %}
 
                 </div>
 
@@ -572,7 +577,7 @@
         </div>
 
         <div class="container-fluid" id="cargasrelatorio">
-            <table class=" width table table-sm table-hover" align="center">
+            <table class=" width table table-sm table-hover table-striped" align="center">
                 <thead align="center" class=" thead-dark">
 
                     <tr>

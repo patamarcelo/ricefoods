@@ -27,6 +27,18 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <!-- MDBootstrap Datatables  -->
     <link href="{% static 'css/addons/datatables.min.css' %}" rel="stylesheet">
+    
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+
+    
+    <!-- CSS custom styles (optional) -->
+    <link href="{% static 'css/relatorioComissaoCargas.css' %}" rel="stylesheet">
+    <!-- JS custom styles (optional) -->
+    <script type="text/javascript" src="{% static 'js/relatorioComissaoCargas.js' %}"></script>
+
+
+
     <style>
         .btn-xs {
             padding: 5px 10px;
@@ -105,7 +117,7 @@
 
         <!--------------------------PEdidos---------------------------->
         <table class="width table table-sm table-borderless align-text-center " width=100>
-            <thead class="thead-dark table-bordered">
+            <thead class="thead-dark ">
                 <tr align="center">
 
                     <th scope="col"><strong> Contrato</strong></th>
@@ -126,7 +138,7 @@
                 </tr>
 
             </thead>
-            <tbody class="table-bordered">
+            <tbody class="">
                 {% for pedido in pedidos %}
 
                 <tr align="center">
@@ -197,11 +209,11 @@
                     <h2><span class="badge badge-primary badge-pill">
                             Relatório Comissões
                         </span></h2>
-                    <i type="submit" style="color:green" class="fas fa-lg fa-file-excel" id="btnExport"></i>
-                    <i type="submit" style="color:black" class="fas fa-lg fa-file-pdf" id="pdf" onclick="createPDF()"
+                    <i type="submit" style="color:green; margin-right: 5px; margin-top: 12px;" class="fas fa-lg fa-file-excel" id="btnExport"></i>
+                    <i type="submit" style="color:black; margin-right: 5px; margin-top: 12px;" class="fas fa-lg fa-file-pdf" id="pdf" onclick="createPDF()"
                         target="_blank"></i>
                     {% for carga in cargas|slice:":1" %}
-                    <a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank" style="color:green" class="fas fa-lg fa-list-alt"></a>                    
+                    <a href="{% url 'detail_cargas' carga.pedido.pk %}"  style="color:green; margin-top: 12px;" class="fas fa-lg fa-list-alt"></a>                    
                     {% endfor %}
                 </div>
 
@@ -213,7 +225,7 @@
 
 
 
-                <thead align="center" class="table-bordered thead-dark">
+                <thead align="center" class=" thead-dark">
 
                     <tr class="cabecalho">
                         <th scope="col"><a class="text-white fa fa-sort-desc"></a></th>
@@ -255,7 +267,7 @@
                         <td><b>{{ carga.pedido.fornecedor.nome|title|truncatechars:28 }}
                             </b></td>
                         <td><b>
-                                {{ carga.placa|upper|slice:":3"}}-{{ carga.placa|upper|slice:"3:"}}</b></td>
+                                {{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</b></td>
                         <td><b>{{ carga.motorista|title }}</b></td>
 
                         {% if carga.notafiscal == None %}
@@ -291,6 +303,7 @@
                         <td><b>{{ carga.notasfiscal2 }}</b></td>
                         {% else %}
                         {% endif %}
+
                         <td><b>{{ carga.peso|intcomma }} Kg </b></td>
                         {% if pedido.produto == "Semente" %}
                         <td><b>{{ carga.peso|div:40|floatformat:"-2" }} Scs </b></td>
@@ -307,19 +320,29 @@
                         <td><b>R$ {{carga.valorcarga|floatformat:"2"}}</b></td>
 
                         {% endif %}
-                        <td><b>R$ {{ carga.comissaocasca|floatformat:2 }}</b></td>
+                        
+                        <!-- COMISSAO -->
+                        <td class="comissaoAreceber" data-comissao="{{ carga.comissaocasca|stringformat:".2f"}}"><b>R$ {{ carga.comissaocasca|floatformat:2 }}</b></td>
+                        
+
+                        <!-- COMISSAO PAGA OU ABERTO -->
+
                         {% if carga.vpcomissaoc == 0 and carga.pgcomissao == True %}
                         <td align="center"><b>R$ 0,00 </b></td>
                         {% elif carga.vpcomissaoc == 0 and carga.pgcomissao == False %}
                         <td align="center"><i>R$ &nbsp; - </i> </td>
 
+
+
                         {% elif carga.vpcomissaoc == None %}
-                        <td align="center"><b> - </b></td>
+                        <td data-comissaopaga="{{carga.vpcomissaoc|stringformat:".2f"}}" class="comissaopaga" align="center"><b> - </b></td>
                         {% elif carga.vpcomissaoc|floatformat:2 != carga.comissaocasca|floatformat:2 %}
-                        <td class="text text-warning"><b>R$ {{ carga.vpcomissaoc|floatformat:2 }}</b></td>
+                        <td data-comissaopaga="{{carga.vpcomissaoc|stringformat:".2f"}}" class="comissaopaga text text-warning"><b>R$ {{ carga.vpcomissaoc|floatformat:2 }}</b></td>
                         {% else %}
-                        <td><b>R$ {{ carga.vpcomissaoc|floatformat:2 }}</b></td>
+                        <td data-comissaopaga="{{carga.vpcomissaoc|stringformat:".2f"}}" class="comissaopaga" ><b>R$ {{ carga.vpcomissaoc|floatformat:2 }}</b></td>
                         {% endif %}
+
+                        <!-- SALDO COMISSÃO -->
                         {% if carga.pgcomissao == True %}
                         <td align="center" class="border-right"><b> R$ 0,00</b></td>
                         {% elif carga.vpcomissaoc == 0 and carga.pgcomissao == True %}
@@ -334,6 +357,8 @@
                         {% endfor %}
                         {% endfor %}
                     </tr>
+                    </tbody>
+                    <tfoot class="borderless bg-white text-dark">
                     <tr class="nothover">
                         <td colspan="1" class="border-top border-dark"></td>
                         <td colspan="1" class="border-top border-dark"></td>
@@ -369,17 +394,24 @@
                                 </i></strong></td>
                         {% endif %}
 
-                        <td align="center" class="border-top border-dark"><i><strong>R$
-                                    {{ pedido.totalcomissaocasca|floatformat:2 }}
-                            </i><strong></td>
+                        <td align="center" 
+                        class="border-top border-dark"
+                        id="totalComissaoGerado">
+                        <i><strong>            
+                        </i><strong></td>
+                        
                         {% endfor %}
+
                         {% if totalpago.vpcomissaoc__sum == 0 or totalpago.vpcomissaoc__sum == None %}
-                        <td align="center" class="border-top border-dark"><i>R$ &nbsp; - </i> </td>
+                        <td align="center" class="border-top border-dark"
+                        id="totalpagocomissaoID"><i></i> </td>
+
                         {% else %}
-                        <td align="center" class="border-top border-dark"><i><strong>R$
-                                    {{ totalpago.vpcomissaoc__sum|floatformat:2 }}
+                        <td align="center" class="border-top border-dark"
+                        id="totalpagocomissaoID"><i><strong>
                             </i><strong></td>
                         {% endif %}
+                        
                         {% for pedido in pedidos %}
                         {% if totalaberto.vpcomissaoc__count == 0 %}
                         <td align="center" class="border-top border-dark"><b> R$ 0,00 </b></td>
@@ -394,7 +426,7 @@
                     </tr>
 
 
-                </tbody>
+                    </tfoot>
             </table>
         </div>
         <!--------------------------EXCEL-------------------------------------------------------------->
@@ -556,17 +588,23 @@
                             </i></strong></td>
                     {% endif %}
 
-                    <td align="center" class="border-top border-dark rodape"><i><strong>R$
-                                {{ pedido.totalcomissaocasca|floatformat:2 }}
-                        </i><strong></td>
+                    <td align="center" 
+                    class="border-top border-dark"
+                    id="totalComissaoGeradoExcel">
+                    <i><strong>            
+                    </i><strong></td>
                     {% endfor %}
+
                     {% if totalpago.vpcomissaoc__sum == 0 or totalpago.vpcomissaoc__sum == None %}
-                    <td align="center" class="border-top border-dark rodape"><i>R$ &nbsp; - </i> </td>
+                    <td align="center" class="border-top border-dark"
+                    id="totalpagocomissaoIDExcel"><i></i> </td>
+
                     {% else %}
-                    <td align="center" class="border-top border-dark rodape"><i><strong>R$
-                                {{ totalpago.vpcomissaoc__sum|floatformat:2 }}
+                    <td align="center" class="border-top border-dark"
+                    id="totalpagocomissaoIDExcel"><i><strong>
                         </i><strong></td>
                     {% endif %}
+                    
                     {% for pedido in pedidos %}
                     {% if totalaberto.vpcomissaoc__count == 0 %}
                     <td align="center" class="border-top border-dark rodape"><b> R$ 0,00 </b></td>
@@ -629,12 +667,7 @@
 <!-- MDBootstrap Datatables  -->
 <script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
 <script>
-    $(document).ready(function () {
-        $('#cargas').DataTable({
-            "order": [[3, "asc"]]
-        });
-        $('.dataTables_length').addClass('bs-select');
-    });
+    
 
     window.setTimeout(function () {
         $(".alert").fadeTo(500, 0).slideUp(500, function () {
