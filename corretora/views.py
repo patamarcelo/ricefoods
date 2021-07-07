@@ -362,6 +362,38 @@ class CargasAgendamentoView(LoginRequiredMixin, ListView):
         context['clientes'] = Cliente.objects.order_by('-nome').all
         return context
 
+class CargasAgendamentoViewTeste(LoginRequiredMixin, ListView):
+    login_url = 'login'    
+    models = Carga    
+    ordering = ['-situacao','-data_agenda','-data','ordem','chegada','buonny','pedido__cliente'] 
+    template_name = 'agendamentoTeste.html'
+    queryset = Carga.objects.all()
+    context_object_name = 'cargas' 
+    
+
+    def get_context_data(self, **kwargs):
+        context = super(CargasAgendamentoViewTeste, self).get_context_data(**kwargs)
+        filt1 = datetime.datetime.now() - datetime.timedelta(15)
+        filt_data = filt1.strftime("%Y-%m-%d")
+        filt2 = 'Ruston - SP'
+        context['query_cargas_json'] = json.dumps(
+            [
+                {
+                    'situacao': obj.situacao,
+                    'data_agenda' : obj.data_agenda.strftime("%Y-%m-%d"),
+                    'placa': obj.placa,
+                    'motorista': obj.motorista,
+                    'nfiscal': obj.notafiscal,
+                    'peso': obj.peso,
+                    'veiculo': obj.veiculo,
+                    'id': obj.pk,
+                    'cliente': obj.pedido.cliente.nome_fantasia
+                }
+                for obj in Carga.objects.order_by('-situacao','data_agenda').filter(data_agenda__gte=filt_data).filter(pedido__cliente__nome_fantasia=filt2)
+            ]
+        )
+        return context
+
 class CargasView(LoginRequiredMixin, ListView):
     login_url = 'login'
     
