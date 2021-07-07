@@ -557,6 +557,7 @@ class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
                     'contrato': obj.contrato,
                     'fornecedor': obj.fornecedor.nome,
                     'cidadef': obj.fornecedor.cidade.cidade,
+                    'color': obj.cliente.color,
                     'cliente': obj.cliente.nome_fantasia
                     
                 }
@@ -641,6 +642,7 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
                     'contrato': obj.contrato,
                     'fornecedor': obj.fornecedor.nome,
                     'cidadef': obj.fornecedor.cidade.cidade,
+                    'color': obj.cliente.color,
                     'cliente': obj.cliente.nome_fantasia
                     
                 }

@@ -84,3 +84,71 @@ window.onload = function () {
     });
 
 }
+
+window.onload = function () {
+    $("#id_pedido").on("change", function () {
+      var idcontrato = $(this).val();
+      var idcontrato = parseInt(idcontrato);
+      var jsonData = loadJson("#jsonData");
+      var contratos = jsonData;
+      console.log(idcontrato);
+  
+      contratos.forEach((element, index, array) => {
+        if (element.id === idcontrato) {
+          var pedido = element.contrato;
+          var fornecedor = element.fornecedor;
+          var cidade = element.cidadef;
+          var cliente = element.cliente;
+          var color = element.color;
+          console.log(pedido);
+          console.log(fornecedor);
+          console.log(cidade);
+          console.log(cliente);
+          console.log(" ");
+          if (pedido === "900") {
+            var elementfornecedor = document.getElementById("fornecedorinfo");
+            elementfornecedor.innerHTML = "Escritório";
+            var elementcidade = document.getElementById("cidadeinfo");
+            elementcidade.innerHTML = cidade;
+            var elementcliente = document.getElementById("clienteinfo");
+            elementcliente.innerHTML = cliente;
+            elementcliente.style.backgroundColor = "";
+            elementcliente.style.backgroundColor = `${color}`;
+            var elementcliente = document.getElementById("pedido_from_model");
+            elementcliente.innerHTML = pedido;
+          } else if (pedido === "901") {
+            var elementfornecedor = document.getElementById("fornecedorinfo");
+            elementfornecedor.innerHTML = "Escritório";
+            var elementcidade = document.getElementById("cidadeinfo");
+            elementcidade.innerHTML = cidade;
+            var elementcliente = document.getElementById("clienteinfo");
+            elementcliente.innerHTML = cliente;
+            elementcliente.style.backgroundColor = "";
+            elementcliente.style.backgroundColor = `${color}`;
+            var elementcliente = document.getElementById("pedido_from_model");
+            elementcliente.innerHTML = pedido;
+          } else {
+            var elementcidade = document.getElementById("cidadeinfo");
+            elementcidade.innerHTML = cidade;
+            var elementcliente = document.getElementById("fornecedorinfo");
+            elementcliente.innerHTML = fornecedor;
+            var elementcliente = document.getElementById("clienteinfo");
+            elementcliente.innerHTML = cliente;
+            elementcliente.style.backgroundColor = "";
+            elementcliente.style.backgroundColor = `${color}`;
+            var elementcliente = document.getElementById("pedido_from_model");
+            elementcliente.innerHTML = pedido;
+          }
+        } else if (isNaN(idcontrato)) {
+          var elementcidade = document.getElementById("cidadeinfo");
+          elementcidade.innerHTML = "";
+          var elementcliente = document.getElementById("fornecedorinfo");
+          elementcliente.innerHTML = "";
+          var elementcliente = document.getElementById("clienteinfo");
+          elementcliente.innerHTML = "";
+          var elementcliente = document.getElementById("pedido_from_model");
+          elementcliente.innerHTML = "";
+        }
+      });
+    });
+  };

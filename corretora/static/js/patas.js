@@ -30,10 +30,12 @@ window.onload = function () {
         var fornecedor = element.fornecedor;
         var cidade = element.cidadef;
         var cliente = element.cliente;
+        var color = element.color;
         console.log(pedido);
         console.log(fornecedor);
         console.log(cidade);
         console.log(cliente);
+        console.log(color);
         console.log(" ");
         if (pedido === "900") {
           var elementfornecedor = document.getElementById("fornecedorinfo");
@@ -42,8 +44,8 @@ window.onload = function () {
           elementcidade.innerHTML = cidade;
           var elementcliente = document.getElementById("clienteinfo");
           elementcliente.innerHTML = cliente;
-          var elementcliente = document.getElementById("pedido_from_model");
-          elementcliente.innerHTML = pedido;
+          elementcliente.style.backgroundColor = "";
+          elementcliente.style.backgroundColor = `${color}`;
         } else if (pedido === "901") {
           var elementfornecedor = document.getElementById("fornecedorinfo");
           elementfornecedor.innerHTML = "Escritório";
@@ -51,8 +53,8 @@ window.onload = function () {
           elementcidade.innerHTML = cidade;
           var elementcliente = document.getElementById("clienteinfo");
           elementcliente.innerHTML = cliente;
-          var elementcliente = document.getElementById("pedido_from_model");
-          elementcliente.innerHTML = pedido;
+          elementcliente.style.backgroundColor = "";
+          elementcliente.style.backgroundColor = `${color}`;
         } else {
           var elementcidade = document.getElementById("cidadeinfo");
           elementcidade.innerHTML = cidade;
@@ -60,8 +62,8 @@ window.onload = function () {
           elementcliente.innerHTML = fornecedor;
           var elementcliente = document.getElementById("clienteinfo");
           elementcliente.innerHTML = cliente;
-          var elementcliente = document.getElementById("pedido_from_model");
-          elementcliente.innerHTML = pedido;
+          elementcliente.style.backgroundColor = "";
+          elementcliente.style.backgroundColor = `${color}`;
         }
       } else if (isNaN(idcontrato)) {
         var elementcidade = document.getElementById("cidadeinfo");
@@ -69,8 +71,6 @@ window.onload = function () {
         var elementcliente = document.getElementById("fornecedorinfo");
         elementcliente.innerHTML = "";
         var elementcliente = document.getElementById("clienteinfo");
-        elementcliente.innerHTML = "";
-        var elementcliente = document.getElementById("pedido_from_model");
         elementcliente.innerHTML = "";
       }
     });
@@ -378,6 +378,142 @@ $(document).ready(function () {
       }
     });
   });
+  
+  $("#id_pedido").on("keyup", function () {
+    var jsonSemDescarga = loadJson("#jsonDataSemDescarga");
+    var formtoday = document.getElementById("id_data").value
+    if (formtoday) {    
+      var jsonData = loadJson("#jsonDataAgenda");
+      console.log(jsonData);
+      var clienteinfonome = document.getElementById("clienteinfo").innerHTML;
+
+      var currentSit = document.getElementById("id_situacao").value;
+
+      
+      
+
+      
+
+      var jsonCargas = loadJson("#jsonCargasCarregado");
+      function agruparPor(objetoArray, propriedade) {
+        return objetoArray.reduce(function (acc, obj) {
+          let key = obj[propriedade];
+          if (!acc[key]) {
+            acc[key] = [];
+          }
+          acc[key].push(obj);
+          return acc;
+        }, {});
+      }
+      var grupodePessoas = agruparPor(jsonCargas, "cliente");
+      var clientesName = Object.entries(grupodePessoas);
+      var resultadoAgendamentoJS = {};
+      for (var key in clientesName) {
+        console.log(key)
+        var obj = clientesName[key];
+        console.log(obj)
+        datasAgendados = obj[1];
+        const resultado = {};
+        
+        datasAgendados.forEach((item) => {
+          console.log(item.data_agenda)
+          if (resultado.hasOwnProperty(item.data_agenda)) {
+            
+            resultado[item.data_agenda] = resultado[item.data_agenda] += 1 ;
+          } else {
+            resultado[item.data_agenda] = 1;
+          }
+        });
+        resultadoAgendamentoJS[obj[0]] = resultado;
+      }
+
+      jsonData.forEach((e, i, array) => {
+        if (clienteinfonome === e.nome) {
+          var nome = e.nome;
+          var dias_descarga = e.dias_descarga;
+          var veiculos_dia = e.veiculos_dia;
+          // var prev_dias_peso = e.prev_dias[0];
+          var descarga_sabado = e.descarga_sabado;
+          // var prev_dias_quant_agendado = e.prev_dias[1];
+          var clientesDatas = {};
+          for (var key of Object.keys(resultadoAgendamentoJS)) {
+            if (key === clienteinfonome) {
+              console.log(`Chave: ${key}`);
+              console.log(`Nome ${clienteinfonome}`);
+              console.log(`é igual ????${key === clienteinfonome}`)
+              newobj = resultadoAgendamentoJS[key];
+              let entries = Object.entries(newobj);
+              for (var [prop, val] of entries) {
+                prop = moment(prop, "YYYY-MM-DD").format("DD/MM/YYYY");
+                console.log(prop, val);
+                clientesDatas[prop] = val;
+              }
+            }
+          }
+
+          let clientesDataSemDescarga = [];
+          for (var key in jsonSemDescarga) {
+            // skip loop if the property is from prototype
+            if (!jsonSemDescarga.hasOwnProperty(key)) continue;
+        
+            var obj = jsonSemDescarga[key];
+            for (var prop in obj) {
+                // skip loop if the property is from prototype
+                if (!obj.hasOwnProperty(prop)) continue;
+                dataSem = moment(obj[prop], "YYYY-MM-DD").format("DD/MM/YYYY");
+                clienteSem = prop
+                if (clienteinfonome === clienteSem) {
+                  
+                  clientesDataSemDescarga.push(dataSem)
+                }
+            }
+          }
+
+          var prev_dias_quant_agendado = clientesDatas;
+          console.log(clientesDatas);
+          console.log(`Clientes e  separados!!`);
+          console.log(array);
+          console.log(nome);
+          console.log(dias_descarga);
+          console.log(veiculos_dia);
+          console.log(prev_dias_quant_agendado);
+          console.log(typeof prev_dias_quant_agendado);
+          console.log(descarga_sabado);
+
+          dataDescarga = AddNewDays(formtoday, e.dias_descarga);
+          console.log(`Data Descarga: ${dataDescarga}`);
+
+          diasemanadescarga = getWeekDay(dataDescarga);
+          console.log(`Dia da Semana da descarga: ${diasemanadescarga}`);
+
+          totalmotagenda = totalAgendadosAgora(
+            prev_dias_quant_agendado,
+            dataDescarga
+          );
+          console.log(`Total Agendado até o momento: ${totalmotagenda}`);
+          console.log(clientesDataSemDescarga.includes(dataDescarga))
+          console.log(clientesDataSemDescarga)
+          console.log(dataDescarga)
+
+          while (
+            totalmotagenda >= veiculos_dia ||
+            (descarga_sabado == false && diasemanadescarga == 6) ||
+            diasemanadescarga == 0
+            || clientesDataSemDescarga.includes(dataDescarga)
+          ) {
+            dataDescarga = AddNewDays(dataDescarga, 1);
+            diasemanadescarga = getWeekDay(dataDescarga);
+            totalmotagenda = totalAgendadosAgora(
+              prev_dias_quant_agendado,
+              dataDescarga
+            );
+          }
+          console.log(`After loop While: ${dataDescarga}`);
+          data_agenda.value = dataDescarga;
+        }
+      });
+    }
+    });
 });
 
 function formatDate(date) {
