@@ -51,19 +51,13 @@ let diasDaSemana = [
 	"Domingo",
 ];
 
+var TesteDay = Date.today().last().monday();
+var TesteDayStr = moment(TesteDay).format("YYYY-MM-DD");
 let curr = new Date();
 var firstWeek = [];
 
-for (let i = 1; i <= 7; i++) {
-	let first = curr.getDate() - curr.getDay() + i;
-	let day = new Date(curr.setDate(first)).toISOString().slice(0, 10);
-	firstWeek.push(day);
-}
-
-var lastWeekCurDay = firstWeek.slice(-1)[0];
-
-for (let i = 2; i <= 8; i++) {
-	var newDataTo = AddDays(lastWeekCurDay, i);
+for (let i = 1; i <= 14; i++) {
+	var newDataTo = AddDays(TesteDayStr, i);
 	var newDataToAdd = moment(newDataTo).format("YYYY-MM-DD");
 	firstWeek.push(newDataToAdd);
 }
@@ -94,6 +88,14 @@ $(document).ready(function () {
 				$(`#dadosagendamento${i}`).before(clonedDiv);
 				$(`#dadosagendamentoC${j} .motoristaAgendaClass`).text(
 					`${jsonData[j].motorista}`
+				);
+				$(`#dadosagendamentoC${j} .motoristaAgendaClass`).css(
+					"white-space",
+					"nowrap"
+				);
+				$(`#dadosagendamentoC${j} .motoristaAgendaClass`).css(
+					"overflow",
+					"hidden"
 				);
 
 				$(`#dadosagendamentoC${j} .enumerateitemAgendaClass`).text(
