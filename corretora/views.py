@@ -365,7 +365,7 @@ class CargasAgendamentoView(LoginRequiredMixin, ListView):
 class CargasAgendamentoViewTeste(LoginRequiredMixin, ListView):
     login_url = 'login'    
     models = Carga    
-    ordering = ['-situacao','-data_agenda','-data','ordem','chegada','buonny','pedido__cliente'] 
+    ordering = ['-situacao','-data_agenda','-modificado','-data','ordem','chegada','buonny','pedido__cliente'] 
     template_name = 'agendamentoTeste.html'
     queryset = Carga.objects.all()
     context_object_name = 'cargas' 
@@ -389,7 +389,7 @@ class CargasAgendamentoViewTeste(LoginRequiredMixin, ListView):
                     'id': obj.pk,
                     'cliente': obj.pedido.cliente.nome_fantasia
                 }
-                for obj in Carga.objects.order_by('-situacao','data_agenda').filter(data_agenda__gte=filt_data).filter(pedido__cliente__nome_fantasia=filt2)
+                for obj in Carga.objects.order_by('-situacao','data_agenda','-modificado').filter(data_agenda__gte=filt_data).filter(pedido__cliente__nome_fantasia=filt2)
             ]
         )
         return context
