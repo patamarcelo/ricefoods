@@ -51,19 +51,36 @@ let diasDaSemana = [
 	"Domingo",
 ];
 
-var TesteDay = Date.today().last().monday();
+var TesteDay = Date.today().last().sunday();
 var TesteDayStr = moment(TesteDay).format("YYYY-MM-DD");
 let curr = new Date();
 var firstWeek = [];
 
-for (let i = 1; i <= 14; i++) {
+for (let i = 2; i <= 15; i++) {
 	var newDataTo = AddDays(TesteDayStr, i);
 	var newDataToAdd = moment(newDataTo).format("YYYY-MM-DD");
 	firstWeek.push(newDataToAdd);
 }
 
+console.log(firstWeek[0]);
+function TotalCarregado(array, data, status) {
+	var TotalCarregado = 0;
+	for (let i = 0; i < array.length; i++) {
+		if (array[i].data_agenda >= data && array[i].situacao == status) {
+			TotalCarregado += 1;
+		}
+	}
+	return TotalCarregado;
+}
+
 $(document).ready(function () {
 	var jsonData = loadJson("#jsonDataAgenda");
+
+	var TotalCarregadoArray = TotalCarregado(
+		jsonData,
+		firstWeek[0],
+		"Carregado"
+	);
 
 	var totalDeCargasGeral = 0;
 	for (let i = 0; i < firstWeek.length; i++) {
@@ -97,10 +114,6 @@ $(document).ready(function () {
 					"overflow",
 					"hidden"
 				);
-
-				$(`#dadosagendamentoC${j} .enumerateitemAgendaClass`).text(
-					`${totalDeCargasGeral}`
-				);
 				if (jsonData[j].nfiscal == null) {
 					$(`#dadosagendamentoC${j} .nfAgendaClass`).text("Sem NF");
 					$(`#dadosagendamentoC${j} .nfAgendaClass`).css(
@@ -120,7 +133,9 @@ $(document).ready(function () {
 				if (jsonData[j].situacao == "Carregado") {
 					totalDeCargasCarregado += jsonData[j].peso;
 					placasCarregadas.push(jsonData[j].placa);
-
+					$(`#dadosagendamentoC${j} .enumerateitemAgendaClass`).text(
+						`${totalDeCargasGeral}`
+					);
 					$(`#dadosagendamentoC${j} .pesoAgendaClass`).text(
 						`${Formatpeso(jsonData[j].peso)} Kg`
 					);
@@ -141,6 +156,10 @@ $(document).ready(function () {
 				} else {
 					totalDeCargasCarregado += jsonData[j].veiculo;
 					placasAgendadas.push(jsonData[j].placa);
+					TotalCarregadoArray += 1;
+					$(`#dadosagendamentoC${j} .enumerateitemAgendaClass`).text(
+						`${TotalCarregadoArray}`
+					);
 
 					$(`#dadosagendamentoC${j} .pesoAgendaClass`).text(
 						`${Formatpeso(jsonData[j].veiculo)} Kg`
