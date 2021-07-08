@@ -51,9 +51,10 @@ let diasDaSemana = [
 	"Domingo",
 ];
 
-var TesteDay = Date.today().last().sunday();
-var TesteDayStr = moment(TesteDay).format("YYYY-MM-DD");
 let curr = new Date();
+var FirstDay = curr.getDate() - curr.getDay();
+var firstday = new Date(curr.setDate(FirstDay));
+var TesteDayStr = moment(firstday).format("YYYY-MM-DD");
 var firstWeek = [];
 
 for (let i = 2; i <= 15; i++) {
@@ -63,6 +64,7 @@ for (let i = 2; i <= 15; i++) {
 }
 
 console.log(firstWeek[0]);
+console.log(firstWeek);
 function TotalCarregado(array, data, status) {
 	var TotalCarregado = 0;
 	for (let i = 0; i < array.length; i++) {
