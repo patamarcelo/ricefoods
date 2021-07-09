@@ -508,11 +508,11 @@
                             {% endif %}
                             
                             {% if carga.peso == 0 %}
-                            <td class="text-warning pesoagendado" data-pesoAgendado="{{carga.veiculo|stringformat:"i"}}" ><strong>{{ carga.veiculo|intcomma }} Kg </strong></td>
+                            <td class="text-warning"><strong>{{ carga.veiculo|intcomma }} Kg </strong></td>
                             {% elif carga.peso < 18000 and carga.peso > 0  %}
-                            <td class="pesocarregado" data-pesoCarregado="{{carga.peso|stringformat:"i"}}"  style="color:darkorange"><i>{{ carga.peso|intcomma }} Kg </i></td>
+                            <td style="color:darkorange"><i>{{ carga.peso|intcomma }} Kg </i></td>
                             {% else %}
-                            <td class="pesocarregado" data-pesoCarregado="{{carga.peso|stringformat:"i"}}" >{{ carga.peso|intcomma }} Kg </td>
+                            <td >{{ carga.peso|intcomma }} Kg </td>
                             {% endif %}
 
                             {% if carga.notafiscal == None %}
@@ -735,7 +735,7 @@
                     {% endif %}
                 </table>
 
-                <!--aisuhdioashiduhasihdiuashaiosudh-->
+                <!-- PAGINATION -->
                 {% if is_paginated %}
 
                 <nav aria-label="Page navigation">
@@ -868,11 +868,12 @@
                     <td>{{ carga.motorista|title }}</td>
 
                     {% if carga.peso == 0 %}
-                    <td class="text-warning"><strong>{{ carga.veiculo|intcomma }}</strong></td>
+                    
+                    <td class="text-warning pesoagendado" data-pesoAgendado="{{carga.veiculo|stringformat:"i"}}"><strong>{{ carga.veiculo|intcomma }}</strong></td>
                     {% elif carga.peso < 18000 and carga.peso > 0  %}
-                    <td style="color:darkorange"><i>{{ carga.peso|intcomma }} </i></td>
+                    <td class="pesocarregado" data-pesoCarregado="{{carga.peso|stringformat:"i"}}"   style="color:darkorange"><i>{{ carga.peso|intcomma }} </i></td>
                     {% else %}
-                    <td>{{ carga.peso|intcomma }} </td>
+                    <td class="pesocarregado" data-pesoCarregado="{{carga.peso|stringformat:"i"}}" >{{ carga.peso|intcomma }} </td>
                     {% endif %}
 
                     {% if carga.notafiscal == None %}
@@ -972,12 +973,14 @@
                     <td>{{ carga.motorista|title }}</td>
 
                     {% if carga.peso == 0 %}
-                    <td class="text-warning"><strong>{{ carga.veiculo|intcomma }}</strong></td>
+                    
+                    <td class="text-warning pesoagendado" data-pesoAgendado="{{carga.veiculo|stringformat:"i"}}"><strong>{{ carga.veiculo|intcomma }}</strong></td>
                     {% elif carga.peso < 18000 and carga.peso > 0  %}
-                    <td style="color:darkorange"><i>{{ carga.peso|intcomma }} </i></td>
+                    <td class="pesocarregado" data-pesoCarregado="{{carga.peso|stringformat:"i"}}"   style="color:darkorange"><i>{{ carga.peso|intcomma }} </i></td>
                     {% else %}
-                    <td>{{ carga.peso|intcomma }} </td>
+                    <td class="pesocarregado" data-pesoCarregado="{{carga.peso|stringformat:"i"}}" >{{ carga.peso|intcomma }} </td>
                     {% endif %}
+
 
                     {% if carga.notafiscal == None %}
                     <td class="text-danger"><strong>Sem NF</strong></td>

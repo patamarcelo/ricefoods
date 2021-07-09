@@ -1,29 +1,57 @@
 {% extends 'base2.html' %}
 {% load static %}
+{% load i18n static %}
 {% block content %}
-<form class="form-signin" method="post" autocomplete="off">
-    {% csrf_token %}
 
-    <svg class="bi bi-bar-chart" width="5em" height="5em" viewBox="0 0 16 16" fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd"
-            d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5h-2v12h2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z" />
-    </svg>
-    <br />
-    <!-- <img class="mb-4" src="{% static 'img/foguete.png' %}" alt="" width="72" height="72"> -->
 
-    <h1 class="h2 mb-3 font-weight-normal">Corretora de Cereais</h1>
-    <h6 class="h6 mb-3 font-weight-normal">Informe seus dados</h6>
+<div class="container">
+    <div class="row">
+        <form class="form-signin" method="post" autocomplete="off">
+            {% csrf_token %}
 
-    <label for="username" class="sr-only">Email</label>
-    <input type="email" id="username" name="username" class="form-control" placeholder="Informe seu e-mail" required
-        autofocus>
+            <svg class="bi bi-bar-chart" width="5em" height="5em" viewBox="0 0 16 16" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5h-2v12h2V2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z" />
+            </svg>
+            <br />
+            <!-- <img class="mb-4" src="{% static 'img/foguete.png' %}" alt="" width="72" height="72"> -->
 
-    <label for="password" class="sr-only">Senha</label>
-    <input type="password" id="password" name="password" class="form-control" placeholder="Informe sua senha" required>
+            <h1 class="h2 mb-3 font-weight-normal">Corretora de Cereais</h1>
+            <h6 class="h6 mb-3 font-weight-normal">Informe seus dados</h6>
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Acessar</button>
-    <p class="mt-3 mb-3 text-muted">&copy; {% now 'Y' %}</p>
-</form>
+            <label for="username" class="sr-only">Email</label>
+            <input type="email" id="username" name="username" class="form-control" placeholder="Informe seu e-mail" required
+                autofocus>
+
+            <label for="password" class="sr-only">Senha</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Informe sua senha" required>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Acessar</button>
+            <p class="mt-3 mb-3 text-muted">&copy; {% now 'Y' %}</p>
+        </form>
+    </div>
+    <div class="row justify-content-center">
+        
+        {% if form.errors and not form.non_field_errors %}
+        <p class="alert alert-danger">
+            {% if form.errors.items|length == 1 %}{% trans "Please correct the error below." %}{% else %}
+            {% trans "Please correct the errors below." %}{% endif %}
+        </p>
+        {% endif %}
+        
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        <p class="alert alert-danger">
+            {{ error }}
+        </p>
+        {% endfor %}
+        {% endif %}
+        
+    </div>
+</div>
+
+
+
 
 {% endblock %}

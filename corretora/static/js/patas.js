@@ -379,7 +379,7 @@ $(document).ready(function () {
     });
   });
   
-  $("#id_pedido").on("keyup", function () {
+  $(document).on("change", "#id_pedido", function () {
     var jsonSemDescarga = loadJson("#jsonDataSemDescarga");
     var formtoday = document.getElementById("id_data").value
     if (formtoday) {    
