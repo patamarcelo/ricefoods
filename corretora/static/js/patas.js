@@ -16,7 +16,7 @@ function loadJson(selector) {
   return JSON.parse(document.querySelector(selector).getAttribute("data-json"));
 }
 
-window.onload = function () {
+$(document).ready(function () {
   $("#id_pedido").on("change", function () {
     var idcontrato = $(this).val();
     var idcontrato = parseInt(idcontrato);
@@ -75,7 +75,7 @@ window.onload = function () {
       }
     });
   });
-};
+});
 
 // _____________________----------------------------------------------------------------
 

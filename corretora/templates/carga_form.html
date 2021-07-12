@@ -87,43 +87,42 @@
 </div>
 <form method="POST" novalidate class="needs-validation" id="cargaeditform">
     {% csrf_token %}
-    <div class="container">
-        <div class="d-flex  flex-column col-11 caixaquadrada">
-            <div class="row" style="padding-left: 15px; white-space: nowrap;">
-            <div class="d-flex ">
-                <h4>
-                    <span>
-                    <b class="badge badge-primary" id="pedido_from_model"> {{ carga.pedido }}</b>&nbsp;&nbsp;
-                    <b class="badge badge-secondary">{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} {{carga.motorista|title}}</b>
-                    </span>
-                </h4>
-            </div>
-                
-                <div class="d-flex justify-content-end col-7 pr-0">
-                    <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-                    <a class="btn btn-warning btn-sm mr-0" href="javascript:history.back()">Voltar</a>
-                </div>      
-            </div>
-            
-                
-            <div class="d-flex justify-content-start">
-                <span>
-                    <h5>
-                        <a class="badge badge-info" id="fornecedorinfo">{{carga.pedido.fornecedor.nome}}</a>&nbsp;&nbsp;
-                        <a class="badge" style="background-color: {{carga.pedido.cliente.color}};" id="clienteinfo">{{carga.pedido.cliente.nome_fantasia}}</a>
-                    </h5>
-                </span>
-            </div>
-            <div class="d-flex justify-content-start">
-                <span>
-                    <h6>
-                        <a class="badge badge-white bg-success" id="cidadeinfo">{{carga.pedido.fornecedor.cidade}}</a>
-                    </h6>
-                </span>
-            </div>                
-        </div>
-        
 
+
+    <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-around col-12 col-sm-12 col-md-11 col-lg-11 pl-0">
+            <div class="d-flex flex-column col-8">
+                    <div class="flex-row">
+                        <h4>
+                            <b class="badge badge-primary" id="pedido_from_model">{{ carga.pedido }}</b>
+                            &nbsp;&nbsp;
+                            <b class="badge badge-secondary">{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} {{carga.motorista|title}}</b>
+                        </h4>
+                    </div>
+                    <div class="d-flex flex-row flex-nowrap">
+                        <h5>
+                            <a class="badge badge-info" id="fornecedorinfo">{{carga.pedido.fornecedor.nome}}</a>&nbsp;&nbsp;
+                            <a class="badge" style="background-color: {{carga.pedido.cliente.color}};" id="clienteinfo">{{carga.pedido.cliente.nome_fantasia}}</a>
+                        </h5>
+                    </div>
+                    <div class="flex-row">
+                        <h6>
+                            <a class="badge badge-white bg-success" id="cidadeinfo">{{carga.pedido.fornecedor.cidade}}</a>                            
+                        </h6>
+                    </div>
+            </div>
+                <div class="d-flex flex-column justify-content-end align-items-end">
+                    <div class="flex-row">
+                        
+                            <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                            <a class="btn btn-warning btn-sm mr-0" href="javascript:history.back()">Voltar</a>
+                        
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    
         
 
 

@@ -389,7 +389,7 @@ class CargasAgendamentoViewTeste(LoginRequiredMixin, ListView):
                     'id': obj.pk,
                     'cliente': obj.pedido.cliente.nome_fantasia
                 }
-                for obj in Carga.objects.order_by('-situacao','data_agenda','-modificado').filter(data_agenda__gte=filt_data).filter(pedido__cliente__nome_fantasia=filt2)
+                for obj in Carga.objects.order_by('-situacao','data_agenda','modificado').filter(data_agenda__gte=filt_data).filter(pedido__cliente__nome_fantasia=filt2)
             ]
         )
         return context
@@ -494,6 +494,20 @@ class CreateCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)        
         context["pedidos"] = Pedido.objects.filter(situacao="a").all()
+        context['pedidos_json'] = json.dumps(
+            [
+                {
+                    'id': obj.id,
+                    'contrato': obj.contrato,
+                    'fornecedor': obj.fornecedor.nome,
+                    'cidadef': obj.fornecedor.cidade.cidade,
+                    'color': obj.cliente.color,
+                    'cliente': obj.cliente.nome_fantasia
+                    
+                }
+                for obj in Pedido.objects.filter(situacao="a").all()
+            ]
+        )
         return context
 
 class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
