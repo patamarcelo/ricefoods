@@ -99,7 +99,6 @@ $(document).ready(function () {
 		for (let j = 0; j < jsonData.length; j++) {
 			if (jsonData[j].data_agenda === HeadDataDate) {
 				totalDeCargas++;
-				totalDeCargasGeral++;
 
 				var clonedDiv = $(`#dadosagendamento${i}`).clone();
 				clonedDiv.attr("id", `dadosagendamentoC${j}`);
@@ -133,6 +132,7 @@ $(document).ready(function () {
 					);
 				}
 				if (jsonData[j].situacao == "Carregado") {
+					totalDeCargasGeral++;
 					totalDeCargasCarregado += jsonData[j].peso;
 					placasCarregadas.push(jsonData[j].placa);
 					$(`#dadosagendamentoC${j} .enumerateitemAgendaClass`).text(
