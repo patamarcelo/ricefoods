@@ -23,6 +23,8 @@ from json import dumps
 # Graficos
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
+
 from braces.views import SuperuserRequiredMixin
 from django.views.generic.list import MultipleObjectMixin
 
@@ -394,8 +396,9 @@ class CargasAgendamentoViewTeste(LoginRequiredMixin, ListView):
         )
         return context
 
-class CargasView(LoginRequiredMixin, ListView):
+class CargasView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     login_url = 'login'
+    permission_required = ('corretora.view_carga')
     
     models = Carga
     paginate_by = 40
@@ -510,9 +513,10 @@ class CreateCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         )
         return context
 
-class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+class CreateageCargasView(SuccessMessageMixin, LoginRequiredMixin, PermissionRequiredMixin ,CreateView):
     login_url = 'login'
     
+    permission_required = ('corretora.add_carga')
     model = Carga
     template_name = 'carga_age_form.html'
     success_message = "%(placa)s - %(motorista)s Agendado com sucesso!!"

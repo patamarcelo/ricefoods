@@ -40,6 +40,14 @@
 </head>
 <style>
 
+    .middle {
+        top: 50%;
+        left: 50%;
+        /* transform: translate(-50%, -50%); */
+        position: absolute;
+    }
+
+
     body {
         background-color: #363639;
         background-color: #2c2c2f;
@@ -142,8 +150,14 @@
             }
         }
 </style>
-<body>        
+    <div class="middle" id="loaderbefore">
+        <h1><i class="fas fa-lg fa-spinner fa-spin text-success"></i></h1>
+    </div>
+
+
     <br>    
+    <div class="agendamentoRuston" id="agendamentoRustonOff" style="display: none">
+    
     <div class="container mb-2">        
         <div class="d-flex justify-content-center align-items-center">
             <h2><span class="badge badge-primary" style="border-radius: 5px">Agendamento Descarga Ruston</span></h2>
@@ -425,9 +439,25 @@
                     </div>
                 </div>
             </div>
+        </div>
             <div style="display: none" id="jsonDataAgenda" data-json="{{ query_cargas_json }}"></div>    
-</body>
+
+    </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
 <script src="{% static 'js/agendamentoRuston.js' %}"></script>   
+<script>
+    function hideandshow(esconde, mostra) {
+        setTimeout(function(){ 
+            esconde.css("display", "none");
+            mostra.css("display", "block");
+        }, 500);
+}
+
+    $(document).ready(function () {
+        var loader = $("#loaderbefore");
+        var agenda = $("#agendamentoRustonOff");
+        hideandshow(loader, agenda)
+    });
+</script>
 </html>

@@ -11,12 +11,11 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="text-container">
-                        <h1>404</h1>
-                        <h2 style="color:red">{% trans 'Página não Encontrada' %} </h2>
+                        <h1>403</h1>
+                        <h2 style="color:red">{% trans 'Você não tem Autorização pra acessar esta Página' %}<br /></h2>
                         <p class="p-heading p-large">
-                            {% trans 'Infelizmente a página que você procura não está disponível.' %}<br />
-                            {% trans 'Volte para a página principal' %}</p>
-                        <a class="btn-solid-lg page-scroll" href="{% url 'index' %}">{% trans 'Voltar'%}</a>
+                            {% trans 'Volte para a página de Login' %}</p>
+                        <a class="btn-solid-lg page-scroll" href="{% url 'login' %}">{% trans 'Voltar'%}</a>
                     </div>
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
