@@ -77,6 +77,7 @@ function TotalCarregado(array, data, status) {
 
 $(document).ready(function () {
 	var jsonData = loadJson("#jsonDataAgenda");
+	console.log(jsonData)
 
 	var TotalCarregadoArray = TotalCarregado(
 		jsonData,
@@ -84,6 +85,7 @@ $(document).ready(function () {
 		"Carregado"
 	);
 
+	console.log(firstWeek);
 	var totalDeCargasGeral = 0;
 	for (let i = 0; i < firstWeek.length; i++) {
 		var HeadDataDate = firstWeek[i];
@@ -97,9 +99,11 @@ $(document).ready(function () {
 		var placasCarregadas = [];
 		var placasAgendadas = [];
 		for (let j = 0; j < jsonData.length; j++) {
+			
 			if (jsonData[j].data_agenda === HeadDataDate) {
 				totalDeCargas++;
 
+				
 				var clonedDiv = $(`#dadosagendamento${i}`).clone();
 				clonedDiv.attr("id", `dadosagendamentoC${j}`);
 				clonedDiv.css("display", "block");
@@ -155,7 +159,7 @@ $(document).ready(function () {
 					$(
 						`#dadosagendamentoC${j} .enumerateitemAgendaClass`
 					).addClass("text-success");
-				} else {
+				} else if (jsonData[j].situacao == "Agendado") {
 					totalDeCargasCarregado += jsonData[j].veiculo;
 					placasAgendadas.push(jsonData[j].placa);
 					TotalCarregadoArray += 1;
@@ -169,6 +173,7 @@ $(document).ready(function () {
 					$(`#dadosagendamentoC${j} .placaAgendaClass`).text(
 						`${FormatPlaca(jsonData[j].placa)}`
 					);
+					// var getUrlD = 1234
 					var getUrlD = $(`#dadosagendamentoC${j} a:eq(0)`)
 						.attr("target", "_blank")
 						.attr("data-url-attr")
