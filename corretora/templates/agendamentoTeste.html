@@ -35,22 +35,23 @@
     <link rel="icon" href="{% static 'images/favicon.png' %}">
     
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js" integrity="sha512-/n/dTQBO8lHzqqgAQvy0ukBQ0qLmGzxKhn8xKrz4cn7XJkZzy+fAtzjnOQd5w55h4k1kUC+8oIe6WmrGUYwODA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
 </head>
 <style>
 
+
     .middle {
-        top: 50%;
-        left: 50%;
-        /* transform: translate(-50%, -50%); */
-        position: absolute;
-    }
+            top: 50%;
+            left: 50%;
+            position: absolute;
+        }
 
 
     body {
         background-color: #363639;
         background-color: #2c2c2f;
+        background-color: #000000; 
         color: whitesmoke;
     }
     
@@ -150,14 +151,13 @@
             }
         }
 </style>
+<body>        
     <div class="middle" id="loaderbefore">
         <h1><i class="fas fa-lg fa-spinner fa-spin text-success"></i></h1>
     </div>
 
-
     <br>    
     <div class="agendamentoRuston" id="agendamentoRustonOff" style="display: none">
-    
     <div class="container mb-2">        
         <div class="d-flex justify-content-center align-items-center">
             <h2><span class="badge badge-primary" style="border-radius: 5px">Agendamento Descarga Ruston</span></h2>
@@ -168,6 +168,7 @@
             <small>{% now "SHORT_DATE_FORMAT" %} <b class="time"> {% now "H:i" %}</b></small>            
         </div>
     </div>
+
 
     <!-------------SEMANA ATUAL------------->
     <div class="container-fluid principal-container" id="semana-atual">        
@@ -187,16 +188,14 @@
                                 </div>                   
                             </div>
                             <div class="d-flex flex-row m-2">
-                               
-
-                                          
-                                <div class="d-flex flex-column m-2" id="DivDia0">
-                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia0">Data | dia semana</h3>
+                                {% for i in '0123456'|make_list %}
+                                <div class="d-flex flex-column m-2" id="DivDia{{ forloop.counter0 }}">
+                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia{{ forloop.counter0 }}">Data | dia semana</h3>
                                     <div class="resumodados bg-info" style="font-style: italic;">
                                         <span class="mb-1 pl-1 quantidadeDeCargas" style="font-size: 13px; display: inline; float: left; font-weight: bold;">3 Cargas</span><span class="mb-1 pr-1 pesoDeCargas" style="font-size: 13px; display: inline;float: right; font-weight: bold;">250.000Kg</span>
                                     </div>                   
                                     <div class="cargascarregadas">
-                                        <div id="dadosagendamento0" class="dadosagendamento" style="display: none;">
+                                        <div id="dadosagendamento{{ forloop.counter0 }}" class="dadosagendamento" style="display: none;">
                                             <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas bg-warning
                                             " style="border-bottom: 1px solid black;">                                                
                                                 <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a class="placaAgendaClass" data-url-attr="{% url 'upd_cargas' 123456789987 %}">PLACA </a> <br><a class="motoristaAgendaClass"> MOTORISTA</a><br> 
@@ -204,100 +203,8 @@
                                             </div>
                                         </div>    
                                     </div>        
-                                </div>        
-                                
-                                <div class="d-flex flex-column m-2" id="DivDia1">
-                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia1">Data | dia semana</h3>
-                                    <div class="resumodados bg-info" style="font-style: italic;">
-                                        <span class="mb-1 pl-1 quantidadeDeCargas" style="font-size: 13px; display: inline; float: left; font-weight: bold;">3 Cargas</span><span class="mb-1 pr-1 pesoDeCargas" style="font-size: 13px; display: inline;float: right; font-weight: bold;">250.000Kg</span>
-                                    </div>                   
-                                    <div class="cargascarregadas">
-                                        <div id="dadosagendamento1" class="dadosagendamento" style="display: none;">
-                                            <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas bg-warning
-                                            " style="border-bottom: 1px solid black;">                                                
-                                                <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a class="placaAgendaClass" data-url-attr="{% url 'upd_cargas' 123456789987 %}">PLACA </a> <br><a class="motoristaAgendaClass"> MOTORISTA</a><br> 
-                                                    <a class="pesoAgendaClass">PESO Kg</a> <br><span class="nfAgendaClass"> Sem NF</p><small class="enumerateitemAgendaClass d-flex align-items-end justify-content-end mr-1 mb-1 "> </small>
-                                            </div>
-                                        </div>    
-                                    </div>        
-                                </div>        
-                                
-                                <div class="d-flex flex-column m-2" id="DivDia2">
-                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia2">Data | dia semana</h3>
-                                    <div class="resumodados bg-info" style="font-style: italic;">
-                                        <span class="mb-1 pl-1 quantidadeDeCargas" style="font-size: 13px; display: inline; float: left; font-weight: bold;">3 Cargas</span><span class="mb-1 pr-1 pesoDeCargas" style="font-size: 13px; display: inline;float: right; font-weight: bold;">250.000Kg</span>
-                                    </div>                   
-                                    <div class="cargascarregadas">
-                                        <div id="dadosagendamento2" class="dadosagendamento" style="display: none;">
-                                            <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas bg-warning
-                                            " style="border-bottom: 1px solid black;">                                                
-                                                <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a class="placaAgendaClass" data-url-attr="{% url 'upd_cargas' 123456789987 %}">PLACA </a> <br><a class="motoristaAgendaClass"> MOTORISTA</a><br> 
-                                                    <a class="pesoAgendaClass">PESO Kg</a> <br><span class="nfAgendaClass"> Sem NF</p><small class="enumerateitemAgendaClass d-flex align-items-end justify-content-end mr-1 mb-1 "> </small>
-                                            </div>
-                                        </div>    
-                                    </div>        
-                                </div>            
-
-                                <div class="d-flex flex-column m-2" id="DivDia3">
-                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia3">Data | dia semana</h3>
-                                    <div class="resumodados bg-info" style="font-style: italic;">
-                                        <span class="mb-1 pl-1 quantidadeDeCargas" style="font-size: 13px; display: inline; float: left; font-weight: bold;">3 Cargas</span><span class="mb-1 pr-1 pesoDeCargas" style="font-size: 13px; display: inline;float: right; font-weight: bold;">250.000Kg</span>
-                                    </div>                   
-                                    <div class="cargascarregadas">
-                                        <div id="dadosagendamento3" class="dadosagendamento" style="display: none;">
-                                            <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas bg-warning
-                                            " style="border-bottom: 1px solid black;">                                                
-                                                <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a class="placaAgendaClass" data-url-attr="{% url 'upd_cargas' 123456789987 %}">PLACA </a> <br><a class="motoristaAgendaClass"> MOTORISTA</a><br> 
-                                                    <a class="pesoAgendaClass">PESO Kg</a> <br><span class="nfAgendaClass"> Sem NF</p><small class="enumerateitemAgendaClass d-flex align-items-end justify-content-end mr-1 mb-1 "> </small>
-                                            </div>
-                                        </div>    
-                                    </div>        
-                                </div>            
-                                <div class="d-flex flex-column m-2" id="DivDia4">
-                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia4">Data | dia semana</h3>
-                                    <div class="resumodados bg-info" style="font-style: italic;">
-                                        <span class="mb-1 pl-1 quantidadeDeCargas" style="font-size: 13px; display: inline; float: left; font-weight: bold;">3 Cargas</span><span class="mb-1 pr-1 pesoDeCargas" style="font-size: 13px; display: inline;float: right; font-weight: bold;">250.000Kg</span>
-                                    </div>                   
-                                    <div class="cargascarregadas">
-                                        <div id="dadosagendamento4" class="dadosagendamento" style="display: none;">
-                                            <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas bg-warning
-                                            " style="border-bottom: 1px solid black;">                                                
-                                                <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a class="placaAgendaClass" data-url-attr="{% url 'upd_cargas' 123456789987 %}">PLACA </a> <br><a class="motoristaAgendaClass"> MOTORISTA</a><br> 
-                                                    <a class="pesoAgendaClass">PESO Kg</a> <br><span class="nfAgendaClass"> Sem NF</p><small class="enumerateitemAgendaClass d-flex align-items-end justify-content-end mr-1 mb-1 "> </small>
-                                            </div>
-                                        </div>    
-                                    </div>        
-                                </div>             
-                                <div class="d-flex flex-column m-2" id="DivDia5">
-                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia5">Data | dia semana</h3>
-                                    <div class="resumodados bg-info" style="font-style: italic;">
-                                        <span class="mb-1 pl-1 quantidadeDeCargas" style="font-size: 13px; display: inline; float: left; font-weight: bold;">3 Cargas</span><span class="mb-1 pr-1 pesoDeCargas" style="font-size: 13px; display: inline;float: right; font-weight: bold;">250.000Kg</span>
-                                    </div>                   
-                                    <div class="cargascarregadas">
-                                        <div id="dadosagendamento5" class="dadosagendamento" style="display: none;">
-                                            <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas bg-warning
-                                            " style="border-bottom: 1px solid black;">                                                
-                                                <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a class="placaAgendaClass" data-url-attr="{% url 'upd_cargas' 123456789987 %}">PLACA </a> <br><a class="motoristaAgendaClass"> MOTORISTA</a><br> 
-                                                    <a class="pesoAgendaClass">PESO Kg</a> <br><span class="nfAgendaClass"> Sem NF</p><small class="enumerateitemAgendaClass d-flex align-items-end justify-content-end mr-1 mb-1 "> </small>
-                                            </div>
-                                        </div>    
-                                    </div>        
-                                </div>              
-                                <div class="d-flex flex-column m-2" id="DivDia6">
-                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia6">Data | dia semana</h3>
-                                    <div class="resumodados bg-info" style="font-style: italic;">
-                                        <span class="mb-1 pl-1 quantidadeDeCargas" style="font-size: 13px; display: inline; float: left; font-weight: bold;">3 Cargas</span><span class="mb-1 pr-1 pesoDeCargas" style="font-size: 13px; display: inline;float: right; font-weight: bold;">250.000Kg</span>
-                                    </div>                   
-                                    <div class="cargascarregadas">
-                                        <div id="dadosagendamento6" class="dadosagendamento" style="display: none;">
-                                            <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas bg-warning
-                                            " style="border-bottom: 1px solid black;">                                                
-                                                <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a class="placaAgendaClass" data-url-attr="{% url 'upd_cargas' 123456789987 %}">PLACA </a> <br><a class="motoristaAgendaClass"> MOTORISTA</a><br> 
-                                                    <a class="pesoAgendaClass">PESO Kg</a> <br><span class="nfAgendaClass"> Sem NF</p><small class="enumerateitemAgendaClass d-flex align-items-end justify-content-end mr-1 mb-1 "> </small>
-                                            </div>
-                                        </div>    
-                                    </div>        
-                                </div>           
+                                </div>
+                                {% endfor %}                  
                             </div>
                         </div>                
                     </div>
@@ -306,7 +213,7 @@
 
 
             <!-------------SEMANA SEGUINTE------------->
-    <div class="container-fluid principal-container mt-2 mb-3" id="semana-seguinte">        
+    <div class="container-fluid principal-container mt-2" id="semana-seguinte">        
         <div class="d-flex justify-content-center align-items-center">
             <div class="container d-flex justify-content-center">        
                     <div class="d-flex flex-row secondbox m-0 p-0 sombra">  
@@ -323,16 +230,15 @@
                                 </div>                   
                             </div>
                             <div class="d-flex flex-row m-2">
-                               
 
-                                          
-                                <div class="d-flex flex-column m-2" id="DivDia7">
-                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia7">Data | dia semana</h3>
+                                {% for i in '0123456'|make_list %}
+                                <div class="d-flex flex-column m-2" id="DivDia{{ forloop.counter0|add:7 }}">
+                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia{{ forloop.counter0|add:7 }}">Data | dia semana</h3>
                                     <div class="resumodados bg-info" style="font-style: italic;">
                                         <span class="mb-1 pl-1 quantidadeDeCargas" style="font-size: 13px; display: inline; float: left; font-weight: bold;">3 Cargas</span><span class="mb-1 pr-1 pesoDeCargas" style="font-size: 13px; display: inline;float: right; font-weight: bold;">250.000Kg</span>
                                     </div>                   
                                     <div class="cargascarregadas">
-                                        <div id="dadosagendamento7" class="dadosagendamento" style="display: none;">
+                                        <div id="dadosagendamento{{ forloop.counter0|add:7 }}" class="dadosagendamento" style="display: none;">
                                             <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas bg-warning
                                             " style="border-bottom: 1px solid black;">                                                
                                                 <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a class="placaAgendaClass" data-url-attr="{% url 'upd_cargas' 123456789987 %}">PLACA </a> <br><a class="motoristaAgendaClass"> MOTORISTA</a><br> 
@@ -341,108 +247,16 @@
                                         </div>    
                                     </div>        
                                 </div>        
-                                
-                                <div class="d-flex flex-column m-2" id="DivDia8">
-                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia8">Data | dia semana</h3>
-                                    <div class="resumodados bg-info" style="font-style: italic;">
-                                        <span class="mb-1 pl-1 quantidadeDeCargas" style="font-size: 13px; display: inline; float: left; font-weight: bold;">3 Cargas</span><span class="mb-1 pr-1 pesoDeCargas" style="font-size: 13px; display: inline;float: right; font-weight: bold;">250.000Kg</span>
-                                    </div>                   
-                                    <div class="cargascarregadas">
-                                        <div id="dadosagendamento8" class="dadosagendamento" style="display: none;">
-                                            <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas bg-warning
-                                            " style="border-bottom: 1px solid black;">                                                
-                                                <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a class="placaAgendaClass" data-url-attr="{% url 'upd_cargas' 123456789987 %}">PLACA </a> <br><a class="motoristaAgendaClass"> MOTORISTA</a><br> 
-                                                    <a class="pesoAgendaClass">PESO Kg</a> <br><span class="nfAgendaClass"> Sem NF</p><small class="enumerateitemAgendaClass d-flex align-items-end justify-content-end mr-1 mb-1 "> </small>
-                                            </div>
-                                        </div>    
-                                    </div>        
-                                </div>        
-                                
-                                <div class="d-flex flex-column m-2" id="DivDia9">
-                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia9">Data | dia semana</h3>
-                                    <div class="resumodados bg-info" style="font-style: italic;">
-                                        <span class="mb-1 pl-1 quantidadeDeCargas" style="font-size: 13px; display: inline; float: left; font-weight: bold;">3 Cargas</span><span class="mb-1 pr-1 pesoDeCargas" style="font-size: 13px; display: inline;float: right; font-weight: bold;">250.000Kg</span>
-                                    </div>                   
-                                    <div class="cargascarregadas">
-                                        <div id="dadosagendamento" class="dadosagendamento" style="display: none;">
-                                            <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas bg-warning
-                                            " style="border-bottom: 1px solid black;">                                                
-                                                <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a class="placaAgendaClass" data-url-attr="{% url 'upd_cargas' 123456789987 %}">PLACA </a> <br><a class="motoristaAgendaClass"> MOTORISTA</a><br> 
-                                                    <a class="pesoAgendaClass">PESO Kg</a> <br><span class="nfAgendaClass"> Sem NF</p><small class="enumerateitemAgendaClass d-flex align-items-end justify-content-end mr-1 mb-1 "> </small>
-                                            </div>
-                                        </div>    
-                                    </div>        
-                                </div>            
+                                {% endfor %}
 
-                                <div class="d-flex flex-column m-2" id="DivDia10">
-                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia10">Data | dia semana</h3>
-                                    <div class="resumodados bg-info" style="font-style: italic;">
-                                        <span class="mb-1 pl-1 quantidadeDeCargas" style="font-size: 13px; display: inline; float: left; font-weight: bold;">3 Cargas</span><span class="mb-1 pr-1 pesoDeCargas" style="font-size: 13px; display: inline;float: right; font-weight: bold;">250.000Kg</span>
-                                    </div>                   
-                                    <div class="cargascarregadas">
-                                        <div id="dadosagendamento10" class="dadosagendamento" style="display: none;">
-                                            <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas bg-warning
-                                            " style="border-bottom: 1px solid black;">                                                
-                                                <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a class="placaAgendaClass" data-url-attr="{% url 'upd_cargas' 123456789987 %}">PLACA </a> <br><a class="motoristaAgendaClass"> MOTORISTA</a><br> 
-                                                    <a class="pesoAgendaClass">PESO Kg</a> <br><span class="nfAgendaClass"> Sem NF</p><small class="enumerateitemAgendaClass d-flex align-items-end justify-content-end mr-1 mb-1 "> </small>
-                                            </div>
-                                        </div>    
-                                    </div>        
-                                </div>            
-                                <div class="d-flex flex-column m-2" id="DivDia11">
-                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia11">Data | dia semana</h3>
-                                    <div class="resumodados bg-info" style="font-style: italic;">
-                                        <span class="mb-1 pl-1 quantidadeDeCargas" style="font-size: 13px; display: inline; float: left; font-weight: bold;">3 Cargas</span><span class="mb-1 pr-1 pesoDeCargas" style="font-size: 13px; display: inline;float: right; font-weight: bold;">250.000Kg</span>
-                                    </div>                   
-                                    <div class="cargascarregadas">
-                                        <div id="dadosagendamento11" class="dadosagendamento" style="display: none;">
-                                            <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas bg-warning
-                                            " style="border-bottom: 1px solid black;">                                                
-                                                <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a class="placaAgendaClass" data-url-attr="{% url 'upd_cargas' 123456789987 %}">PLACA </a> <br><a class="motoristaAgendaClass"> MOTORISTA</a><br> 
-                                                    <a class="pesoAgendaClass">PESO Kg</a> <br><span class="nfAgendaClass"> Sem NF</p><small class="enumerateitemAgendaClass d-flex align-items-end justify-content-end mr-1 mb-1 "> </small>
-                                            </div>
-                                        </div>    
-                                    </div>        
-                                </div>             
-                                <div class="d-flex flex-column m-2" id="DivDia12">
-                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia12">Data | dia semana</h3>
-                                    <div class="resumodados bg-info" style="font-style: italic;">
-                                        <span class="mb-1 pl-1 quantidadeDeCargas" style="font-size: 13px; display: inline; float: left; font-weight: bold;">3 Cargas</span><span class="mb-1 pr-1 pesoDeCargas" style="font-size: 13px; display: inline;float: right; font-weight: bold;">250.000Kg</span>
-                                    </div>                   
-                                    <div class="cargascarregadas">
-                                        <div id="dadosagendamento12" class="dadosagendamento" style="display: none;">
-                                            <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas bg-warning
-                                            " style="border-bottom: 1px solid black;">                                                
-                                                <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a class="placaAgendaClass" data-url-attr="{% url 'upd_cargas' 123456789987 %}">PLACA </a> <br><a class="motoristaAgendaClass"> MOTORISTA</a><br> 
-                                                    <a class="pesoAgendaClass">PESO Kg</a> <br><span class="nfAgendaClass"> Sem NF</p><small class="enumerateitemAgendaClass d-flex align-items-end justify-content-end mr-1 mb-1 "> </small>
-                                            </div>
-                                        </div>    
-                                    </div>        
-                                </div>              
-                                <div class="d-flex flex-column m-2" id="DivDia13">
-                                    <h3 class="badge badge-warning bg-warning text-black" id="HeadDia13">Data | dia semana</h3>
-                                    <div class="resumodados bg-info" style="font-style: italic;">
-                                        <span class="mb-1 pl-1 quantidadeDeCargas" style="font-size: 13px; display: inline; float: left; font-weight: bold;">3 Cargas</span><span class="mb-1 pr-1 pesoDeCargas" style="font-size: 13px; display: inline;float: right; font-weight: bold;">250.000Kg</span>
-                                    </div>                   
-                                    <div class="cargascarregadas">
-                                        <div id="dadosagendamento13" class="dadosagendamento" style="display: none;">
-                                            <div class="d-flex flex-row mt-1 mb-1 dadosmotoristas bg-warning
-                                            " style="border-bottom: 1px solid black;">                                                
-                                                <p class="mb-1 flex-grow-1" style="font-size: 13px !important;"><a class="placaAgendaClass" data-url-attr="{% url 'upd_cargas' 123456789987 %}">PLACA </a> <br><a class="motoristaAgendaClass"> MOTORISTA</a><br> 
-                                                    <a class="pesoAgendaClass">PESO Kg</a> <br><span class="nfAgendaClass"> Sem NF</p><small class="enumerateitemAgendaClass d-flex align-items-end justify-content-end mr-1 mb-1 "> </small>
-                                            </div>
-                                        </div>    
-                                    </div>        
-                                </div>           
                             </div>
                         </div>                
                     </div>
                 </div>
             </div>
         </div>
-            <div style="display: none" id="jsonDataAgenda" data-json="{{ query_cargas_json }}"></div>    
-
-    </body>
+        <div style="display: none" id="jsonDataAgenda" data-json="{{ query_cargas_json }}"></div>    
+</body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
 <script src="{% static 'js/agendamentoRuston.js' %}"></script>   
@@ -451,12 +265,14 @@
         setTimeout(function(){ 
             esconde.css("display", "none");
             mostra.css("display", "block");
+            $('body').css("background-color", "black");
         }, 500);
 }
 
     $(document).ready(function () {
         var loader = $("#loaderbefore");
         var agenda = $("#agendamentoRustonOff");
+        $('body').css("background-color", "black");
         hideandshow(loader, agenda)
     });
 </script>
