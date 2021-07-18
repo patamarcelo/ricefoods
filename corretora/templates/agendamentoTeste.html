@@ -126,7 +126,7 @@
         animation-iteration-count:infinite;
         -moz-animation-iteration-count:infinite;
         -webkit-animation-iteration-count:infinite;        
-        }
+    }
 
         a { 
             color: inherit;
@@ -150,6 +150,7 @@
                 white-space: nowrap;
             }
         }
+
 </style>
 <body>        
     <div class="middle" id="loaderbefore">
@@ -264,9 +265,9 @@
     function hideandshow(esconde, mostra) {
         setTimeout(function(){ 
             esconde.css("display", "none");
-            mostra.css("display", "block");
+            mostra.css({display : "block" , marginBottom : "20px"});
             $('body').css("background-color", "black");
-        }, 500);
+        }, 200);
 }
 
     $(document).ready(function () {

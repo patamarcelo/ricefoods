@@ -209,14 +209,14 @@
         
         .caixainterna.sombraagendado {
             background: #fffc00;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, rgb(0,0,0, 0.2), rgb(255,255,0, 0.12));  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, rgb(0,0,0, 0.2), rgb(255,255,0, 0.12)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: -webkit-linear-gradient(to right, rgb(0,0,0, 0.9), rgb(255,255,0, 0.05));  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, rgb(0,0,0, 0.9), rgb(255,255,0, 0.05)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
         }
         .caixainterna.sombracarregado {
             background: #fffc00;  /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, rgb(0,0,0, 0.2), rgb(0,255,0, 0.12));  /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, rgb(0,0,0, 0.2), rgb(0,255,0, 0.12)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: -webkit-linear-gradient(to right, rgb(0,0,0, 0.9), rgb(0,255,0, 0.05));  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, rgb(0,0,0, 0.9), rgb(0,255,0, 0.05)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         }
 
     </style>
@@ -233,31 +233,61 @@
     </div>
     <div class="infinite-container ">
         {% for carga in cargas %}
-          <div class="infinite-item">            
-                <div class="d-flex caixainterna sombra{{carga.situacao|lower}} borda{{carga.situacao|lower}} copy-data" style="box-shadow: 7px 0px 3px {{carga.pedido.cliente.color}};" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}">                                                    
+          <div class="infinite-item" id="CargaId{{carga.pk|stringformat:"i"}}">            
+                <div class="d-flex caixainterna sombra{{carga.situacao|lower}} borda{{carga.situacao|lower}} " style="box-shadow: 7px 0px 3px {{carga.pedido.cliente.color}};">                                                    
                         <div class="d-flex  flex-column col-7 motoristas justify-content-around ">
-                            <div class="d-flex flex-row">
+                            <div class="d-flex flex-row h-2">
                                 <div class="col" style="padding-left: 0px">
                                     <h6 class="index"><strong><b class="numcontagem">{{ page_obj.start_index|add:forloop.counter0 }}</b> &emsp;&emsp;
                                     {% if carga.ordem %}
-                                    <i class="text-success fas fa-check"></i>
+                                    <i class="text-success fas fa-check"
+                                    updatemotoristaUser="{{carga.motorista|title}}" updatePlacaUser="{{carga.placa}}" ordem-carregamento="{{carga.ordem}}" onClick="editUser({{carga.pk|stringformat:"i"}})" data-toggle="modal" data-target="#myModal")"
+                                    ></i>
                                         {% else %}
-                                        <i class="text-danger fas fa-times"></i>
+                                    <i class="text-danger fas fa-times"
+                                    updatemotoristaUser="{{carga.motorista|title}}" updatePlacaUser="{{carga.placa}}" ordem-carregamento="{{carga.ordem}}" onClick="editUser({{carga.pk|stringformat:"i"}})" data-toggle="modal" data-target="#myModal")"
+                                    ></i>
                                         {% endif %}
                                     &emsp;&emsp;
                                     {% if 'dast' in carga.buonny|lower %}
-                                    <strong class="text-danger">{{ carga.buonny|title }}</strong>
+                                    <strong class="text-danger"
+                                    updatemotoristaUserBuonny="{{carga.motorista|title}}"
+                                    updatePlacaUserBuonny="{{carga.placa}}" 
+                                    updateBuonnyUserBuonny="{{carga.buonny}}" 
+                                    onClick="editUserBuonny({{carga.pk|stringformat:"i"}})" 
+                                    data-toggle="modal" data-target="#myModalBuonny")"
+                                    >{{ carga.buonny|title }}</strong>
                                     {% elif 'sul' in carga.buonny|lower %}
-                                    <strong class="text-warning">{{ carga.buonny|title }}</strong>
+                                    <strong class="text-warning"
+                                    updatemotoristaUserBuonny="{{carga.motorista|title}}"
+                                    updatePlacaUserBuonny="{{carga.placa}}" 
+                                    updateBuonnyUserBuonny="{{carga.buonny}}" 
+                                    onClick="editUserBuonny({{carga.pk|stringformat:"i"}})" 
+                                    data-toggle="modal" data-target="#myModalBuonny")"
+                                    >{{ carga.buonny|title }}</strong>
                                     {% elif 'nviado' in carga.buonny|lower or 'nviada' in carga.buonny|lower %}
-                                    <strong class="text-info">{{ carga.buonny|title }}</strong>
+                                    <strong class="text-info"
+                                    updatemotoristaUserBuonny="{{carga.motorista|title}}"
+                                    updatePlacaUserBuonny="{{carga.placa}}" 
+                                    updateBuonnyUserBuonny="{{carga.buonny}}" 
+                                    onClick="editUserBuonny({{carga.pk|stringformat:"i"}})" 
+                                    data-toggle="modal" data-target="#myModalBuonny")"
+                                    >{{ carga.buonny|title }}</strong>
                                     {% else %}
-                                    <strong class="text-success">{{ carga.buonny|title }}</strong>
+                                    <strong class="text-success"
+                                    updatemotoristaUserBuonny="{{carga.motorista|title}}"
+                                    updatePlacaUserBuonny="{{carga.placa}}" 
+                                    updateBuonnyUserBuonny="{{carga.buonny}}" 
+                                    onClick="editUserBuonny({{carga.pk|stringformat:"i"}})" 
+                                    data-toggle="modal" data-target="#myModalBuonny")"
+                                    >{{ carga.buonny|title }}</strong>
                                     {% endif %}
                                     </strong>
                                 </h6>
                                 </div>
-                                    <div class="justify-content-end index" style="text-align: right !important;display: inline; font-size: 10px">
+                                    <div class="justify-content-end index copy-data" 
+                                    data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}"
+                                    style="text-align: right !important;display: inline; font-size: 10px">
                                         {% if todays_date == carga.data|date:"Y-m-d" %}
                                         <i class="text-primary"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></i>
                                         {% elif todays_date > carga.data|date:"Y-m-d" and carga.situacao == 'Agendado' %}
@@ -405,14 +435,14 @@
       {% if page_obj.has_next %}
         <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
       {% endif %}
-            
-    
+        
+    {% include 'modal_cargas.html' %}
+    {% include 'modal_cargas_chegada.html' %}
+    {% include 'modal_cargas_buonny.html' %}
+
+    <script src="{% static 'js/patasCargasMb.js' %}"></script>   
 </body>
 <br>
-<script>
-
-
-</script>
 
 
 <!-- jQuery -->
@@ -448,4 +478,12 @@
             $('.loading').hide();
           }
         });
+
+    $(document).ready(function () {
+        $("#form-name-Buonny").css('width',"75%")
+        $("#form-name").css('width',"20px").css("margin-top", "20px").css("margin-right", "12px")
+        $(".modal-content").attr('style', 'background-color: black !important');
+    })
 </script>
+<script src="{% static 'js/notify.min.js' %}"></script>   
+<script src="{% static 'js/notify.js' %}"></script>   
