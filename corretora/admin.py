@@ -24,19 +24,19 @@ class CidadeAdmin(admin.ModelAdmin):
 
 
 class CartaoVpAdmin(SimpleHistoryAdmin):
-    list_display = ('format_card', 'cartao_utilizado','modificado')
-    search_fields = ['cartao_numero', 'cartao_utilizado']
-    list_filter = ('cartao_utilizado',)
+    list_display = ('format_card', 'cartao_utilizado','modificado','cartao_base')
+    search_fields = ['cartao_numero', 'cartao_utilizado','cartao_base']
+    list_filter = ('cartao_utilizado','cartao_base',)
     fieldsets = (
         ('Cartao', {
-            'fields': ('cartao_numero','cartao_utilizado',)
+            'fields': ('cartao_numero','cartao_utilizado','cartao_base',)
         }),        
         ('Observação', {
             'fields': ('obs',)
         }),    
     )
-    ordering = ('cartao_numero',)
-    history_list_display = ['cartao_numero', 'cartao_utilizado','modificado','criados']
+    ordering = ('cartao_base','cartao_numero',)
+    history_list_display = ['cartao_numero', 'cartao_utilizado','cartao_base','modificado','criados',]
 
     def format_card(self, obj):
             return ' '.join(obj.cartao_numero[i:i+4] for i in range(0,len(obj.cartao_numero), 4 ))

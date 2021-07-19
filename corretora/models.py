@@ -71,9 +71,16 @@ NOMES_DATAS = {
     12: "Dezembro",
 }
 
+BASE_CARTAOVP = (
+    ('palmares', 'Palmares'),
+    ('rio_grande', 'Granjas - RG'),
+    ('jaguarao', 'Jaguarão')
+)
+
 
 class CartaoVp(Base):
     cartao_numero    = models.CharField('Número do Cartão',max_length=16, help_text="Somente os 16 números", unique=True)
+    cartao_base      = models.CharField('Local Cartão', max_length=17, choices=BASE_CARTAOVP, default='Palmares')
     cartao_utilizado = models.BooleanField('Cartão já Utilizado?', default=False, help_text="Informar se o cartão já foi utilizado")
     obs              = models.TextField('Observação', max_length=500, blank=True)
     history          = HistoricalRecords()
@@ -98,6 +105,8 @@ class Cidade(Base):
 
     def __str__(self):
         return self.cidade
+
+
 
 
 PROD_CHOICES = (
