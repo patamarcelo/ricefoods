@@ -23,6 +23,28 @@ class CidadeAdmin(admin.ModelAdmin):
     list_display = ('cidade', 'estado')
 
 
+class CartaoVpAdmin(SimpleHistoryAdmin):
+    list_display = ('format_card', 'cartao_utilizado','modificado')
+    search_fields = ['cartao_numero', 'cartao_utilizado']
+    list_filter = ('cartao_utilizado',)
+    fieldsets = (
+        ('Cartao', {
+            'fields': ('cartao_numero','cartao_utilizado',)
+        }),        
+        ('Observação', {
+            'fields': ('obs',)
+        }),    
+    )
+    ordering = ('cartao_numero',)
+    history_list_display = ['cartao_numero', 'cartao_utilizado','modificado','criados']
+
+    def format_card(self, obj):
+            return ' '.join(obj.cartao_numero[i:i+4] for i in range(0,len(obj.cartao_numero), 4 ))
+    format_card.short_description = "Cartão VP"
+
+
+admin.site.register(CartaoVp, CartaoVpAdmin)
+
 
 class DatasemcargaAdmin(SimpleHistoryAdmin):
     list_display = ('get_data', 'cliente','ativo','get_data_alterado','get_data_criado')

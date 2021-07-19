@@ -261,6 +261,10 @@
                 </div>
                 <div class="container" style="justify-content:center; padding-bottom: 0px !important; padding: 15px;">
                     <button type="submit" class="btn btn-primary btn-xs btnfiltrar" id="btnfiltrar">Filtrar</button>
+                    <!-- <i class="fas fa-backspace" onclick="CleanAllFields()"></i> -->
+                    <input type="button" class="btn btn-secondary btn-xs mt-0" onclick="CleanAllFields()" value="Limpar" id="btnLimparForm" style="margin-bottom: 10px;">
+
+                    
 
                     {% if request.get_full_path ==  "/corretora/cf" %}
                     {% else %}

@@ -298,8 +298,26 @@
                                     </div>    
                             </div>   
                             <div class="d-flex flex-column">                                                                                   
-                                <p style="white-space: nowrap;">                                                                
-                                    {{ carga.placa|slice:"0:3"}}-{{ carga.placa|slice:"3:"}} - <a class="motorista">{{ carga.motorista|title }}</a> - 
+                                <p style="white-space: nowrap;">      
+                                    
+                                    {% if carga.situacao == 'Carregado' %}
+                                    
+                                    {{ carga.placa|slice:"0:3"}}-{{ carga.placa|slice:"3:"}} - 
+                                    
+                                    {% elif carga.chegada and carga.situacao == 'Agendado' %}
+                                    
+                                    <a class="text-success" style="width: fit-content; display: inline;">
+                                        {{ carga.placa|slice:"0:3"}}-{{ carga.placa|slice:"3:"}} - 
+                                    </a>
+                                    {% else %}
+                                   
+                                    <a class="text-warning"style="width: fit-content;  display: inline;">     
+                                        {{ carga.placa|slice:"0:3"}}-{{ carga.placa|slice:"3:"}} - 
+                                    </a>
+                                    {% endif %}
+
+
+                                    <a class="motorista">{{ carga.motorista|title }}</a> - 
                                     
                                     {% if carga.peso == 0 %}
                                     <i class="text-warning">{{ carga.veiculo|intcomma }} Kg </i>
@@ -481,7 +499,8 @@
 
     $(document).ready(function () {
         $("#form-name-Buonny").css('width',"75%")
-        $("#form-name").css('width',"20px").css("margin-top", "20px").css("margin-right", "12px")
+        $("#form-name").css('width',"20px").addClass("align-self-center").css("margin-right", "12px")
+        $(".modal-body").addClass("align-items-center")
         $(".modal-content").attr('style', 'background-color: black !important');
     })
 </script>

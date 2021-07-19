@@ -72,6 +72,20 @@ NOMES_DATAS = {
 }
 
 
+class CartaoVp(Base):
+    cartao_numero    = models.CharField('Número do Cartão',max_length=16, help_text="Somente os 16 números", unique=True)
+    cartao_utilizado = models.BooleanField('Cartão já Utilizado?', default=False, help_text="Informar se o cartão já foi utilizado")
+    obs              = models.TextField('Observação', max_length=500, blank=True)
+    history          = HistoricalRecords()
+    
+    class Meta:
+        ordering = ['cartao_numero']
+        verbose_name = 'Cartão VP'
+        verbose_name_plural = 'Cartoēs VP'
+
+
+    def __str__(self):
+        return self.cartao_numero
 
 class Cidade(Base):
     cidade = models.CharField('Cidade', max_length=40, unique=True)

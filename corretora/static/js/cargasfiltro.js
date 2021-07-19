@@ -21,6 +21,28 @@ document.getElementById("select-all").onclick = function () {
 	}
 };
 
+
+function CleanAllFields() {
+	console.log("OK");
+	$("input").each(function () {
+		var idF = $(this).attr("id");
+		if (idF == "btnLimparForm") {
+			$(this).removeClass('btn-xs btnLimparForm')
+			$(this).addClass('btn-xs btnLimparForm')
+			console.log("pula essa");
+		} else {
+			var clean = $(this).val();
+			if (clean.length > 1) {
+				console.log(clean);
+				$(this).val("");
+			}
+		}
+		$("select").each(function () {
+			$(this).prop("selectedIndex", 0).val();
+		});
+	});
+}
+
 // function Mudarestado(el) {
 //     var display = document.getElementById(el).style.display;
 //     if (display == "none")
@@ -186,10 +208,12 @@ $(document).ready(function () {
 	console.log(`Total Carregado: ${numberWithCommas(totalsum)} Kg`);
 
 	var PesoTotalHtml = document.getElementById("totalPesoCarregadoJsID");
-	
+
 	if (PesoTotalHtml) {
 		PesoTotalHtml.innerHTML = `${numberWithCommas(totalsum)} Kg`;
-		var PesoTotalExcel = document.getElementById("totalPesoCarregadoJsExcel");
+		var PesoTotalExcel = document.getElementById(
+			"totalPesoCarregadoJsExcel"
+		);
 		PesoTotalExcel.innerHTML = `${numberWithCommas(totalsum)} Kg`;
 	}
 
@@ -236,5 +260,3 @@ $(document).ready(function () {
 function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
-
-

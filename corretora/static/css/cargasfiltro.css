@@ -141,8 +141,9 @@ table {
 
 }
 
-.form-group input:hover,
-.form-group input:focus,
+
+.form-group input:hover:not(#btnLimparForm),
+.form-group input:focus:not(#btnLimparForm),
 input[type="text"]:hover,
 input[type="number"]:hover,
 input[type="checkbox"]:hover,
@@ -381,3 +382,7 @@ th:hover {
     color: whitesmoke !important;
 }
 
+
+#btnLimparForm:after {
+    pointer-events: none;
+  }
