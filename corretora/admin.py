@@ -35,7 +35,7 @@ class CartaoVpAdmin(SimpleHistoryAdmin):
             'fields': ('obs',)
         }),    
     )
-    ordering = ('cartao_base','cartao_numero',)
+    ordering = ('cartao_utilizado','cartao_base','cartao_numero',)
     history_list_display = ['cartao_numero', 'cartao_utilizado','cartao_base','modificado','criados',]
 
     def format_card(self, obj):

@@ -78,4 +78,38 @@
 
 {% block extra_foot %}{% endblock %}
 </body>
+
+<script>
+    $(document).ready(function (){
+        var idNumeroCartao = $("#id_cartao_numero")
+        idNumeroCartao.attr('maxlength','19')
+        
+        var newValFormEdit = idNumeroCartao.val().replace(/\D/g, "")
+                        .replace(/^0+/, "")
+						.replace(/\B(?=(\d{4})+(?!\d)\.?)/g, " ")
+        // idNumeroCartao.attr('minlength','16')
+
+        $("#id_cartao_numero").val(newValFormEdit)
+        idNumeroCartao.on({
+		keyup: function (event) {
+			$(event.target).val(function (index, value) {
+				return (
+					value
+						.replace(/\D/g, "")
+						
+						.replace(/^0+/, "")
+						.replace(/\B(?=(\d{4})+(?!\d)\.?)/g, " ")
+				);
+			});
+		},
+	});        
+    })
+
+    
+    $('#cartaovp_form').on("submit", function () {
+		var idNumeroCartaoForm = $("#id_cartao_numero").val();
+        console.log(idNumeroCartaoForm)
+		document.getElementById("id_cartao_numero").value = idNumeroCartaoForm.replace(/\s+/g, '');
+    });
+</script>
 </html>

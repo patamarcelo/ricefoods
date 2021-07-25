@@ -1,0 +1,86 @@
+{% load bootstrap4 %}
+{% load static %}
+
+<link href="{% static 'css/cartaovp.css' %}" rel="stylesheet">
+
+
+<div class="card text-center hide" id="CardVP" style="display: none;" >
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs" id="cartoesVPCard">
+      
+      {% for i in cartoesvp %}
+      <li class="nav-item" id='cartaoVPHeader0'>
+        {% if forloop.counter0 == 0 %}
+        <a class="nav-link active " href="#{{i.cartao_base}}">{{ i.get_cartao_base }} &nbsp;<sup id="sub{{i.cartao_base}}"></sup></a>
+        {% else %}
+        <a class="nav-link " href="#{{i.cartao_base}}">{{ i.get_cartao_base }} &nbsp;<sup id="sub{{i.cartao_base}}"></sup></a>
+        {% endif %}
+      </li>
+      {% endfor %}
+      
+      
+      
+    </ul>
+  </div>
+  <div class="card-body" id="BodyCardDiv">
+      <div class="tab-content mt-3">
+        {% for i in cartoesvp %}
+        {% if forloop.counter0 == 0 %}
+          <div class="tab-pane active" id="{{i.cartao_base}}" role="tabpanel">
+
+              <div class="container">
+                <div class="row justify-content-between align-items-center">
+                  <p class="card-text">Tabela de Cartões de {{i.get_cartao_base}}</p>
+                  <input type="text" class="inputCard" id="myInput{{i.cartao_base}}"  onkeyup="MyFunction('table{{i.cartao_base}}', 'myInput{{i.cartao_base}}')" placeholder="Filtre o Cartão.." title="Escreva o Número do Cartão">
+                </div>
+              </div>
+            
+              <table class="table table-dark table-striped table-hover" id="table{{i.cartao_base}}">
+              <thead>
+                <tr>
+                  <th scope="col"><a class="text-info fa fa-sort-desc"></a></th>
+                  <th scope="col">Cartão Número</th>
+                  <th scope="col">Disponível</th>
+                  <th scope="col">Local</th>
+                </tr>
+              </thead>
+              <tbody>
+                        
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <div class="tab-pane" id="{{i.cartao_base}}" role="tabpanel">
+            <div class="container">
+                <div class="row justify-content-between align-items-center">
+                  <p class="card-text ">Tabela de Cartões de {{i.get_cartao_base}}</p>
+                  <input type="text" class="inputCard" id="myInput{{i.cartao_base}}"  onkeyup="MyFunction('table{{i.cartao_base}}', 'myInput{{i.cartao_base}}')" placeholder="Filtre o Cartão.." title="Escreva o Número do Cartão">
+                </div>
+            </div>
+            <table class="table table-dark table-striped table-hover" id="table{{i.cartao_base}}">
+              <thead>
+                <tr>
+                  <th scope="col"><a class="text-info fa fa-sort-desc"></a></th>
+                  <th scope="col">Cartão Número</th>
+                  <th scope="col">Disponível</th>
+                  <th scope="col">Local</th>
+                </tr>
+              </thead>
+              <tbody>
+                        
+              </tbody>
+            </table>
+          </div>
+          {% endif %}
+          {% endfor %}
+      </div>
+  </div>
+</div>
+
+
+<div style="display: none" id="jsonCartaoVp" data-json="{{ cartao_vp }}"></div>
+
+
+
+
+<script src="{% static 'js/cartaovp.js' %}"></script>   

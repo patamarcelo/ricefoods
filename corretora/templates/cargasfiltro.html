@@ -646,11 +646,16 @@
                             {% if user.is_superuser%}
                             {% if carga.comissaocasca > 1 %}
 
-                            {% if carga.pgcomissao == True %}
+                            {% if carga.pgcomissao == True and carga.obs_comissao %}
 
-                            <td align=center><a class="text text-success" style='font-style:italic'
-                                    href="{% url 'upd_comiss' carga.pk %}" target="_blank"><b>R$
-                                        {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
+                            <td align=center style="background-color: rgb(255,216,143,0.3);"><a class="text text-success" style='font-style:italic;'
+                                href="{% url 'upd_comiss' carga.pk %}"><b>R$
+                                    {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
+                        
+                            {% elif carga.pgcomissao == True %}
+                                    <td align=center><a class="text text-success" style='font-style:italic'
+                                href="{% url 'upd_comiss' carga.pk %}"><b>R$
+                                    {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
                             {% elif carga.pgcomissao == False and carga.vpcomissaoc > 0 %}
                             <td align=center><a class="text text-danger" style='font-style:italic'
                                     href="{% url 'upd_comiss' carga.pk %}" target="_blank"><b>R$

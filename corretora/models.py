@@ -77,22 +77,35 @@ BASE_CARTAOVP = (
     ('jaguarao', 'Jaguarão')
 )
 
+def get_last_cartao_base():
+    query = CartaoVp.objects.all()
+    if not query:
+        last_used = 'palmares'
+    else:
+        last_used = CartaoVp.objects.all().last().cartao_base
+    return last_used
 
 class CartaoVp(Base):
     cartao_numero    = models.CharField('Número do Cartão',max_length=16, help_text="Somente os 16 números", unique=True)
-    cartao_base      = models.CharField('Local Cartão', max_length=17, choices=BASE_CARTAOVP, default='Palmares')
+    cartao_base      = models.CharField('Local Cartão', max_length=17, choices=BASE_CARTAOVP, default=get_last_cartao_base)
     cartao_utilizado = models.BooleanField('Cartão já Utilizado?', default=False, help_text="Informar se o cartão já foi utilizado")
     obs              = models.TextField('Observação', max_length=500, blank=True)
     history          = HistoricalRecords()
     
     class Meta:
-        ordering = ['cartao_numero']
         verbose_name = 'Cartão VP'
         verbose_name_plural = 'Cartoēs VP'
 
 
     def __str__(self):
         return self.cartao_numero
+    
+    @property
+    def get_cartao_base(self):
+        return self.get_cartao_base_display()
+
+    
+
 
 class Cidade(Base):
     cidade = models.CharField('Cidade', max_length=40, unique=True)
@@ -1292,8 +1305,9 @@ class Carga(Base):
     manchpic  = models.DecimalField('Manch/Pic', max_digits=4, decimal_places=2,null=True, blank=True)
     vermelhos = models.DecimalField('Vermelhos', max_digits=4, decimal_places=2,null=True, blank=True)
 
-    obs     = models.TextField('Observação', max_length=500, blank=True)
-    history = HistoricalRecords()
+    obs          = models.TextField('Observação', max_length=500, blank=True)
+    obs_comissao = models.TextField('Observação Comissão', max_length=500, null=True, blank=True)
+    history      = HistoricalRecords()
 
 
     def valorcarga(self):

@@ -1,0 +1,82 @@
+/* .card {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important; */
+/* } */
+
+.nav-link.active {
+    background-color: black !important;
+    color: whitesmoke !important;        
+}
+
+.nav-link {
+    color: whitesmoke !important;
+}
+
+
+
+.card-header {
+    background-color: #808080 !important;
+    background: rgb(128,128,128);
+    background: radial-gradient(circle, rgba(128,128,128,1) 0%, rgba(18,18,18,1) 100%);
+    border-top-left-radius: .3rem !important;
+    border-top-right-radius: .3rem !important;
+    border: none !important;        
+}
+.card-body {
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    background-color: black;
+    border-color: #dee2e6 #dee2e6 #fff;
+    border-radius: .25rem;
+}
+.nav-link {
+    border-bottom: 0.1px solid #fff !important;
+    border-bottom: none !important;
+}
+.tab-content {
+    margin-top:0px !important;
+}
+.table {
+    margin-bottom: 0px !important;
+}
+.table >tbody>tr>td{
+    height:13px !important;
+    padding:0px;
+    border-top: 0px;
+}  
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+}
+
+#CardVP table > thead > tr {
+    color: #D4AF37;
+    font-weight: 900;    
+
+}
+
+.inputCard {
+    max-height: 25px !important;
+    margin-bottom: 16px !important;
+    font-size: 12px !important;
+}
+#CardVP table tbody tr td {
+    font-size: 12px;
+}
+
+.card-text {
+    color: #F5DEB3 !important;
+}
+
+#BodyCardDiv input {
+    background-color: #F5F5F5 !important;
+}
+

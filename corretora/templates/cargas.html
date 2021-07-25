@@ -163,6 +163,23 @@
             cursor: grabbing;
         }
 
+        .cartoesvp_table {
+        background: #363639;
+        width: 50%;
+        margin: 20px;
+        margin-left: 0px;
+        margin-bottom: 0px;
+        margin-top: 8px;
+        padding: 15px;
+        padding-bottom: 0px;
+        padding-top: 5px;
+
+        }
+
+        #CartoesVpDiv.hide {
+            max-height: 2px;
+        }
+
         
 
     </style>
@@ -172,6 +189,8 @@
 </head>
 
 <body>
+
+    
     <div id="clickeadvise" class="clickeadvise" style="display: none; z-index:10">        
         <h3> <span class="badge badge-pill bg-success"> <i class="fa fa-copy" aria-hidden="true"></i></span>
             <span class="badge badge-pill bg-success" id="cargasmotcopy"></span></h3>
@@ -239,6 +258,10 @@
                     <a class="btn btn-outline-primary btn-sm" href="{% url 'agendamentoTeste' %}"
                         target="_blank">Descarga Ruston</a>
                 </div>
+                <div class="col-3-sm align-self-center ml-2">
+                    <a><i class="fas fa-eye-slash text-danger" id="ocultar"
+                        onclick="ocultarmostrar('CardVP','ocultar')">&nbsp;&nbsp;Cartões VP</i></a>
+                </div>
 
 
             </div>
@@ -250,7 +273,16 @@
 
 
 
+        <div class="cartoesvp_table" id='CartoesVpDiv'>
+            
 
+            {% block content %}
+    
+            {% include 'cartoesvp_table.html' %}
+    
+            {% endblock %}
+
+        </div>
         <div class="my-table container-fluid" style="zoom: 79%;">
             <table id="cargas2"
                 class="width table-round-corner  table table-hover table-striped table-dark table-bordered table-sm"
@@ -525,9 +557,14 @@
                         {% if user.is_superuser%}
                         {% if carga.comissaocasca > 1 %}
 
-                        {% if carga.pgcomissao == True %}
+                        {% if carga.pgcomissao == True and carga.obs_comissao %}
 
-                        <td align=center><a class="text text-success" style='font-style:italic'
+                        <td align=center style="background-color: rgb(255,216,143,0.3);"><a class="text text-success" style='font-style:italic;'
+                                href="{% url 'upd_comiss' carga.pk %}"><b>R$
+                                    {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
+                        
+                        {% elif carga.pgcomissao == True %}
+                                    <td align=center><a class="text text-success" style='font-style:italic'
                                 href="{% url 'upd_comiss' carga.pk %}"><b>R$
                                     {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
                         {% elif carga.pgcomissao == False and carga.vpcomissaoc > 0 %}

@@ -410,6 +410,19 @@ class CargasView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(CargasView, self).get_context_data(**kwargs)
         context['clientes'] = Cliente.objects.order_by('-nome').all
+        context['cartoesvp'] = CartaoVp.objects.order_by('-cartao_base','cartao_numero').filter(cartao_utilizado=False).distinct('cartao_base')
+        context['cartao_vp'] = json.dumps(
+            [
+                {
+                    'id': obj.id,
+                    'numero': obj.cartao_numero,
+                    'cartaobase': obj.get_cartao_base,
+                    'cartaobase_name': obj.cartao_base,
+                    'disponivel': obj.cartao_utilizado,
+                }
+                for obj in CartaoVp.objects.order_by('-cartao_base','cartao_numero').filter(cartao_utilizado=False).all()
+            ]
+        )
         return context
 
 class ResumoTabelasAjaxView(LoginRequiredMixin, TemplateView):
@@ -484,6 +497,7 @@ class CreateCargasView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     template_name = 'carga_form_add.html'
     success_message = "%(placa)s - %(motorista)s Incluído com Sucesso!!"
     fields = '__all__'
+    exclude = ['obs_comissao']
     # success_url = reverse_lazy('corretora')
 
     def get_success_url(self):
@@ -816,7 +830,7 @@ class UpdatecomissCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView
     model = Carga
     template_name = 'carga_comiss.html'
     success_message = 'Comissão atualizada com sucesso!!'
-    fields = ('pgcomissao', 'vpcomissaoc', 'vpcomissaof')
+    fields = ('pgcomissao', 'vpcomissaoc', 'vpcomissaof', 'obs_comissao')
     success_url = reverse_lazy('cargas')
 
      
