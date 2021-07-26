@@ -63,7 +63,7 @@ $(document).ready(function () {
 						? '<i class="far fa-check-circle text-success"></i>'
 						: '<i class="far fa-times-circle text-danger"></i>';
 				$(`#table${res[i].base} > tbody:last-child`).append(
-					`<tr><td>${countCard}</td><td class="copy-data" data-clipboard-text="${jsonData[j].numero}">${cardNumberHtml}</td><td>${iconAvailable}</td><td>${jsonData[j].cartaobase}</td></tr>`
+					`<tr id="cardVPtr-${jsonData[j].id}"><td>${countCard}</td><td class="copy-data" data-clipboard-text="${jsonData[j].numero}">${cardNumberHtml}</td><td onClick="editUserCardVP(${jsonData[j].id})" data-toggle="modal" data-target="#myModalCartaoVP")" data-disponivel="${jsonData[j].disponivel}">${iconAvailable}</td><td>${jsonData[j].cartaobase}</td></tr>`
 				);
 			}
 		}
@@ -93,13 +93,14 @@ function ocultarmostrar(el, el2) {
 }
 
 $(document).ready(function () {
-	$(".copy-data").click(function () {
+	$("#CardVP .copy-data").click(function () {
 		const t = 800;
 		const t1 = 400;
 		const t2 = 1390;
 
 		const valueeeee = $(this).attr("data-clipboard-text");
 		var elementtextadv = document.getElementById("cargasmotcopy");
+		console.log(elementtextadv);
 		var newValFormEdit = valueeeee
 			.replace(/\D/g, "")
 			.replace(/^0+/, "")
@@ -142,3 +143,103 @@ function MyFunction(tableid, inputid) {
 // 		});
 // 	},
 // });
+
+//UpdateCartaoVP
+
+$("form#updateCardVPForm").on("submit", function (event) {
+	event.preventDefault();
+
+	var urlform = $("[data-validate-url-cardvp]").attr(
+		"data-validate-url-cardvp"
+	);
+	console.log(urlform);
+	var idInput = $('input[name="formIdCardVP"]').val().trim();
+	var cardvpInput = $('input[name="formCardVPInput"]').is(":checked");
+	var cardNumberVal = $(`#cardVPtr-${idInput}`)
+		.find("td[data-clipboard-text]")
+		.attr("data-clipboard-text")
+		.replace(/\D/g, "")
+		.replace(/^0+/, "")
+		.replace(/\B(?=(\d{4})+(?!\d)\.?)/g, " ");
+
+	if (cardvpInput === true) {
+		var valCardAjax = "True";
+	} else {
+		var valCardAjax = "False";
+	}
+	// Create Ajax Call
+	$.ajax({
+		url: urlform,
+		data: {
+			id: idInput,
+			name: valCardAjax,
+		},
+		dataType: "json",
+		success: function (data) {
+			if (data.user) {
+				updateCardDispTable(data.user);
+				console.log(data.user);
+				$.notify(
+					`${cardNumberVal} | Cartão atualizado com sucesso!!`,
+					"success"
+				);
+			}
+		},
+	});
+	$("form#updateCardVPForm").trigger("reset");
+	$("#myModalCartaoVP").modal("hide");
+	return false;
+});
+
+function updateFormCardVp() {
+	$("form#updateCardVPForm").trigger("reset");
+}
+
+function editUserCardVP(id) {
+	if (id) {
+		tr_id = "#cardVPtr-" + id;
+		console.log(tr_id);
+		cardDisponivel = $(tr_id)
+			.find("td[data-disponivel]")
+			.attr("data-disponivel");
+		console.log(cardDisponivel);
+		cartao = $(tr_id)
+			.find("td[data-clipboard-text]")
+			.attr("data-clipboard-text");
+
+		var cartaoForm = document.getElementById("updateCradVPUser");
+		cartaoForm.innerHTML = cartao
+			.replace(/\D/g, "")
+			.replace(/^0+/, "")
+			.replace(/\B(?=(\d{4})+(?!\d)\.?)/g, " ");
+
+		$("#form-id-cardvp").val(id);
+		if (cardDisponivel === "true") {
+			$("#form-name-disponivel").attr("checked", true);
+		} else {
+			$("#form-name-disponivel").attr("checked", false);
+		}
+	}
+	var cardvpInput = $('input[name="formCardVPInput"]').is(":checked");
+	console.log(cardvpInput);
+}
+
+function updateCardDispTable(user) {
+	tr_id = "#cardVPtr-" + user.id;
+	disponivel = user.name;
+	console.log(disponivel);
+	dataDisponivelTable = $(tr_id).find("td[data-disponivel]");
+	if (disponivel === false) {
+		var aElement = $(tr_id).find("i");
+		console.log(aElement);
+		dataDisponivelTable.attr("data-disponivel", "false");
+		aElement.removeClass("fa-times-circle text-danger");
+		aElement.addClass("fa-check-circle text-success");
+	} else {
+		var aElement = $(tr_id).find("i");
+		dataDisponivelTable.attr("data-disponivel", "true");
+		console.log(aElement);
+		aElement.removeClass("fa-check-circle text-success");
+		aElement.addClass("fa-times-circle text-danger");
+	}
+}

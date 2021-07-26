@@ -726,6 +726,24 @@ class UpdatechegadaCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateVie
     fields = ('chegada',)
     success_url = reverse_lazy('cargas')
 
+class UpdateAjaxCartaoVpView(LoginRequiredMixin, UpdateView):
+    model = CartaoVp
+    fields = ('cartao_utilizado',)
+
+    def get(self, request):
+        id1 = request.GET.get("id", None)
+        cartao1 = request.GET.get("name")
+        
+        obj = get_object_or_404(CartaoVp, id=id1)
+        obj.cartao_utilizado = cartao1
+        obj.save()
+        obj1 = get_object_or_404(CartaoVp, id=id1)
+
+        user = {"id": obj1.pk, "name": obj1.cartao_utilizado}
+
+        data = {"user": user}
+        return JsonResponse(data)
+
 class UpdateAjaxOrdemView(LoginRequiredMixin, UpdateView):
     model = Carga
     fields = ('ordem',)

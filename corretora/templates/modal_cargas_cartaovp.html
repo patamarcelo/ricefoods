@@ -1,0 +1,32 @@
+{% load static %}
+<!-- CSS Modal Custom -->
+<link href="{% static 'css/modal.css' %}" rel="stylesheet">
+
+<!-- Modal -->
+<div class="modal fade" id="myModalCartaoVP" tabindex="-1" role="dialog" aria-labelledby="myModalLabelCartaoVP">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content bg-dark">
+      <div class="modal-header">
+          
+          <h4> <em class="badge badge-primary" id="myModalLabelCartaoVP">Cartão utilizado ?</em></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      
+      </div>
+      <form id="updateCardVPForm" action="" data-validate-url-cardvp="{% url 'cargas_ajax_update_cartaovp' %}">
+      
+        <div class="modal-body">
+
+          <input class="form-control" id="form-id-cardvp" type="hidden" name="formIdCardVP"/>
+          <input class="form-control" id="form-name-disponivel" type="checkbox" name="formCardVPInput" />
+          <h5> <em  id="updateCradVPUser"></em></h5>
+          
+      
+        </div>
+      <div class="modal-footer">
+          <button type="submit" class="btn btn-sm  btn-primary" id="savebtn">Salvar</button>
+          <button type="button" class="btn btn-sm btn-warning" onclick="updateFormCardVp()" data-dismiss="modal">Fechar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -80,3 +80,8 @@
     background-color: #F5F5F5 !important;
 }
 
+[data-target] {
+    cursor: pointer;
+}
+
+
