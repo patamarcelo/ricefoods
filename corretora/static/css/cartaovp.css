@@ -18,17 +18,17 @@
     background-color: #808080 !important;
     background: rgb(128,128,128);
     background: radial-gradient(circle, rgba(128,128,128,1) 0%, rgba(18,18,18,1) 100%);
-    border-top-left-radius: .3rem !important;
-    border-top-right-radius: .3rem !important;
+    /* border-top-left-radius: .3rem !important; */
+    /* border-top-right-radius: .3rem !important; */
     border: none !important;        
 }
 .card-body {
     border: 1px solid transparent;
-    border-top-left-radius: .25rem;
-    border-top-right-radius: .25rem;
+    /* border-top-left-radius: .25rem; */
+    /* border-top-right-radius: .25rem; */
     background-color: black;
     border-color: #dee2e6 #dee2e6 #fff;
-    border-radius: .25rem;
+    /* border-radius: .25rem; */
 }
 .nav-link {
     border-bottom: 0.1px solid #fff !important;
