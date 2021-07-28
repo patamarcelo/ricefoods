@@ -354,6 +354,17 @@
     $(document).ready(function() {
         $("#id_contrato").focus();
     });
+    $(document).ready(function() {
+        var formtoday = new Date();
+        var dd = String(formtoday.getDate()).padStart(2, '0');
+        var mm = String(formtoday.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = formtoday.getFullYear();
+        var formtoday = dd + '/' + mm + '/' + yyyy;
+        console.log(formtoday)
+        $('#id_data').val(formtoday)
+    });
+
+
 </script>
 
 

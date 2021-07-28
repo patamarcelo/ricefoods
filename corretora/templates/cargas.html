@@ -258,10 +258,16 @@
                     <a class="btn btn-outline-primary btn-sm" href="{% url 'agendamentoTeste' %}"
                         target="_blank">Descarga Ruston</a>
                 </div>
+                {% if cartoesvp %}
+    
+            
+
                 <div class="col-3-sm align-self-center ml-2">
                     <a><i class="fas fa-eye-slash text-danger" id="ocultar"
                         onclick="ocultarmostrar('CardVP','ocultar')">&nbsp;&nbsp;Cartões VP</i></a>
-                </div>
+                    </div>
+                {% else %}
+                {% endif %}
 
 
             </div>
@@ -277,8 +283,12 @@
             
 
             {% block content %}
+            {% if cartoesvp %}
     
             {% include 'cartoesvp_table.html' %}
+
+            {% else %}
+            {% endif %}
     
             {% endblock %}
 

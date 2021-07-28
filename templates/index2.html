@@ -59,7 +59,7 @@
     <h1> Corretora de Cereais </h1>
     {% if user.is_anonymous %}
     <div class="container d-inline-flex  justify-content-center">
-    <a class="btn btn-primary col-lg-1 col-md-2 col-sm-3 col-3" href="{% url 'login' %}">Login</a>
+    <a class="btn btn-primary col-lg-1 col-md-2 col-sm-3 col-3" href="{% url 'login' %}" id="login-btn">Login</a>
     </div>
     {% else %}
     <div class="container" align=center>
@@ -71,7 +71,7 @@
     <div class="container" align=center style="margin-bottom:10px;">
         <div class="inline-flex">
             <a class="col-lg-2 col-md-3 col-sm-4 col-4  btn btn-primary"
-                href="{% url 'corretora' %}">Corretora</a>
+                href="{% url 'corretora' %}" id="corretora-enter-btn">Corretora</a>
             <a class="col-lg-2 col-md-3 col-sm-4 col-4  btn btn-success" href="{% url 'dashboard' %}"
                 target="_blank">Painel</a>
         </div>
@@ -80,7 +80,7 @@
     <div class="container" align=center style="margin-bottom:10px;">
         <div class="inline-flex">
             <a class="col-lg-3 col-md-5 col-sm-7 col-8  btn btn-primary"
-                href="{% url 'corretora' %}">Corretora</a>
+                href="{% url 'corretora' %}" id="corretora-enter-btn">Corretora</a>
         </div>  
     </div>
     {% endif %}
@@ -151,4 +151,18 @@
     {% endif %}
 </div>
 
+
+{% if user.is_anonymous %}
+<script>
+    $(document).ready(function() {
+        $("#login-btn").focus();
+    });
+</script>
+{% else %}
+<script>
+    $(document).ready(function() {
+        $("#corretora-enter-btn").focus();
+    });
+</script>
+{% endif %}
 {% endblock %}

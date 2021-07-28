@@ -134,15 +134,18 @@ function MyFunction(tableid, inputid) {
 	}
 }
 
-// $("#CardVP input").on({
-// 	keyup: function (event) {
-// 		$(event.target).val(function (index, value) {
-// 			return value
-// 				.replace(/\D/g, "")
-// 				.replace(/\B(?=(\d{4})+(?!\d)\.?)/g, " ");
-// 		});
-// 	},
-// });
+$("#CardVP input").on({
+	keyup: function (event) {
+		$(event.target).val(function (index, value) {
+			return value.replace(/\D/g, "").replace(/(\d{4}(?!\s))/g, "$1 ");
+			// .replace(/\B(?=(\d{4})+(?!\d))/g, " ")
+		});
+	},
+});
+
+$(document).ready(function () {
+	$(".card-body input").attr("maxlength", "19");
+});
 
 //UpdateCartaoVP
 
