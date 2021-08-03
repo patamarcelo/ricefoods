@@ -70,6 +70,9 @@ urlpatterns = [
     path('corretora/cargas/updatebuonny', UpdateAjaxBuonnyView.as_view(), name="cargas_ajax_update_buonny"),
     path('corretora/cargas/updateclassificacao', UpdateAjaxClassificacaoView.as_view(), name="cargas_ajax_update_classificacao"),
     path('corretora/cargas/updatecartaovp', UpdateAjaxCartaoVpView.as_view(), name="cargas_ajax_update_cartaovp"),
+    
+    path('corretora/cargas/carjasJsonTeste', CargasViewJsonTeste.as_view(), name="cargas_json_teste"),
+    path('corretora/cargas/carjasJsonTeste2', CargasViewJsonTeste2.as_view(), name="cargas_json_teste_ad"),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 

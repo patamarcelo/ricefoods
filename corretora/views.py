@@ -10,6 +10,10 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
+from django.http import JsonResponse
+from django.core import serializers
+
+
 
 
 
@@ -424,6 +428,34 @@ class CargasView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             ]
         )
         return context
+
+class CargasViewJsonTeste(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    login_url = 'login'
+    permission_required = ('corretora.view_carga')
+    
+    models = Carga
+    # paginate_by = 40
+    # ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
+    template_name = 'cargasJsonTeste.html'
+    queryset = Carga.objects.all()
+    context_object_name = 'cargas' 
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        data = serializers.serialize("json", queryset)
+        return JsonResponse(data, status=200, safe=False) 
+
+class CargasViewJsonTeste2(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    login_url = 'login'
+    permission_required = ('corretora.view_carga')
+    
+    models = Carga
+    # paginate_by = 40
+    # ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
+    template_name = 'cargasJsonTeste2.html'
+    queryset = Carga.objects.all()
+    context_object_name = 'cargas'
+
 
 class ResumoTabelasAjaxView(LoginRequiredMixin, TemplateView):
     login_url = 'login'    

@@ -45,6 +45,7 @@ $(document).ready(function () {
 		}
 	}
 
+	const numberTOAdviseCardMissing = 10;
 	for (let i = 0; i < res.length; i++) {
 		console.log(res[i].base);
 		console.log(res[i].local);
@@ -62,15 +63,27 @@ $(document).ready(function () {
 					jsonData[j].disponivel == false
 						? '<i class="far fa-check-circle text-success"></i>'
 						: '<i class="far fa-times-circle text-danger"></i>';
+
 				$(`#table${res[i].base} > tbody:last-child`).append(
 					`<tr id="cardVPtr-${jsonData[j].id}"><td>${countCard}</td><td class="copy-data" data-clipboard-text="${jsonData[j].numero}">${cardNumberHtml}</td><td onClick="editUserCardVP(${jsonData[j].id})" data-toggle="modal" data-target="#myModalCartaoVP")" data-disponivel="${jsonData[j].disponivel}">${iconAvailable}</td><td>${jsonData[j].cartaobase}</td></tr>`
 				);
 			}
 		}
+
 		console.log(res[i].base);
+		var totalCardNumberColor =
+			res[i].total < numberTOAdviseCardMissing
+				? "text-danger"
+				: "text-success";
 		$(`#sub${res[i].base}`)
 			.text(res[i].total)
-			.addClass("text text-success font-weight-bold");
+			.addClass(`text ${totalCardNumberColor} font-weight-bold`);
+	}
+
+	for (let i = 0; i < res.length; i++) {
+		if (res[i].total < numberTOAdviseCardMissing) {
+			$("#divOcultarCartoesVpCargas").addClass("filial-sem-cartaovp");
+		}
 	}
 });
 

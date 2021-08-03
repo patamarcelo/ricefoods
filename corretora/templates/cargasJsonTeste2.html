@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    
+    <title>Json Teste</title>
+    <script src="{% static 'js/cargaJsonTeste.js' %}"></script>   
+</head>
+<body>
+    <h1> Pagina para testar JSON</h1>
+    <ol>
+        
+    </ol>
+
+    <div style="display: none" id="jsonData" data-url-ajax="{% url 'cargas_json_teste' %}" ></div>
+</body>
+</html>
