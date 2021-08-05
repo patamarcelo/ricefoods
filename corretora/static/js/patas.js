@@ -829,13 +829,13 @@ function updateToUserTabelBuonny(user) {
   bElement.removeAttr("class");
   
   if (buonny.includes('dast')) {
-    bElement.addClass("text-danger");
+    bElement.addClass("text-danger font-weight-bold");
   } else if (buonny.includes('sul')) {
-    bElement.addClass("text-warning");
+    bElement.addClass("text-warning font-weight-bold");
   } else if (buonny.includes('nviad')) {
-    bElement.addClass("text-info");
+    bElement.addClass("text-info font-weight-bold");
   } else {
-    bElement.addClass("text-success"); 
+    bElement.addClass("text-success font-weight-bold"); 
   } 
 }
 

@@ -344,11 +344,11 @@
 
                         <!-- SALDO COMISSÃO -->
                         {% if carga.pgcomissao == True %}
-                        <td align="center" class="border-right"><b> R$ 0,00</b></td>
+                        <td align="center" class="border-right comissaosaldo" data-comissaosaldo="0"><b> R$ 0,00</b></td>
                         {% elif carga.vpcomissaoc == 0 and carga.pgcomissao == True %}
-                        <td align="center" class="border-right"><b> R$ 0,00</b></td>
+                        <td align="center" class="border-right comissaosaldo" data-comissaosaldo="0"><b> R$ 0,00</b></td>
                         {% elif carga.vpcomissaoc == 0 and carga.pgcomissao == False %}
-                        <td class="border-right"><b> R$ {{ carga.comissaocasca|floatformat:2 }}</b></td>
+                        <td class="border-right comissaosaldo" data-comissaosaldo="{{carga.comissaocasca|stringformat:".2f"}}"><b> R$ {{ carga.comissaocasca|floatformat:2 }}</b></td>
                         {% else %}
                         <td align="center"><b> - </b></td>
                         {% endif %}
@@ -414,10 +414,9 @@
                         
                         {% for pedido in pedidos %}
                         {% if totalaberto.vpcomissaoc__count == 0 %}
-                        <td align="center" class="border-top border-dark"><b> R$ 0,00 </b></td>
+                        <td align="center" class="border-top border-dark" id="totalcomissaoabertoID"><b></b></td>
                         {% else %}
-                        <td align="center" class="border-top border-dark"><i><strong>R$
-                                    {{ pedido.saldototalcomissaocasca|floatformat:2 }}
+                        <td align="center" class="border-top border-dark" id="totalcomissaoabertoID"><i><strong>
                             </i><strong></td>
 
                         {% endif %}
@@ -607,10 +606,9 @@
                     
                     {% for pedido in pedidos %}
                     {% if totalaberto.vpcomissaoc__count == 0 %}
-                    <td align="center" class="border-top border-dark rodape"><b> R$ 0,00 </b></td>
+                        <td align="center" class="border-top border-dark" id="totalcomissaoabertoIDExcel"><b></b></td>
                     {% else %}
-                    <td align="center" class="border-top border-dark rodape"><i><strong>R$
-                                {{ pedido.saldototalcomissaocasca|floatformat:2 }}
+                        <td align="center" class="border-top border-dark" id="totalcomissaoabertoIDExcel"><i><strong>
                         </i><strong></td>
 
 

@@ -15,6 +15,23 @@ $(document).ready(function () {
 		PesoTotalHtml.innerHTML = `<i><strong> R$ ${totalsum}</i></strong>`;
 		PesoTotalExcel.innerHTML = `<i><strong> R$ ${totalsum}</i></strong>`;
 	}
+	
+	var totalsumSaldo = 0;
+	lis = document.getElementsByClassName("comissaosaldo");
+
+	for (var i = 0; i < lis.length; i++) {
+		totalsumSaldo += parseFloat(lis[i].getAttribute("data-comissaosaldo"));
+	}
+
+	var totalsumSaldo = numberWithCommas(parseFloat(totalsumSaldo).toFixed(2));
+	console.log(`Total saldo de comissão R$ ${totalsumSaldo}`);
+	var saldoTotalHtml = document.getElementById("totalcomissaoabertoID");
+	var saldoTotalExcel = document.getElementById("totalcomissaoabertoIDExcel");
+
+	if (saldoTotalHtml) {
+		saldoTotalHtml.innerHTML = `<i><strong> R$ ${totalsumSaldo}</i></strong>`;
+		saldoTotalExcel.innerHTML = `<i><strong> R$ ${totalsumSaldo}</i></strong>`;
+	}
 });
 
 function numberWithCommas(x) {
