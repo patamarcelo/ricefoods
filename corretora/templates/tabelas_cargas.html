@@ -174,9 +174,9 @@
                     {% endif %}
 
                     {% if carga.ordem %}
-                    <td class="text-success userName" updatemotoristaUser="{{carga.motorista|title}}" updatePlacaUser="{{carga.placa}}" ordem-carregamento="{{carga.ordem}}" onClick="editUser({{carga.pk|stringformat:"i"}})" data-toggle="modal" data-target="#myModal")"><em>Enviada</em></td>
+                    <td style="text-align: center;" class="text-success userName" updatemotoristaUser="{{carga.motorista|title}}" updatePlacaUser="{{carga.placa}}" ordem-carregamento="{{carga.ordem}}" onClick="editUser({{carga.pk|stringformat:"i"}})" data-toggle="modal" data-target="#myModal")"><strong><i class="font-weight-bold far fa-check-circle text-success"></i></td>
                     {% else %}
-                    <td class="text-danger userName" updatemotoristaUser="{{carga.motorista|title}}" updatePlacaUser="{{carga.placa}}" ordem-carregamento="{{carga.ordem}}" onClick="editUser({{carga.pk|stringformat:"i"}})" data-toggle="modal" data-target="#myModal")"><em>Não Env.</em></td>
+                    <td style="text-align: center;" class="text-danger userName" updatemotoristaUser="{{carga.motorista|title}}" updatePlacaUser="{{carga.placa}}" ordem-carregamento="{{carga.ordem}}" onClick="editUser({{carga.pk|stringformat:"i"}})" data-toggle="modal" data-target="#myModal")"><i class="font-weight-bold far fa-times-circle text-danger"></i></td>
                     {% endif %}
 
                     {% if todays_date == carga.data|date:"Y-m-d" %}
