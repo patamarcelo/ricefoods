@@ -850,3 +850,7 @@ function updateToUserTabelBuonny(user) {
 		bElement.addClass("text-success font-weight-bold");
 	}
 }
+
+$(document).ready(function() {
+	$("#id_pedido").focus();
+});

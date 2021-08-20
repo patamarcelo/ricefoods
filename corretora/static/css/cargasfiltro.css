@@ -386,3 +386,27 @@ th:hover {
 #btnLimparForm:after {
     pointer-events: none;
   }
+
+#ui-datepicker-div > table > thead > tr > th {
+    color: whitesmoke;
+}
+#ui-datepicker-div > table {
+    margin-top: 3px;
+    border-bottom-left-radius: 0px !important; ;
+    border-bottom-right-radius: 0px !important; ;
+    background-color: #363639;
+    border: none !important;
+}
+
+#ui-datepicker-div {
+    /* background-color: #363639; */
+    border: none !important;
+}
+
+#ui-datepicker-div > table > tbody > tr > td {
+    padding: 2px !important;
+}
+
+#ui-datepicker-div > table > tbody > tr > td > a:hover {
+    background-color: lightgreen
+}

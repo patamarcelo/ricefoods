@@ -21,14 +21,13 @@ document.getElementById("select-all").onclick = function () {
 	}
 };
 
-
 function CleanAllFields() {
 	console.log("OK");
 	$("input").each(function () {
 		var idF = $(this).attr("id");
 		if (idF == "btnLimparForm") {
-			$(this).removeClass('btn-xs btnLimparForm')
-			$(this).addClass('btn-xs btnLimparForm')
+			$(this).removeClass("btn-xs btnLimparForm");
+			$(this).addClass("btn-xs btnLimparForm");
 			console.log("pula essa");
 		} else {
 			var clean = $(this).val();
@@ -260,3 +259,45 @@ $(document).ready(function () {
 function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
+
+$(document).ready(function () {
+	$("#id_data__gte").addClass("datepicker");
+	$("#id_data__lte").addClass("datepicker");
+	$(".datepicker").datepicker({
+		// format: "dd/mm/yyyy",
+		locale: "pt-br",
+		// startDate: "-3d",
+	});
+});
+
+$(function () {
+	$.datepicker.setDefaults({
+		firstDay: 1,
+		showOn: "focus",
+		dateFormat: "dd/mm/yy",
+		dayNames: [
+			"Domingo",
+			"Segunda",
+			"Terça",
+			"Quarte",
+			"Quinta",
+			"Sexta",
+			"Sábado",
+		],
+		dayNamesMin: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+		monthNames: [
+			"Janeiro",
+			"Fevereiro",
+			"Março",
+			"Abril",
+			"Maio",
+			"Junho",
+			"Julho",
+			"Agosto",
+			"Setembro",
+			"Outubro",
+			"Novembro",
+			"Dezembro",
+		],
+	});
+});

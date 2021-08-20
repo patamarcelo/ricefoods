@@ -33,7 +33,7 @@
                 <!-- Call Me Form -->
                 <br />
                 <br />
-                <form id="contato" method="post" data-toggle="validator" data-focus="false">
+                <form id="contato2" method="post" data-toggle="validator" data-focus="false">
                     {% csrf_token %}
                     <div class="form-group">
                         <input type="text" class="form-control-input" id="nome" name="nome" required>
@@ -65,6 +65,16 @@
                         </select>
                         <div class="help-block with-errors"></div>
                     </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control-input" id="validatorcont" name="validatorvalidatorcont" required placeholder="Quanto é 6 + 6 ?" style="padding: 10px 21px !important; color: white !important">
+                        <label class="label-control" for="cvalidatorcont"></label>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div id="waittabeladash2" style="display: none">
+                        <div class="d-flex justify-content-center mt-4">
+                            <h3><i class="fas fa-lg fa-spinner fa-spin text-success"></i></h3>
+                        </div>
+                      </div>
 
                     <div class="form-group">
                         <button type="submit" class="form-control-submit-button">CONTATE ME</button>
