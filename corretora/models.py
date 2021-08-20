@@ -8,6 +8,9 @@ import datetime
 from simple_history.models import HistoricalRecords
 import dateutil.relativedelta
 
+from decimal import Decimal
+
+
 
 class NameField(models.CharField):
     def __init__(self, *args, **kwargs):
@@ -1307,6 +1310,11 @@ class Carga(Base):
 
     obs          = models.TextField('Observação', max_length=500, blank=True)
     obs_comissao = models.TextField('Observação Comissão', max_length=500, null=True, blank=True)
+
+    gera_comi_frete  = models.BooleanField('Comi Frete', default=False)
+    comi_frete_ton   = models.DecimalField('Comi Frete', max_digits=8, decimal_places=2, help_text="Valor por tonelada", null=True, blank=True)
+    comi_frete_total = models.DecimalField('Comi F Total', max_digits=8, decimal_places=2, help_text="Valor Total", null=True, blank=True)
+    
     history      = HistoricalRecords()
 
 
@@ -1362,6 +1370,21 @@ class Carga(Base):
             return self.data_intervalo_cargaedescarga.days
         else:
             pass
+    
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            if "GDX" in self.transp.nome:
+                self.gera_comi_frete = False
+            else:
+                self.gera_comi_frete = True
+        if not self.peso:
+            self.peso = 0
+        if not self.comi_frete_ton and self.gera_comi_frete == True:
+            self.comi_frete_ton = 0
+        if not self.comi_frete_total:
+            if self.gera_comi_frete == True and self.comi_frete_ton != None and self.peso > 0:
+                self.comi_frete_total =  self.comi_frete_ton * Decimal(self.peso / 1000)
+        super(Carga, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ['situacao', '-data']
