@@ -6,7 +6,8 @@ from stdimage.models import StdImageField
 
 def get_file_path(instance, filename):
     ext = filename.split('.')[-1]
-    filename = f'{uuid.uuid4()}.{ext}'
+    name =filename.split('.')[0] 
+    filename = f'/corretora/fotosite/{uuid.uuid4()}__{name}.{ext}'
     return filename
 
 class Base(models.Model):

@@ -28,6 +28,7 @@ django-stdimage==5.1.1
 django-storages==1.9.1
 django-widget-tweaks==1.4.8
 docutils==0.15.2
+dropbox==11.17.0
 gunicorn==20.0.4
 html5lib==1.0.1
 humanize==2.4.0
@@ -41,6 +42,7 @@ model-mommy==2.0.0
 nltk==3.5
 pathspec==0.8.0
 Pillow==7.1.1
+ply==3.11
 progressbar2==3.50.1
 psycopg2-binary==2.8.5
 pylint==2.5.3
@@ -57,6 +59,7 @@ six==1.14.0
 soupsieve==2.0.1
 sqlparse==0.3.1
 static3==0.7.0
+stone==3.2.1
 textblob==0.15.3
 toml==0.10.1
 tqdm==4.46.0

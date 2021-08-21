@@ -9,8 +9,18 @@ from simple_history.models import HistoricalRecords
 import dateutil.relativedelta
 
 from decimal import Decimal
+import uuid
+from ricef.settings import *
 
 
+def get_file_path_comprovantes(instance, filename):
+    ext = filename.split('.')[-1]
+    name =filename.split('.')[0] 
+    if DEBUG == True:
+        filename = f'/corretora/comprovantes/desenvolvimento/{uuid.uuid4()}__{name}.{ext}'
+    else:
+        filename = f'/corretora/comprovantes/{uuid.uuid4()}__{name}.{ext}'
+    return filename
 
 class NameField(models.CharField):
     def __init__(self, *args, **kwargs):
@@ -1314,6 +1324,10 @@ class Carga(Base):
     gera_comi_frete  = models.BooleanField('Comi Frete', default=False)
     comi_frete_ton   = models.DecimalField('Comi Frete', max_digits=8, decimal_places=2, help_text="Valor por tonelada", null=True, blank=True)
     comi_frete_total = models.DecimalField('Comi F Total', max_digits=8, decimal_places=2, help_text="Valor Total", null=True, blank=True)
+    
+    comprovante_descarga = models.FileField('Comprovante Descarga', upload_to=get_file_path_comprovantes, null=True, blank=True)
+    data_descarga        = models.DateField('Data Descarga', null=True, blank=True, default=None, help_text="dd/mm/aaaa")
+
     
     history      = HistoricalRecords()
 

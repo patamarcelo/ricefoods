@@ -292,6 +292,9 @@ class CargaAdmin(SimpleHistoryAdmin):
     ('Comissão Frete', {
             'fields': ('gera_comi_frete','comi_frete_ton', 'comi_frete_total')
         }),
+    ('Descarga', {
+            'fields': ('data_descarga','comprovante_descarga')
+        }),
     )
     raw_id_fields = ('pedido', )
     list_filter = ('situacao','pedido__produto','pedido__tipo','pedido__cliente','pedido__situacao', 'transp__nome' ,'gera_comi_frete' ,'pedido__fornecedor')
