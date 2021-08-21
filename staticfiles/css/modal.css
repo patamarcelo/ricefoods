@@ -1,0 +1,50 @@
+.modal input[type='checkbox'] {    
+    height: 15px !important;
+    width: 7%;
+    align-self: center;
+  }
+  
+  h5 {
+    white-space: nowrap;
+    align-self: center;
+    margin-bottom: 0px;
+  }
+
+  .modal-body {
+    display: flex;
+    align-content: center;
+    justify-content: flex-start;
+    padding: 15px;
+  }
+
+  .modal-footer {
+    padding: 5px;
+  }
+
+  [ordem-carregamento] {
+    cursor: pointer
+  }
+  
+  [updateBuonnyUserBuonny] {
+    cursor: pointer
+  }
+
+
+  .modal input[type='checkbox']:focus, .modal .btn:focus  {    
+    outline: 10px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+  }
+
+  #myModalClassificacao small {
+    margin-left: 0px;
+    padding-left: 3px;
+  }
+  
+  #myModalClassificacao textarea {
+    font-size: 11px;
+  }
+  
+
+  .font-italic {
+    font-style: italic !important;
+  }

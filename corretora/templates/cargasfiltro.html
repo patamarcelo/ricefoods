@@ -237,6 +237,13 @@
                         placeholder="Descarga">
                         {{ filter.form.data_agenda__lte|as_crispy_field }}
                     </div>
+                    {% if user.is_superuser %}
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Descarga" data-placement="bottom"
+                        placeholder="Descarga">
+                        {{ filter.form.com_comissao_frete|as_crispy_field }}
+                    </div>
+                    {% else %}
+                    {% endif %}
                 </div>
                 <div class="row">
 
@@ -310,6 +317,7 @@
                     <th scope="col">Descarga</th>
                     <th scope="col" class="text text-center">Class.</th>
                     {% if user.is_superuser%}
+                    <th scope="col" class="text text-center">Comi. F.</th>
                     <th scope="col" class="text text-center">Comiss.</th>
                     {% endif %}
                     <th scope="col" class="text text-center">Ação</th>
@@ -356,6 +364,7 @@
                             <th scope="col">Descarga</th>
                             <th scope="col" class="text text-center">Class.</th>
                             {% if user.is_superuser%}
+                            <th scope="col" class="text text-center">Comi. F.</th>
                             <th scope="col" class="text text-center">Comiss.</th>
                             {% endif %}
                             <th scope="col" class="text text-center">Ação</th>
@@ -402,6 +411,7 @@
                             <th scope="col">Descarga</th>
                             <th scope="col" class="text text-center">Class.</th>
                             {% if user.is_superuser%}
+                            <th scope="col" class="text text-center">Comi. F.</th>
                             <th scope="col" class="text text-center">Comiss.</th>
                             {% endif %}
                             <th scope="col" class="text text-center">Ação</th>
@@ -647,6 +657,11 @@
 
 
                             {% if user.is_superuser%}
+                            {% if carga.comi_frete_total %}
+                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}">R$ {{ carga.comi_frete_total|floatformat:2 }}</td>
+                            {% else %}
+                            <td align=center>-</td>
+                            {% endif %}
                             {% if carga.comissaocasca > 1 %}
 
                             {% if carga.pgcomissao == True and carga.obs_comissao %}
@@ -674,6 +689,7 @@
                             {% endif %}
                             {% else %}
                             {% endif %}
+                            
                             {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %}
                             <td align=center>
                                 <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}" target="_blank">Edit</a>
@@ -702,7 +718,8 @@
                             {% if comitotal == 0 %}
                             {% else %}
                             <div class="col titulototaldireita">
-                                <p style="float: right;" ><strong>Aberto <i class="text text-warning"><br/> R$ {{ comitotal|floatformat:"2" }}</i></strong></p>
+                                <p style="float: right; margin-left: 7px; display: none;" id="totalcomifretehtmlHeader" ><strong>Comi. F. <br/><i class="text text-warning" id="totalcomifretehtml"></i></strong></p>
+                                <p style="float: right;margin-right: 25px;" ><strong>Aberto <i class="text text-warning"><br/> R$ {{ comitotal|floatformat:"2" }}</i></strong></p>
                             </div>  
                             {% endif %}
                             {% else %}
@@ -737,7 +754,8 @@
                             {% if comitotal == 0 %}
                             {% else %}
                             <div class="col titulototaldireita">
-                                <p style="float: right;" ><strong>Aberto <i class="text text-warning"><br/> R$ {{ comitotal|floatformat:"2" }}</i></strong></p>
+                                <p style="float: right; margin-left: 7px; display: none;" id="totalcomifretehtmlHeader" ><strong>Comi. F. <br/><i class="text text-warning" id="totalcomifretehtml"></i></strong></p>
+                                <p style="float: right;margin-right: 25px;" ><strong>Aberto <i class="text text-warning"><br/> R$ {{ comitotal|floatformat:"2" }}</i></strong></p>
                             </div>  
                             {% endif %}
                             {% else %}
@@ -837,6 +855,7 @@
                     <th scope="col">Produto</th>
                     <th scope="col">Descarga</th>
                     {% if user.is_superuser%}
+                    <th scope="col" class="text text-center">Comi. F.</th>
                     <th scope="col" class="text text-center">Comiss.</th>
                     {% endif %}
 
@@ -1042,6 +1061,11 @@
                     <td> - </td>
                     {% endif %} 
                     {% if user.is_superuser%}
+                    {% if carga.comi_frete_total %}
+                    <td >R$ {{ carga.comi_frete_total|floatformat:2 }}</td>
+                    {% else %}
+                    <td align=center>-</td>
+                    {% endif %}
                     {% if carga.comissaocasca > 1 %}
 
                     {% if carga.pgcomissao == True %}

@@ -32,6 +32,12 @@ class CargasFilter(django_filters.FilterSet):
     comcomissao = django_filters.ChoiceFilter(
         label="Comissão ?",  choices=CHOICES3, method="com_sem_comissao"
     )
+
+    CHOICES4 = (('True', 'Contém'),('False', 'Não Contém'))
+    
+    com_comissao_frete = django_filters.ChoiceFilter(
+        label="Comi. F. ?",  choices=CHOICES4, method="com_sem_comissao_f"
+    )
     
     
 
@@ -142,6 +148,10 @@ class CargasFilter(django_filters.FilterSet):
     def filter_by_order(self, queryset, name, value):
         expression = "data" if value == "crescente" else "-data"
         return queryset.order_by(expression)
+    
+    def com_sem_comissao_f(self, queryset, name, value):
+        expression = True if value == "True" else False
+        return queryset.filter(gera_comi_frete=expression)
 
     def filtrando_comissao(self, queryset, name, value):
         qs = set()

@@ -111,5 +111,9 @@
         console.log(idNumeroCartaoForm)
 		document.getElementById("id_cartao_numero").value = idNumeroCartaoForm.replace(/\s+/g, '');
     });
+
+    $("#id_comi_frete_ton").on('change', function() {
+        $("#id_comi_frete_total").val('')
+    });
 </script>
 </html>
