@@ -16,10 +16,7 @@ from ricef.settings import *
 def get_file_path_comprovantes(instance, filename):
     ext = filename.split('.')[-1]
     name =filename.split('.')[0] 
-    if DEBUG == True:
-        filename = f'/corretora/comprovantes/desenvolvimento/{uuid.uuid4()}__{name}.{ext}'
-    else:
-        filename = f'/corretora/comprovantes/{uuid.uuid4()}__{name}.{ext}'
+    filename = f'/corretora/comprovantes/{uuid.uuid4()}__{name}.{ext}'
     return filename
 
 class NameField(models.CharField):

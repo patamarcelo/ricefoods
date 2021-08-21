@@ -660,7 +660,7 @@
                             {% if carga.pedido.situacao == 'a' and carga.comi_frete_total%}
                             <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}"><a style="color: whitesmoke !important;" target="_blank" href="{% url 'admin:corretora_carga_change' carga.pk  %}">R$ {{ carga.comi_frete_total|floatformat:2 }}</a></td>
                             {% elif carga.comi_frete_total %}
-                            <td align=center><em>R$ {{ carga.comi_frete_total|floatformat:2 }}</em></td>
+                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}" align=center><em>R$ {{ carga.comi_frete_total|floatformat:2 }}</em></td>
                             {% else %}
                             <td align=center>-</td>
                             {% endif %}
