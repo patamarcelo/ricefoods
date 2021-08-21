@@ -327,7 +327,7 @@
             <tbody>
                 {% if user.is_superuser%}
                 <tr>
-                    <th class="text text-info" scope="row" colspan="21" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
+                    <th class="text text-info" scope="row" colspan="22" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
                 </tr>
                 {% else %}
                 <tr>
@@ -374,7 +374,7 @@
                     <tbody>
                         {% if user.is_superuser%}
                         <tr>
-                            <th class="text text-danger" scope="row" colspan="20" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
+                            <th class="text text-danger" scope="row" colspan="21" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
                         </tr>
                         {% else %}
                         <tr>
@@ -658,7 +658,7 @@
 
                             {% if user.is_superuser%}
                             {% if carga.comi_frete_total %}
-                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}">R$ {{ carga.comi_frete_total|floatformat:2 }}</td>
+                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}"><a style="color: whitesmoke !important;" target="_blank" href="{% url 'admin:corretora_carga_change' carga.pk  %}">R$ {{ carga.comi_frete_total|floatformat:2 }}</a></td>
                             {% else %}
                             <td align=center>-</td>
                             {% endif %}
