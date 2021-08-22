@@ -25,7 +25,7 @@ def get_file_path_pedidos(instance, filename):
     ext       = filename.split('.')[-1]
     name      = filename.split('.')[0].replace('/',"").replace(" ","_")
     date_file = datetime.datetime.now().strftime('%Y%m%d')
-    filename  = f'/corretora/pedidos/{date_file}_{instance.contrato}_{instance.cliente.nome_fantasia}_{name}.{ext}'
+    filename  = f'/corretora/pedidos/{instance.cliente.nome_fantasia}/{date_file}_{instance.contrato}__{name}.{ext}'
     return filename
 
 class NameField(models.CharField):
