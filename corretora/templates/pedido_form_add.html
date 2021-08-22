@@ -104,10 +104,27 @@
         top: 45px;
     }
 
+    input[type='file'] {
+    background-color: #3498db;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    margin: 10px;
+    padding: 6px 20px;
+    width: auto;
+    margin-left: 0px;
+    margin-bottom: 25px;
+    }
+
+/* Aparência que terá o seletor de arquivo */
+    #div_id_pedido_arquivo > label {
+        display: none;
+    }
+
     
 </style>
 
-<form method="POST" novalidate class="needs-validation" id="formpedidoadd">
+<form method="POST" novalidate class="needs-validation" id="formpedidoadd" enctype="multipart/form-data">
     {% csrf_token %}
 
     <div class="d-flex justify-content-center">
@@ -288,6 +305,13 @@
                 </div>
             </div>
         </div>
+        <div class="container d-flex flex-column  justify-content-start col-lg-12 ">
+            <div class="d-flex flex-row justify-content-start  form-row">
+                <div class="col-12" data-toggle="tooltip" title="Arquivo" data-placement="top">
+                    {{ form.pedido_arquivo|as_crispy_field }}
+                </div>
+            </div>
+        </div>
     </div>
 
     {% buttons %}
@@ -363,6 +387,9 @@
         console.log(formtoday)
         $('#id_data').val(formtoday)
     });
+    $(document).ready(function (){
+        $("#div_id_pedido_arquivo label").text('Arquivo')
+    })
 
 
 </script>

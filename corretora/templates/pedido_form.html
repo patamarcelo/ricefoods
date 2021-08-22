@@ -100,9 +100,28 @@
     #div_id_comissaoc > label {
         white-space: nowrap;
     }
+
+    input[type='file'] {
+    background-color: #3498db;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    margin: 10px;
+    padding: 6px 20px;
+    width: auto;
+    margin-left: 0px;
+    margin-bottom: 25px;
+    }
+
+    
+
+/* Aparência que terá o seletor de arquivo */
+    #div_id_pedido_arquivo > label {
+        display: none;
+    }
 </style>
 
-<form method="POST" novalidate class="needs-validation" id="formpedidoedit">
+<form method="POST" novalidate class="needs-validation" id="formpedidoedit" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="d-flex justify-content-center">
         <div class="d-flex justify-content-between col-lg-10 col-12 p-0">
@@ -245,6 +264,13 @@
             <div class="d-flex flex-row justify-content-center  form-row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12" rel="tooltip" data-toggle="tooltip" title="Obs.">
                     {{ form.obs|as_crispy_field }}
+                </div>
+            </div>
+        </div>
+        <div class="container d-flex flex-column  justify-content-start col-lg-12 ">
+            <div class="d-flex flex-row justify-content-start  form-row">
+                <div class="col-12" data-toggle="tooltip" title="Arquivo" data-placement="top">
+                    {{ form.pedido_arquivo|as_crispy_field }}
                 </div>
             </div>
         </div>

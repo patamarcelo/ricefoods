@@ -41,7 +41,8 @@ from django_filters.views import FilterView
 from . import filters
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
 
 
 
@@ -216,7 +217,7 @@ class UpdatePedidosView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     fields = ('ativo','situacao','data','fornecedor','cliente','preco_produto','preco_frete',
                 'comissaoc','comissaof','prazopgto','modalidadepgto',
                'renda', 'inteiro', 'impureza', 'umidade','gessado','bbranca','amarelo','manchpic','vermelhos',
-               'variedade','produto','tipo','quantidade_pedido','obs' )
+               'variedade','produto','tipo','quantidade_pedido','obs', 'pedido_arquivo' )
     success_url = reverse_lazy('pedidos')
 
 class DeletePedidosView(LoginRequiredMixin, DeleteView):
