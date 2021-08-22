@@ -184,7 +184,7 @@ class ClienteAdmin(admin.ModelAdmin):
 
 # @admin.register(Pedido)
 class PedidoAdmin(SimpleHistoryAdmin):
-    list_display = ('contrato','situacao','get_data','fornecedor','get_cidade','cliente','get_preco','produto','renda','inteiro','variedade','tipo','get_peso_tipo','get_peso_total' ,'ativo','get_modificado')
+    list_display = ('contrato','situacao','get_data','fornecedor','get_cidade','cliente','get_preco','produto','renda','inteiro','variedade','tipo','get_peso_tipo','get_peso_total', 'tem_pedido' ,'ativo','get_modificado')
     fieldsets = (
         ('Situação', {
             'fields': ('ativo','carregado','saldo')
@@ -207,6 +207,9 @@ class PedidoAdmin(SimpleHistoryAdmin):
         ('Observação', {
             'fields': ('obs',)
         }),
+        ('Arquivo', {
+            'fields': ('pedido_arquivo',)
+        }),
     )
     
     readonly_fields = [
@@ -217,6 +220,16 @@ class PedidoAdmin(SimpleHistoryAdmin):
     list_filter = ('ativo','situacao','tipo','produto','cliente__nome_fantasia','fornecedor__nome')
     search_fields = ['contrato','quantidade_pedido','produto','situacao','data','fornecedor__nome','cliente__nome','preco_produto', 'variedade','tipo','quantidade_pedido']
     history_list_display = ["quantidade_pedido","preco_frete","changed_fields_pedido"]
+
+    def tem_pedido(self, obj):
+        if obj.pedido_arquivo:
+            obj_res = True
+        else:
+            obj_res = False
+        return obj_res
+
+    tem_pedido.boolean = True
+    tem_pedido.short_description = u"Arquivo"
 
     def changed_fields_pedido(self, obj):
         if obj.prev_record:

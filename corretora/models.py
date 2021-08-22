@@ -14,9 +14,18 @@ from ricef.settings import *
 
 
 def get_file_path_comprovantes(instance, filename):
-    ext = filename.split('.')[-1]
-    name =filename.split('.')[0] 
-    filename = f'/corretora/comprovantes/{uuid.uuid4()}__{name}.{ext}'
+    ext       = filename.split('.')[-1]
+    name      = filename.split('.')[0]
+    date_file = datetime.datetime.now().strftime('%Y%m%d')
+    mot_name  = ''.join(instance.motorista.split()).lower() 
+    filename  = f'/corretora/comprovantes/{date_file}_{instance.placa}_{mot_name}_{uuid.uuid4()}__{name}.{ext}'
+    return filename
+
+def get_file_path_pedidos(instance, filename):
+    ext       = filename.split('.')[-1]
+    name      = filename.split('.')[0].replace('/',"").replace(" ","_")
+    date_file = datetime.datetime.now().strftime('%Y%m%d')
+    filename  = f'/corretora/pedidos/{date_file}_{instance.contrato}_{instance.cliente.nome_fantasia}_{name}.{ext}'
     return filename
 
 class NameField(models.CharField):
@@ -1134,6 +1143,8 @@ class Pedido(Base):
     produto           = models.CharField('Produto', max_length=17, choices=PROD_CHOICES,default='Arroz em Casca')
     tipo              = models.CharField('Tipo', max_length=12, choices=TIPO_CHOICES, default='Saco 50Kg')
     quantidade_pedido = models.PositiveIntegerField('Quant. Pedido', help_text="Peso em Kg")
+
+    pedido_arquivo = models.FileField('Pedido ', upload_to=get_file_path_pedidos, null=True, blank=True)
     
 
     obs     = models.TextField('Observação', max_length=500, blank=True)
