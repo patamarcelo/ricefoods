@@ -18,7 +18,7 @@ def get_file_path_comprovantes(instance, filename):
     name      = filename.split('.')[0]
     date_file = datetime.datetime.now().strftime('%Y%m%d')
     mot_name  = ''.join(instance.motorista.split()).lower() 
-    filename  = f'/corretora/comprovantes/{date_file}_{instance.placa}_{mot_name}_{uuid.uuid4()}__{name}.{ext}'
+    filename  = f'/corretora/comprovantes/{instance.transp.nome}/{date_file}_{instance.placa}_{mot_name}_{str(uuid.uuid4())[:8]}__{name}.{ext}'
     return filename
 
 def get_file_path_pedidos(instance, filename):
