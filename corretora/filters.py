@@ -161,8 +161,10 @@ class CargasFilter(django_filters.FilterSet):
         return queryset.filter(gera_comi_frete=expression)
     
     def com_comprovante_d(self, queryset, name, value):
-        expression = ~Q(comprovante_descarga=None) if value == "True" else Q(comprovante_descarga=None)
-        return queryset.filter(expression)
+        if value == "True":
+            return queryset.filter(comprovante_descarga__startswith='/correto')
+        else:
+            return queryset.filter(~Q(comprovante_descarga__startswith='/correto'))
 
     def filtrando_comissao(self, queryset, name, value):
         qs = set()
