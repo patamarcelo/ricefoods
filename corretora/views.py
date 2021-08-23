@@ -932,7 +932,9 @@ class UpdatecomprovdescargaCargasView(SuccessMessageMixin, LoginRequiredMixin, U
         data_descarga        = form.cleaned_data['data_descarga']
         obs_descarga         = form.cleaned_data['obs_descarga']
         subject = f"{transpNome.title()} - Comprovante: {placa} - {motorista.title()}"
-        text = f'{boas_vindas()} \n\n{transpContato.title()}\n\n\nSegue comprovante em anexo.'
+        text = f'{boas_vindas()} \n\n{transpContato.title()}\n\n\nSegue comprovante em anexo: {placa} - {motorista.title()}.\n\n\n'
+        if obs_descarga:
+            text = f'{boas_vindas()} \n\n{transpContato.title()}\n\n\nSegue comprovante em anexo: {placa} - {motorista.title()}.\n\n\nObs.:\t {obs_descarga}'
         email = ['marcelo@gdourado.com.br',transpMail]
         try:
             if 'comprovante_descarga' in self.request.FILES and transp_recebe_email == True:
