@@ -884,8 +884,16 @@ class UpdatecomissCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView
     fields = ('pgcomissao', 'vpcomissaoc', 'vpcomissaof', 'obs_comissao')
     success_url = reverse_lazy('cargas')
 
-     
-
+class UpdatecomprovdescargaCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    login_url = 'login'
+    
+    model = Carga
+    template_name = 'carga_comprovante_descarga.html'
+    success_message = 'Comprovante salvo com sucesso!!'
+    fields = ('comprovante_descarga', 'data_descarga', 'obs_descarga')
+    success_url = reverse_lazy('cargas')
+    
+    
 
 class DeleteCargasView(LoginRequiredMixin,SuccessMessageMixin, DeleteView):
     login_url = 'login'

@@ -1,0 +1,106 @@
+{% extends 'basecorretora.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+</div>
+<style>
+
+    .badge {
+        margin: 0px;
+    }
+
+    .textarea {
+        max-height: 150px;
+    }
+     #div_id_obs_comissao {
+         margin-top: 20px;
+    }
+
+    body {
+        background-color: black;
+    }
+
+    .form-body {
+        border: 0.2px solid #ccc;
+        padding: 20px;
+        padding-bottom: 0px;
+        background-color: #363639;
+        color: blanchedalmond;
+    }
+</style>
+<form method="POST" enctype="multipart/form-data">
+    <div class="container" style="padding-left: 160px;">
+        <div class="d-flex flex-column ">
+            <div class="row" style="margin: 0px;">        
+                <div class="d-flex flex-column justify-content-start">
+                    <div class="flex-row justify-content-start">
+                        <br>
+                        <h4> <span class="badge badge-primary "> {{carga.pedido}}
+                            </span>&nbsp;&nbsp;<span
+                                class="badge badge-dark">{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}
+                                |
+                                {{carga.motorista|title}} | NF {{carga.notafiscal}}</span></h4>
+                    </div>
+                    <div class="flex-row justify-content-start">                    
+                        <h5> <span class="badge badge-warning ">{{carga.pedido.fornecedor.nome}}</span>
+                            &nbsp;&nbsp;<span
+                                class="badge badge-success ">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
+                    </div>
+                </div>                                  
+            </div>
+            <br>
+
+            {% csrf_token %}
+            <hr>
+            <div class="d-flex justify-content-start form-body">
+                <div class="flex-column col-12 justify-content-start pl-0">             
+                        <div class="flex-row justify-content-start mb-3" style="text-align: left;">
+                                {{ form.obs_descarga|as_crispy_field }}
+                        </div>        
+                        <div class="flex-row justify-content-start mb-3" style="text-align: left;">
+                            <div class="col-3 ml-0 pl-0">    
+                                {{ form.data_descarga|as_crispy_field }}
+                            </div>
+                        </div>        
+                        <div class="flex-row justify-content-start mb-3" style="text-align: left;">
+                                {{ form.comprovante_descarga|as_crispy_field }}
+                        </div>        
+                </div>
+            </div>
+
+    
+
+
+    {% buttons %}
+            <div class="d-flex justify-content-start">
+                <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 0px;">Salvar</button>
+                <button type="button" class="btn btn-outline-warning btn-sm">
+                    <a href="{% url 'cargas' %}">Cancelar</a>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    {% endbuttons %}
+
+</form>
+
+
+
+<script type="text/javascript" src="{% static 'js/jquery.mask.js' %}"></script>
+<script>
+    $(document).ready(function() {
+        $("#id_data_descarga").mask("00/00/0000");
+        console.log('marcelo')
+    })
+</script>
+
+
+<!-- jQuery Masks-->
+{% endblock %}
+

@@ -309,7 +309,7 @@ class CargaAdmin(SimpleHistoryAdmin):
             'fields': ('gera_comi_frete','comi_frete_ton', 'comi_frete_total')
         }),
     ('Descarga', {
-            'fields': ('data_descarga','comprovante_descarga')
+            'fields': ('data_descarga','comprovante_descarga','obs_descarga')
         }),
     )
     raw_id_fields = ('pedido', )

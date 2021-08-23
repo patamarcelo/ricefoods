@@ -2,6 +2,7 @@ import django_filters
 from django_filters import *
 from .models import *
 from django import forms
+from django.db.models import Q
 
 # https://youtu.be/nle3u6Ww6Xk
 
@@ -37,6 +38,12 @@ class CargasFilter(django_filters.FilterSet):
     
     com_comissao_frete = django_filters.ChoiceFilter(
         label="Comi. F. ?",  choices=CHOICES4, method="com_sem_comissao_f"
+    )
+    
+    CHOICES5 = (('True', 'Contém'),('False', 'Não Contém'))
+    
+    com_comprovante_descarga = django_filters.ChoiceFilter(
+        label="Comp. D. ?",  choices=CHOICES5, method="com_comprovante_d"
     )
     
     
@@ -152,6 +159,10 @@ class CargasFilter(django_filters.FilterSet):
     def com_sem_comissao_f(self, queryset, name, value):
         expression = True if value == "True" else False
         return queryset.filter(gera_comi_frete=expression)
+    
+    def com_comprovante_d(self, queryset, name, value):
+        expression = ~Q(comprovante_descarga=None) if value == "True" else Q(comprovante_descarga=None)
+        return queryset.filter(expression)
 
     def filtrando_comissao(self, queryset, name, value):
         qs = set()

@@ -1335,6 +1335,7 @@ class Carga(Base):
     
     comprovante_descarga = models.FileField('Comprovante Descarga', upload_to=get_file_path_comprovantes, null=True, blank=True)
     data_descarga        = models.DateField('Data Descarga', null=True, blank=True, default=None, help_text="dd/mm/aaaa")
+    obs_descarga         = models.TextField('Observação Descarga', max_length=500, null=True, blank=True)
 
     
     history      = HistoricalRecords()

@@ -244,6 +244,10 @@
                     </div>
                     {% else %}
                     {% endif %}
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Descarga" data-placement="bottom"
+                        placeholder="Descarga">
+                        {{ filter.form.com_comprovante_descarga|as_crispy_field }}
+                    </div>
                 </div>
                 <div class="row">
 
@@ -363,6 +367,7 @@
                             <th scope="col">Cliente</th>
                             <th scope="col">Descarga</th>
                             <th scope="col" class="text text-center">Class.</th>
+                            <th scope="col" class="text text-center">Comp. D.</th>
                             {% if user.is_superuser%}
                             <th scope="col" class="text text-center">Comi. F.</th>
                             <th scope="col" class="text text-center">Comiss.</th>
@@ -374,11 +379,11 @@
                     <tbody>
                         {% if user.is_superuser%}
                         <tr>
-                            <th class="text text-danger" scope="row" colspan="21" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
+                            <th class="text text-danger" scope="row" colspan="22" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
                         </tr>
                         {% else %}
                         <tr>
-                            <th class="text text-danger" scope="row" colspan="19" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
+                            <th class="text text-danger" scope="row" colspan="20" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
                         </tr>
                         {% endif %}
             {% else %}
@@ -410,6 +415,7 @@
                             <th scope="col">Produto</th>
                             <th scope="col">Descarga</th>
                             <th scope="col" class="text text-center">Class.</th>
+                            <th scope="col" class="text text-center">Comp. D.</th>
                             {% if user.is_superuser%}
                             <th scope="col" class="text text-center">Comi. F.</th>
                             <th scope="col" class="text text-center">Comiss.</th>
@@ -649,6 +655,12 @@
                                 {% endif %}
                                 {% else %}
                             <td align="center"><b> - </b></td>
+                            {% endif %}
+
+                            {% if carga.comprovante_descarga %}
+                            <td ><a class="text text-success" target="_blank" href="{% url 'update_comprovante_descarga' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i>                            </a></td>
+                            {% else %}
+                            <td ><a class="text text-danger" target="_blank" href="{% url 'update_comprovante_descarga' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i>                            </a></td>
                             {% endif %}
 
 
