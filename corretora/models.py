@@ -1075,13 +1075,14 @@ class Datasemcarga(Base):
 
 
 class Transportadora(Base):
-    nome     = models.CharField('Nome', max_length=20, unique=True)
-    cidade   = models.ForeignKey(Cidade, on_delete=models.PROTECT)
-    estado   = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
-    contato  = models.CharField('Contato', max_length=30, blank=True)
-    telefone = models.CharField('Telefone', max_length=15, blank=True, help_text="digite apenas números")
-    email    = models.EmailField('E-mail', max_length=30,blank=True)
-    obs      = models.TextField('Observação', max_length=500, blank=True)
+    recebe_email_comprovante = models.BooleanField('Recebe Comprovante E-mail', default=False)
+    nome                     = models.CharField('Nome', max_length=20, unique=True)
+    cidade                   = models.ForeignKey(Cidade, on_delete=models.PROTECT)
+    estado                   = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
+    contato                  = models.CharField('Contato', max_length=30, blank=True)
+    telefone                 = models.CharField('Telefone', max_length=15, blank=True, help_text="digite apenas números")
+    email                    = models.EmailField('E-mail', max_length=30,blank=True)
+    obs                      = models.TextField('Observação', max_length=500, blank=True)
 
     class Meta:
         ordering = ['nome']

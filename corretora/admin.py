@@ -282,12 +282,20 @@ admin.site.register(Pedido, PedidoAdmin)
 
 @admin.register(Transportadora)
 class TransportadoraAdmin(admin.ModelAdmin):
-    list_display = ('nome','contato','email','telefone','cidade','estado','ativo','get_modificado')
-    fields = ['ativo', ('nome','contato'),('cidade','estado'),('email','telefone'),'obs']
+    list_display = ('nome','contato','email','telefone','cidade','estado','ativo','get_modificado','get_recebe_email_comprovante')
+    fields = ['ativo', 'recebe_email_comprovante', ('nome','contato'),('cidade','estado'),('email','telefone'),'obs']
 
     def get_modificado(self,obj):
         return date_format(obj.modificado, format='SHORT_DATE_FORMAT', use_l10n=True)
     get_modificado.short_description = 'Atualização'
+    
+    def get_recebe_email_comprovante(self,obj):
+        if obj.recebe_email_comprovante:
+            return True
+        else:
+            return False
+    get_recebe_email_comprovante.boolean = True
+    get_recebe_email_comprovante.short_description = 'Recebe Comp?'
 
 # @admin.register(Carga)
 class CargaAdmin(SimpleHistoryAdmin):

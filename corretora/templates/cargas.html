@@ -318,6 +318,7 @@
                         <th scope="col">Cliente</th>
                         <th scope="col">Descarga</th>
                         <th scope="col" class="text text-center">Class.</th>
+                        <th scope="col" class="text text-center">Comp. D.</th>
                         {% if user.is_superuser%}
                         <th scope="col" class="text text-center">Comiss.</th>
                         {% endif %}
@@ -560,6 +561,13 @@
                             {% else %}
                         <td align="center"><b> - </b></td>
                         {% endif %}
+
+                        {% if carga.comprovante_descarga %}
+                        <td ><a class="text text-success" target="_blank" href="{% url 'update_comprovante_descarga' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i>                            </a></td>
+                        {% else %}
+                        <td ><a class="text text-danger" target="_blank" href="{% url 'update_comprovante_descarga' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i>                            </a></td>
+                        {% endif %}
+
 
 
 

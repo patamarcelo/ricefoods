@@ -48,14 +48,20 @@
                     <div class="flex-row justify-content-start">                    
                         <h5> <span class="badge badge-warning ">{{carga.pedido.fornecedor.nome}}</span>
                             &nbsp;&nbsp;<span
-                                class="badge badge-success ">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
+                                class="badge" style="background-color: {{carga.pedido.cliente.color}};">{{carga.pedido.cliente.nome_fantasia}}</span></h5>
+                    </div>
+                    <div class="flex-row justify-content-start">                    
+                        {% if 'GDX' in carga.transp.nome|upper %}
+                        <h5> <span class="badge badge-info ">{{carga.transp.nome|title}}</span></h5>
+                        {% else %}
+                        <h5> <span class="badge badge-secondary ">{{carga.transp.nome|title}}</span></h5>
+                        {% endif %}
+                        
                     </div>
                 </div>                                  
             </div>
-            <br>
 
             {% csrf_token %}
-            <hr>
             <div class="d-flex justify-content-start form-body">
                 <div class="flex-column col-12 justify-content-start pl-0">             
                         <div class="flex-row justify-content-start mb-3" style="text-align: left;">
@@ -77,8 +83,8 @@
 
     {% buttons %}
             <div class="d-flex justify-content-start">
-                <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 0px;">Salvar</button>
-                <button type="button" class="btn btn-outline-warning btn-sm">
+                <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 0px;" data-toggle="tooltip" title="Salvar" data-placement="bottom">Salvar</button>
+                <button type="button" class="btn btn-outline-warning btn-sm" data-toggle="tooltip" title="Cancelar" data-placement="bottom">
                     <a href="{% url 'cargas' %}">Cancelar</a>
                 </button>
             </div>
@@ -96,9 +102,12 @@
 <script>
     $(document).ready(function() {
         $("#id_data_descarga").mask("00/00/0000");
-        console.log('marcelo')
-    })
+    });
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
 </script>
+
 
 
 <!-- jQuery Masks-->

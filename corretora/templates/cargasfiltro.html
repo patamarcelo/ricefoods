@@ -320,6 +320,7 @@
                     <th scope="col">Produto</th>
                     <th scope="col">Descarga</th>
                     <th scope="col" class="text text-center">Class.</th>
+                    <th scope="col" class="text text-center">Comp. D.</th>
                     {% if user.is_superuser%}
                     <th scope="col" class="text text-center">Comi. F.</th>
                     <th scope="col" class="text text-center">Comiss.</th>
@@ -331,11 +332,11 @@
             <tbody>
                 {% if user.is_superuser%}
                 <tr>
-                    <th class="text text-info" scope="row" colspan="22" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
+                    <th class="text text-info" scope="row" colspan="23" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
                 </tr>
                 {% else %}
                 <tr>
-                    <th class="text text-info" scope="row" colspan="20" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
+                    <th class="text text-info" scope="row" colspan="21" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
                 </tr>
                 {% endif %}
             </tbody>

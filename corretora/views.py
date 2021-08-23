@@ -13,6 +13,8 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.core import serializers
 
+from django.core.mail import send_mail, EmailMessage
+
 
 
 
@@ -43,10 +45,7 @@ from . import filters
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 
-
-
-
-
+from .forms import CompDescargaForm
 
 class CargasFiltradasView(LoginRequiredMixin, FilterView):
     login_url = 'login'    
@@ -886,13 +885,78 @@ class UpdatecomissCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView
 
 class UpdatecomprovdescargaCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     login_url = 'login'
-    
+    form_class = CompDescargaForm
     model = Carga
     template_name = 'carga_comprovante_descarga.html'
     success_message = 'Comprovante salvo com sucesso!!'
-    fields = ('comprovante_descarga', 'data_descarga', 'obs_descarga')
+    # fields = ('comprovante_descarga', 'data_descarga', 'obs_descarga')
     success_url = reverse_lazy('cargas')
+
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        print(self.object.id)
+        tranps_get_id = self.object.transp.id
+        transp = Transportadora.objects.all().filter(id=tranps_get_id)
+        print(transp[0].email)
+        return super(UpdatecomprovdescargaCargasView, self).get(request, *args, **kwargs)
     
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        print(self.object)
+        return super(UpdatecomprovdescargaCargasView, self).post(request, *args, **kwargs)
+
+    def form_valid(self, form, *args, **kwargs):
+        def boas_vindas():
+            hora_atual = datetime.datetime.now()
+            hora_atual_print = hora_atual.strftime("%H:%M:%S")
+            hora = int(hora_atual.strftime("%H"))
+            minutos = int(hora_atual.strftime("%M"))
+            segundos = int(hora_atual.strftime("%S"))
+            if hora > 11:
+                return f"Boa tarde,\n"
+            else:
+                return f"Bom dia,\n"
+        self.object    = self.get_object()
+        motorista      = self.object.motorista
+        placa          = self.object.placa
+        notafiscal     = self.object.notafiscal
+        tranps_get_id  = self.object.transp.id
+        transp         = Transportadora.objects.all().filter(id=tranps_get_id)
+        transpNome     = transp[0].nome
+        transpMail    = transp[0].email
+        transpContato = transp[0].contato
+        transp_recebe_email = transp[0].recebe_email_comprovante
+        if 'comprovante_descarga' in self.request.FILES:
+            comprovante_descarga = self.request.FILES['comprovante_descarga']
+        data_descarga        = form.cleaned_data['data_descarga']
+        obs_descarga         = form.cleaned_data['obs_descarga']
+        subject = f"{transpNome.title()} - Comprovante: {placa} - {motorista.title()}"
+        text = f'{boas_vindas()} \n\n{transpContato.title()}\n\n\nSegue comprovante em anexo.'
+        email = ['marcelo@gdourado.com.br',transpMail]
+        try:
+            if 'comprovante_descarga' in self.request.FILES and transp_recebe_email == True:
+                mail = EmailMessage(
+                    subject=subject,
+                    body=text,
+                    from_email='contato@gdourado.com.br',
+                    to=email,
+                    headers={'Reply-To': 'marcelo@gdourado.com.br'}
+                )
+                mail.attach(comprovante_descarga.name, comprovante_descarga.read(), comprovante_descarga.content_type)
+                mail.send()
+                messages.success(self.request, f'Comprovante de {placa} - {motorista.title()} Enviado com successo para {transpNome.title()}')
+            else:
+                print('Salvo somente no DB')
+        except Exception as e:
+            print(e)
+        return super(UpdatecomprovdescargaCargasView, self).form_valid(form, *args, **kwargs)
+    
+
+    def form_invalid(self, form, *args, **kwargs):
+        messages.error(self.request, 'Erro ao enviar e-mail')
+        return super(UpdatecomprovdescargaCargasView, self).form_invalid(form, *args, **kwargs)
+
     
 
 class DeleteCargasView(LoginRequiredMixin,SuccessMessageMixin, DeleteView):
