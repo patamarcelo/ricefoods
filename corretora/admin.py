@@ -139,7 +139,7 @@ class FornecedorAdmin(admin.ModelAdmin):
 
 @admin.register(EmpresaCorretora)
 class EmpresaCorretoraAdmin(admin.ModelAdmin):
-    list_display = ('nome','cpf_cnpj','cidade','ativo','get_modificado') 
+    list_display = ('nome','cpf_cnpj','cidade','ativo') 
     fieldsets = (
         ('Situação', {
             'fields': ('ativo',)
@@ -162,10 +162,6 @@ class EmpresaCorretoraAdmin(admin.ModelAdmin):
     search_fields = ['nome','endereco','cidade__cidade','cidade__estado']
     list_filter = ('ativo',)
 
-    def get_modificado(self,obj):
-        if ob.modificado:
-            return date_format(obj.modificado, format='SHORT_DATE_FORMAT', use_l10n=True)
-    get_modificado.short_description = 'Atualização'
 
     def cpf_cnpj(self,obj):
         cpff = obj.cnpj_cpf
