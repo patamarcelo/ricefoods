@@ -1396,10 +1396,8 @@ class Carga(Base):
     data_descarga        = models.DateField('Data Descarga', null=True, blank=True, default=None, help_text="dd/mm/aaaa")
     obs_descarga         = models.TextField('Observação Descarga', max_length=500, null=True, blank=True)
 
-    fatura_frete_terceiros = models.ForeignKey(FaturaCargasComiFrete, on_delete=models.SET_NULL, null=True, blank=True )
-    
+    fatura_frete_terceiros = models.ForeignKey(FaturaCargasComiFrete, on_delete=models.SET_NULL, null=True, blank=True, limit_choices_to = {'pagamento_fatura': False})
 
-    
     history      = HistoricalRecords()
 
 
