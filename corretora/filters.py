@@ -46,6 +46,12 @@ class CargasFilter(django_filters.FilterSet):
         label="Comp. D. ?",  choices=CHOICES5, method="com_comprovante_d"
     )
     
+    CHOICES6 = (('True', 'Faturado'),('False', 'Não Fat'))
+    
+    com_fatura_terceiros = django_filters.ChoiceFilter(
+        label="Fat. Terc. ?",  choices=CHOICES6, method="frete_com_fatura"
+    )
+    
     
 
     transp = django_filters.ModelMultipleChoiceFilter(
@@ -165,6 +171,11 @@ class CargasFilter(django_filters.FilterSet):
             return queryset.filter(comprovante_descarga__startswith='/correto')
         else:
             return queryset.filter(~Q(comprovante_descarga__startswith='/correto'))
+    
+    def frete_com_fatura(self, queryset, name, value):
+        expression = ~Q(fatura_frete_terceiros=None) if value == "True" else Q(fatura_frete_terceiros=None)
+        return queryset.filter(expression)
+    
 
     def filtrando_comissao(self, queryset, name, value):
         qs = set()

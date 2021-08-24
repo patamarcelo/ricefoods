@@ -429,7 +429,7 @@ admin.site.register(Carga, CargaAdmin)
 
 
 class FaturaCargasComiFreteAdmin(SimpleHistoryAdmin):
-    list_display = ('numero','empresa','get_data_fatura', 'get_data_fatura_vencimento', 'valor_total_fatura', 'transportadora')
+    list_display = ('numero','empresa','get_data_fatura', 'get_data_fatura_vencimento', 'valor_total_fatura', 'transportadora','enviada_cobranca','pagamento_fatura')
     fieldsets = (
     ('Situaçào', {
         'fields': ('ativo',)
@@ -437,8 +437,11 @@ class FaturaCargasComiFreteAdmin(SimpleHistoryAdmin):
     ('Dados', {
         'fields': (('numero','empresa'),'data_fatura','data_fatura_vencimento','valor_total_fatura','transportadora')
         }),
+    ('Dados', {
+        'fields': ('obs',)
+        }),
     ('Cobrança', {
-        'fields': ('enviada_cobranca',)
+        'fields': ('enviada_cobranca','pagamento_fatura')
         }),
     
     )
@@ -465,6 +468,40 @@ class FaturaCargasComiFreteAdmin(SimpleHistoryAdmin):
     
 
 admin.site.register(FaturaCargasComiFrete, FaturaCargasComiFreteAdmin)
+
+
+class PagamentoFaturaCargasComiFreteAdmin(SimpleHistoryAdmin):
+    list_display = ('fatura','get_data_fatura_pagamento', 'valor_pago_fatura','pagador', 'conta_pagadora')
+    fieldsets = (
+    ('Situaçào', {
+        'fields': ('ativo',)
+    }),
+    ('Dados', {
+        'fields': (('fatura','data_fatura_pagamento'),'valor_pago_fatura','pagador','conta_pagadora')
+        }),
+    ('Dados', {
+        'fields': ('obs',)
+        }),
+    
+    )
+    list_filter = ('fatura','data_fatura_pagamento')
+    search_fields = ['fatura']
+    history_list_display = ['fatura','data_fatura_pagamento', 'valor_pago_fatura','pagador', 'conta_pagadora', 'obs', "changed_fields"]
+
+
+    def changed_fields(self, obj):
+        if obj.prev_record:
+            delta = obj.diff_against(obj.prev_record)
+            camposalterados = str(delta.changed_fields)
+            return camposalterados
+        else:
+            return 'Sem Alterações'
+    
+    def get_data_fatura_pagamento(self,obj):
+        return date_format(obj.data_fatura_pagamento, format='SHORT_DATE_FORMAT', use_l10n=True)
+    get_data_fatura_pagamento.short_description = 'Data Pgto. Fatura'
+    
+admin.site.register(PagamentoFaturaCargasComiFrete, PagamentoFaturaCargasComiFreteAdmin)
     
     
     

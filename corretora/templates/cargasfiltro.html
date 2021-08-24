@@ -242,6 +242,10 @@
                         placeholder="Descarga">
                         {{ filter.form.com_comissao_frete|as_crispy_field }}
                     </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Descarga" data-placement="bottom"
+                        placeholder="Descarga">
+                        {{ filter.form.com_fatura_terceiros|as_crispy_field }}
+                    </div>
                     {% else %}
                     {% endif %}
                     <div class="col-2 form-group" data-toggle="tooltip" title="Descarga" data-placement="bottom"

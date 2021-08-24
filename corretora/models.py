@@ -1293,7 +1293,9 @@ class FaturaCargasComiFrete(Base):
     data_fatura_vencimento = models.DateField('Data Vencimento Fatura', null=True, blank=True, default=None, help_text="dd/mm/aaaa")
     valor_total_fatura     = models.DecimalField('Valor Fatura', max_digits=20, decimal_places=2,  null=True, blank=True)
     transportadora         = models.ForeignKey(Transportadora, on_delete=models.PROTECT, null=True, blank=True)
+    obs                    = models.TextField('Observação', max_length=500, blank=True, null=True)
     enviada_cobranca       = models.BooleanField('Enviada Cobrança?', default=False)
+    pagamento_fatura       = models.BooleanField('Fatura Paga?', default=False)
     history                = HistoricalRecords()
 
     class Meta: 
@@ -1302,6 +1304,22 @@ class FaturaCargasComiFrete(Base):
     
     def __str__(self):
         return self.numero
+
+class PagamentoFaturaCargasComiFrete(Base):
+    fatura                = models.ForeignKey(FaturaCargasComiFrete, on_delete=models.PROTECT, limit_choices_to = {'pagamento_fatura': False})
+    data_fatura_pagamento = models.DateField('Data Pagamento Fatura', null=True, blank=True, help_text="dd/mm/aaaa")
+    valor_pago_fatura     = models.DecimalField('Valor Pago Fatura', max_digits=20, decimal_places=2,  null=True, blank=True)
+    pagador               = models.CharField('Pagador', max_length=20, unique=True,  null=True, blank=True)
+    conta_pagadora        = models.TextField('Conta Pagador', max_length=200, unique=True,  null=True, blank=True)
+    obs                    = models.TextField('Observação', max_length=500, blank=True)
+    history               = HistoricalRecords()
+
+    class Meta: 
+        verbose_name = 'Pagamento Fatura Terceiros'    
+        verbose_name_plural = 'Pagamentos Faturas Terceiros'    
+    
+    def __str__(self):
+        return self.fatura.numero
 
 
 
