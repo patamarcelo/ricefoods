@@ -104,6 +104,8 @@ def get_last_cartao_base():
         last_used = CartaoVp.objects.all().last().cartao_base
     return last_used
 
+
+
 class CartaoVp(Base):
     cartao_numero    = models.CharField('Número do Cartão',max_length=16, help_text="Somente os 16 números", unique=True)
     cartao_base      = models.CharField('Local Cartão', max_length=17, choices=BASE_CARTAOVP, default=get_last_cartao_base)
@@ -138,6 +140,25 @@ class Cidade(Base):
     def __str__(self):
         return self.cidade
 
+class EmpresaCorretora(Base):
+    nome          = models.CharField('Nome', max_length=50)
+    cnpj_cpf      = models.CharField('CNPJ/CPF', max_length=14, unique=True, null=True, help_text="digite apenas números")
+    insc_estadual = models.CharField('Inscrição Estadual',  unique=True, max_length=13,null=True,help_text="digite apenas números")
+    banco         = models.CharField('Banco', max_length=10, blank=True)
+    agencia       = models.CharField('Agencia', max_length=5,blank=True, help_text="digite apenas números")
+    conta         = models.CharField('Conta', max_length=12,blank=True, help_text="digite apenas números")
+    endereco      = models.CharField('Endereço', max_length=50)
+    cidade        = models.ForeignKey(Cidade, on_delete=models.PROTECT)
+    estado        = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
+    obs           = models.TextField('Observação', max_length=500, blank=True)
+
+    class Meta:
+        verbose_name = 'Corretora'
+        verbose_name_plural = 'Corretoras'
+
+    def __str__(self):
+        return self.nome
+
 
 
 
@@ -156,9 +177,9 @@ class Fornecedor(Base):
     banco         = models.CharField('Banco', max_length=10, blank=True)
     agencia       = models.CharField('Agencia', max_length=5,blank=True, help_text="digite apenas números")
     conta         = models.CharField('Conta', max_length=12,blank=True, help_text="digite apenas números")
-    endereco      = models.CharField('Endereço', max_length=50)
     cidade        = models.ForeignKey(Cidade, on_delete=models.PROTECT)
     estado        = models.TextField('Estado', max_length=12, choices=UF_CHOICES)
+    endereco      = models.CharField('Endereço', max_length=50, default='', blank=True, null=True)
     obs           = models.TextField('Observação', max_length=500, blank=True)
 
     
@@ -1265,6 +1286,25 @@ class Pedido(Base):
         return self.contrato   
 
 
+class FaturaCargasComiFrete(Base):
+    numero                 = models.CharField('Número Fatura', max_length=20, unique=True,  null=True, blank=True)
+    empresa                = models.ForeignKey(EmpresaCorretora, on_delete=models.PROTECT, null=True, blank=True)
+    data_fatura            = models.DateField('Data Fatura', null=True, blank=True, default=None, help_text="dd/mm/aaaa")
+    data_fatura_vencimento = models.DateField('Data Vencimento Fatura', null=True, blank=True, default=None, help_text="dd/mm/aaaa")
+    valor_total_fatura     = models.DecimalField('Valor Fatura', max_digits=20, decimal_places=2,  null=True, blank=True)
+    transportadora         = models.ForeignKey(Transportadora, on_delete=models.PROTECT, null=True, blank=True)
+    enviada_cobranca       = models.BooleanField('Enviada Cobrança?', default=False)
+    history                = HistoricalRecords()
+
+    class Meta: 
+        verbose_name = 'Fatura Terceiros'    
+        verbose_name_plural = 'Faturas Terceiros'    
+    
+    def __str__(self):
+        return self.numero
+
+
+
 def get_default_transp_name():
     return Transportadora.objects.get(nome="GDX Log")
 
@@ -1338,6 +1378,9 @@ class Carga(Base):
     data_descarga        = models.DateField('Data Descarga', null=True, blank=True, default=None, help_text="dd/mm/aaaa")
     obs_descarga         = models.TextField('Observação Descarga', max_length=500, null=True, blank=True)
 
+    fatura_frete_terceiros = models.ForeignKey(FaturaCargasComiFrete, on_delete=models.SET_NULL, null=True, blank=True )
+    
+
     
     history      = HistoricalRecords()
 
@@ -1396,6 +1439,10 @@ class Carga(Base):
             pass
     
     def save(self, *args, **kwargs):
+        if self.pk is not None:
+            orig = Carga.objects.get(pk=self.pk)
+            if "GDX" in orig.transp.nome and "GDX" not in self.transp.nome:
+                self.gera_comi_frete = True
         if not self.pk:
             if "GDX" in self.transp.nome:
                 self.gera_comi_frete = False
@@ -1418,4 +1465,6 @@ class Carga(Base):
 
     def __str__(self):
         return f'{self.placa} - {self.motorista}'
+
+
 

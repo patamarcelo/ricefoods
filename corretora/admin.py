@@ -118,7 +118,6 @@ class FornecedorAdmin(admin.ModelAdmin):
     get_modificado.short_description = 'Atualização'
 
 
-
     def cpf_cnpj(self,obj):
         
         cpff = obj.cnpj_cpf
@@ -136,6 +135,48 @@ class FornecedorAdmin(admin.ModelAdmin):
         if insc:
             return f'{insc[0:3]}/{insc[3:]}'
     get_insc.short_description = "Insc. Estadual"
+
+
+@admin.register(EmpresaCorretora)
+class EmpresaCorretoraAdmin(admin.ModelAdmin):
+    list_display = ('nome','cpf_cnpj','cidade','ativo','get_modificado') 
+    fieldsets = (
+        ('Situação', {
+            'fields': ('ativo',)
+        }),
+        (None, {
+            'fields': ('nome','cnpj_cpf','insc_estadual')
+        }),
+        ('Dados Bancáros',{
+            'fields': ('banco','agencia','conta')
+        }),
+        (None, {
+            'fields': (('cidade', 'estado'), 'endereco')
+        }),
+        ('Observação', {
+            'fields': ('obs',)
+        }),
+    )
+    
+    
+    search_fields = ['nome','endereco','cidade__cidade','cidade__estado']
+    list_filter = ('ativo',)
+
+    def get_modificado(self,obj):
+        if ob.modificado:
+            return date_format(obj.modificado, format='SHORT_DATE_FORMAT', use_l10n=True)
+    get_modificado.short_description = 'Atualização'
+
+    def cpf_cnpj(self,obj):
+        cpff = obj.cnpj_cpf
+        if cpff:
+            if len(cpff) <= 11:
+                return f'{cpff[0:3]}.{cpff[3:6]}.{cpff[6:9]}-{cpff[9:]}'
+            elif len(cpff) < 16:
+                return f'{cpff[0:2]}.{cpff[2:5]}.{cpff[5:8]}/{cpff[8:12]}.{cpff[12:]}'
+            else:
+                return cpff
+    cpf_cnpj.short_description = "CPF/CNPJ"
 
             
 
@@ -319,6 +360,9 @@ class CargaAdmin(SimpleHistoryAdmin):
     ('Descarga', {
             'fields': ('data_descarga','comprovante_descarga','obs_descarga')
         }),
+    ('Fatura', {
+            'fields': ('fatura_frete_terceiros',)
+        }),
     )
     raw_id_fields = ('pedido', )
     list_filter = ('situacao','pedido__produto','pedido__tipo','pedido__cliente','pedido__situacao', 'gera_comi_frete', 'transp__nome' ,'pedido__fornecedor')
@@ -385,6 +429,46 @@ class CargaAdmin(SimpleHistoryAdmin):
     
 
 admin.site.register(Carga, CargaAdmin)
+
+
+
+class FaturaCargasComiFreteAdmin(SimpleHistoryAdmin):
+    list_display = ('numero','empresa','get_data_fatura', 'get_data_fatura_vencimento', 'valor_total_fatura', 'transportadora')
+    fieldsets = (
+    ('Situaçào', {
+        'fields': ('ativo',)
+    }),
+    ('Dados', {
+        'fields': (('numero','empresa'),'data_fatura','data_fatura_vencimento','valor_total_fatura','transportadora')
+        }),
+    ('Cobrança', {
+        'fields': ('enviada_cobranca',)
+        }),
+    
+    )
+    list_filter = ('empresa','transportadora')
+    search_fields = ['empresa','transportadora','data_fatura','data_fatura_vencimento']
+    history_list_display = ['numero','empresa','data_fatura', 'data_fatura_vencimento', 'valor_total_fatura', 'transportadora', "changed_fields"]
+
+
+    def changed_fields(self, obj):
+        if obj.prev_record:
+            delta = obj.diff_against(obj.prev_record)
+            camposalterados = str(delta.changed_fields)
+            return camposalterados
+        else:
+            return 'Sem Alterações'
+    
+    def get_data_fatura(self,obj):
+        return date_format(obj.data_fatura, format='SHORT_DATE_FORMAT', use_l10n=True)
+    get_data_fatura.short_description = 'Data Fatura'
+    
+    def get_data_fatura_vencimento(self,obj):
+        return date_format(obj.data_fatura_vencimento, format='SHORT_DATE_FORMAT', use_l10n=True)
+    get_data_fatura_vencimento.short_description = 'Data Fatura Venc.'
+    
+
+admin.site.register(FaturaCargasComiFrete, FaturaCargasComiFreteAdmin)
     
     
     
