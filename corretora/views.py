@@ -14,6 +14,7 @@ from django.http import JsonResponse
 from django.core import serializers
 
 from django.core.mail import send_mail, EmailMessage
+import re
 
 
 
@@ -917,24 +918,25 @@ class UpdatecomprovdescargaCargasView(SuccessMessageMixin, LoginRequiredMixin, U
                 return f"Boa tarde,\n"
             else:
                 return f"Bom dia,\n"
-        self.object    = self.get_object()
-        motorista      = self.object.motorista
-        placa          = self.object.placa
-        notafiscal     = self.object.notafiscal
-        tranps_get_id  = self.object.transp.id
-        transp         = Transportadora.objects.all().filter(id=tranps_get_id)
-        transpNome     = transp[0].nome
-        transpMail    = transp[0].email
-        transpContato = transp[0].contato
+        self.object         = self.get_object()
+        motorista           = self.object.motorista
+        placa               = self.object.placa
+        notafiscal          = self.object.notafiscal
+        nf_format           = re.sub(r'(?<!^)(?=(\d{3})+$)', r'.', str(notafiscal))
+        tranps_get_id       = self.object.transp.id
+        transp              = Transportadora.objects.all().filter(id=tranps_get_id)
+        transpNome          = transp[0].nome
+        transpMail          = transp[0].email
+        transpContato       = transp[0].contato
         transp_recebe_email = transp[0].recebe_email_comprovante
         if 'comprovante_descarga' in self.request.FILES:
             comprovante_descarga = self.request.FILES['comprovante_descarga']
         data_descarga        = form.cleaned_data['data_descarga']
         obs_descarga         = form.cleaned_data['obs_descarga']
-        subject = f"{transpNome.title()} - Comprovante: {placa} - {motorista.title()}"
-        text = f'{boas_vindas()} \n\n{transpContato.title()}\n\n\nSegue comprovante em anexo: {placa} - {motorista.title()}.\n\n\n'
+        subject = f"{transpNome.title()} - Comprovante: {placa} - {motorista.title()} - NF: {nf_format}"
+        text = f'{boas_vindas()} \n\n{transpContato.title()}\n\n\nSegue comprovante em anexo: {placa} - {motorista.title()} - NF: {nf_format}\n\n\n'
         if obs_descarga:
-            text = f'{boas_vindas()} \n\n{transpContato.title()}\n\n\nSegue comprovante em anexo: {placa} - {motorista.title()}.\n\n\nObs.:\t {obs_descarga}'
+            text = f'{boas_vindas()} \n\n{transpContato.title()}\n\n\nSegue comprovante em anexo: {placa} - {motorista.title()} - NF: {nf_format}\n\n\nObs.:\t {obs_descarga}\n\n\n'
         email = ['marcelo@gdourado.com.br',transpMail]
         try:
             if 'comprovante_descarga' in self.request.FILES and transp_recebe_email == True:
