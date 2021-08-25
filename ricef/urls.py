@@ -55,6 +55,7 @@ urlpatterns = [
     path('corretora/agendamento', CargasAgendamentoView.as_view(), name='agendamento'), 
     path('corretora/agendamentoTeste', CargasAgendamentoViewTeste.as_view(), name='agendamentoTeste'), 
     path('corretora/cf', CargasFiltradasView.as_view(), name='cargasfiltro'), 
+    path('corretora/cfcomifrete', CargasFiltradasComissaoFreteView.as_view(), name='cargasfiltro_comifrete'), 
     path('corretora/cargas/add', CreateCargasView.as_view(), name='add_cargas'),
     path('corretora/cargas/add/age', CreateageCargasView.as_view(), name='add_age_cargas'),
     path('corretora/cargas/<int:pk>/update', UpdateCargasView.as_view(), name='upd_cargas'), 

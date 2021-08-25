@@ -469,11 +469,13 @@ class FaturaCargasComiFreteAdmin(SimpleHistoryAdmin):
             return 'Sem Alterações'
     
     def get_data_fatura(self,obj):
-        return date_format(obj.data_fatura, format='SHORT_DATE_FORMAT', use_l10n=True)
+        if obj.data_fatura:
+            return date_format(obj.data_fatura, format='SHORT_DATE_FORMAT', use_l10n=True)
     get_data_fatura.short_description = 'Data Fatura'
     
     def get_data_fatura_vencimento(self,obj):
-        return date_format(obj.data_fatura_vencimento, format='SHORT_DATE_FORMAT', use_l10n=True)
+        if obj.data_fatura_vencimento:
+            return date_format(obj.data_fatura_vencimento, format='SHORT_DATE_FORMAT', use_l10n=True)
     get_data_fatura_vencimento.short_description = 'Data Fatura Venc.'
     
 
@@ -508,7 +510,8 @@ class PagamentoFaturaCargasComiFreteAdmin(SimpleHistoryAdmin):
             return 'Sem Alterações'
     
     def get_data_fatura_pagamento(self,obj):
-        return date_format(obj.data_fatura_pagamento, format='SHORT_DATE_FORMAT', use_l10n=True)
+        if obj.data_fatura_pagamento:
+            return date_format(obj.data_fatura_pagamento, format='SHORT_DATE_FORMAT', use_l10n=True)
     get_data_fatura_pagamento.short_description = 'Data Pgto. Fatura'
     
 admin.site.register(PagamentoFaturaCargasComiFrete, PagamentoFaturaCargasComiFreteAdmin)

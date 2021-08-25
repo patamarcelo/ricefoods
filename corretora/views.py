@@ -89,6 +89,49 @@ class CargasFiltradasView(LoginRequiredMixin, FilterView):
         context['comitotal'] = get_total_comissao()
         return context
 
+class CargasFiltradasComissaoFreteView(LoginRequiredMixin, SuperuserRequiredMixin, FilterView):
+    login_url = 'login'    
+    model = Carga
+    template_name = 'cargasfiltro_comissaofrete.html'  
+    filterset_class = CargasFilter
+    ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
+
+    def get_queryset(self):
+        return Carga.objects.filter(gera_comi_frete=True)
+
+
+    def get_context_data(self, **kwargs):
+        context = super(CargasFiltradasComissaoFreteView, self).get_context_data(**kwargs)
+        context['cargas'] = Carga.objects.all
+        queryset = self.get_queryset()
+        filter = CargasFilter(self.request.GET, queryset=queryset)                
+        context['pesototal'] = filter.qs.filter(situacao='Carregado').filter(peso__gt=0).values('peso').aggregate(Sum(F'peso'))
+        context['agendatotal'] = filter.qs.filter(situacao='Agendado').filter(peso=0).values('veiculo').aggregate(Sum('veiculo'))   
+        context['motoristas_autocomplete_json'] = json.dumps(
+            [
+                {
+                    'motorista': obj.motorista
+                }
+                for obj in Carga.objects.order_by('motorista').distinct('motorista').all()   
+            ]
+        )     
+        context['placas_autocomplete_json'] = json.dumps(
+            [
+                {
+                    'placa': obj.placa
+                }
+                for obj in Carga.objects.order_by('placa').distinct('placa').all()   
+            ]
+        )     
+        def get_total_comissao():
+            total = 0                        
+            for carga in filter.qs.filter(pgcomissao=False).filter(situacao='Carregado'):
+                if carga.comissaocasca != 0 and carga.comissaocasca != None:
+                    total = total + carga.comissaocasca
+            return total
+        context['comitotal'] = get_total_comissao()
+        return context
+
 class BasetwoView(LoginRequiredMixin, SuperuserRequiredMixin, TemplateView):
     login_url = 'login'    
     template_name = 'dashboard.html'

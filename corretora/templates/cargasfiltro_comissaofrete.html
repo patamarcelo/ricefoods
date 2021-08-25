@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
     <!-- Your custom styles (optional) -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/cargasfiltro.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cargasfiltro_comissaofrete.css' %}">
     
     <!-- MDBootstrap Datatables  -->
     <link href="{% static 'css/addons/datatables.min.css' %}" rel="stylesheet">
@@ -61,10 +61,10 @@
     <div class="container-fluid" align="center">
         <br />
         <div class="row">
-            <div class="col-3" >
-                <h3 style="float: left;"><u> <strong><a href="{% url 'cargasfiltro' %}" style="color: blanchedalmond">Cargas | Filtro</a></strong></u></h3>
+            <div class="col-6" >
+                <h3 style="float: left;"><u> <strong><a href="{% url 'cargasfiltro_comifrete' %}" style="color: blanchedalmond">Cargas | Comissão Frete Terceiros</a></strong></u></h3>
             </div>
-            <div class="col-9">
+            <div class="col-6">
                 <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
                 <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'index2' %}">Inicio</a>
 
@@ -94,21 +94,14 @@
         <div class="d-flex container-fluid" style="float: left; margin-left: 10px">
             <div class="row">
                 <div class="col-3-sm">
-                    <a class="btn btn-primary btn-sm" href="{% url 'add_cargas' %}">Adicionar Cargas</a>
+                    <a class="btn btn-outline-primary btn-sm" href="{% url 'add_cargas' %}">Adicionar Cargas</a>
                 </div>
-                <div class="col-3-sm">
-                    <a class="btn btn-outline-success btn-sm" href="{% url 'add_age_cargas' %}"
-                        target="_blank">Agendar</a>
-                </div>
+
 
                 <a class="btn btn-outline-warning btn-sm" href="javascript:history.back()">Voltar</a>
                 <div class="col-3-sm">
                     <button id="btn_filtro" type="button" class="btn btn-outline-info btn-sm"
                         onclick="Ocultarfiltros('filtro')">Filtros</button>
-                </div>
-                <div class="col-3-sm">
-                    <a class="btn btn-outline-primary btn-sm" href="{% url 'agendamentoTeste' %}"
-                        target="_blank">Descarga Ruston</a>
                 </div>
             </div>
         </div>
@@ -284,7 +277,7 @@
 
                     
 
-                    {% if request.get_full_path ==  "/corretora/cf" %}
+                    {% if request.get_full_path ==  "/corretora/cfcomifrete" %}
                     {% else %}
                     <i type="submit" style="color:grey; margin-bottom: 20px; float: right;" class="fas fa-lg fa-file-pdf" id="pdf" onclick="createPDF()"
                         target="_blank"></i>
@@ -296,7 +289,7 @@
         </form>
     </div>
 
-    {% if request.get_full_path ==  "/corretora/cf" %}
+    {% if request.get_full_path ==  "/corretora/cfcomifrete" %}
     <div class="my-table container-fluid" id="cargasfiltro">
         <table id="cargas4" class="width table-round-corner  table  table-striped table-dark table-bordered table-sm"
             width="100%">
@@ -371,7 +364,7 @@
                             <th scope="col">Origem</th>
                             <th scope="col">Cliente</th>
                             <th scope="col">Descarga</th>
-                            <th scope="col" class="text text-center">Class.</th>
+                            <!-- <th scope="col" class="text text-center">Class.</th> -->
                             <th scope="col" class="text text-center">Comp. D.</th>
                             {% if user.is_superuser%}
                             <th scope="col" class="text text-center">Comi. F.</th>
@@ -403,9 +396,9 @@
                             <th scope="col"><a class="text-info fa fa-sort-desc"></a></th>
                             <th scope="col">Pedido</th>
                             <th scope="col">Transp.</th>
-                            <th scope="col">Buonny</th>
+                            <!-- <th scope="col">Buonny</th> -->
                             <th scope="col">Situação</th>
-                            <th scope="col">Ordem</th>
+                            <!-- <th scope="col">Ordem</th> -->
                             <th scope="col">Data</th>
                             <th scope="col">Placa</th>
                             <th scope="col">Motorista</th>
@@ -418,12 +411,13 @@
                             <th scope="col">Origem</th>
                             <th scope="col">Cliente</th>
                             <th scope="col">Produto</th>
-                            <th scope="col">Descarga</th>
-                            <th scope="col" class="text text-center">Class.</th>
+                            <!-- <th scope="col">Descarga</th> -->
+                            <!-- <th scope="col" class="text text-center">Class.</th> -->
                             <th scope="col" class="text text-center">Comp. D.</th>
                             {% if user.is_superuser%}
+                            <th scope="col" class="text text-center">Comi. F. Ton.</th>
                             <th scope="col" class="text text-center">Comi. F.</th>
-                            <th scope="col" class="text text-center">Comiss.</th>
+                            <!-- <th scope="col" class="text text-center">Comiss.</th> -->
                             {% endif %}
                             <th scope="col" class="text text-center">Ação</th>
 
@@ -432,7 +426,7 @@
                     <tbody>
                         {% for carga in object_list %}                        
                         <tr class="simplehighlight" id="user-{{carga.pk|stringformat:"i"}}">
-                            <td>{{ page_obj.start_index|add:forloop.counter0 }}</td>
+                            <td>{{ forloop.counter }}</td>
                             {% if carga.pedido.situacao == "a" %}
                             <td><a href="{% url 'detail_cargas' carga.pedido.pk %}" target="_blank"
                                     class="text-success">{{ carga.pedido }}</a></td>
@@ -454,7 +448,7 @@
                             <td class="copy-data" title="Copiar {{carga.placa}} - {{carga.motorista|title}}" data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}" style="background-color: #660066;">{{ carga.transp|title }}</td>
                             {% endif %}
 
-                            {% if 'das' in  carga.buonny|lower %}
+                            <!-- {% if 'das' in  carga.buonny|lower %}
                             <td updatemotoristaUserBuonny="{{carga.motorista|title}}" updatePlacaUserBuonny="{{carga.placa}}" updateBuonnyUserBuonny="{{carga.buonny}}" onClick="editUserBuonny({{carga.pk|stringformat:"i"}})" 
                             data-toggle="modal" data-target="#myModalBuonny")" class="text-danger"><strong>{{ carga.buonny|title }}</strong></td>
                             {% elif 'sul' in carga.buonny|lower %}
@@ -466,7 +460,7 @@
                             {% else %}
                             <td updatemotoristaUserBuonny="{{carga.motorista|title}}" updatePlacaUserBuonny="{{carga.placa}}" updateBuonnyUserBuonny="{{carga.buonny}}" onClick="editUserBuonny({{carga.pk|stringformat:"i"}})" 
                             data-toggle="modal" data-target="#myModalBuonny")" class="text-success"><strong>{{ carga.buonny|title }}</strong></td>
-                            {% endif %}
+                            {% endif %} -->
 
                             
                             {% if carga.situacao == 'Agendado' %}
@@ -478,11 +472,11 @@
                             {% endif %}
 
 
-                            {% if carga.ordem %}
+                            <!-- {% if carga.ordem %}
                             <td class="text-success userName" updatemotoristaUser="{{carga.motorista|title}}" updatePlacaUser="{{carga.placa}}" ordem-carregamento="{{carga.ordem}}" onClick="editUser({{carga.pk|stringformat:"i"}})" data-toggle="modal" data-target="#myModal")"><i class="font-weight-bold far fa-check-circle text-success"></i></td>
                             {% else %}
                             <td class="text-danger userName" updatemotoristaUser="{{carga.motorista|title}}" updatePlacaUser="{{carga.placa}}" ordem-carregamento="{{carga.ordem}}" onClick="editUser({{carga.pk|stringformat:"i"}})" data-toggle="modal" data-target="#myModal")"><i class="font-weight-bold far fa-times-circle text-danger"></i></td>
-                            {% endif %}
+                            {% endif %} -->
 
                             {% if todays_date == carga.data|date:"Y-m-d" %}
                             <td class="text-primary"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
@@ -583,23 +577,23 @@
                             <td data-fornecedor-nome="{{carga.pedido.fornecedor.nome|title}}" data-nfiscal="{{carga.notafiscal}}" style="background-color: #9400d3;">Palmares
                             </td>
                             {% else %}
-                            <td data-fornecedor-nome="{{carga.pedido.fornecedor.nome|title}}" data-nfiscal="{{carga.notafiscal}}">{{ carga.pedido.fornecedor.nome|title|truncatechars:20 }}</td>
+                            <td data-fornecedor-nome="{{carga.pedido.fornecedor.nome|title}}" data-nfiscal="{{carga.notafiscal}}">{{ carga.pedido.fornecedor.nome|title|truncatechars:35 }}</td>
                             {% endif %}
-                            <td>{{ carga.pedido.fornecedor.cidade.cidade|truncatechars:18 }}</td>
+                            <td>{{ carga.pedido.fornecedor.cidade.cidade|truncatechars:35 }}</td>
                             
                             <td data-cliente-nome="{{carga.pedido.cliente|upper}}" data-cliente-color="{{carga.pedido.cliente.color}}" style="color: {{ carga.pedido.cliente.color}}"><em><strong>{{ carga.pedido.cliente|upper }}</strong></em></td>
                             
                             <td>{{ carga.pedido.produto }}</td>
                         
-                            {% if carga.data_intervalo_cargaedescarga > -2 %}
+                            <!-- {% if carga.data_intervalo_cargaedescarga > -2 %}
                             <td style="background-color: rgba(139,0,0, 0.7);"><strong>{{ carga.data_agenda|date:"SHORT_DATE_FORMAT" }}</strong></td>
                             {% elif carga.data_agenda %}
                             <td>{{ carga.data_agenda|date:"SHORT_DATE_FORMAT" }}</td>
                             {% else %}
                             <td align="center"><i class="text-warning fab fa-algolia"></i>
-                            {% endif %}
+                            {% endif %} -->
                         
-                            {% if carga.pedido.produto == "Arroz em Casca" %}
+                            <!-- {% if carga.pedido.produto == "Arroz em Casca" %}
                             {% if carga.renda != None and carga.inteiro != None and carga.impureza != None and carga.umidade  != None and carga.gessado  != None and carga.bbranca  != None and carga.amarelo  != None and carga.manchpic  != None and carga.vermelhos != None %}
                            
                             <td align="center" 
@@ -660,7 +654,7 @@
                                 {% endif %}
                                 {% else %}
                             <td align="center"><b> - </b></td>
-                            {% endif %}
+                            {% endif %} -->
 
                             {% if carga.comprovante_descarga %}
                             <td ><a class="text text-success" target="_blank" href="{% url 'update_comprovante_descarga' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i>                            </a></td>
@@ -674,25 +668,30 @@
 
 
                             {% if user.is_superuser%}
+                            {% if carga.pedido.situacao == 'a' and carga.comi_frete_total%}
+                            <td ><a style="color: whitesmoke !important;" target="_blank" href="{% url 'admin:corretora_carga_change' carga.pk  %}">R$ {{ carga.comi_frete_ton|floatformat:2 }}</a></td>
+                            {% elif carga.pedido.situacao == 'a' %}
+                            <td align=center ><a style="color: whitesmoke !important;" target="_blank" href="{% url 'admin:corretora_carga_change' carga.pk  %}">-</a></td>
+                            {% elif carga.comi_frete_total %}
+                            <td  align=center><em>R$ {{ carga.comi_frete_ton|floatformat:2 }}</em></td>
+                            {% else %}
+                            <td align=center>-</td>
+                            {% endif %}
+                            
 
                             {% if carga.pedido.situacao == 'a' and carga.comi_frete_total%}
                             <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}"><a style="color: whitesmoke !important;" target="_blank" href="{% url 'admin:corretora_carga_change' carga.pk  %}">R$ {{ carga.comi_frete_total|floatformat:2 }}</a></td>
-                            {% elif carga.pedido.situacao == 'a' %}
-                            <td align=center class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}"><a style="color: whitesmoke !important;" target="_blank" href="{% url 'admin:corretora_carga_change' carga.pk  %}">-</a></td>
                             {% elif carga.comi_frete_total %}
                             <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}" align=center><em>R$ {{ carga.comi_frete_total|floatformat:2 }}</em></td>
                             {% else %}
                             <td align=center>-</td>
                             {% endif %}
                             
-                            {% if carga.comissaocasca > 1 %}
-
+                            <!-- {% if carga.comissaocasca > 1 %}
                             {% if carga.pgcomissao == True and carga.obs_comissao %}
-
                             <td align=center style="background-color: rgb(255,216,143,0.3);"><a class="text text-success" style='font-style:italic;'
                                 href="{% url 'upd_comiss' carga.pk %}"><b>R$
                                     {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
-                        
                             {% elif carga.pgcomissao == True %}
                                     <td align=center><a class="text text-success" style='font-style:italic'
                                 href="{% url 'upd_comiss' carga.pk %}"><b>R$
@@ -708,10 +707,9 @@
                             {% endif %}
                             {% else %}
                             <td align=center>- </td>
-
                             {% endif %}
                             {% else %}
-                            {% endif %}
+                            {% endif %} -->
                             
                             {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %}
                             <td align=center>
@@ -742,7 +740,6 @@
                             {% else %}
                             <div class="col titulototaldireita">
                                 <p style="float: right; margin-left: 7px; display: none;" id="totalcomifretehtmlHeader" ><strong>Comi. F. <br/><i class="text text-warning" id="totalcomifretehtml"></i></strong></p>
-                                <p style="float: right;margin-right: 25px;" ><strong>Aberto <i class="text text-warning"><br/> R$ {{ comitotal|floatformat:"2" }}</i></strong></p>
                             </div>  
                             {% endif %}
                             {% else %}
@@ -778,7 +775,7 @@
                             {% else %}
                             <div class="col titulototaldireita">
                                 <p style="float: right; margin-left: 7px; display: none;" id="totalcomifretehtmlHeader" ><strong>Comi. F. <br/><i class="text text-warning" id="totalcomifretehtml"></i></strong></p>
-                                <p style="float: right;margin-right: 25px;" ><strong>Aberto <i class="text text-warning"><br/> R$ {{ comitotal|floatformat:"2" }}</i></strong></p>
+                                
                             </div>  
                             {% endif %}
                             {% else %}
@@ -832,15 +829,7 @@
                 </nav>
                 {% endif %}
 
-                {% if page_obj.paginator.count > 100 %}
-                <p style="float: left;"><strong>Mostrando {{ page_obj.start_index }} - {{ page_obj.end_index }} de
-                        {{ page_obj.paginator.count }} Cargas </strong></p>
-
-                {% else %}
-                <p style="float: left;"><strong> Total: {{ page_obj.end_index }}
-                     Cargas </strong></p>
-
-                {% endif %}
+                
                 <p><span style="float: right;"><strong>{% now "SHORT_DATETIME_FORMAT" %}
                     </span></strong></p>
             </div>
@@ -863,7 +852,7 @@
                     <th scope="col">Transp.</th>
                     
                     <th scope="col">Situação</th>
-                    <th scope="col">Ordem</th>
+                    
                     <th scope="col">Data</th>
                     <th scope="col">Placa</th>
                     <th scope="col">Motorista</th>
@@ -876,10 +865,11 @@
                     <th scope="col">Origem</th>
                     <th scope="col">Cliente</th>
                     <th scope="col">Produto</th>
-                    <th scope="col">Descarga</th>
+                    
                     {% if user.is_superuser%}
+                    <th scope="col" class="text text-center">Comi. F. Ton</th>
                     <th scope="col" class="text text-center">Comi. F.</th>
-                    <th scope="col" class="text text-center">Comiss.</th>
+                    
                     {% endif %}
 
 
@@ -909,11 +899,7 @@
 
                     <td>{{ carga.situacao }}</td>
 
-                    {% if carga.ordem %}
-                    <td class="text-success"><em>Enviada</em></td>
-                    {% else %}
-                    <td class="text-danger"><em>Não Env.</em></td>
-                    {% endif %}
+                    
 
                     <td>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</td>
 
@@ -972,28 +958,9 @@
 
                     <td>{{ carga.pedido.cliente|upper }}</td>
                     <td>{{ carga.pedido.produto }}</td>
-                    <td>{{ carga.data_agenda }}</td>
+                    
 
-                    {% if user.is_superuser%}
-                    {% if carga.comissaocasca > 1 %}
-
-                    {% if carga.pgcomissao == True %}
-
-                    <td align=center><b>R$
-                            {{ carga.vpcomissaoc|floatformat:2 }}</b></td>
-                    {% elif carga.pgcomissao == False and carga.vpcomissaoc > 0 %}
-                    <td align=center><b>R$
-                            {{ carga.vpcomissaoc|floatformat:2 }}</b></td>
-                    {% else %}
-                    <td align=center><b>R$
-                            {{ carga.comissaocasca|floatformat:2 }}</b></td>
-                    {% endif %}
-                    {% else %}
-                    <td align=center>- </td>
-
-                    {% endif %}
-                    {% else %}
-                    {% endif %}
+                    
 
                 </tr>
                 {% else %}
@@ -1014,11 +981,7 @@
 
                     <td>{{ carga.situacao }}</td>
 
-                    {% if carga.ordem %}
-                    <td class="text-success"><em>Enviada</em></td>
-                    {% else %}
-                    <td class="text-danger"><em>Não Env.</em></td>
-                    {% endif %}
+                    
 
                     <td>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</td>
 
@@ -1078,36 +1041,23 @@
 
                     <td>{{ carga.pedido.cliente|upper }}</td>
                     <td>{{ carga.pedido.produto }}</td>
-                    {% if carga.data_agenda %}
-                    <td>{{ carga.data_agenda|date:"SHORT_DATE_FORMAT" }}</td>
-                    {% else %}
-                    <td> - </td>
+                    
                     {% endif %} 
+                    
                     {% if user.is_superuser%}
+                    
+                    {% if carga.comi_frete_total %}
+                    <td  align=center><em>R$ {{ carga.comi_frete_ton|floatformat:2 }}</em></td>
+                    {% else %}
+                    <td align=center>-</td>
+                    {% endif %}
+                    
                     {% if carga.comi_frete_total %}
                     <td >R$ {{ carga.comi_frete_total|floatformat:2 }}</td>
                     {% else %}
                     <td align=center>-</td>
                     {% endif %}
-                    {% if carga.comissaocasca > 1 %}
-
-                    {% if carga.pgcomissao == True %}
-
-                    <td align=center><b>R$
-                            {{ carga.vpcomissaoc|floatformat:2 }}</b></td>
-                    {% elif carga.pgcomissao == False and carga.vpcomissaoc > 0 %}
-                    <td align=center><b>R$
-                            {{ carga.vpcomissaoc|floatformat:2 }}</b></td>
-                    {% else %}
-                    <td align=center><b>R$
-                            {{ carga.comissaocasca|floatformat:2 }}</b></td>
-                    {% endif %}
-                    {% else %}
-                    <td align=center>- </td>
-
-                    {% endif %}
-                    {% else %}
-                    {% endif %}
+                    
 
                 </tr>
                 {% endif %}
@@ -1168,11 +1118,6 @@
 
     
     
-    {% include 'modal_cargas.html' %}
-    {% include 'modal_cargas_chegada.html' %}
-    {% include 'modal_cargas_buonny.html' %}
-    {% include 'modal_cargas_classificacao.html' %}
-
 </body>
 <br>
 <script>
@@ -1219,7 +1164,7 @@
 
 
 <!-- jQuery Masks-->
-<script type="text/javascript" src="{% static 'js/cargasfiltro.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/cargasfiltro_comissaofrete.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/jquery.mask.js' %}"></script>
 
 <!-- Notificacoes JS-->
