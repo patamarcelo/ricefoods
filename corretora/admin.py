@@ -342,7 +342,13 @@ class CargaAdmin(SimpleHistoryAdmin):
         'fields': ('pedido', ('data', 'buonny') )
     }),
     ('Carga', {
-        'fields': (('ordem','tac','chegada'),'transp','situacao',('placa','motorista'),('peso','veiculo'),('notafiscal','notafiscal2','valornf'))
+        'fields': (('ordem','tac','chegada'),'transp','situacao',('veiculo','peso'))
+    }),
+    ('Nota Fiscal', {
+        'fields': (('notafiscal','notafiscal2'),'valornf')
+    }),
+    ('Motorista', {
+        'fields': (('placa','motorista'),'valor_mot')
     }),
     ('Classificação', {
         'fields': (('renda','inteiro','impureza', 'umidade'),('gessado','bbranca','amarelo'),('manchpic','vermelhos'))
@@ -353,11 +359,11 @@ class CargaAdmin(SimpleHistoryAdmin):
     ('Comissão Frete', {
             'fields': ('gera_comi_frete','comi_frete_ton', 'comi_frete_total')
         }),
+    ('Fatura Frete Terceiros', {
+        'fields': ('fatura_frete_terceiros',)
+    }),
     ('Descarga', {
-            'fields': ('data_descarga','comprovante_descarga','obs_descarga')
-        }),
-    ('Fatura', {
-            'fields': ('fatura_frete_terceiros',)
+            'fields': ('data_descarga','obs_descarga','comprovante_descarga')
         }),
     )
     raw_id_fields = ('pedido', )
