@@ -255,6 +255,7 @@
                     <th scope="col"><input type="checkbox" value="0" id='select-all-saldoprevisto'></th>
                     <th scope="col" class="text text-center">Saldo Prev.</th>
                     <th scope="col"><input type="checkbox" value="0" id='select-all-comissao'></th>
+                    <th scope="col" class="text text-center"><i style="color:green;" class="fas fa-lg fa-file-excel" ></i></th>
                     {% if user.is_superuser%}
                     <th scope="col">Comiss</th>
                     {% endif %}
@@ -387,6 +388,12 @@
                     {% endif %}
                     <td align=center><input type="checkbox" name="comissao" value="{{ pedido.totalcomissaocasca|stringformat:"f" }}"
                             class="icms" align="center" style="size: 10px;"></td>
+                    
+                    {% if pedido.pedido_arquivo %}
+                    <td class="text-center"><a href="{{ pedido.pedido_arquivo.url}}"><i style="color:green;" class="fas fa-lg fa-file-excel" ></i></a></td>
+                    {% else %}
+                    <td class="text-center">-</td>
+                    {% endif %}
                     {% if user.is_superuser %}                   
                     {% if pedido.produto == 'Arroz em Casca' or pedido.produto == 'Semente' and pedido.totalcomissaocasca != None and pedido.carregado %}
                     {% if pedido.totalcomissaocasca == 0 or pedido.totalcomissaocasca == None %}
