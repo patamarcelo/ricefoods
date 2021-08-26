@@ -367,6 +367,7 @@ $(document).ready(function () {
 		for (var checkbox of checkboxes) {
 			checkbox.checked = this.checked;
 		}
+		document.getElementById("orderTableHead").click()
 	});
 });
 

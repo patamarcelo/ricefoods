@@ -395,7 +395,7 @@
                     <thead class="borderless">
                         <tr>
 
-                            <th scope="col"><a class="text-info fa fa-sort-desc"></a></th>
+                            <th scope="col" id="orderTableHead"><a class="text-info fa fa-sort-desc"></a></th>
                             <th scope="col">Pedido</th>
                             <th scope="col">Transp.</th>
                             <!-- <th scope="col">Buonny</th> -->
@@ -533,11 +533,11 @@
                             {% endif %}
                             
                             {% if carga.peso == 0 %}
-                            <td class="text-warning"><strong>{{ carga.veiculo|intcomma }} Kg </strong></td>
+                            <td class="text-warning" data-pesoAgendado="{{carga.veiculo|stringformat:"i"}}"><strong>{{ carga.veiculo|intcomma }} Kg </strong></td>
                             {% elif carga.peso < 18000 and carga.peso > 0  %}
-                            <td style="color:darkorange"><i>{{ carga.peso|intcomma }} Kg </i></td>
+                            <td style="color:darkorange" data-pesoCarregado="{{carga.peso|stringformat:"i"}}"><i>{{ carga.peso|intcomma }} Kg </i></td>
                             {% else %}
-                            <td >{{ carga.peso|intcomma }} Kg </td>
+                            <td data-pesoCarregado="{{carga.peso|stringformat:"i"}}" >{{ carga.peso|intcomma }} Kg </td>
                             {% endif %}
 
                             {% if carga.notafiscal == None %}
@@ -669,12 +669,28 @@
 
 
 
-
                             {% if user.is_superuser%}
                             {% if carga.pedido.situacao == 'a' and carga.comi_frete_ton %}
-                            <td ><a style="color: whitesmoke !important;" target="_blank" href="{% url 'admin:corretora_carga_change' carga.pk  %}">R$ {{ carga.comi_frete_ton|floatformat:2 }}</a></td>
+                            <td
+                                updatemotoristaUser="{{carga.motorista|title}}" 
+                                updatePlacaUser="{{carga.placa}}"
+                                data-toggle="modal" data-target="#myModalClassificacao")"
+                                data-ajax-renda="{{carga.comi_frete_ton}}"
+                                data-ajax-inteiro="{{carga.comi_frete_total}}"
+                                onClick="editUserClassificacao({{carga.pk|stringformat:"i"}})" 
+                             >
+                            <a style="color: whitesmoke !important;" target="_blank" class="valorportonhtml">R$ {{ carga.comi_frete_ton|floatformat:2 }}</a></td>
                             {% elif carga.pedido.situacao == 'a' %}
-                            <td align=center ><a style="color: whitesmoke !important;" target="_blank" href="{% url 'admin:corretora_carga_change' carga.pk  %}"><i class=" far fa-times-circle text-danger"></i></a></td>
+                            <td align=center 
+                                data-toggle="modal"
+                                data-target="#myModalClassificacao")"
+                                updatemotoristaUser="{{carga.motorista|title}}" 
+                                updatePlacaUser="{{carga.placa}}"
+                                data-toggle="modal" data-target="#myModalClassificacao")"
+                                
+                                onClick="editUserClassificacao({{carga.pk|stringformat:"i"}})" 
+                            >
+                            <a style="color: whitesmoke !important;" target="_blank" class="valorportonhtml"><i class=" far fa-times-circle text-danger"></i></a></td>
                             {% elif carga.comi_frete_ton %}
                             <td  align=center><em>R$ {{ carga.comi_frete_ton|floatformat:2 }}</em></td>
                             {% else %}
@@ -683,9 +699,9 @@
                             
 
                             {% if carga.pedido.situacao == 'a' and carga.comi_frete_total%}
-                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}"><a style="color: whitesmoke !important;" target="_blank" href="{% url 'admin:corretora_carga_change' carga.pk  %}">R$ {{ carga.comi_frete_total|floatformat:2 }}</a></td>
+                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}"><a class="valortotalcominhtml" style="color: whitesmoke !important;" target="_blank" href="{% url 'admin:corretora_carga_change' carga.pk  %}">R$ {{ carga.comi_frete_total|floatformat:2 }}</a></td>
                             {% elif carga.comi_frete_total %}
-                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}" align=center><em>R$ {{ carga.comi_frete_total|floatformat:2 }}</em></td>
+                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}" align=center><em class="valortotalcominhtml">R$ {{ carga.comi_frete_total|floatformat:2 }}</em></td>
                             {% else %}
                             <td align=center><i class=" far fa-times-circle text-danger"></i></td>
                             {% endif %}
@@ -713,6 +729,7 @@
                             {% endif %}
                             {% else %}
                             {% endif %} -->
+
                             {% if carga.fatura_frete_terceiros %}
                             <td align=center><i class="text text-success fas fa-check"></i></td>
                             {% elif carga.comi_frete_total == None or carga.comi_frete_total == 0 %}
@@ -1125,6 +1142,7 @@
     <div style="display: none" id="jsonMotoristas" data-json="{{ motoristas_autocomplete_json }}"></div>
     <div style="display: none" id="jsonPlacas" data-json="{{ placas_autocomplete_json }}"></div>
 
+    {% include 'modal_cargas_comifrete.html' %}
     
     
 </body>
@@ -1179,3 +1197,5 @@
 <!-- Notificacoes JS-->
 <script src="{% static 'js/notify.min.js' %}"></script>   
 <script src="{% static 'js/notify.js' %}"></script>   
+
+

@@ -916,6 +916,30 @@ class UpdateAjaxClassificacaoView(LoginRequiredMixin, UpdateView):
         print(data)
         return JsonResponse(data)
 
+class UpdateAjaxComifreteView(LoginRequiredMixin, UpdateView):
+    model = Carga
+    fields = ('renda','inteiro','impureza',
+                'umidade','gessado','bbranca','amarelo','manchpic','vermelhos',
+                'obs')
+
+    def get(self, request):
+        id1 = request.GET.get("id", None)
+        comi_frete_ton = request.GET.get("renda")
+        comi_frete_total = request.GET.get("inteiro")
+        print(comi_frete_ton)
+        print(comi_frete_total)
+        
+        obj = get_object_or_404(Carga, id=id1)
+        obj.comi_frete_ton = float((comi_frete_ton.replace(".", "").replace(",", "."))) if comi_frete_ton else None
+        obj.comi_frete_total = float((comi_frete_total.replace(".", "").replace(",", "."))) if comi_frete_total else None
+        obj.save()
+        
+        obj1 = get_object_or_404(Carga, id=id1)
+        data = {"id": obj1.pk, "comi_frete_ton": obj1.comi_frete_ton, "comi_frete_total": obj1.comi_frete_total}
+
+        print(data)
+        return JsonResponse(data)
+
 
 
 

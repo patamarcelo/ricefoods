@@ -1,0 +1,82 @@
+{% load static %}
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.1.1/dist/js/autoComplete.min.js"></script>
+
+
+
+<!-- CSS Modal Custom -->
+<link href="{% static 'css/modal.css' %}" rel="stylesheet">
+<style>
+  .modal-body {
+    height: auto !important;
+  }
+
+  input:focus:not(#btnLimparForm), textarea:focus:not(#btnLimparForm) {
+    border: 3px solid rgb(0, 255, 255) !important;
+    background-color: white !important;
+  }
+  
+  input, textarea {
+    background-color: rgb(180, 180, 190) !important;
+  }
+
+
+</style>
+
+<!-- Modal -->
+<div class="modal fade" id="myModalClassificacao" tabindex="-1" role="dialog" aria-labelledby="myModalLabelClassificacao">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content bg-dark">
+      <div class="modal-header pb-1">
+          
+        <div class="container-fluid"> 
+          <div class="row">   
+            <h4> <em class="badge badge-info" id="myModalLabelClassificacao">Comissão Frete Terceiros</em></h4>
+          </div>
+          <div class="row">   
+            <h4 class="updatePlacaUser ml-1 mr-2 "> <em class="badge badge-warning" id="updateFornecedorClassificacao"></em></h4>
+          
+          
+            <h4 class="updatePlacaUser ml-1"> <em class="badge"  id="updateClienteClassificacao"></em></h4>
+          </div>
+          
+        </div>
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <form id="updateUserClassificacao" action="" data-validate-username-url-Classificacao="{% url 'cargas_ajax_update_comifrete' %}">
+      
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <h5 class="updatePlacaUser ml-2 mr-2"> <em class="badge badge-secondary"  id="updatePlacaUserClassificacao"></em></h5>              
+              <h5 class="updatePlacaUser ml-1"> <em class="badge badge-primary"  id="updateNfiscalClassificacao"></em></h5>
+            </div>
+              <input class="form-control" id="form-id-Classificacao" type="hidden" name="formIdClassificacao"/>
+            <div class="row">
+              <div class="col-3">
+                <small id="hint_id_renda" class="form-text text-white">Valor por Ton</small>
+                <input class="form-control" id="form-name-renda" type="text" name="formNameRenda" maxlength="7" style="margin: 1px;" />
+              </div>
+              <div class="col-3">
+                <small id="hint_id_inteiro" class="form-text text-white">Valor Total</small>
+                <input class="form-control" id="form-name-inteiro" type="text" name="formNameInteiro" maxlength="9" style="margin: 1px;" />
+              </div>
+          </div>
+        </div>        
+      </div>        
+      <div class="modal-footer mt-2" style="padding-right: 30px;">
+          <button type="submit" class="btn btn-sm  btn-primary" >Salvar</button>
+          <button type="button" class="btn btn-sm btn-warning" onclick="updateFormClassificacao()" data-dismiss="modal">Fechar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+{% block scripts %}
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="{% static 'js/pataajaxcomifrete.js' %}"></script>   
+{% endblock %}

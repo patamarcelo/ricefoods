@@ -71,6 +71,7 @@ urlpatterns = [
     path('corretora/cargas/updatebuonny', UpdateAjaxBuonnyView.as_view(), name="cargas_ajax_update_buonny"),
     path('corretora/cargas/updateclassificacao', UpdateAjaxClassificacaoView.as_view(), name="cargas_ajax_update_classificacao"),
     path('corretora/cargas/updatecartaovp', UpdateAjaxCartaoVpView.as_view(), name="cargas_ajax_update_cartaovp"),
+    path('corretora/cargas/updatecomifrete', UpdateAjaxComifreteView.as_view(), name="cargas_ajax_update_comifrete"),
     path('corretora/cargas/<int:pk>/updatecompdescarga', UpdatecomprovdescargaCargasView.as_view(), name="update_comprovante_descarga"),
     
     path('corretora/cargas/carjasJsonTeste', CargasViewJsonTeste.as_view(), name="cargas_json_teste"),
