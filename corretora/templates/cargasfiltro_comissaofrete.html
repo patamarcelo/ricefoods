@@ -715,7 +715,7 @@
                             {% endif %} -->
                             {% if carga.fatura_frete_terceiros %}
                             <td align=center><i class="text text-success fas fa-check"></i></td>
-                            {% elif carga.comi_frete_total == None %}
+                            {% elif carga.comi_frete_total == None or carga.comi_frete_total == 0 %}
                             <td align=center>-</td>
                             {% else %}
                             <td><div class="custom-control custom-switch"><input type="checkbox" name='chkOrgRow' class="custom-control-input" value="{{carga.comi_frete_total|stringformat:".2f"}}" id="switch-{{carga.pk|stringformat:"i"}}">  <label class="custom-control-label" for="switch-{{carga.pk|stringformat:"i"}}"></label></div></td>

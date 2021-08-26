@@ -203,9 +203,11 @@ $(document).ready(function () {
 	var totalComiFrete = 0;
 	lisComiFrete = document.getElementsByClassName("comifretegerado");
 	for (var i = 0; i < lisComiFrete.length; i++) {
-		totalComiFrete += parseFloat(
-			lisComiFrete[i].getAttribute("data-comiFreteCarga")
-		);
+		if (parseFloat(lisComiFrete[i].getAttribute("data-comiFreteCarga"))) {
+			totalComiFrete += parseFloat(
+				lisComiFrete[i].getAttribute("data-comiFreteCarga")
+			);
+		}
 	}
 	var comiFreteFormat = totalComiFrete.toLocaleString("pt-br", {
 		style: "currency",
