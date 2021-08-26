@@ -174,7 +174,7 @@ class CargasFilter(django_filters.FilterSet):
     
     def frete_com_fatura(self, queryset, name, value):
         expression = ~Q(fatura_frete_terceiros=None) if value == "True" else Q(fatura_frete_terceiros=None)
-        return queryset.filter(expression)
+        return queryset.filter(expression).filter(comi_frete_total__gt=0)
     
 
     def filtrando_comissao(self, queryset, name, value):

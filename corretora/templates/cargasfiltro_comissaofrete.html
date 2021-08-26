@@ -322,6 +322,7 @@
                     <th scope="col" class="text text-center">Comi. F.</th>
                     <th scope="col" class="text text-center">Comiss.</th>
                     {% endif %}
+                    <th scope="col" class="text text-center">Fatura</th>
                     <th scope="col" class="text text-center">Ação</th>
 
                 </tr>
@@ -329,11 +330,11 @@
             <tbody>
                 {% if user.is_superuser%}
                 <tr>
-                    <th class="text text-info" scope="row" colspan="23" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
+                    <th class="text text-info" scope="row" colspan="24" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
                 </tr>
                 {% else %}
                 <tr>
-                    <th class="text text-info" scope="row" colspan="21" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
+                    <th class="text text-info" scope="row" colspan="22" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
                 </tr>
                 {% endif %}
             </tbody>
@@ -370,6 +371,7 @@
                             <th scope="col" class="text text-center">Comi. F.</th>
                             <th scope="col" class="text text-center">Comiss.</th>
                             {% endif %}
+                            <th scope="col" class="text text-center">Fatura</th>
                             <th scope="col" class="text text-center">Ação</th>
         
                         </tr>
@@ -377,11 +379,11 @@
                     <tbody>
                         {% if user.is_superuser%}
                         <tr>
-                            <th class="text text-danger" scope="row" colspan="22" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
+                            <th class="text text-danger" scope="row" colspan="23" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
                         </tr>
                         {% else %}
                         <tr>
-                            <th class="text text-danger" scope="row" colspan="20" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
+                            <th class="text text-danger" scope="row" colspan="21" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
                         </tr>
                         {% endif %}
             {% else %}
@@ -419,11 +421,12 @@
                             <th scope="col" class="text text-center">Comi. F.</th>
                             <!-- <th scope="col" class="text text-center">Comiss.</th> -->
                             {% endif %}
+                            <th scope="col" class="text text-center">Fatura<br/><div class="custom-control custom-switch"><input type="checkbox" name='headCheck' class="custom-control-input" id="switch"><label class="custom-control-label" for="switch"></label></div></th>
                             <th scope="col" class="text text-center">Ação</th>
 
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="bodycargasfiltro">
                         {% for carga in object_list %}                        
                         <tr class="simplehighlight" id="user-{{carga.pk|stringformat:"i"}}">
                             <td>{{ forloop.counter }}</td>
@@ -710,7 +713,14 @@
                             {% endif %}
                             {% else %}
                             {% endif %} -->
-                            
+                            {% if carga.fatura_frete_terceiros %}
+                            <td align=center><i class="text text-success fas fa-check"></i></td>
+                            {% elif carga.comi_frete_total == None %}
+                            <td align=center>-</td>
+                            {% else %}
+                            <td><div class="custom-control custom-switch"><input type="checkbox" name='chkOrgRow' class="custom-control-input" value="{{carga.comi_frete_total|stringformat:".2f"}}" id="switch-{{carga.pk|stringformat:"i"}}">  <label class="custom-control-label" for="switch-{{carga.pk|stringformat:"i"}}"></label></div></td>
+                            {% endif %}
+
                             {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %}
                             <td align=center>
                                 <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}" target="_blank">Edit</a>
@@ -729,7 +739,6 @@
                     {% if agendatotal.veiculo__sum == None %}  
                     <div class="container-fluid">
                         <div class="row linhatitulototal">
-                                      
                             <div class="col titulototal">
                                 {% if pesototal.peso__sum == None %}                    
                                 {% else %}

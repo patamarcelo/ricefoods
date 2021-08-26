@@ -16,7 +16,7 @@ from django.core import serializers
 from django.core.mail import send_mail, EmailMessage
 import re
 
-
+from django.db.models import Q
 
 
 
@@ -97,7 +97,8 @@ class CargasFiltradasComissaoFreteView(LoginRequiredMixin, SuperuserRequiredMixi
     ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
 
     def get_queryset(self):
-        return Carga.objects.filter(gera_comi_frete=True)
+        filter1 = "GDX"
+        return Carga.objects.filter(~Q(transp__nome__startswith=filter1))
 
 
     def get_context_data(self, **kwargs):

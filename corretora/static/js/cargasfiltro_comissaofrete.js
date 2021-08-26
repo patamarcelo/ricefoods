@@ -205,8 +205,8 @@ $(document).ready(function () {
 	for (var i = 0; i < lisComiFrete.length; i++) {
 		if (parseFloat(lisComiFrete[i].getAttribute("data-comiFreteCarga")))
 			totalComiFrete += parseFloat(
-			lisComiFrete[i].getAttribute("data-comiFreteCarga")
-		);
+				lisComiFrete[i].getAttribute("data-comiFreteCarga")
+			);
 	}
 	var comiFreteFormat = totalComiFrete.toLocaleString("pt-br", {
 		style: "currency",
@@ -322,3 +322,62 @@ $(function () {
 		],
 	});
 });
+
+$("#cargasfiltro")
+	.find("input:checkbox")
+	.on("change", function () {
+		var total = 0;
+		var countTotal = 0;
+		$("#bodycargasfiltro")
+			.find(":checkbox")
+			.each(function () {
+				if ($(this).is(":checked")) {
+					total = total + parseFloat($(this).val());
+					countTotal += 1
+					$(this)
+					.closest("tr")
+					.toggleClass("checked-color", $(this).is(":checked"));
+					var trid = $(this).closest('tr').attr('id'); // table row ID 
+					console.log(trid)
+				} else {
+					$(this)
+					.closest("tr")
+					.toggleClass("checked-color", $(this).is(":checked"));
+				}
+			});
+		console.log(total.toFixed(2));
+		console.log(`Quantidade Selecionada: ${countTotal}`);
+		//sem R$
+		console.log(
+			total.toLocaleString("pt-br", { minimumFractionDigits: 2 })
+		);
+		//com R$
+		console.log(
+			total.toLocaleString("pt-br", {
+				style: "currency",
+				currency: "BRL",
+			})
+		);
+	});
+$(document).ready(function () {
+	$("#switch").on("click", function () {
+		var checkboxes = document
+			.getElementById("bodycargasfiltro")
+			.querySelectorAll('input[type="checkbox"][name=chkOrgRow]');
+		for (var checkbox of checkboxes) {
+			checkbox.checked = this.checked;
+		}
+	});
+});
+
+// $(document).ready(function () {
+// 	$("#cargasfiltro")
+// 		.find("input:checkbox")
+// 		.on("change", function () {
+// 			$('input[name="chkOrgRow"]').on("change", function () {
+// 				$(this)
+// 					.closest("tr")
+// 					.toggleClass("checked-color", $(this).is(":checked"));
+// 			});
+// 		});
+// });
