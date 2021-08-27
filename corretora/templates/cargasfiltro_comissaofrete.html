@@ -687,7 +687,8 @@
                                 updatemotoristaUser="{{carga.motorista|title}}" 
                                 updatePlacaUser="{{carga.placa}}"
                                 data-toggle="modal" data-target="#myModalClassificacao")"
-                                
+                                data-ajax-renda="{{carga.comi_frete_ton}}"
+                                data-ajax-inteiro="{{carga.comi_frete_total}}"
                                 onClick="editUserClassificacao({{carga.pk|stringformat:"i"}})" 
                             >
                             <a style="color: whitesmoke !important;" target="_blank" class="valorportonhtml"><i class=" far fa-times-circle text-danger"></i></a></td>
@@ -699,11 +700,11 @@
                             
 
                             {% if carga.pedido.situacao == 'a' and carga.comi_frete_total%}
-                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}"><a class="valortotalcominhtml" style="color: whitesmoke !important;" target="_blank" href="{% url 'admin:corretora_carga_change' carga.pk  %}">R$ {{ carga.comi_frete_total|floatformat:2 }}</a></td>
+                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total}}"><a class="valortotalcominhtml" style="color: whitesmoke !important;" target="_blank" href="{% url 'admin:corretora_carga_change' carga.pk  %}">R$ {{ carga.comi_frete_total|floatformat:2 }}</a></td>
                             {% elif carga.comi_frete_total %}
-                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}" align=center><em class="valortotalcominhtml">R$ {{ carga.comi_frete_total|floatformat:2 }}</em></td>
+                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total}}" align=center><em class="valortotalcominhtml">R$ {{ carga.comi_frete_total|floatformat:2 }}</em></td>
                             {% else %}
-                            <td align=center><i class=" far fa-times-circle text-danger"></i></td>
+                            <td align=center data-comiFreteCarga="{{carga.comi_frete_total}}" class="valortotalcominhtml"><i class=" far fa-times-circle text-danger"></i></td>
                             {% endif %}
                             
                             <!-- {% if carga.comissaocasca > 1 %}

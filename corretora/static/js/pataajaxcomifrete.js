@@ -167,7 +167,8 @@ function AttrOrNone(x) {
 function updateToUserTabelClassificacao(data) {
 	var tr_id = "#user-" + data.id;
 	
-	console.log(data.comi_frete_total)
+	
+
 	if (data.comi_frete_total == null) {
 		var comiTotal = 0
 	} else {
@@ -175,17 +176,33 @@ function updateToUserTabelClassificacao(data) {
 	}
 
 	var comiTon = parseFloat(data.comi_frete_ton).toLocaleString('pt-br', {minimumFractionDigits: 2});
-	
-
-
-	var tablerenda = $(tr_id).find("td[data-ajax-renda]");
-	tablerenda.attr("data-ajax-renda", AttrOrNone(comiTon));
-	$(tr_id).find("a.valorportonhtml").html(`R$ ${comiTon}`);
+	console.log(comiTon)
+	console.log(comiTotal)
+	if (data.comi_frete_ton == "0.00" ) {
+		var tablerenda = $(tr_id).find("td[data-ajax-renda]");
+		tablerenda.attr("data-ajax-renda", AttrOrNone(comiTon));
+		$(tr_id).find("a.valorportonhtml").html(`<i class=" far fa-times-circle text-danger"></i>`);
+	} else {
+		var tablerenda = $(tr_id).find("td[data-ajax-renda]");
+		tablerenda.attr("data-ajax-renda", AttrOrNone(comiTon));
+		$(tr_id).find("a.valorportonhtml").html(`R$ ${comiTon}`);
+	}
 
 	var tableinteiro = $(tr_id).find("td[data-ajax-inteiro]");
-	console.log(typeof comiTotal)
 	tableinteiro.attr("data-ajax-inteiro", AttrOrNone(comiTotal));
-	$(tr_id).find("a.valortotalcominhtml").html(`R$ ${comiTotal}`);
+	
+	if (data.comi_frete_total == "0.00" ) {	
+		var tableinteiroTotal = $(tr_id).find("td[data-comiFreteCarga]");
+		tableinteiroTotal.attr("data-comiFreteCarga", AttrOrNone(comiTotal));
+		tableinteiroTotal.html(`<i class=" far fa-times-circle text-danger"></i>`);
+	} else {
+		var tableinteiroTotal = $(tr_id).find("td[data-comiFreteCarga]");
+		tableinteiroTotal.attr("data-comiFreteCarga", AttrOrNone(comiTotal));
+		tableinteiroTotal.html(`R$ ${comiTotal}`)
+	}
+	// $(`${tr_id} > td:nth-child(19)`).html(`<div class="custom-control custom-switch"><input type="checkbox" name="chkOrgRow" class="custom-control-input" value="${data.comi_frete_total}" id="switch-${data.id}">  <label class="custom-control-label" for="switch-${data.id}"></label></div>`)
+	// $(tr_id).find("a.valortotalcominhtml").html(`R$ ${comiTotal}`);
+
 	
 
 	// if (typeof Classificacao === "string") {
