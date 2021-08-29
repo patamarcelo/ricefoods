@@ -176,8 +176,13 @@ function updateToUserTabelClassificacao(data) {
 	}
 
 	var comiTon = parseFloat(data.comi_frete_ton).toLocaleString('pt-br', {minimumFractionDigits: 2});
-	console.log(comiTon)
-	console.log(comiTotal)
+	
+	console.log(`Comiton: ${comiTon}`)
+	console.log(`Comitotal: ${comiTotal}`)
+	console.log(typeof comiTon)
+	console.log(typeof comiTotal)
+	console.log(comiTotal == 0)
+	console.log(comiTotal === 0)
 	if (data.comi_frete_ton == "0.00" ) {
 		var tablerenda = $(tr_id).find("td[data-ajax-renda]");
 		tablerenda.attr("data-ajax-renda", AttrOrNone(comiTon));
@@ -191,14 +196,15 @@ function updateToUserTabelClassificacao(data) {
 	var tableinteiro = $(tr_id).find("td[data-ajax-inteiro]");
 	tableinteiro.attr("data-ajax-inteiro", AttrOrNone(comiTotal));
 	
-	if (data.comi_frete_total == "0.00" ) {	
+	if (comiTotal == 0 ) {	
 		var tableinteiroTotal = $(tr_id).find("td[data-comiFreteCarga]");
-		tableinteiroTotal.attr("data-comiFreteCarga", AttrOrNone(comiTotal));
+		tableinteiroTotal.attr("data-comiFreteCarga", AttrOrNone(data.comi_frete_total));
 		tableinteiroTotal.html(`<i class=" far fa-times-circle text-danger"></i>`);
 	} else {
 		var tableinteiroTotal = $(tr_id).find("td[data-comiFreteCarga]");
-		tableinteiroTotal.attr("data-comiFreteCarga", AttrOrNone(comiTotal));
+		tableinteiroTotal.attr("data-comiFreteCarga", AttrOrNone(data.comi_frete_total));
 		tableinteiroTotal.html(`R$ ${comiTotal}`)
+		$(tr_id).find("input:checkbox").val(data.comi_frete_total)
 	}
 	// $(`${tr_id} > td:nth-child(19)`).html(`<div class="custom-control custom-switch"><input type="checkbox" name="chkOrgRow" class="custom-control-input" value="${data.comi_frete_total}" id="switch-${data.id}">  <label class="custom-control-label" for="switch-${data.id}"></label></div>`)
 	// $(tr_id).find("a.valortotalcominhtml").html(`R$ ${comiTotal}`);

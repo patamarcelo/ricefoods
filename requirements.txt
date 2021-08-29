@@ -62,6 +62,7 @@ static3==0.7.0
 stone==3.2.1
 textblob==0.15.3
 toml==0.10.1
+tornado==6.1
 tqdm==4.46.0
 typed-ast==1.4.1
 urllib3==1.25.9

@@ -203,6 +203,9 @@ $(document).ready(function () {
 	var totalComiFrete = 0;
 	lisComiFrete = document.getElementsByClassName("comifretegerado");
 	for (var i = 0; i < lisComiFrete.length; i++) {
+		console.log(
+			parseFloat(lisComiFrete[i].getAttribute("data-comiFreteCarga"))
+		);
 		if (parseFloat(lisComiFrete[i].getAttribute("data-comiFreteCarga")))
 			totalComiFrete += parseFloat(
 				lisComiFrete[i].getAttribute("data-comiFreteCarga")
@@ -325,7 +328,7 @@ $(function () {
 
 $("#cargasfiltro")
 	.find("input:checkbox")
-	.on("change", function () {
+	.on("click", function () {
 		var total = 0;
 		var countTotal = 0;
 		$("#bodycargasfiltro")
@@ -333,16 +336,16 @@ $("#cargasfiltro")
 			.each(function () {
 				if ($(this).is(":checked")) {
 					total = total + parseFloat($(this).val());
-					countTotal += 1
+					countTotal += 1;
 					$(this)
-					.closest("tr")
-					.toggleClass("checked-color", $(this).is(":checked"));
-					var trid = $(this).closest('tr').attr('id'); // table row ID 
-					console.log(trid)
+						.closest("tr")
+						.toggleClass("checked-color", $(this).is(":checked"));
+					var trid = $(this).closest("tr").attr("id"); // table row ID
+					// console.log(trid.split("-").pop());
 				} else {
 					$(this)
-					.closest("tr")
-					.toggleClass("checked-color", $(this).is(":checked"));
+						.closest("tr")
+						.toggleClass("checked-color", $(this).is(":checked"));
 				}
 			});
 		console.log(total.toFixed(2));
@@ -358,6 +361,9 @@ $("#cargasfiltro")
 				currency: "BRL",
 			})
 		);
+		$("#valorfatura").val(
+			total.toLocaleString("pt-br", { minimumFractionDigits: 2 })
+		);
 	});
 $(document).ready(function () {
 	$("#switch").on("click", function () {
@@ -367,8 +373,19 @@ $(document).ready(function () {
 		for (var checkbox of checkboxes) {
 			checkbox.checked = this.checked;
 		}
-		document.getElementById("orderTableHead").click()
+		document.getElementById("orderTableHead").click();
 	});
+});
+
+$(document).ready(function () {
+	$("#datafatura").mask("00/00/0000");
+	$("#datafaturavencimento").mask("00/00/0000");
+	var formtoday = new Date();
+	var dd = String(formtoday.getDate()).padStart(2, "0");
+	var mm = String(formtoday.getMonth() + 1).padStart(2, "0"); //January is 0!
+	var yyyy = formtoday.getFullYear();
+	var formtoday = dd + "/" + mm + "/" + yyyy;
+	$("#datafatura").val(formtoday);
 });
 
 // $(document).ready(function () {

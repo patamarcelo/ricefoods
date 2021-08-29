@@ -156,6 +156,13 @@ input[type="number"]:hover,
 input[type="checkbox"]:hover,
 #id_ordering:hover,
 #id_ordering:focus,
+
+#formFatura form select:hover,
+#formFatura form select:focus,
+
+#filtro form select:hover,
+#filtro form select:focus,
+
 #id_situacao:hover,
 #id_situacao:focus,
 #id_comcomissao:hover,
@@ -416,4 +423,23 @@ th:hover {
 
 #ui-datepicker-div > table > tbody > tr > td > a:hover {
     background-color: lightgreen
+}
+
+
+.container-form {
+    background-color: #1c1c1c;
+    padding: 10px;
+    border-radius: 2px 4px 2px;
+    -moz-box-shadow:    inset 0 0 20px #000000;
+    -webkit-box-shadow: inset 0 0 20px #000000;
+    box-shadow:         inset 0 0 20px #000000;
+
+}
+
+#formFaturaFretes select {
+    background-color: rgb(180,180,190);
+}
+
+.fa {
+    font-size: 16px;
 }

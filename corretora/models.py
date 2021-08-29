@@ -1396,7 +1396,7 @@ class Carga(Base):
     data_descarga        = models.DateField('Data Descarga', null=True, blank=True, default=None, help_text="dd/mm/aaaa")
     obs_descarga         = models.TextField('Observação Descarga', max_length=500, null=True, blank=True)
 
-    fatura_frete_terceiros = models.ForeignKey(FaturaCargasComiFrete, on_delete=models.SET_NULL, null=True, blank=True, limit_choices_to = {'pagamento_fatura': False})
+    fatura_frete_terceiros = models.ForeignKey(FaturaCargasComiFrete, on_delete=models.PROTECT, null=True, blank=True, limit_choices_to = {'pagamento_fatura': False})
 
     history      = HistoricalRecords()
 
@@ -1471,6 +1471,9 @@ class Carga(Base):
         if not self.comi_frete_total:
             if self.gera_comi_frete == True and self.comi_frete_ton != None and self.peso > 0:
                 self.comi_frete_total =  self.comi_frete_ton * Decimal(self.peso / 1000)
+        if self.comi_frete_ton and self.comi_frete_total :
+            if self.comi_frete_ton > 0 and self.comi_frete_total > 0:
+                self.gera_comi_frete = True
         super(Carga, self).save(*args, **kwargs)
 
     class Meta:

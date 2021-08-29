@@ -40,6 +40,9 @@
     <link href="{% static 'css/addons/datatables.min.css' %}" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
 
+    <!-- Momento JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
     
 
     
@@ -239,6 +242,10 @@
                         placeholder="Descarga">
                         {{ filter.form.com_fatura_terceiros|as_crispy_field }}
                     </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Fatura Nº" data-placement="bottom"
+                        placeholder="Fatura Nº">
+                        {{ filter.form.fatura_frete_terceiros__numero__icontains|as_crispy_field }}
+                    </div>
                     {% else %}
                     {% endif %}
                     <div class="col-2 form-group" data-toggle="tooltip" title="Descarga" data-placement="bottom"
@@ -323,6 +330,7 @@
                     <th scope="col" class="text text-center">Comiss.</th>
                     {% endif %}
                     <th scope="col" class="text text-center">Fatura</th>
+                    <th scope="col" class="text text-center">Fatura Nº</th>
                     <th scope="col" class="text text-center">Ação</th>
 
                 </tr>
@@ -330,11 +338,11 @@
             <tbody>
                 {% if user.is_superuser%}
                 <tr>
-                    <th class="text text-info" scope="row" colspan="24" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
+                    <th class="text text-info" scope="row" colspan="25" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
                 </tr>
                 {% else %}
                 <tr>
-                    <th class="text text-info" scope="row" colspan="22" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
+                    <th class="text text-info" scope="row" colspan="23" style="font-size: 18px;"><strong>Filtre os dados!!</strong></th>
                 </tr>
                 {% endif %}
             </tbody>
@@ -372,6 +380,7 @@
                             <th scope="col" class="text text-center">Comiss.</th>
                             {% endif %}
                             <th scope="col" class="text text-center">Fatura</th>
+                            <th scope="col" class="text text-center">Fatura Nº</th>
                             <th scope="col" class="text text-center">Ação</th>
         
                         </tr>
@@ -379,11 +388,11 @@
                     <tbody>
                         {% if user.is_superuser%}
                         <tr>
-                            <th class="text text-danger" scope="row" colspan="23" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
+                            <th class="text text-danger" scope="row" colspan="24" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
                         </tr>
                         {% else %}
                         <tr>
-                            <th class="text text-danger" scope="row" colspan="21" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
+                            <th class="text text-danger" scope="row" colspan="22" style="font-size: 18px;"><strong>Sem dados para os filtros selecionados!!</strong></th>
                         </tr>
                         {% endif %}
             {% else %}
@@ -422,6 +431,7 @@
                             <!-- <th scope="col" class="text text-center">Comiss.</th> -->
                             {% endif %}
                             <th scope="col" class="text text-center">Fatura<br/><div class="custom-control custom-switch"><input type="checkbox" name='headCheck' class="custom-control-input" id="switch"><label class="custom-control-label" for="switch"></label></div></th>
+                            <th scope="col" class="text text-center">Fatura Nº</th>
                             <th scope="col" class="text text-center">Ação</th>
 
                         </tr>
@@ -700,11 +710,11 @@
                             
 
                             {% if carga.pedido.situacao == 'a' and carga.comi_frete_total%}
-                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total}}"><a class="valortotalcominhtml" style="color: whitesmoke !important;" target="_blank" href="{% url 'admin:corretora_carga_change' carga.pk  %}">R$ {{ carga.comi_frete_total|floatformat:2 }}</a></td>
+                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}"><a class="valortotalcominhtml" style="color: whitesmoke !important;" target="_blank" href="{% url 'admin:corretora_carga_change' carga.pk  %}">R$ {{ carga.comi_frete_total|floatformat:2 }}</a></td>
                             {% elif carga.comi_frete_total %}
-                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total}}" align=center><em class="valortotalcominhtml">R$ {{ carga.comi_frete_total|floatformat:2 }}</em></td>
+                            <td class="comifretegerado" data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}" align=center><em class="valortotalcominhtml">R$ {{ carga.comi_frete_total|floatformat:2 }}</em></td>
                             {% else %}
-                            <td align=center data-comiFreteCarga="{{carga.comi_frete_total}}" class="valortotalcominhtml"><i class=" far fa-times-circle text-danger"></i></td>
+                            <td align=center data-comiFreteCarga="{{carga.comi_frete_total|stringformat:".2f"}}" class="valortotalcominhtml"><i class=" far fa-times-circle text-danger"></i></td>
                             {% endif %}
                             
                             <!-- {% if carga.comissaocasca > 1 %}
@@ -738,7 +748,11 @@
                             {% else %}
                             <td><div class="custom-control custom-switch"><input type="checkbox" name='chkOrgRow' class="custom-control-input" value="{{carga.comi_frete_total|stringformat:".2f"}}" id="switch-{{carga.pk|stringformat:"i"}}">  <label class="custom-control-label" for="switch-{{carga.pk|stringformat:"i"}}"></label></div></td>
                             {% endif %}
-
+                            {% if carga.fatura_frete_terceiros %}
+                            <td align=center>{{carga.fatura_frete_terceiros}}</td>
+                            {% else %}        
+                            <td align=center>-</td>
+                            {% endif %}
                             {% if carga.situacao == 'Agendado'  and carga.pedido.situacao == 'a' %}
                             <td align=center>
                                 <a class="btn btn-warning btn-xs" href="{% url 'upd_cargas' carga.pk %}" target="_blank">Edit</a>
@@ -857,8 +871,7 @@
                 {% endif %}
 
                 
-                <p><span style="float: right;"><strong>{% now "SHORT_DATETIME_FORMAT" %}
-                    </span></strong></p>
+                
             </div>
         </table>
     </div>
@@ -1139,13 +1152,13 @@
     </div>
     {% endif %}
 
-
+    {% include 'cargasfiltro_comissaofrete_form.html' %}
     <div style="display: none" id="jsonMotoristas" data-json="{{ motoristas_autocomplete_json }}"></div>
     <div style="display: none" id="jsonPlacas" data-json="{{ placas_autocomplete_json }}"></div>
 
+
     {% include 'modal_cargas_comifrete.html' %}
-    
-    
+
 </body>
 <br>
 <script>

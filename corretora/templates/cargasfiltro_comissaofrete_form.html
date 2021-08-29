@@ -1,0 +1,75 @@
+
+{% load bootstrap4 %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{% static 'css/cargasfiltro_comissaofrete.css' %}">
+{% if request.get_full_path ==  "/corretora/cfcomifrete" %}
+{% else %}
+<div class="container-fluid" style="cursor: pointer;" id="cursoropen">
+    <div class="container-fluid ml-2">
+        <div class="d-flex flex-row justify-content-between">
+            <div class="d-flex col-3 justify-content-start pl-0">
+                <h3 class="badge badge-pill badge-success"><i class="fa fa-xl fa-plus text-white" aria-hidden="true" id="showFormFatura" ></i></h3>
+            </div>
+            <div class="d-flex col-4 justify-content-end pr-0">
+                <small><strong>{% now "SHORT_DATETIME_FORMAT" %}</strong></small>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container container-form" style="display: none" id="formFatura">
+    <form action="" class="needs-validation" url-form-fatura="{% url 'criar_fatura_frete_terceiros' %}" id="formFaturaFretes" novalidate>
+        {% csrf_token %}
+        <div class="container">
+                <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="faturanumero">Número Fatura</label>
+                    <input type="text" class="form-control" id="faturanumero" placeholder="Fatura Número" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="empresa">Empresa</label>
+                    <select id="empresa" class="form-control">
+                    <option selected disabled value="">Escolha...</option>
+                    {% for empresa in empresas %}
+                    <option class="select-option" name="empresa" value="{{empresa.id}}">{{empresa.nome}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="transportadora">Transportadora</label>
+                    <select id="transportadora" class="form-control">
+                    <option selected disabled value="">Escolha...</option>
+                    {% for transportadora in transportadoras %}
+                    <option class="select-option" name="transportadora" value="{{transportadora.id}}">{{transportadora.nome}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="datafatura">Data Fatura</label>
+                    <input type="text" class="form-control" id="datafatura" placeholder="dd/mm/aaaa" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="datafaturavencimento">Data Vencimento Fatura</label>
+                    <input type="text" class="form-control" id="datafaturavencimento" placeholder="dd/mm/aaaa" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="valorfatura">Valor Fatura</label>
+                    <input type="text" class="form-control" id="valorfatura" placeholder="Valor Fatura" required disabled>
+                </div>
+                </div>
+                <div class="form-group">
+                <label for="obs" class="form-label">Observação</label>
+                <textarea type="textarea" class="form-control pl-1" id="obs" name="obs"></textarea>
+                </div>
+
+                <button type="submit" class="ml-0 btn btn-sm btn-primary">Gerar Fatura</button>
+            </div>
+    </form>
+</div>
+<script src="{% static 'js/pataajaxfaturafrete.js' %}"></script>   
+{% endif %}
+{% endblock %}
+

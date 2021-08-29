@@ -104,6 +104,8 @@ class CargasFiltradasComissaoFreteView(LoginRequiredMixin, SuperuserRequiredMixi
     def get_context_data(self, **kwargs):
         context = super(CargasFiltradasComissaoFreteView, self).get_context_data(**kwargs)
         context['cargas'] = Carga.objects.all
+        context['transportadoras'] = Transportadora.objects.all
+        context['empresas'] = EmpresaCorretora.objects.all
         queryset = self.get_queryset()
         filter = CargasFilter(self.request.GET, queryset=queryset)                
         context['pesototal'] = filter.qs.filter(situacao='Carregado').filter(peso__gt=0).values('peso').aggregate(Sum(F'peso'))
@@ -939,6 +941,54 @@ class UpdateAjaxComifreteView(LoginRequiredMixin, UpdateView):
 
         print(data)
         return JsonResponse(data)
+
+class CreateFaturasComiFreteAjaxView(LoginRequiredMixin, UpdateView):
+    model = FaturaCargasComiFrete
+    fields = ('numero','empresa',
+    'data_fatura', 'data_fatura_vencimento', 
+    'valor_total_fatura', 'transportadora', 'obs')
+    
+    def get(self, request):
+        ids_cargas = request.GET.getlist("ids_carga[]")
+        ids_formt = [int(x) for x in ids_cargas]
+        numero_input = request.GET.get("numero")
+        empresa_input = int(request.GET.get("empresa"))
+        empresa_format = EmpresaCorretora.objects.filter(id=empresa_input)[0]
+        transportadora_input = int(request.GET.get("transportadora"))
+        transportadora_format = Transportadora.objects.filter(id=transportadora_input)[0]
+        datafatura_input = request.GET.get("datafatura")
+        datafatura_input = datetime.datetime.strptime(datafatura_input, '%d/%m/%Y')
+        datafatura_format = datafatura_input.strftime("%Y-%m-%d")
+        
+        datavencimentofatura_input = request.GET.get("datavencimentofatura")
+        datavencimentofatura_input = datetime.datetime.strptime(datavencimentofatura_input, '%d/%m/%Y')
+        datavencimentofatura_format = datavencimentofatura_input.strftime("%Y-%m-%d")
+        valorfatura_input = float(request.GET.get("valorfatura").replace(".", "").replace(",", "."))
+        obs_input = request.GET.get("obs")
+        nova_fatura = FaturaCargasComiFrete.objects.create(
+            numero=numero_input,
+            empresa=empresa_format,
+            data_fatura=datafatura_format,
+            data_fatura_vencimento=datavencimentofatura_format,
+            transportadora=transportadora_format,
+            valor_total_fatura=valorfatura_input,
+            obs=obs_input
+            )
+        id_nova_fatura = nova_fatura.id
+        print(f'id da nova fatura {id_nova_fatura}')
+        nova_fatura = FaturaCargasComiFrete.objects.filter(id=id_nova_fatura)[0]
+
+        cargas_fatura = Carga.objects.filter(id__in=ids_formt)
+        print(cargas_fatura)
+        for i in cargas_fatura:
+            i.fatura_frete_terceiros = nova_fatura
+            i.save()
+            print(i.fatura_frete_terceiros)
+
+        data_fatura = FaturaCargasComiFrete.objects.all().filter(id=id_nova_fatura)[0]
+        data = { "numero": data_fatura.numero, "valor": data_fatura.valor_total_fatura, "transp" : data_fatura.transportadora.nome }
+        print(data)
+        return JsonResponse(data, safe=False)
 
 
 
