@@ -63,7 +63,7 @@ $("form#updateUserClassificacao").on("submit", function (event) {
 			if (data) {
 				console.log(data)
 				updateToUserTabelClassificacao(data);
-				// $.notify(`${nplaca} - ${mot} - NF ${formatNumber(nfiscal)} | Classificação atualizada com sucesso!!`, 'success');
+				$.notify(`${nplaca} - ${mot} - NF ${formatNumber(nfiscal)} | Valor alterado: Ton: ${CurrencyBRL(data.comi_frete_ton)} - Total: ${CurrencyBRL(data.comi_frete_total)}!!`, 'success');
 			}
 		},
 	});
@@ -71,6 +71,13 @@ $("form#updateUserClassificacao").on("submit", function (event) {
 	$("#myModalClassificacao").modal("hide");
 	return false;
 });
+
+function CurrencyBRL (x) {
+	return parseFloat(x).toLocaleString("pt-br", {
+		style: "currency",
+		currency: "BRL",
+	})
+}
 
 function updateFormClassificacao() {
 	$("form#updateUserClassificacao").trigger("reset");

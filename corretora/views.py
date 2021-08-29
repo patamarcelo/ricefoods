@@ -920,9 +920,7 @@ class UpdateAjaxClassificacaoView(LoginRequiredMixin, UpdateView):
 
 class UpdateAjaxComifreteView(LoginRequiredMixin, UpdateView):
     model = Carga
-    fields = ('renda','inteiro','impureza',
-                'umidade','gessado','bbranca','amarelo','manchpic','vermelhos',
-                'obs')
+    fields = ('comi_frete_ton','comi_frete_total')
 
     def get(self, request):
         id1 = request.GET.get("id", None)

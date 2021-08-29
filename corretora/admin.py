@@ -369,7 +369,7 @@ class CargaAdmin(SimpleHistoryAdmin):
     raw_id_fields = ('pedido', )
     list_filter = ('situacao','pedido__produto','pedido__tipo','pedido__cliente','pedido__situacao', 'gera_comi_frete', 'transp__nome' ,'pedido__fornecedor')
     search_fields = ['pedido__contrato','situacao','data','pedido__fornecedor__nome','placa','pedido__cliente__nome','pedido__tipo','motorista','peso','veiculo','buonny','notafiscal','notafiscal2','valornf']
-    history_list_display = ["situacao","ordem","get_data","peso","agendamento","notafiscal","pedido","motorista","placa","obs","valornf","valor_mot","changed_fields"]
+    history_list_display = ["situacao","ordem","get_data","peso","agendamento","notafiscal","pedido","motorista","placa","obs","valornf","valor_mot","comi_frete_ton","comi_frete_total","changed_fields"]
 
     def get_pedido_aberto(self, obj):
         if obj.pedido.situacao == 'a':
