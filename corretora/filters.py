@@ -147,6 +147,12 @@ class CargasFilter(django_filters.FilterSet):
         label="Fatura Nº",
         lookup_expr="icontains",
     )
+    
+    obs__icontains = django_filters.CharFilter(
+        field_name="obs",
+        label="Observação",
+        lookup_expr="icontains",
+    )
 
     class Meta:
         model = Carga
@@ -163,6 +169,7 @@ class CargasFilter(django_filters.FilterSet):
             "peso": ["icontains", "gte", "lte"],
             "pedido__fornecedor__cidade__cidade": ["icontains"],
             "fatura_frete_terceiros__numero": ["icontains"],
+            "obs": ["icontains"],
         }
 
     def filter_by_order(self, queryset, name, value):

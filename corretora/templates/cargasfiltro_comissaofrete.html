@@ -252,6 +252,10 @@
                         placeholder="Descarga">
                         {{ filter.form.com_comprovante_descarga|as_crispy_field }}
                     </div>
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Observação" data-placement="bottom"
+                    placeholder="Observação">
+                    {{ filter.form.obs__icontains|as_crispy_field }}
+                    </div>
                 </div>
                 <div class="row">
 
@@ -346,7 +350,8 @@
                 </tr>
                 {% endif %}
             </tbody>
-            {% elif  page_obj.paginator.count == 0 %}
+
+            {% elif  object_list|length == 0 %}
 
             <div class="my-table container-fluid" id="cargasfiltro4">
                 <table id="cargas5" class="width table-round-corner  table  table-striped table-dark table-bordered table-sm"
@@ -1150,9 +1155,9 @@
         
 
     </div>
+    {% include 'cargasfiltro_comissaofrete_form.html' %}
     {% endif %}
 
-    {% include 'cargasfiltro_comissaofrete_form.html' %}
     <div style="display: none" id="jsonMotoristas" data-json="{{ motoristas_autocomplete_json }}"></div>
     <div style="display: none" id="jsonPlacas" data-json="{{ placas_autocomplete_json }}"></div>
 
