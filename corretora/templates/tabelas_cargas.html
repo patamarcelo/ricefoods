@@ -117,9 +117,6 @@
                     <th scope="col">Origem</th>
                     <th scope="col">Cliente</th>
                     <th scope="col" class="text text-center">Class.</th>
-                    {% if user.is_superuser%}
-                    <th scope="col" class="text text-center">Comiss.</th>
-                    {% endif %}
                     <th scope="col" class="text text-center">Ação</th>
                 </tr>
             </thead>
@@ -347,33 +344,7 @@
 
 
 
-                    {% if user.is_superuser%}
-                    {% if carga.comissaocasca > 1 %}
-
-                    {% if carga.pgcomissao == True %}
-
-                    <td align=center><a class="text text-success" target="_blank" style='font-style:italic'
-                            href="{% url 'upd_comiss' carga.pk %}"><b>R$
-                                {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
-
-                    {% elif carga.pgcomissao == False and carga.vpcomissaoc > 0 %}
-                    <td align=center><a class="text text-danger" target="_blank" style='font-style:italic'
-                            href="{% url 'upd_comiss' carga.pk %}"><b>R$
-                                {{ carga.vpcomissaoc|floatformat:2 }}</b></a></td>
-
-                    {% else %}
-                    <td align=center><a class="text text-warning" target="_blank" style='font-style:italic'
-                            href="{% url 'upd_comiss' carga.pk %}"><b>R$
-                                {{ carga.comissaocasca|floatformat:2 }}</b></a></td>
-                    {% endif %}
-                    {% else %}
-                    <td align=center>- </td>
-
-
-                    {% endif %}
-
-                    {% else %}
-                    {% endif %}
+                    
 
                     {% if carga.situacao == 'Agendado' and carga.pedido.situacao == 'a' %}
                     <td align=center>

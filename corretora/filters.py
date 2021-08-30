@@ -185,30 +185,17 @@ class CargasFilter(django_filters.FilterSet):
     
 
     def filtrando_comissao(self, queryset, name, value):
-        qs = set()
-        c = Carga.objects.all()
-        for i in c:
-            if i.comissaocasca != None:
-                if i.comissaocasca > 0:
-                    qs.add(i.id)        
-        expressa = "True" if value == "True" else "False"
-        return queryset.filter(id__in=qs).filter(pgcomissao=expressa)
+        expression = True if value == "True" else False
+        return queryset.filter(pgcomissao=expression)
     
     def com_sem_comissao(self, queryset, name, value):
-        qs = set()
-        qs2 = set()
-        c = Carga.objects.all()
-        for i in c:
-            if i.comissaocasca != None:
-                if i.comissaocasca > 0:
-                    qs.add(i.id)        
-                else:
-                    qs2.add(i.id)
-            else:
-                qs2.add(i.id)
         if value == "True":
-            return queryset.filter(id__in=qs)
+            c = Carga.objects.all()
+            qs_ids_1 = [i.id for i in c if i.comissaocasca != None and i.comissaocasca > 0]
+            return queryset.filter(id__in=qs_ids_1)
         elif value == "False":
-            return queryset.filter(id__in=qs2)
+            c = Carga.objects.all()
+            qs_ids_2 = [i.id for i in c if i.comissaocasca == None or i.comissaocasca == 0]
+            return queryset.filter(id__in=qs_ids_2)
         else:
             return queryset
