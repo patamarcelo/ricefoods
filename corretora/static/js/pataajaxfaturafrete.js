@@ -10,28 +10,26 @@ $(document).ready(function () {
 		return self.indexOf(value) === index;
 	}	  
 	var ids_cargas_table = [];
-	var ids_cargas_table_unique = ids_cargas_table.filter(onlyUnique).sort()
-
-		$("#switch").on("click", function () {
-			var checkboxes = document
-				.getElementById("bodycargasfiltro")
-				.querySelectorAll('input[type="checkbox"][name=chkOrgRow]');
-			for (var checkbox of checkboxes) {
-				if (this.checked) {
-					checkbox.checked = this.checked;
-					let idInsert = checkbox.id.split("-").pop();
-					ids_cargas_table.push(idInsert);
-				} else {
-					this.checked = false;
-					let idtakeof = checkbox.id.split("-").pop();
-					let index = ids_cargas_table.indexOf(idtakeof);
-					if (index >= 0) {
-					ids_cargas_table.splice(index, 1);
-					}
+	$("#switch").on("click", function () {
+		var checkboxes = document
+			.getElementById("bodycargasfiltro")
+			.querySelectorAll('input[type="checkbox"][name=chkOrgRow]');
+		for (var checkbox of checkboxes) {
+			if (this.checked) {
+				checkbox.checked = this.checked;
+				let idInsert = checkbox.id.split("-").pop();
+				ids_cargas_table.push(idInsert);
+			} else {
+				checkbox.checked = false;
+				let idtakeof = checkbox.id.split("-").pop();
+				let index = ids_cargas_table.indexOf(idtakeof);
+				if (index >= 0) {
+				ids_cargas_table.splice(index, 1);
 				}
 			}
-			console.log(ids_cargas_table);
-		});
+		}
+		console.log(ids_cargas_table);
+	});
 	$("#bodycargasfiltro")
 		.find("input:checkbox")
 		.on("click", function () {
@@ -52,11 +50,12 @@ $(document).ready(function () {
 			console.log(ids_cargas_table);
 		});
 	$("#formFaturaFretes button").on("click", function (event) {
+		console.log(ids_cargas_table.filter(onlyUnique).sort())
 		event.preventDefault();
 		var urlformfatura = $("form[url-form-fatura]").attr("url-form-fatura");
 		console.log(urlformfatura);
 
-		var idscargaInput = ids_cargas_table_unique;
+		var idscargaInput = ids_cargas_table.filter(onlyUnique).sort();
 		var numeroInput = $("#faturanumero").val().trim();
 		var empresaInput = $("#empresa option:selected").val().trim();
 		var transportadoraInput = $("#transportadora option:selected")
@@ -119,7 +118,7 @@ $(document).ready(function () {
 									className: "success",
 								}
 							);
-							UpdateFaturaFrete(ids_cargas_table_unique, data);
+							UpdateFaturaFrete(ids_cargas_table, data);
 						}
 						$("#formFaturaFretes").trigger("reset");
 						$("#formFatura").slideToggle("slow");
