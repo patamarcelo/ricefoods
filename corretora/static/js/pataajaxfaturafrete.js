@@ -6,18 +6,45 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+	function onlyUnique(value, index, self) {
+		return self.indexOf(value) === index;
+	}	  
 	var ids_cargas_table = [];
-	$("#cargasfiltro")
+	var ids_cargas_table_unique = ids_cargas_table.filter(onlyUnique).sort()
+
+		$("#switch").on("click", function () {
+			var checkboxes = document
+				.getElementById("bodycargasfiltro")
+				.querySelectorAll('input[type="checkbox"][name=chkOrgRow]');
+			for (var checkbox of checkboxes) {
+				if (this.checked) {
+					checkbox.checked = this.checked;
+					let idInsert = checkbox.id.split("-").pop();
+					ids_cargas_table.push(idInsert);
+				} else {
+					this.checked = false;
+					let idtakeof = checkbox.id.split("-").pop();
+					let index = ids_cargas_table.indexOf(idtakeof);
+					if (index >= 0) {
+					ids_cargas_table.splice(index, 1);
+					}
+				}
+			}
+			console.log(ids_cargas_table);
+		});
+	$("#bodycargasfiltro")
 		.find("input:checkbox")
 		.on("click", function () {
 			if ($(this).is(":checked")) {
-				var trid = $(this).closest("tr").attr("id"); // table row ID
-				var idInsert = trid.split("-").pop();
+				let trid = $(this).closest("tr").attr("id"); // table row ID
+				console.log(trid)
+				let idInsert = trid.split("-").pop();
 				ids_cargas_table.push(idInsert);
 			} else {
-				var trid = $(this).closest("tr").attr("id"); // table row ID
-				var idtakeof = trid.split("-").pop();
-				var index = ids_cargas_table.indexOf(idtakeof);
+				let trid = $(this).closest("tr").attr("id"); // table row ID
+				console.log(trid)
+				let idtakeof = trid.split("-").pop();
+				let index = ids_cargas_table.indexOf(idtakeof);
 				if (index >= 0) {
 					ids_cargas_table.splice(index, 1);
 				}
@@ -29,7 +56,7 @@ $(document).ready(function () {
 		var urlformfatura = $("form[url-form-fatura]").attr("url-form-fatura");
 		console.log(urlformfatura);
 
-		var idscargaInput = ids_cargas_table;
+		var idscargaInput = ids_cargas_table_unique;
 		var numeroInput = $("#faturanumero").val().trim();
 		var empresaInput = $("#empresa option:selected").val().trim();
 		var transportadoraInput = $("#transportadora option:selected")
@@ -92,7 +119,7 @@ $(document).ready(function () {
 									className: "success",
 								}
 							);
-							UpdateFaturaFrete(ids_cargas_table, data);
+							UpdateFaturaFrete(ids_cargas_table_unique, data);
 						}
 						$("#formFaturaFretes").trigger("reset");
 						$("#formFatura").slideToggle("slow");

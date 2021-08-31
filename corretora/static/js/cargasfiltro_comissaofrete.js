@@ -328,7 +328,7 @@ $(function () {
 
 $("#cargasfiltro")
 	.find("input:checkbox")
-	.on("click", function () {
+	.on("change", function () {
 		var total = 0;
 		var countTotal = 0;
 		$("#bodycargasfiltro")
@@ -365,17 +365,6 @@ $("#cargasfiltro")
 			total.toLocaleString("pt-br", { minimumFractionDigits: 2 })
 		);
 	});
-$(document).ready(function () {
-	$("#switch").on("click", function () {
-		var checkboxes = document
-			.getElementById("bodycargasfiltro")
-			.querySelectorAll('input[type="checkbox"][name=chkOrgRow]');
-		for (var checkbox of checkboxes) {
-			checkbox.checked = this.checked;
-		}
-		document.getElementById("orderTableHead").click();
-	});
-});
 
 $(document).ready(function () {
 	$("#datafatura").mask("00/00/0000");
