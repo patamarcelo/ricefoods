@@ -319,8 +319,21 @@ admin.site.register(Pedido, PedidoAdmin)
 
 @admin.register(Transportadora)
 class TransportadoraAdmin(admin.ModelAdmin):
-    list_display = ('nome','contato','email','telefone','cidade','estado','ativo','get_modificado','get_recebe_email_comprovante')
-    fields = ['ativo', 'recebe_email_comprovante', ('nome','contato'),('cidade','estado'),('email','telefone'),'obs']
+    list_display = ('nome','contato','email','telefone','cidade','estado','ativo','get_modificado','get_recebe_email_comprovante','get_recebe_email_notafiscal')
+    fieldsets = (
+        ('Geral', {
+            'fields' : ('ativo','recebe_email_comprovante')
+        }),
+        ('Dados', {
+            'fields' : (('nome','contato'), ('cidade', 'estado'),'email','telefone')
+        }),
+        ('Nota Fiscal', {
+            'fields' : ('recebe_email_notafiscal','email_notafiscal')
+        }),
+        ('Observação', {
+            'fields' : ('obs',)
+        }),
+    )
 
     def get_modificado(self,obj):
         return date_format(obj.modificado, format='SHORT_DATE_FORMAT', use_l10n=True)
@@ -333,6 +346,14 @@ class TransportadoraAdmin(admin.ModelAdmin):
             return False
     get_recebe_email_comprovante.boolean = True
     get_recebe_email_comprovante.short_description = 'Recebe Comp?'
+    
+    def get_recebe_email_notafiscal(self,obj):
+        if obj.recebe_email_notafiscal:
+            return True
+        else:
+            return False
+    get_recebe_email_notafiscal.boolean = True
+    get_recebe_email_notafiscal.short_description = 'Recebe NF?'
 
 # @admin.register(Carga)
 class CargaAdmin(SimpleHistoryAdmin):
@@ -364,6 +385,9 @@ class CargaAdmin(SimpleHistoryAdmin):
     }),
     ('Descarga', {
             'fields': ('data_descarga','obs_descarga','comprovante_descarga')
+        }),
+    ('Nota Fiscal', {
+            'fields': ('nota_fiscal_arquivo',)
         }),
     )
     raw_id_fields = ('pedido', )

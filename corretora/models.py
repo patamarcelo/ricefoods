@@ -13,6 +13,14 @@ import uuid
 from ricef.settings import *
 
 
+def get_file_path_notafiscal(instance, filename):
+    ext       = filename.split('.')[-1]
+    name      = filename.split('.')[0]
+    date_file = datetime.datetime.now().strftime('%Y%m%d')
+    mot_name  = ''.join(instance.motorista.split()).lower() 
+    filename  = f'/corretora/notasfiscais/{instance.pedido.cliente.nome_fantasia}/{date_file}_{name}_{str(uuid.uuid4())[:8]}.{ext}'
+    return filename
+
 def get_file_path_comprovantes(instance, filename):
     ext       = filename.split('.')[-1]
     name      = filename.split('.')[0]
@@ -1096,6 +1104,8 @@ class Datasemcarga(Base):
 
 
 class Transportadora(Base):
+    recebe_email_notafiscal  = models.BooleanField('Recebe Nota Fiscal E-mail', default=False)
+    email_notafiscal         = models.EmailField('E-mail Nota Fiscal', max_length=30, blank=True)
     recebe_email_comprovante = models.BooleanField('Recebe Comprovante E-mail', default=False)
     nome                     = models.CharField('Nome', max_length=20, unique=True)
     cidade                   = models.ForeignKey(Cidade, on_delete=models.PROTECT)
@@ -1395,6 +1405,8 @@ class Carga(Base):
     comprovante_descarga = models.FileField('Comprovante Descarga', upload_to=get_file_path_comprovantes, null=True, blank=True)
     data_descarga        = models.DateField('Data Descarga', null=True, blank=True, default=None, help_text="dd/mm/aaaa")
     obs_descarga         = models.TextField('Observação Descarga', max_length=500, null=True, blank=True)
+
+    nota_fiscal_arquivo = models.FileField('Nota Fiscal', upload_to=get_file_path_notafiscal, null=True, blank=True)
 
     fatura_frete_terceiros = models.ForeignKey(FaturaCargasComiFrete, on_delete=models.PROTECT, null=True, blank=True, limit_choices_to = {'pagamento_fatura': False})
 

@@ -16,3 +16,15 @@ class CompDescargaForm(forms.ModelForm):
         model = Carga
         fields = ("comprovante_descarga", "data_descarga", "obs_descarga")
 
+class EnvianotafiscalForm(forms.ModelForm):
+
+    nota_fiscal_arquivo = forms.FileField(label="Nota Fiscal")
+    obs = forms.CharField(
+        label="Observação", widget=forms.Textarea(), required=False
+    )
+
+
+    class Meta:
+        model = Carga
+        fields = ("nota_fiscal_arquivo", "obs")
+

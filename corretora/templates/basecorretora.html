@@ -259,19 +259,10 @@
         </div>
         <br>
         <div class="container" align="center">
-            <div class="col-7">
-                {% if messages %}
-                <div class="container">
-                    <div class="d-flex flex-row justify-content-center">
-                        <div class="col-10 col-sm-qw col-sm-offset-2">
-                            <div class="alert alert-success alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert"><span
-                                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                {% for m in messages %}
-                                {{ m }} <br />
-                                {% endfor %}
-                            </div>
-                        </div>
+            {% if messages %}
+            <div class="container" align="center">
+                <div class="col-12">
+                    <div class="container" {% for m in messages %} mensagensbody="{{m}}" {% endfor %}>
                     </div>
                 </div>
             </div>
@@ -332,16 +323,33 @@
         
 
 
-        $("table tbody").on("click", "td", function () {
-            $(this).toggleClass("selected");
+    $("table tbody").on("click", "td", function () {
+        $(this).toggleClass("selected");
+    });
+
+    window.setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
         });
+    }, 3000);
 
-        window.setTimeout(function () {
-            $(".alert").fadeTo(500, 0).slideUp(500, function () {
-                $(this).remove();
+    $(document).ready(function () {
+        let msg = $("[mensagensbody]").attr("mensagensbody")
+        console.log(msg)
+        if(msg) {
+            if(msg.includes("xclu")) {
+                var style = "error"
+            } else if (msg.includes("lterado")) {
+                var style = "warn"
+            } else {
+                var style = "success"
+            }
+            $.notify(`${msg}`, {
+                position: "top-right",
+                className: `${style}`,
             });
-        }, 3000);
-
+        }
+    });
 
     </script>
     <script src="{% static 'js/notify.min.js' %}"></script>   

@@ -299,6 +299,7 @@
                         <th scope="col">Frete</th>
                         <th scope="col">Peso</th>
                         <th scope="col">NF</th>
+                        <th scope="col">NF</th>
                         <th scope="col">Valor NF</th>
                         <th scope="col">Fornecedor</th>
                         <th scope="col">Origem</th>
@@ -428,6 +429,18 @@
                         {% else %}
                         <td>{{ carga.peso|intcomma }} Kg </td>
                         {% endif %}
+
+                        {% if carga.nota_fiscal_arquivo %}
+                        <td ><a class="text text-success" target="_blank" href="{% url 'update_notafiscal' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i>                            </a></td>
+                        {% else %}
+                        <td ><a class="text text-danger" target="_blank" href="{% url 'update_notafiscal' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i>                            </a></td>
+                        {% endif %}
+
+
+
+
+
+
 
                         {% if carga.notafiscal == None %}
                         <td class="text-danger"><strong>Sem NF</strong></td>

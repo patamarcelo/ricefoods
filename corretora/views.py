@@ -46,7 +46,7 @@ from . import filters
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 
-from .forms import CompDescargaForm
+from .forms import CompDescargaForm, EnvianotafiscalForm
 
 class CargasFiltradasView(LoginRequiredMixin, FilterView):
     login_url = 'login'    
@@ -1006,7 +1006,6 @@ class UpdatecomprovdescargaCargasView(SuccessMessageMixin, LoginRequiredMixin, U
     model = Carga
     template_name = 'carga_comprovante_descarga.html'
     success_message = 'Comprovante salvo com sucesso!!'
-    # fields = ('comprovante_descarga', 'data_descarga', 'obs_descarga')
     success_url = reverse_lazy('cargas')
 
 
@@ -1024,19 +1023,19 @@ class UpdatecomprovdescargaCargasView(SuccessMessageMixin, LoginRequiredMixin, U
         return super(UpdatecomprovdescargaCargasView, self).post(request, *args, **kwargs)
 
     def form_valid(self, form, *args, **kwargs):
-        def boas_vindas():
+        def boas_vindas(user_name):
             hora_atual = datetime.datetime.now()
             hora_atual_print = hora_atual.strftime("%H:%M:%S")
             hora = int(hora_atual.strftime("%H"))
             minutos = int(hora_atual.strftime("%M"))
             segundos = int(hora_atual.strftime("%S"))
             if hora > 11:
-                return f"Boa tarde,\n"
+                return f"Boa tarde {user_name},\n"
             else:
-                return f"Bom dia,\n"
+                return f"Bom dia {user_name},\n"
         self.object         = self.get_object()
         motorista           = self.object.motorista
-        placa               = self.object.placa
+        placa               = f'{self.object.placa[:3]} {self.object.placa[-4:]}'
         notafiscal          = self.object.notafiscal
         nf_format           = re.sub(r'(?<!^)(?=(\d{3})+$)', r'.', str(notafiscal))
         tranps_get_id       = self.object.transp.id
@@ -1050,16 +1049,16 @@ class UpdatecomprovdescargaCargasView(SuccessMessageMixin, LoginRequiredMixin, U
         data_descarga        = form.cleaned_data['data_descarga']
         obs_descarga         = form.cleaned_data['obs_descarga']
         subject = f"{transpNome.title()} - Comprovante: {placa} - {motorista.title()} - NF: {nf_format}"
-        text = f'{boas_vindas()} \n\n{transpContato.title()}\n\n\nSegue comprovante em anexo: {placa} - {motorista.title()} - NF: {nf_format}\n\n\n'
+        text = f'{boas_vindas(transpContato.title())} \n\n\nSegue comprovante em anexo: \n\n\n{placa} - {motorista.title()} - NF: {nf_format}\n\n\n'
         if obs_descarga:
-            text = f'{boas_vindas()} \n\n{transpContato.title()}\n\n\nSegue comprovante em anexo: {placa} - {motorista.title()} - NF: {nf_format}\n\n\nObs.:\t {obs_descarga}\n\n\n'
+            text = f'{boas_vindas(transpContato.title())} \n\n\nSegue comprovante em anexo: \n\n\n{placa} - {motorista.title()} - NF: {nf_format}\n\n\nObs.:\t {obs_descarga}\n\n\n'
         email = ['marcelo@gdourado.com.br',transpMail]
         try:
             if 'comprovante_descarga' in self.request.FILES and transp_recebe_email == True:
                 mail = EmailMessage(
                     subject=subject,
                     body=text,
-                    from_email='contato@gdourado.com.br',
+                    from_email='marcelo@gdxlog.com.br',
                     to=email,
                     headers={'Reply-To': 'marcelo@gdourado.com.br'}
                 )
@@ -1076,6 +1075,94 @@ class UpdatecomprovdescargaCargasView(SuccessMessageMixin, LoginRequiredMixin, U
     def form_invalid(self, form, *args, **kwargs):
         messages.error(self.request, 'Erro ao enviar e-mail')
         return super(UpdatecomprovdescargaCargasView, self).form_invalid(form, *args, **kwargs)
+
+
+class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    login_url = 'login'
+    form_class = EnvianotafiscalForm
+    model = Carga
+    template_name = 'carga_notafiscal.html'
+    success_message = 'Nota Fiscal salva com sucesso!!'
+    # success_url = reverse_lazy('cargas')
+    
+    def get_success_url(self):
+        carga_status = Carga.objects.filter(id=self.object.id)[0]
+        if carga_status.pedido.situacao == 'a':
+            return reverse_lazy('upd_cargas', kwargs={'pk': self.object.pk})
+        else:
+            return reverse_lazy('cargas')
+
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        print(self.object.id)
+        tranps_get_id = self.object.transp.id
+        transp = Transportadora.objects.all().filter(id=tranps_get_id)
+        print(transp[0].email)
+        return super(UpdateNotafiscalCargasView, self).get(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        print(self.object)
+        return super(UpdateNotafiscalCargasView, self).post(request, *args, **kwargs)
+
+    def form_valid(self, form, *args, **kwargs):
+        def boas_vindas(user_name):
+            hora_atual = datetime.datetime.now()
+            hora_atual_print = hora_atual.strftime("%H:%M:%S")
+            hora = int(hora_atual.strftime("%H"))
+            minutos = int(hora_atual.strftime("%M"))
+            segundos = int(hora_atual.strftime("%S"))
+            if hora > 11:
+                return f"Boa tarde {user_name},\n"
+            else:
+                return f"Bom dia {user_name},\n"
+        self.object         = self.get_object()
+        motorista           = self.object.motorista
+        valor_motorista     = str(self.object.valor_mot).replace('.',',')
+        print(valor_motorista)
+        print(type(valor_motorista))
+        placa               = f'{self.object.placa[:3]} {self.object.placa[-4:]}'
+        notafiscal          = self.object.notafiscal
+        nf_format           = re.sub(r'(?<!^)(?=(\d{3})+$)', r'.', str(notafiscal))
+        tranps_get_id       = self.object.transp.id
+        transp              = Transportadora.objects.all().filter(id=tranps_get_id)
+        transpNome          = transp[0].nome
+        transpMail          = transp[0].email_notafiscal
+        transpContato       = transp[0].contato
+        transp_recebe_email = transp[0].recebe_email_notafiscal
+        valor_mot_text = f'Valor Motorista: R$ {valor_motorista} por Tonelada'
+        valor_mot_mail = " " if not self.object.valor_mot or self.object.valor_mot == 0 else valor_mot_text
+        
+        if 'nota_fiscal_arquivo' in self.request.FILES:
+            nota_fiscal_arquivo = self.request.FILES['nota_fiscal_arquivo']
+        obs      = form.cleaned_data['obs']
+        obs_mail = f'Obs.: {obs}\n\n\n' if obs else " "
+        subject  = f"{transpNome.title()} - Nota Fiscal: {placa} - {motorista.title()}"
+        text     = f'{boas_vindas(transpContato.title())} \n\n\nSegue Nota Fiscal em anexo: \n\n\n{placa} - {motorista.title()}\n\n\n{valor_mot_mail}\n\n\n{obs_mail}'
+        email    = ['marcelo@gdourado.com.br',transpMail]
+        try:
+            if 'nota_fiscal_arquivo' in self.request.FILES and transp_recebe_email == True:
+                mail = EmailMessage(
+                    subject=subject,
+                    body=text,
+                    from_email='marcelo@gdxlog.com.br',
+                    to=email,
+                    headers={'Reply-To': 'faturamento@gdxlog.com.br'}
+                )
+                mail.attach(nota_fiscal_arquivo.name, nota_fiscal_arquivo.read(), nota_fiscal_arquivo.content_type)
+                mail.send()
+                messages.success(self.request, f'Nota Fiscal de {placa} - {motorista.title()} Enviado com successo para {transpNome.title()}')
+            else:
+                print('Salvo somente no DB')
+        except Exception as e:
+            print(e)
+        return super(UpdateNotafiscalCargasView, self).form_valid(form, *args, **kwargs)
+    
+
+    def form_invalid(self, form, *args, **kwargs):
+        messages.error(self.request, 'Erro ao enviar e-mail')
+        return super(UpdateNotafiscalCargasView, self).form_invalid(form, *args, **kwargs)
 
     
 

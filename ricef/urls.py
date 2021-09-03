@@ -74,6 +74,7 @@ urlpatterns = [
     path('corretora/cargas/updatecomifrete', UpdateAjaxComifreteView.as_view(), name="cargas_ajax_update_comifrete"),
     path('corretora/cargas/faturafretes', CreateFaturasComiFreteAjaxView.as_view(), name="criar_fatura_frete_terceiros"),
     path('corretora/cargas/<int:pk>/updatecompdescarga', UpdatecomprovdescargaCargasView.as_view(), name="update_comprovante_descarga"),
+    path('corretora/cargas/<int:pk>/updatenotfiscal', UpdateNotafiscalCargasView.as_view(), name="update_notafiscal"),
     
     path('corretora/cargas/carjasJsonTeste', CargasViewJsonTeste.as_view(), name="cargas_json_teste"),
     path('corretora/cargas/carjasJsonTeste2', CargasViewJsonTeste2.as_view(), name="cargas_json_teste_ad"),
