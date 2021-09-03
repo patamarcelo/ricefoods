@@ -1140,7 +1140,7 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
         obs_mail = f'Obs.: {obs}\n\n\n' if obs else " "
         subject  = f"{transpNome.title()} - Nota Fiscal: {placa} - {motorista.title()}"
         text     = f'{boas_vindas(transpContato.title())} \n\n\nSegue Nota Fiscal em anexo: \n\n\n{placa} - {motorista.title()}\n\n\n{valor_mot_mail}\n\n\n{obs_mail}'
-        email    = ['marcelo@gdourado.com.br',transpMail]
+        email    = ['marcelo@gdourado.com.br','cascacorretora.nf@gmail.com',transpMail]
         try:
             if 'nota_fiscal_arquivo' in self.request.FILES and transp_recebe_email == True:
                 mail = EmailMessage(
