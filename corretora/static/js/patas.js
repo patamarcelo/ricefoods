@@ -1,4 +1,22 @@
 $(document).ready(function () {
+	let msg = $("[mensagensbody]").attr("mensagensbody")
+	console.log(msg)
+	if(msg) {
+		if(msg.includes("xclu")) {
+			var style = "error"
+		} else if (msg.includes("lterado")) {
+			var style = "warn"
+		} else {
+			var style = "success"
+		}
+		$.notify(`${msg}`, {
+			position: "top-right",
+			className: `${style}`,
+		});
+	}
+});
+
+$(document).ready(function () {
 	$('[data-toggle="tooltip"]').tooltip();
 });
 
@@ -642,7 +660,7 @@ function updateToUserTabel(user) {
 		aElementClass.addClass("fa-check-circle text-success");
 	} else {
 		var aElement = $(tr_id).find("td[ordem-carregamento]");
-    var aElementClass = $(tr_id).find("td[ordem-carregamento]").find("i");
+		var aElementClass = $(tr_id).find("td[ordem-carregamento]").find("i");
 		aElement.attr("ordem-carregamento", "False");
 		aElementClass.removeClass("fa-check-circle text-success");
 		aElementClass.addClass("fa-times-circle text-danger");
@@ -851,6 +869,6 @@ function updateToUserTabelBuonny(user) {
 	}
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
 	$("#id_pedido").focus();
 });

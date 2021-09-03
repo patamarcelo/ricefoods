@@ -47,9 +47,6 @@ $(document).ready(function () {
 
 	const numberTOAdviseCardMissing = 10;
 	for (let i = 0; i < res.length; i++) {
-		console.log(res[i].base);
-		console.log(res[i].local);
-		console.log(res[i].total);
 		countCard = 0;
 		for (let j = 0; j < jsonData.length; j++) {
 			if (res[i].base == jsonData[j].cartaobase_name) {
