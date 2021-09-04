@@ -18,8 +18,8 @@ class CompDescargaForm(forms.ModelForm):
 
 class EnvianotafiscalForm(forms.ModelForm):
 
-    nota_fiscal_arquivo = forms.FileField(label="Nota Fiscal")
-    nota_fiscal_xml = forms.FileField(label="XML NF", required=False)
+    nota_fiscal_arquivo = forms.FileField(label="Nota Fiscal", help_text="Somente arquivo PDF")
+    nota_fiscal_xml = forms.FileField(label="XML NF", required=False, help_text="Somente arquivo XML")
     obs = forms.CharField(label="Observação", widget=forms.Textarea(), required=False)
 
     class Meta:
