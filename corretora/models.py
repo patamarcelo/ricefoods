@@ -1407,6 +1407,7 @@ class Carga(Base):
     obs_descarga         = models.TextField('Observação Descarga', max_length=500, null=True, blank=True)
 
     nota_fiscal_arquivo = models.FileField('Nota Fiscal', upload_to=get_file_path_notafiscal, null=True, blank=True)
+    nota_fiscal_xml     = models.FileField('NF Xml', upload_to=get_file_path_notafiscal, null=True, blank=True)
 
     fatura_frete_terceiros = models.ForeignKey(FaturaCargasComiFrete, on_delete=models.PROTECT, null=True, blank=True, limit_choices_to = {'pagamento_fatura': False})
 

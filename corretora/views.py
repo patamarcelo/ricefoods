@@ -48,6 +48,9 @@ from django.shortcuts import render, redirect
 
 from .forms import CompDescargaForm, EnvianotafiscalForm
 
+import xml.etree.ElementTree as ET
+from decimal import Decimal
+
 class CargasFiltradasView(LoginRequiredMixin, FilterView):
     login_url = 'login'    
     model = Carga
@@ -1102,8 +1105,45 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
         return super(UpdateNotafiscalCargasView, self).get(request, *args, **kwargs)
     
     def post(self, request, *args, **kwargs):
+        def read_and_extract(filename):
+            tree = ET.parse(filename)
+            root = tree.getroot()
+            ns = {'nfe': 'http://www.portalfiscal.inf.br/nfe'}
+            numero_nf =[i.text for i in root.findall('.//nfe:nNF', ns)][0]
+            data_emi =[i.text for i in root.findall('.//nfe:dhEmi', ns)][0]
+            peso_produto_total =[i.text for i in root.findall('.//nfe:pesoL', ns)][-1]
+            valor_produto_total = [i.text for i in root.findall('.//nfe:vProd', ns)][-1]
+            nomes =[i.text for i in root.findall('.//nfe:xNome', ns)]
+
+            valor_produto = 0
+            peso_produto = 0
+            for child in root.findall('.//nfe:det', ns):
+                for valor, peso, tipo in zip(child.findall('.//nfe:vProd', ns),child.findall('.//nfe:qCom', ns),child.findall('.//nfe:uCom', ns)):
+                    if tipo.text == 'KG':
+                        valor_produto += float(valor.text)
+                        peso_produto += float(peso.text)
+
+            valor_produto = valor_produto if valor_produto > 0 else valor_produto_total
+            peso_produto = peso_produto if peso_produto > 0 else peso_produto_total
+            data_nf = datetime.datetime.strptime(data_emi[0:19],"%Y-%m-%dT%H:%M:%S")
+            data_nf_format = data_nf.strftime("%Y-%m-%d")
+            return {'valor': valor_produto,'peso' : peso_produto, 'numero_nf': numero_nf, 'data_nf':data_nf_format}
         self.object = self.get_object()
         print(self.object)
+        if 'nota_fiscal_xml' in self.request.FILES:
+            nota_fiscal_xml = self.request.FILES['nota_fiscal_xml']
+            try:
+                dados_xml = read_and_extract(nota_fiscal_xml)
+                carga_xml = self.object
+                carga_xml.valornf = Decimal(dados_xml['valor'])
+                carga_xml.peso = int(float(dados_xml['peso']))
+                carga_xml.notafiscal = dados_xml['numero_nf']
+                carga_xml.data = dados_xml['data_nf']
+                carga_xml.situacao = 'Carregado'
+                carga_xml.save()
+            except Exception as e:
+                messages.error(self.request, f'{e}')
+                print(f'Error on save xml: {e}')
         return super(UpdateNotafiscalCargasView, self).post(request, *args, **kwargs)
 
     def form_valid(self, form, *args, **kwargs):
@@ -1117,6 +1157,7 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
                 return f"Boa tarde {user_name},\n"
             else:
                 return f"Bom dia {user_name},\n"
+
         self.object         = self.get_object()
         motorista           = self.object.motorista
         valor_motorista     = str(self.object.valor_mot).replace('.',',')
@@ -1136,6 +1177,7 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
         
         if 'nota_fiscal_arquivo' in self.request.FILES:
             nota_fiscal_arquivo = self.request.FILES['nota_fiscal_arquivo']
+
         obs      = form.cleaned_data['obs']
         obs_mail = f'Obs.: {obs}\n\n\n' if obs else " "
         subject  = f"{transpNome.title()} - Nota Fiscal: {placa} - {motorista.title()}"

@@ -387,7 +387,7 @@ class CargaAdmin(SimpleHistoryAdmin):
             'fields': ('data_descarga','obs_descarga','comprovante_descarga')
         }),
     ('Nota Fiscal', {
-            'fields': ('nota_fiscal_arquivo',)
+            'fields': ('nota_fiscal_arquivo','nota_fiscal_xml')
         }),
     )
     raw_id_fields = ('pedido', )

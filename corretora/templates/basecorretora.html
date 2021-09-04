@@ -333,23 +333,6 @@
         });
     }, 3000);
 
-    $(document).ready(function () {
-        let msg = $("[mensagensbody]").attr("mensagensbody")
-        console.log(msg)
-        if(msg) {
-            if(msg.includes("xclu")) {
-                var style = "error"
-            } else if (msg.includes("lterado")) {
-                var style = "warn"
-            } else {
-                var style = "success"
-            }
-            $.notify(`${msg}`, {
-                position: "top-right",
-                className: `${style}`,
-            });
-        }
-    });
 
     </script>
     <script src="{% static 'js/notify.min.js' %}"></script>   
