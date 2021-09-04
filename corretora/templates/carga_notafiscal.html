@@ -107,7 +107,46 @@
 
 <script type="text/javascript" src="{% static 'js/jquery.mask.js' %}"></script>
 
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+$("form").submit(function(){
+    var fileUploadXML = $("#id_nota_fiscal_xml");
+    var notXML = 'Somente arquivos XML podem ser carregados no campo XML NF'
+    var valXML = fileUploadXML.val().toLowerCase();
+    console.log(valXML)
+    console.log(typeof valXML)
+    var regexXML = new RegExp("(.*?)\.(xml)$");
 
+    var fileUploadPDF = $("#id_nota_fiscal_arquivo");
+    var notPDF = 'Somente arquivos PDF podem ser carregados no campo Nota Fiscal'
+    var valPDF = fileUploadPDF.val().toLowerCase();
+    var regexPDF = new RegExp("(.*?)\.(pdf)$");
+
+    if(!(regexPDF.test(valPDF)) || (valXML.length > 5)) {
+        if (valXML.length > 5) {
+            if(!(regexXML.test(valXML))) {
+                $(fileUploadXML).val('');
+                $.notify(`${notXML}`, {
+                    position: "top-right",
+                    className: "warn",
+                });
+                var resultIF = false;
+            }
+        }
+        if(!(regexPDF.test(valPDF))) {
+            $(fileUploadPDF).val('');
+            $.notify(`${notPDF}`, {
+                position: "top-right",
+                className: "warn",
+            });
+            var resultIF = false;
+        }
+        return resultIF;
+    } 
+});
+</script>
 
 
 <!-- jQuery Masks-->
