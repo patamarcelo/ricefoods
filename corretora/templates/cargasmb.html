@@ -238,7 +238,7 @@
                         <div class="d-flex  flex-column col-7 motoristas justify-content-around ">
                             <div class="d-flex flex-row h-2">
                                 <div class="col justify-content-around" style="padding-left: 0px; padding-right: 5px">
-                                    <h6 class="index"><strong><b class="numcontagem">{{ page_obj.start_index|add:forloop.counter0 }}</b> &emsp;&emsp;
+                                    <h6 class="index" style="white-space: nowrap;"><strong><b class="numcontagem">{{ page_obj.start_index|add:forloop.counter0 }}</b> &emsp;&emsp;
                                     {% if carga.ordem %}
                                     <i class="text-success fas fa-check"
                                     updatemotoristaUser="{{carga.motorista|title}}" updatePlacaUser="{{carga.placa}}" ordem-carregamento="{{carga.ordem}}" onClick="editUser({{carga.pk|stringformat:"i"}})" data-toggle="modal" data-target="#myModal")"
@@ -283,22 +283,18 @@
                                     >{{ carga.buonny|title }}</strong>
                                     {% endif %}
                                     </strong>
-                                    {% if carga.comprovante_descarga %}
-                                    <a class="text text-success" style="margin-left: 7px; white-space: nowrap;" target="_blank" href="{% url 'update_comprovante_descarga' carga.pk  %}"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
-                                    {% else %}
-                                    <a class="text text-danger" style="margin-left: 7px; white-space: nowrap;" target="_blank" href="{% url 'update_comprovante_descarga' carga.pk  %}"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
-                                    {% endif %}
+                                    
 
                                     {% if carga.nota_fiscal_arquivo %}
-                                    <a class="text text-success" style="margin-left: 7px; white-space: nowrap;" target="_blank" href="{% url 'update_notafiscal' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
+                                    <a class="text text-success" style="margin-left: 12px;" target="_blank" href="{% url 'update_notafiscal' carga.pk  %}"><i class="fa fa-sm fa-file-text-o" aria-hidden="true"></i></a>
                                     {% else %}
-                                    <a class="text text-danger" style="margin-left: 7px; white-space: nowrap;" target="_blank" href="{% url 'update_notafiscal' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
+                                    <a class="text text-danger" style="margin-left: 12px;" target="_blank" href="{% url 'update_notafiscal' carga.pk  %}"><i class="fa fa-sm fa-file-text-o" aria-hidden="true"></i></a>
                                     {% endif %}
                                 </h6>
                                 </div>
                                     <div class="justify-content-end index copy-data" 
                                     data-clipboard-text="{{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}} - {{carga.motorista|title }}"
-                                    style="text-align: right !important;display: inline; font-size: 10px">
+                                    style="text-align: right !important;display: inline; font-size: 10px ; margin-right: -5px; white-space: nowrap;" >
                                         {% if todays_date == carga.data|date:"Y-m-d" %}
                                         <i class="text-primary"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></i>
                                         {% elif todays_date > carga.data|date:"Y-m-d" and carga.situacao == 'Agendado' %}
@@ -306,6 +302,7 @@
                                         {% else %}
                                         <strong><i>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</i></strong>
                                         {% endif %}
+                                        
                                     </div>    
                             </div>   
                             <div class="d-flex flex-column">                                                                                   
@@ -328,7 +325,7 @@
                                     {% endif %}
 
 
-                                    <a class="motorista">{{ carga.motorista|title }}</a> - 
+                                    <a class="motorista">{{ carga.motorista|title|truncatechars:15  }}</a> - 
                                     
                                     {% if carga.peso == 0 %}
                                     <i class="text-warning">{{ carga.veiculo|intcomma }} Kg </i>
@@ -388,6 +385,7 @@
                                     <span>R$ {{ carga.valornf }}</span>                                                                                    
                                     {% endif %}
                                     </span>
+
                                 </p>
                                 {% if carga.obs %}
                                 <smal class="obs">Obs.: {{ carga.obs|title }}</smal>
@@ -395,12 +393,23 @@
                                 {% endif %}                        
                             </div>
                         </div>
-                    <div class="d-flex  flex-column col dadospedido">                            
-                        <div class="d-flex flex-row justify-content-end ">
-                           
-                                <p class="cliente" style="color: whitesmoke">                                                
+                    <div class="d-flex  flex-column col dadospedido justify-content-around">                            
+                        <div class="d-flex flex-row justify-content-around aling-items-end">
+                                {% if carga.comprovante_descarga %}
+                                <a class="text text-success align-self-top mt-0" style="margin-right: 15px;" target="_blank" href="{% url 'update_comprovante_descarga' carga.pk  %}"><i class="fa fa-xs fa-paperclip" aria-hidden="true"></i></a>
+                                {% else %}
+                                <a class="text text-danger align-self-top mt-0" style="margin-right: 15px;" target="_blank" href="{% url 'update_comprovante_descarga' carga.pk  %}"><i class="fa fa-xs fa-paperclip" aria-hidden="true"></i></a>
+                                {% endif %}
+
+                                {% if 'b' in carga.pedido.situacao %}
+                                <p class="cliente align-self-top" style="color: whitesmoke">                                                
                                     <b><strong class="nomecliente" style="color: {{ carga.pedido.cliente.color}}"> {{ carga.pedido.cliente }}</strong></b>
                                 </p>                                                                
+                                {% else %}
+                                <p class="cliente mt-1 align-self-top" style="color: whitesmoke">                                                
+                                    <b><strong class="nomecliente" style="color: {{ carga.pedido.cliente.color}}"> {{ carga.pedido.cliente }}</strong></b>
+                                </p>                                                                
+                                {% endif %}
                         </div>    
                         <div class="d-flex flex-row justify-content-end ">
                            
