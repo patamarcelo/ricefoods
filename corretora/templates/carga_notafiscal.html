@@ -33,7 +33,7 @@
     }
 </style>
 <form method="POST" enctype="multipart/form-data">
-    <div class="container" style="padding-left: 160px;">
+    <div class="container" >
         <div class="d-flex flex-column ">
             <div class="row" style="margin: 0px;">        
                 <div class="d-flex flex-column justify-content-start">
@@ -135,13 +135,15 @@ $("form").submit(function(){
                 var resultIF = false;
             }
         }
-        if(!(regexPDF.test(valPDF))) {
-            $(fileUploadPDF).val('');
-            $.notify(`${notPDF}`, {
-                position: "top-right",
-                className: "warn",
-            });
-            var resultIF = false;
+        if(valPDF.length > 5) {
+            if(!(regexPDF.test(valPDF))) {
+                $(fileUploadPDF).val('');
+                $.notify(`${notPDF}`, {
+                    position: "top-right",
+                    className: "warn",
+                });
+                var resultIF = false;
+            }
         }
         return resultIF;
     } 

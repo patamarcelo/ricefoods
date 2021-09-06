@@ -546,7 +546,7 @@ class CargasmbView(LoginRequiredMixin, ListView):
     login_url = 'login'
     
     models = Carga
-    paginate_by = 30
+    paginate_by = 60
     ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
     template_name = 'cargasmb.html'
     queryset = Carga.objects.all()
@@ -1109,25 +1109,56 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
             tree = ET.parse(filename)
             root = tree.getroot()
             ns = {'nfe': 'http://www.portalfiscal.inf.br/nfe'}
-            numero_nf =[i.text for i in root.findall('.//nfe:nNF', ns)][0]
-            data_emi =[i.text for i in root.findall('.//nfe:dhEmi', ns)][0]
-            peso_produto_total =[i.text for i in root.findall('.//nfe:pesoL', ns)][-1]
-            valor_produto_total = [i.text for i in root.findall('.//nfe:vProd', ns)][-1]
-            nomes =[i.text for i in root.findall('.//nfe:xNome', ns)]
+            try:
+                nomes =[i.text for i in root.findall('.//nfe:xNome', ns)]
+            except ValueError:
+                print('problema em pegar os nomes nas notas')
+            
+            numeronf_is_valid = None
+            numero_nf = 0
+            try:
+                numero_nf         = [i.text for i in root.findall('.//nfe:nNF', ns)][0]
+                numeronf_is_valid = True
+            except:
+                numeronf_is_valid = False
 
-            valor_produto = 0
-            peso_produto = 0
-            for child in root.findall('.//nfe:det', ns):
-                for valor, peso, tipo in zip(child.findall('.//nfe:vProd', ns),child.findall('.//nfe:qCom', ns),child.findall('.//nfe:uCom', ns)):
-                    if tipo.text == 'KG':
-                        valor_produto += float(valor.text)
-                        peso_produto += float(peso.text)
-
-            valor_produto = valor_produto if valor_produto > 0 else valor_produto_total
-            peso_produto = peso_produto if peso_produto > 0 else peso_produto_total
-            data_nf = datetime.datetime.strptime(data_emi[0:19],"%Y-%m-%dT%H:%M:%S")
-            data_nf_format = data_nf.strftime("%Y-%m-%d")
+            date_is_valid = None
+            try:
+                data_emi =[i.text for i in root.findall('.//nfe:dhEmi', ns)][0]
+                data_nf = datetime.datetime.strptime(data_emi[0:19],"%Y-%m-%dT%H:%M:%S")
+                data_nf_format = data_nf.strftime("%Y-%m-%d")
+                date_is_valid = True
+            except:
+                date_is_valid = False
+            valor_produto       = 0
+            peso_produto        = 0
+            valor_produto_total = 0
+            peso_produto_total  = 0
+            peso_and_valor      = None
+            try:
+                peso_produto_total =[i.text for i in root.findall('.//nfe:pesoL', ns)][-1]
+                valor_produto_total = [i.text for i in root.findall('.//nfe:vProd', ns)][-1]
+            except:
+                pass
+            try:    
+                for child in root.findall('.//nfe:det', ns):
+                    for valor, peso, tipo in zip(child.findall('.//nfe:vProd', ns),child.findall('.//nfe:qCom', ns),child.findall('.//nfe:uCom', ns)):
+                        if tipo.text == 'KG':
+                            valor_produto += float(valor.text)
+                            peso_produto += float(peso.text)
+                peso_and_valor = True
+            except:
+                peso_and_valor = False
+            data_nf_format = data_nf_format if date_is_valid == True else '2222-01-01'
+            if peso_and_valor == True:
+                valor_produto = valor_produto_total if valor_produto == 0 and int(float(valor_produto_total)) > 0 else valor_produto
+                peso_produto = peso_produto_total if peso_produto == 0 and int(float(peso_produto_total)) > 0 else peso_produto
+            
             return {'valor': valor_produto,'peso' : peso_produto, 'numero_nf': numero_nf, 'data_nf':data_nf_format}
+
+
+
+        
         self.object = self.get_object()
         print(self.object)
         if 'nota_fiscal_xml' in self.request.FILES:

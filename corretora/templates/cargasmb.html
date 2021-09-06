@@ -283,6 +283,11 @@
                                     >{{ carga.buonny|title }}</strong>
                                     {% endif %}
                                     </strong>
+                                    {% if carga.comprovante_descarga %}
+                                    <a class="text text-success" style="margin-left: 7px; white-space: nowrap;" target="_blank" href="{% url 'update_comprovante_descarga' carga.pk  %}"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
+                                    {% else %}
+                                    <a class="text text-danger" style="margin-left: 7px; white-space: nowrap;" target="_blank" href="{% url 'update_comprovante_descarga' carga.pk  %}"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
+                                    {% endif %}
                                 </h6>
                                 </div>
                                     <div class="justify-content-end index copy-data" 
