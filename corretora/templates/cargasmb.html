@@ -237,7 +237,7 @@
                 <div class="d-flex caixainterna sombra{{carga.situacao|lower}} borda{{carga.situacao|lower}} " style="box-shadow: 7px 0px 3px {{carga.pedido.cliente.color}};">                                                    
                         <div class="d-flex  flex-column col-7 motoristas justify-content-around ">
                             <div class="d-flex flex-row h-2">
-                                <div class="col" style="padding-left: 0px">
+                                <div class="col justify-content-around" style="padding-left: 0px; padding-right: 5px">
                                     <h6 class="index"><strong><b class="numcontagem">{{ page_obj.start_index|add:forloop.counter0 }}</b> &emsp;&emsp;
                                     {% if carga.ordem %}
                                     <i class="text-success fas fa-check"
@@ -288,6 +288,12 @@
                                     {% else %}
                                     <a class="text text-danger" style="margin-left: 7px; white-space: nowrap;" target="_blank" href="{% url 'update_comprovante_descarga' carga.pk  %}"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
                                     {% endif %}
+
+                                    {% if carga.nota_fiscal_arquivo %}
+                                    <a class="text text-success" style="margin-left: 7px; white-space: nowrap;" target="_blank" href="{% url 'update_notafiscal' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
+                                    {% else %}
+                                    <a class="text text-danger" style="margin-left: 7px; white-space: nowrap;" target="_blank" href="{% url 'update_notafiscal' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i></a>
+                                    {% endif %}
                                 </h6>
                                 </div>
                                     <div class="justify-content-end index copy-data" 
@@ -298,7 +304,7 @@
                                         {% elif todays_date > carga.data|date:"Y-m-d" and carga.situacao == 'Agendado' %}
                                         <i class="text-danger"><strong>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</strong></i>
                                         {% else %}
-                                        <i>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</i>
+                                        <strong><i>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</i></strong>
                                         {% endif %}
                                     </div>    
                             </div>   
