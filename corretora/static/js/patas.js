@@ -1,22 +1,4 @@
 $(document).ready(function () {
-	let msg = $("[mensagensbody]").attr("mensagensbody")
-	console.log(msg)
-	if(msg) {
-		if(msg.includes("xclu") || msg.includes("duplicate key value") || msg.includes("not well-formed")) {
-			var style = "error"
-		} else if (msg.includes("lterado")) {
-			var style = "warn"
-		} else {
-			var style = "success"
-		}
-		$.notify(`${msg}`, {
-			position: "top-right",
-			className: `${style}`,
-		});
-	}
-});
-
-$(document).ready(function () {
 	$('[data-toggle="tooltip"]').tooltip();
 });
 
