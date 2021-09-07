@@ -714,6 +714,8 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     success_url = reverse_lazy('cargas')
 
+    error_message = 'Erro ao salvar NF | Produtor, verificar os dados abaixo'
+
     def get_context_data(self, **kwargs):
         def dias_da_semana():                  
             today = datetime.datetime.now()   
@@ -785,6 +787,10 @@ class UpdateCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
             ]
         )
         return context
+
+    def form_invalid(self, form):
+        messages.error(self.request, self.error_message)
+        return super().form_invalid(form)
 
 class UpdateclassCargasView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     login_url = 'login'

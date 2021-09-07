@@ -337,7 +337,11 @@
 	let msg = $("[mensagensbody]").attr("mensagensbody")
 	console.log(msg)
 	if(msg) {
-		if(msg.includes("xclu") || msg.includes("duplicate key value") || msg.includes("not well-formed")) {
+		if(msg.includes("xclu") || 
+        msg.includes("duplicate key value") ||
+        msg.includes("not well-formed") ||
+        msg.includes("Esta Nota Fiscal com este Produtor já existe") || 
+        msg.includes("Erro ao salvar")) {
 			var style = "error"
 		} else if (msg.includes("lterado")) {
 			var style = "warn"

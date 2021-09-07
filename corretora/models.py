@@ -12,6 +12,12 @@ from decimal import Decimal
 import uuid
 from ricef.settings import *
 
+from django.forms import ValidationError
+from django.contrib import messages
+from django import forms
+
+
+
 
 def get_file_path_notafiscal(instance, filename):
     ext       = filename.split('.')[-1]
@@ -1376,7 +1382,7 @@ class Carga(Base):
     veiculo   = models.IntegerField('Veículo', choices=VEICULO_CHOICES)
     valor_mot = models.DecimalField('Frete', max_digits=5, decimal_places=2, null=True, blank=True)
     
-    notafiscal  = models.CharField('NF', max_length=8, unique=True,  null=True, blank=True)
+    notafiscal  = models.CharField('NF', max_length=8,  null=True, blank=True)
     notafiscal2 = models.CharField('NF 2', max_length=8, unique=True,  null=True, blank=True)
     valornf     = models.DecimalField('Valor NF', max_digits=8, decimal_places=2,  null=True, blank=True)
 
@@ -1467,7 +1473,17 @@ class Carga(Base):
         else:
             pass
     
+    def validate_unique(self, exclude=None):
+        if self.notafiscal:
+            qs = Carga.objects.filter(notafiscal=self.notafiscal).exclude(id=self.id)
+            print(qs)
+            if qs.filter(pedido__fornecedor__nome=self.pedido.fornecedor.nome).exists():
+                print('nota fiscal já existe no DB')
+                raise ValidationError("Esta Nota Fiscal com este Produtor já existe!")
+            super(Carga, self).validate_unique(exclude)
+    
     def save(self, *args, **kwargs):
+        self.validate_unique()
         if self.pk is not None:
             orig = Carga.objects.get(pk=self.pk)
             if "GDX" in orig.transp.nome and "GDX" not in self.transp.nome:
