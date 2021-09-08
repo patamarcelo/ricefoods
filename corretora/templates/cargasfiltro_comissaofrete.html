@@ -557,7 +557,7 @@
 
                             {% if carga.notafiscal == None %}
                             <td class="text-danger"><strong>Sem NF</strong></td>
-                            {% elif carga.notafiscal|length <= 4 %}
+                            {% elif carga.notafiscal|length <= 3 %}
                             <td>
                                 {{ carga.notafiscal }}
                             </td>
@@ -685,7 +685,7 @@
 
 
                             {% if user.is_superuser%}
-                            {% if carga.pedido.situacao == 'a' and carga.comi_frete_ton %}
+                            {% if not carga.fatura_frete_terceiros and carga.comi_frete_ton %}
                             <td
                                 updatemotoristaUser="{{carga.motorista|title}}" 
                                 updatePlacaUser="{{carga.placa}}"
@@ -695,7 +695,7 @@
                                 onClick="editUserClassificacao({{carga.pk|stringformat:"i"}})" 
                              >
                             <a style="color: whitesmoke !important;" target="_blank" class="valorportonhtml">R$ {{ carga.comi_frete_ton|floatformat:2 }}</a></td>
-                            {% elif carga.pedido.situacao == 'a' %}
+                            {% elif not carga.fatura_frete_terceiros %}
                             <td align=center 
                                 data-toggle="modal"
                                 data-target="#myModalClassificacao")"
@@ -963,7 +963,7 @@
 
                     {% if carga.notafiscal == None %}
                     <td class="text-danger"><strong>Sem NF</strong></td>
-                    {% elif carga.notafiscal|length <= 4 %}
+                    {% elif carga.notafiscal|length <= 3 %}
                     <td>
                         {{ carga.notafiscal }}
                     </td>
@@ -1046,7 +1046,7 @@
 
                     {% if carga.notafiscal == None %}
                     <td class="text-danger"><strong>Sem NF</strong></td>
-                    {% elif carga.notafiscal|length <= 4 %}
+                    {% elif carga.notafiscal|length <= 3 %}
                     <td>
                         {{ carga.notafiscal }}
                     </td>
@@ -1111,40 +1111,52 @@
         </table>
         
             {% if agendatotal.veiculo__sum == None %}  
-                    <div class="container">
+                    <div class="container" >
                         <div class="row linhatitulototal">
                                       
-                            <div class="col titulototal">
+                            <div class="row titulototal">
                                 {% if pesototal.peso__sum == None %}                    
                                 {% else %}
-                                <p ><strong>Carregado: <i id="totalPesoCarregadoJsExcel"></i></strong></p>
+                                <p style="font-size: 13px; font-weight: bold; float: left;" ><strong>Carregado: <i id="totalPesoCarregadoJsExcel"></i></strong></p>
+                                <p style="font-size: 13px; font-weight: bold; float: right;" ><strong>Comi: <i id="totalcomifretehtmlHeaderExcel"></i></strong></p>
                                 {% endif %}  
                             </div>  
                             
                         </div>
                     </div>                    
                     {% else %}
-                    <div class="container">
-                        <div class="row linhatitulototal">
-                            <div class="col titulototal">
+                    <div class="d-flex justify-content-around">
                                 {% if agendatotal.veiculo__sum == None %}                    
                                 {% else %}
-                                <p><strong>Agendado: <i id="AgendadoTotalExcel"></i></strong></p>
+                                <div class="d-flex">
+                                    <p style="font-size: 13px; font-weight: bold; float: left;"><strong>Agendado: <i id="AgendadoTotalExcel"></i></strong></p>
+                                </div>
+                                <div class="d-flex">
+                                    <p style="font-size: 13px; font-weight: bold; float: right;" ><strong>Comi: <i id="totalcomifretehtmlHeaderExcel"></i></strong></p>
+                                </div>
                                 {% endif %}        
-                            </div>             
-                            <div class="col titulototal">
+                            
+                    </div>             
+                    <div class="container">
+                            <div class="row titulototal">
                                 {% if pesototal.peso__sum == None %}                    
                                 {% else %}
-                                <p ><strong>Carregado: <i id="totalPesoCarregadoJsExcel"></i></strong></p>
+                                <p style="font-size: 13px; font-weight: bold" ><strong>&nbsp;</i></strong></p>
+                                {% endif %}  
+                            </div>  
+                            <div class="row titulototal">
+                                {% if pesototal.peso__sum == None %}                    
+                                {% else %}
+                                <p style="font-size: 13px; font-weight: bold" ><strong>Carregado: <i id="totalPesoCarregadoJsExcel"></i></strong></p>
                                 {% endif %}  
                             </div>  
                             {% if pesototal.peso__sum == None and agendatotal.peso__sum == None %}
                             {% else %}
-                            <div class="col titulototal">                                
-                                <p ><strong>Total: <i id="PesoTotalExcel"></i></strong></p>
+                            <div class="row titulototal">                                
+                                <p style="font-size: 13px; font-weight: bold"><strong>Total: <i id="PesoTotalExcel"></i></strong></p>
                             </div>  
                             {% endif %}
-                        </div>
+                        
                     </div>
                 {% endif %}
                 

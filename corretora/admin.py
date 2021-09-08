@@ -357,7 +357,7 @@ class TransportadoraAdmin(admin.ModelAdmin):
 
 # @admin.register(Carga)
 class CargaAdmin(SimpleHistoryAdmin):
-    list_display = ('placa','motorista','situacao','pedido','get_pedido_aberto','get_data','buonny','tac','ordem','get_fornecedor','get_cidade_fornecedor','get_cliente','transp','veiculo','notafiscal','gera_comi_frete','tem_comprovante','comi_frete_ton','get_modificado',)
+    list_display = ('placa','motorista','situacao','pedido','get_pedido_aberto','get_data','buonny','tac','ordem','get_fornecedor','get_cidade_fornecedor','get_cliente','transp','veiculo','notafiscal','gera_comi_frete','tem_comprovante','comi_frete_ton','fatura_frete_terceiros','get_modificado',)
     fieldsets = (
     ('Agendamento', {
         'fields': ('pedido', ('data', 'buonny') )
@@ -392,7 +392,7 @@ class CargaAdmin(SimpleHistoryAdmin):
     )
     raw_id_fields = ('pedido', )
     list_filter = ('situacao','pedido__produto','pedido__tipo','pedido__cliente','pedido__situacao', 'gera_comi_frete', 'transp__nome' ,'pedido__fornecedor')
-    search_fields = ['pedido__contrato','situacao','data','pedido__fornecedor__nome','placa','pedido__cliente__nome','pedido__tipo','motorista','peso','veiculo','buonny','notafiscal','notafiscal2','valornf']
+    search_fields = ['pedido__contrato','situacao','data','pedido__fornecedor__nome','placa','pedido__cliente__nome','pedido__tipo','motorista','peso','veiculo','buonny','notafiscal','notafiscal2','valornf','fatura_frete_terceiros__numero']
     history_list_display = ["situacao","ordem","get_data","peso","agendamento","notafiscal","pedido","motorista","placa","obs","valornf","valor_mot","comi_frete_ton","comi_frete_total","changed_fields"]
 
     def get_pedido_aberto(self, obj):

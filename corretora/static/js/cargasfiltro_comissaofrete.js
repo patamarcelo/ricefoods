@@ -200,6 +200,7 @@ $(document).ready(function () {
 $(document).ready(function () {
 	var totalComiFreteHtml = $("#totalcomifretehtml");
 	var totalComiFreteHtmlHeader = $("#totalcomifretehtmlHeader");
+	var totalComiFreteHtmlHeaderExcel = $("#totalcomifretehtmlHeaderExcel");
 	var totalComiFrete = 0;
 	lisComiFrete = document.getElementsByClassName("comifretegerado");
 	for (var i = 0; i < lisComiFrete.length; i++) {
@@ -219,6 +220,7 @@ $(document).ready(function () {
 	if (totalComiFrete > 0) {
 		totalComiFreteHtmlHeader.css("display", "block");
 		totalComiFreteHtml.html(comiFreteFormat);
+		totalComiFreteHtmlHeaderExcel.html(comiFreteFormat);
 	} else {
 	}
 

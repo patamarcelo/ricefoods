@@ -549,7 +549,7 @@
 
                             {% if carga.notafiscal == None %}
                             <td class="text-danger"><strong>Sem NF</strong></td>
-                            {% elif carga.notafiscal|length <= 4 %}
+                            {% elif carga.notafiscal|length <= 3 %}
                             <td>
                                 {{ carga.notafiscal }}
                             </td>
@@ -942,7 +942,7 @@
 
                     {% if carga.notafiscal == None %}
                     <td class="text-danger"><strong>Sem NF</strong></td>
-                    {% elif carga.notafiscal|length <= 4 %}
+                    {% elif carga.notafiscal|length <= 3 %}
                     <td>
                         {{ carga.notafiscal }}
                     </td>
@@ -1048,7 +1048,7 @@
 
                     {% if carga.notafiscal == None %}
                     <td class="text-danger"><strong>Sem NF</strong></td>
-                    {% elif carga.notafiscal|length <= 4 %}
+                    {% elif carga.notafiscal|length <= 3 %}
                     <td>
                         {{ carga.notafiscal }}
                     </td>
