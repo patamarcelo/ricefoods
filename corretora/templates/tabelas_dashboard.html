@@ -174,7 +174,7 @@
                     <tbody align="center">
                         {% for cliente in clientes %}                        
                         <tr align=" center" class="simplehighlight">
-                           {% if cliente.comissao_ultimos_meses > 0 %}
+                           {% if cliente.comissao_ultimos_meses > 0 or cliente.comissaoabertocasca > 0 %}
                             <td style="color: {{cliente.color}}"><em><strong>{{ cliente.nome_fantasia|upper }}</strong></em></td>
 
                             {% for key, value in cliente.comissao_geral_por_cliente.items %}

@@ -982,7 +982,17 @@
 
                     <td>{{ carga.pedido.cliente|upper }}</td>
                     <td>{{ carga.pedido.produto }}</td>
-                    <td>{{ carga.data_agenda }}</td>
+                    {% if carga.data_agenda %}
+                    <td>{{ carga.data_agenda|date:"SHORT_DATE_FORMAT" }}</td>
+                    {% else %}
+                    <td align=center>-</td>
+                    {% endif %}
+
+                    {% if carga.comi_frete_total is not None %}
+                    <td >R$ {{ carga.comi_frete_total|floatformat:2 }}</td>
+                    {% else %}
+                    <td align=center>-</td>
+                    {% endif %}
 
                     {% if user.is_superuser%}
                     {% if carga.comissaocasca > 1 %}
@@ -1093,12 +1103,14 @@
                     {% else %}
                     <td> - </td>
                     {% endif %} 
+                    
                     {% if user.is_superuser%}
-                    {% if carga.comi_frete_total %}
+                    {% if carga.comi_frete_total is not None %}
                     <td >R$ {{ carga.comi_frete_total|floatformat:2 }}</td>
                     {% else %}
                     <td align=center>-</td>
                     {% endif %}
+
                     {% if carga.comissaocasca > 1 %}
 
                     {% if carga.pgcomissao == True %}
