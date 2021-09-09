@@ -390,11 +390,11 @@ class CargaAdmin(SimpleHistoryAdmin):
             'fields': ('nota_fiscal_arquivo','nota_fiscal_xml')
         }),
     )
-    raw_id_fields = ('pedido', )
+    raw_id_fields = ('pedido', 'fatura_frete_terceiros')
     list_filter = ('situacao','pedido__produto','pedido__tipo','pedido__cliente','pedido__situacao', 'gera_comi_frete', 'transp__nome' ,'pedido__fornecedor')
     search_fields = ['pedido__contrato','situacao','data','pedido__fornecedor__nome','placa','pedido__cliente__nome','pedido__tipo','motorista','peso','veiculo','buonny','notafiscal','notafiscal2','valornf','fatura_frete_terceiros__numero']
-    history_list_display = ["situacao","ordem","get_data","peso","agendamento","notafiscal","pedido","motorista","placa","obs","valornf","valor_mot","comi_frete_ton","comi_frete_total","changed_fields"]
-
+    history_list_display = ["situacao","ordem","get_data","peso","agendamento","notafiscal","pedido","motorista","placa","obs","valornf","valor_mot","comi_frete_ton","comi_frete_total",'fatura_frete_terceiros',"changed_fields"]
+    
     def get_pedido_aberto(self, obj):
         if obj.pedido.situacao == 'a':
             obj_res = True
