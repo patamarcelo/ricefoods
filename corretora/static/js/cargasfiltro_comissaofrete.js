@@ -31,9 +31,13 @@ function CleanAllFields() {
 			console.log("pula essa");
 		} else {
 			var clean = $(this).val();
+			var check = $('input[type="checkbox"]')
 			if (clean.length > 1) {
 				console.log(clean);
 				$(this).val("");
+			}
+			if (check.is(':checked')) {
+				check.prop('checked', false)
 			}
 		}
 		$("select").each(function () {

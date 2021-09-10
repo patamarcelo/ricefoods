@@ -211,9 +211,8 @@
     </div>
     
     <header class="container p-0">
-        <br />
         <div class="row">
-            {% if 'add/age' in request.get_full_path %}
+            <!-- {% if 'add/age' in request.get_full_path %}
 
             <div class="col-3">
                 <h1 class="cabecalho"> <strong>Agendamento</strong></h1>
@@ -247,17 +246,17 @@
                 <h1 class="editarpedido"> <strong>Editar Carga</strong></h1>
             </div>
             {% else %}
-            <div class="col-8 col-md-6">
-                <h1> <strong>Painel de Controle | Corretora</strong></h1>
-
-            </div>
             {% endif %}
+
+            {% if request.get_full_path == '/corretora/' %}
+            {% else %}
             <div class="col botoescabecalho">
                 <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
                 <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'index2' %}">Inicio</a>
             </div>
+            {% endif %} -->
         </div>
-        <br>
+        
         <div class="container" align="center">
             {% if messages %}
             <div class="container" align="center">
@@ -271,9 +270,10 @@
         </div>
         </div>
 
+        
         {% block content %}
-        {% include 'indexcorretora.html' %}
     </header>
+    {% include 'indexcorretora.html' %}
 
 
 

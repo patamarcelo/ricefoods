@@ -191,25 +191,16 @@
             </div>
         </div>
 
-        <div class="container" align=center>
-            <div class="col-12">
+
                 {% if messages %}
-                <div class="container">
-                    <div class="d-flex flex-row justify-content-center">
-                        <div class="d-flex flex-shrink-1">
-                            <div class="alert alert-success alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert"><span
-                                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                {% for m in messages %}
-                                {{ m }} <br />
-                                {% endfor %}
-                            </div>
+                <div class="container" align="center">
+                    <div class="col-12">
+                        <div class="container" {% for m in messages %} mensagensbody="{{m}}" {% endfor %}>
                         </div>
                     </div>
                 </div>
-                {% endif %}
-            </div>
-        </div>
+            {% endif %}
+
     </div>    
     <div class="container-fluid onebotoestop ml-2 " style="margin-left: 5px;">
         <div class="row">
@@ -457,6 +448,8 @@
 <script type="text/javascript"></script>
 <!-- MDBootstrap Datatables  -->
 <script type="text/javascript" src="{% static 'js/addons/datatables.min.js' %}"></script>
+<script src="{% static 'js/notify.min.js' %}"></script>   
+<script src="{% static 'js/notify.js' %}"></script>   
 <script>
 
     $(".simplehighlight").click(function() {
@@ -555,4 +548,28 @@
         .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
         .forEach(tr => tbody.appendChild(tr) );
     })));
+
+    
+    $(document).ready(function () {
+        let msg = $("[mensagensbody]").attr("mensagensbody")
+        console.log(msg)
+        if(msg) {
+            if(msg.includes("xclu") || 
+            msg.includes("duplicate key value") ||
+            msg.includes("not well-formed") ||
+            msg.includes("Erro ao salvar")) {
+                var style = "error"
+            } else if (msg.includes("lterado")) {
+                var style = "warn"
+            } else {
+                var style = "success"
+            }
+            $.notify(`${msg}`, {
+                position: "top-right",
+                className: `${style}`,
+            });
+        }
+    });
+
+
 </script>

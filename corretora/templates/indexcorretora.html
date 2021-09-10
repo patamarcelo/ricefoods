@@ -38,34 +38,46 @@
         -moz-animation-iteration-count:infinite;
         -webkit-animation-iteration-count:infinite;
         }
-
+    
+    .ct-first{
+        
+        background-color: #252527
+    }
 </style>
-<small class="ml-0">Olá {{ user.first_name|title }}, {% now "SHORT_DATE_FORMAT" %} </small>
-<br />
-<div class="container botoesfixo ml-0 pl-0">
-    {% if user.is_superuser %}
-    {% if request.get_full_path ==  "/corretora/dashboard" %}
-    {% else %}
-    <a class="btn btn-success btn-sm ml-0" href="{% url 'dashboard' %}" target="_blank">Painel</a>
-    <a class="btn btn-primary btn-sm" href="{% url 'pedidos' %}" target="_blank">Pedidos</a>
-    {% endif %}
-    {% else %}
-    <a class="btn btn-primary btn-sm ml-0" href="{% url 'pedidos' %}" target="_blank">Pedidos</a>
-    {% endif %}
-    <a class="text text-success fas fa-clipboard-list fa-lg" href="{% url 'add_pedidos' %}" target="_blank"></a>
-    <a class="btn btn-primary btn-sm" href="{% url 'cargas' %}" target="_blank">Cargas</a>
-    <a class="text text-success fas fa-truck-moving fa-lg" href="{% url 'add_age_cargas' %}" target="_blank"></a>
-    <a class="btn btn-outline-info btn-sm" href="{% url 'cargasfiltro' %}" target="_blank">Cargas F</a>
-    {% if user.is_superuser %}
-    <a class="btn btn-outline-info btn-sm" href="{% url 'cargasfiltro_comifrete' %}" target="_blank">Cargas Comi</a>
-    {% else %}
-    {% endif %}
-    <a class="btn btn-primary btn-sm" href="{% url 'fornecedores' %}" target="_blank">Fornecedores</a>    
-    <a class="text text-success fas fa-user-plus fa-sm" href="{% url 'add_fornecedor' %}" target="_blank"></a>
-    <a class="btn btn-outline-primary btn-sm" href="{% url 'agendamentoTeste' %}" target="_blank">Descarga Ruston</a>    
-    <a class="btn btn-outline-info btn-sm" target="_blank" href="{% url 'admin:index'  %}">Admin</a>
 
+<div class="d-flex flex-column col-12 container-fluid align-items-center justify-content-center ct-first">
+    <div class="d-inline-flex container-fluid justify-content-between ct-first mt-3">
+        <div class="flex-column justify-content-start botoesfixo">
+            {% if user.is_superuser %}
+            {% if request.get_full_path ==  "/corretora/dashboard" %}
+            {% else %}
+            <a class="btn btn-success btn-sm " href="{% url 'dashboard' %}" target="_blank">Painel</a>
+            <a class="btn btn-primary btn-sm" href="{% url 'pedidos' %}" target="_blank">Pedidos</a>
+            {% endif %}
+            {% else %}
+            <a class="btn btn-primary btn-sm ml-0" href="{% url 'pedidos' %}" target="_blank">Pedidos</a>
+            {% endif %}
+            <a class="text text-success fas fa-clipboard-list fa-lg" href="{% url 'add_pedidos' %}" target="_blank"></a>
+            <a class="btn btn-primary btn-sm" href="{% url 'cargas' %}" target="_blank">Cargas</a>
+            <a class="text text-success fas fa-truck-moving fa-lg" href="{% url 'add_age_cargas' %}" target="_blank"></a>
+            <a class="btn btn-outline-info btn-sm" href="{% url 'cargasfiltro' %}" target="_blank">Cargas F</a>
+            {% if user.is_superuser %}
+            <a class="btn btn-outline-info btn-sm" href="{% url 'cargasfiltro_comifrete' %}" target="_blank">Cargas Comi</a>
+            {% else %}
+            {% endif %}
+            <a class="btn btn-primary btn-sm" href="{% url 'fornecedores' %}" target="_blank">Fornecedores</a>    
+            <a class="text text-success fas fa-user-plus fa-sm" href="{% url 'add_fornecedor' %}" target="_blank"></a>
+            <a class="btn btn-outline-primary btn-sm" href="{% url 'agendamentoTeste' %}" target="_blank">Descarga Ruston</a>    
+            <a class="btn btn-outline-info btn-sm" target="_blank" href="{% url 'admin:index'  %}">Admin</a>
+        </div>
+        <div class="flex-column justify-content-end">
+            <a class="btn btn-dark btn-sm" href="{% url 'index2' %}">Inicio</a>
+            <a class="btn btn-outline-danger btn-sm"  href="{% url 'logout' %}">Sair</a>
+        </div>
+    </div>
+    <div class="d-flex col-12 justify-content-end container-fluid mt-2 mb-2">
+        <small class="" style="margin-right: 6px;">Olá {{ user.first_name|title }}, {% now "SHORT_DATE_FORMAT" %} </small>
+    </div>
 </div>
-<hr>
 
 {% endblock %}

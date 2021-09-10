@@ -1164,6 +1164,8 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
 
 
 
+        def add_days_agenda(data_agenda):
+            return data_agenda + datetime.timedelta(days=1)
         
         self.object = self.get_object()
         print(self.object)
@@ -1172,6 +1174,22 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
             try:
                 dados_xml = read_and_extract(nota_fiscal_xml)
                 carga_xml = self.object
+
+                carga_xml_id = self.object.id
+                carga_xml_cliente_id = self.object.pedido.cliente.id
+                carga_xml_cliente_veiculos_dia = self.object.pedido.cliente.veiculos_dia
+                carga_xml_cliente_descarrega_sabado = self.object.pedido.cliente.descarga_sabado
+                data_agenda = Carga.objects.filter(id=carga_xml_id)[0].data_agenda
+                if data_agenda:
+                    data_agenda_total = Carga.objects.filter(data_agenda=data_agenda, situacao='Carregado', pedido__cliente_id=carga_xml_cliente_id).count()
+                    weekday = data_agenda.weekday()
+                    desc_sabado = 5 if carga_xml_cliente_descarrega_sabado == False else 6
+                    while data_agenda_total >= carga_xml_cliente_veiculos_dia or weekday == desc_sabado or weekday == 6:
+                        data_agenda += datetime.timedelta(days=1)
+                        data_agenda_total = Carga.objects.filter(data_agenda=data_agenda, situacao='Carregado', pedido__cliente_id=carga_xml_cliente_id).count()
+                        weekday = data_agenda.weekday()
+                    carga_xml.data_agenda = data_agenda
+
                 carga_xml.valornf = Decimal(dados_xml['valor'])
                 carga_xml.peso = int(float(dados_xml['peso']))
                 carga_xml.notafiscal = dados_xml['numero_nf']
