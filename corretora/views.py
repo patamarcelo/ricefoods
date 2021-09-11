@@ -1181,9 +1181,8 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
                 carga_xml_cliente_veiculos_dia = self.object.pedido.cliente.veiculos_dia
                 carga_xml_cliente_descarrega_sabado = self.object.pedido.cliente.descarga_sabado
                 data_nf = datetime.datetime.strptime(dados_xml['data_nf'], '%Y-%m-%d')
-                data_agenda = data_nf + datetime.timedelta(days=self.object.pedido.cliente.dias_descarga)
-                print(data_agenda)
-                if data_agenda:
+                if data_nf:
+                    data_agenda = data_nf + datetime.timedelta(days=self.object.pedido.cliente.dias_descarga)
                     data_agenda_total = Carga.objects.order_by('placa').filter(data_agenda=data_agenda, situacao='Carregado', pedido__cliente_id=carga_xml_cliente_id).distinct('placa').exclude(placa=carga_xml_placa).count()
                     weekday = data_agenda.weekday()
                     desc_sabado = 5 if carga_xml_cliente_descarrega_sabado == False else 6
@@ -1206,7 +1205,7 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
         return super(UpdateNotafiscalCargasView, self).post(request, *args, **kwargs)
 
     def form_valid(self, form, *args, **kwargs):
-        def boas_vindas(user_name):
+        def boas_vindas(user_name=" "):
             hora_atual = datetime.datetime.now()
             hora_atual_print = hora_atual.strftime("%H:%M:%S")
             hora = int(hora_atual.strftime("%H"))
@@ -1217,22 +1216,29 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
             else:
                 return f"Bom dia {user_name},\n"
 
-        self.object         = self.get_object()
-        motorista           = self.object.motorista
-        valor_motorista     = str(self.object.valor_mot).replace('.',',')
-        print(valor_motorista)
-        print(type(valor_motorista))
-        placa               = f'{self.object.placa[:3]} {self.object.placa[-4:]}'
-        notafiscal          = self.object.notafiscal
-        nf_format           = re.sub(r'(?<!^)(?=(\d{3})+$)', r'.', str(notafiscal))
-        tranps_get_id       = self.object.transp.id
-        transp              = Transportadora.objects.all().filter(id=tranps_get_id)
-        transpNome          = transp[0].nome
-        transpMail          = transp[0].email_notafiscal
-        transpContato       = transp[0].contato
-        transp_recebe_email = transp[0].recebe_email_notafiscal
-        valor_mot_text = f'Valor Motorista: R$ {valor_motorista} por Tonelada'
-        valor_mot_mail = " " if not self.object.valor_mot or self.object.valor_mot == 0 else valor_mot_text
+        self.object           = self.get_object()
+        motorista             = self.object.motorista
+        cliente_recebe_email  = self.object.pedido.cliente.recebe_email_notafiscal
+        cliente_nome          = self.object.pedido.cliente.nome
+        contrato_numero       = self.object.pedido.contrato
+        valor_motorista       = str(self.object.valor_mot).replace('.',',')
+        placa                 = f'{self.object.placa[:3]} {self.object.placa[-4:]}'
+        notafiscal            = self.object.notafiscal
+        nf_format             = re.sub(r'(?<!^)(?=(\d{3})+$)', r'.', str(notafiscal))
+        cliente_get_id        = self.object.pedido.cliente.id
+        cliente_query         = Cliente.objects.all().filter(id=cliente_get_id)[0]
+        list_email_client_all = cliente_query.email_notafiscal_1, cliente_query.email_notafiscal_2, cliente_query.email_notafiscal_3, cliente_query.email_notafiscal_4, cliente_query.email_notafiscal_5
+        list_email_client     = [x for x in list_email_client_all if len(x) > 5]
+        tranps_get_id        = self.object.transp.id
+        transp               = Transportadora.objects.all().filter(id=tranps_get_id)
+        transpNome           = transp[0].nome
+        transpMail           = transp[0].email_notafiscal
+        transpContato        = transp[0].contato
+        transp_recebe_email  = transp[0].recebe_email_notafiscal
+
+
+        valor_mot_text      = f'Valor Motorista: R$ {valor_motorista} por Tonelada'
+        valor_mot_mail      = " " if not self.object.valor_mot or self.object.valor_mot == 0 else valor_mot_text
         
         if 'nota_fiscal_arquivo' in self.request.FILES:
             nota_fiscal_arquivo = self.request.FILES['nota_fiscal_arquivo']
@@ -1241,7 +1247,8 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
         obs_mail = f'Obs.: {obs}\n\n\n' if obs else " "
         subject  = f"{transpNome.title()} - Nota Fiscal: {placa} - {motorista.title()}"
         text     = f'{boas_vindas(transpContato.title())} \n\n\nSegue Nota Fiscal em anexo: \n\n\n{placa} - {motorista.title()}\n\n\n{valor_mot_mail}\n\n\n{obs_mail}'
-        email    = ['marcelo@gdourado.com.br','cascacorretora.nf@gmail.com',transpMail]
+        email    = ['faturamento@gdxlog.com.br','cascacorretora.nf@gmail.com',transpMail]
+        
         try:
             if 'nota_fiscal_arquivo' in self.request.FILES and transp_recebe_email == True:
                 mail = EmailMessage(
@@ -1256,6 +1263,26 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
                 messages.success(self.request, f'Nota Fiscal de {placa} - {motorista.title()} Enviado com successo para {transpNome.title()}')
             else:
                 print('Salvo somente no DB')
+        except Exception as e:
+            print(e)
+        
+        text_cliente = f'{boas_vindas()} \n\n\nSegue Nota Fiscal e Guias em anexo: \n\n\nContrato Numero: {contrato_numero}\n\n\n'
+        try:
+            if 'guias_notas' in self.request.FILES and cliente_recebe_email == True:
+                mail_cliente = EmailMessage(
+                    subject=subject,
+                    body=text_cliente,
+                    from_email='marcelo@gdxlog.com.br',
+                    to=list_email_client,
+                    headers={'Reply-To': 'faturamento@gdxlog.com.br'}
+                )
+                guias_notas = self.request.FILES.getlist('guias_notas')
+                for guias in guias_notas:
+                    mail_cliente.attach(guias.name, guias.read())
+                mail_cliente.send()
+                messages.success(self.request, f'Documentos de {placa} - {motorista.title()} Enviado com successo para {cliente_nome}')
+            else:
+                print('Não Enviado pelas configurações de conta!!')
         except Exception as e:
             print(e)
         return super(UpdateNotafiscalCargasView, self).form_valid(form, *args, **kwargs)

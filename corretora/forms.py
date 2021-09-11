@@ -21,6 +21,8 @@ class EnvianotafiscalForm(forms.ModelForm):
     nota_fiscal_arquivo = forms.FileField(label="Nota Fiscal", help_text="Somente arquivo PDF")
     nota_fiscal_xml = forms.FileField(label="XML NF", required=False, help_text="Somente arquivo XML")
     obs = forms.CharField(label="Observação", widget=forms.Textarea(), required=False)
+    
+    guias_notas = forms.FileField(label="NF + Guias", help_text="Arquivos serão enviados para o Cliente", widget=forms.FileInput(attrs={'multiple': True}), required=False)
 
     class Meta:
         model = Carga

@@ -178,7 +178,7 @@ class EmpresaCorretoraAdmin(admin.ModelAdmin):
 
 @admin.register(Cliente)
 class ClienteAdmin(admin.ModelAdmin):
-    list_display = ('nome_fantasia','cpf_cnpj','get_insc','cidade','ativo','get_modificado','dias_descarga','veiculos_dia','descarga_sabado','color')
+    list_display = ('nome_fantasia','cpf_cnpj','get_insc','cidade','ativo','get_modificado','dias_descarga','veiculos_dia','descarga_sabado','recebe_nf','color')
     fieldsets = (
         ('Situação', {
             'fields': ('ativo',)
@@ -189,6 +189,9 @@ class ClienteAdmin(admin.ModelAdmin):
         ('Dados', {
             'fields': (('cidade', 'estado'), 'endereco','telefone', ('dias_descarga', 'veiculos_dia'))
         }),
+        ('E-mail Nota Fiscal', {
+            'fields': (('recebe_email_notafiscal'), 'email_notafiscal_1','email_notafiscal_2','email_notafiscal_3','email_notafiscal_4','email_notafiscal_5')
+        }),
         ('Observação', {
             'fields': ('descarga_sabado','obs','color')
         }),
@@ -197,6 +200,15 @@ class ClienteAdmin(admin.ModelAdmin):
     # fields = [ 'nome','endereco','nome_fantasia',('cidade','estado')]
     search_fields = ['nome','nome_fantasia','cnpj_cpf','insc_estadual','ativo','endereco','cidade__cidade','cidade__estado']
     list_filter = ('ativo',)
+
+    def recebe_nf(self, obj):
+        if obj.recebe_email_notafiscal:
+            obj_res = True
+        else:
+            obj_res = False
+        return obj_res
+    recebe_nf.boolean = True
+    recebe_nf.short_description = u"Recebe NF?"
 
     def get_modificado(self,obj):
         return date_format(obj.modificado, format='SHORT_DATE_FORMAT', use_l10n=True)
