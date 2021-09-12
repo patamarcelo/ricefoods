@@ -213,8 +213,9 @@
             {% if messages %}
             <div class="container" align="center">
                 <div class="col-12">
-                    <div class="container" {% for m in messages %} mensagensbody="{{m}}" {% endfor %}>
-                    </div>
+                    {% for m in messages %}
+                    <div class="container"  mensagensbody="{{m}}"></div>
+                    {% endfor %}
                 </div>
             </div>
             {% endif %}
@@ -714,26 +715,28 @@
 <script src="{% static 'js/notify.js' %}"></script>   
 
 <script>
-    $(document).ready(function () {
-	let msg = $("[mensagensbody]").attr("mensagensbody")
-	console.log(msg)
-	if(msg) {
-		if(msg.includes("xclu") || 
-        msg.includes("duplicate key value") ||
-        msg.includes("not well-formed") ||
-        msg.includes("Esta Nota Fiscal com este Produtor já existe") || 
-        msg.includes("Erro ao salvar")) {
-			var style = "error"
-		} else if (msg.includes("lterado")) {
-			var style = "warn"
-		} else {
-			var style = "success"
-		}
-		$.notify(`${msg}`, {
-			position: "top-right",
-			className: `${style}`,
-		});
-	}
+$(document).ready(function () {
+    $("[mensagensbody]").each(function () {
+        var msg = $(this).attr("mensagensbody");
+        console.log(msg)
+        if(msg) {
+            if(msg.includes("xclu") || 
+            msg.includes("duplicate key value") ||
+            msg.includes("not well-formed") ||
+            msg.includes("Esta Nota Fiscal com este Produtor já existe") || 
+            msg.includes("Erro ao salvar")) {
+                var style = "error"
+            } else if (msg.includes("lterado") || msg.includes("Documentos de")) {
+                var style = "warn"
+            } else {
+                var style = "success"
+            }
+            $.notify(`${msg}`, {
+                position: "top-right",
+                className: `${style}`,
+            });
+        };
+    });
 });
 </script>
 

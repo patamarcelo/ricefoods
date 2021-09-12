@@ -1205,7 +1205,7 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
         return super(UpdateNotafiscalCargasView, self).post(request, *args, **kwargs)
 
     def form_valid(self, form, *args, **kwargs):
-        def boas_vindas(user_name=" "):
+        def boas_vindas(user_name=""):
             hora_atual = datetime.datetime.now()
             hora_atual_print = hora_atual.strftime("%H:%M:%S")
             hora = int(hora_atual.strftime("%H"))
@@ -1266,7 +1266,7 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
         except Exception as e:
             print(e)
         
-        text_cliente = f'{boas_vindas()} \n\n\nSegue Nota Fiscal e Guias em anexo: \n\n\nContrato Numero: {contrato_numero}\n\n\n'
+        text_cliente = f'{boas_vindas()} \n\n\nSegue Nota Fiscal e Guias em anexo: \n\n\nContrato Número: {contrato_numero}\n\n\n'
         try:
             if 'guias_notas' in self.request.FILES and cliente_recebe_email == True:
                 mail_cliente = EmailMessage(
