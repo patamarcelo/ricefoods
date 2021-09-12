@@ -113,18 +113,6 @@
 <body>
 
     <header class="container">
-        <br />
-        <div class="row">
-            <div class="col-8">
-                <h1 class="ml-3"> <strong>Dashboard | Corretora</strong>
-                </h1>
-            </div>
-            <div class="col botoescabecalho">
-                <a class="btn btn-outline-danger btn-sm" style="float: right;" href="{% url 'logout' %}">Sair</a>
-                <a class="btn btn-dark btn-sm" style="float: right;" href="{% url 'index2' %}">Inicio</a>
-            </div>
-        </div>
-        <br>
         <div class="container-fluid">
             <div class="col-12">
                 {% if messages %}
@@ -147,8 +135,8 @@
         </div>
 
         {% block content %}
-        {% include 'indexcorretora.html' %}
     </header>
+    {% include 'indexcorretora.html' %}
 
 
 

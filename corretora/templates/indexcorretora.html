@@ -44,9 +44,11 @@
         background-color: #252527
     }
 </style>
-
+<div class="d-flex justify-content-end container-fluid pt-1 ct-first">
+    <small class="" style="margin: 1px 20px;">Olá {{ user.first_name|title }}, {% now "SHORT_DATE_FORMAT" %} </small>
+</div>
 <div class="d-flex flex-column col-12 container-fluid align-items-center justify-content-center ct-first">
-    <div class="d-inline-flex container-fluid justify-content-between ct-first mt-3">
+    <div class="d-inline-flex container-fluid justify-content-between ct-first mt-1 mb-2">
         <div class="flex-column justify-content-start botoesfixo">
             {% if user.is_superuser %}
             {% if request.get_full_path ==  "/corretora/dashboard" %}
@@ -74,9 +76,6 @@
             <a class="btn btn-dark btn-sm" href="{% url 'index2' %}">Inicio</a>
             <a class="btn btn-outline-danger btn-sm"  href="{% url 'logout' %}">Sair</a>
         </div>
-    </div>
-    <div class="d-flex col-12 justify-content-end container-fluid mt-2 mb-2">
-        <small class="" style="margin-right: 6px;">Olá {{ user.first_name|title }}, {% now "SHORT_DATE_FORMAT" %} </small>
     </div>
 </div>
 
