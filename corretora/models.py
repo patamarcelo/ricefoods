@@ -196,6 +196,13 @@ class Fornecedor(Base):
     endereco      = models.CharField('Endereço', max_length=50, default='', blank=True, null=True)
     obs           = models.TextField('Observação', max_length=500, blank=True)
 
+    recebe_email_notafiscal = models.BooleanField('Recebe Nota Fiscal E-mail', default=False)
+    email_notafiscal_1      = models.EmailField('E-mail Nota Fiscal 1', max_length=50, blank=True)
+    email_notafiscal_2      = models.EmailField('E-mail Nota Fiscal 2', max_length=50, blank=True)
+    email_notafiscal_3      = models.EmailField('E-mail Nota Fiscal 3', max_length=50, blank=True)
+    email_notafiscal_4      = models.EmailField('E-mail Nota Fiscal 4', max_length=50, blank=True)
+    email_notafiscal_5      = models.EmailField('E-mail Nota Fiscal 5', max_length=50, blank=True)
+
     
     class Meta:
         ordering = ['nome']

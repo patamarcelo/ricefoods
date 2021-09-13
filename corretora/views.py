@@ -1212,25 +1212,28 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
             else:
                 return f"Bom dia {user_name},\n"
 
-        self.object           = self.get_object()
-        motorista             = self.object.motorista
-        cliente_recebe_email  = self.object.pedido.cliente.recebe_email_notafiscal
-        cliente_nome          = self.object.pedido.cliente.nome
-        contrato_numero       = self.object.pedido.contrato
-        valor_motorista       = str(self.object.valor_mot).replace('.',',')
-        placa                 = f'{self.object.placa[:3]} {self.object.placa[-4:]}'
-        notafiscal            = self.object.notafiscal
-        nf_format             = re.sub(r'(?<!^)(?=(\d{3})+$)', r'.', str(notafiscal))
-        cliente_get_id        = self.object.pedido.cliente.id
-        cliente_query         = Cliente.objects.all().filter(id=cliente_get_id)[0]
-        list_email_client_all = cliente_query.email_notafiscal_1, cliente_query.email_notafiscal_2, cliente_query.email_notafiscal_3, cliente_query.email_notafiscal_4, cliente_query.email_notafiscal_5
-        list_email_client     = [x for x in list_email_client_all if len(x) > 5]
-        tranps_get_id        = self.object.transp.id
-        transp               = Transportadora.objects.all().filter(id=tranps_get_id)
-        transpNome           = transp[0].nome
-        transpMail           = transp[0].email_notafiscal
-        transpContato        = transp[0].contato
-        transp_recebe_email  = transp[0].recebe_email_notafiscal
+        self.object               = self.get_object()
+        motorista                 = self.object.motorista
+        cliente_recebe_email      = self.object.pedido.cliente.recebe_email_notafiscal
+        cliente_nome              = self.object.pedido.cliente.nome
+        fornecedor_recebe_nf      = self.object.pedido.fornecedor.recebe_email_notafiscal
+        fornecedor_nome           = self.object.pedido.fornecedor.nome
+        contrato_numero           = self.object.pedido.contrato
+        valor_motorista           = str(self.object.valor_mot).replace('.',',')
+        placa                     = f'{self.object.placa[:3]} {self.object.placa[-4:]}'
+        notafiscal                = self.object.notafiscal
+        nf_format                 = re.sub(r'(?<!^)(?=(\d{3})+$)', r'.', str(notafiscal))
+        fornecedor_get_id         = self.object.pedido.fornecedor.id
+        cliente_get_id            = self.object.pedido.cliente.id
+        cliente_query             = Cliente.objects.all().filter(id=cliente_get_id)[0]
+        list_email_client_all     = cliente_query.email_notafiscal_1, cliente_query.email_notafiscal_2, cliente_query.email_notafiscal_3, cliente_query.email_notafiscal_4, cliente_query.email_notafiscal_5
+        list_email_client         = [x for x in list_email_client_all if len(x) > 5]
+        tranps_get_id             = self.object.transp.id
+        transp                    = Transportadora.objects.all().filter(id=tranps_get_id)
+        transpNome                = transp[0].nome
+        transpMail                = transp[0].email_notafiscal
+        transpContato             = transp[0].contato
+        transp_recebe_email       = transp[0].recebe_email_notafiscal
 
 
         valor_mot_text      = f'Valor Motorista: R$ {valor_motorista} por Tonelada'
@@ -1271,17 +1274,41 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
                         text_cliente = f'{boas_vindas()} \n\n\nSeguem documentos em anexo: \n\n\nContrato Número: {contrato_numero}\n\n\n'
                     else:
                         text_cliente = f'{boas_vindas()} \n\n\nSegue documento em anexo: \n\n\nContrato Número: {contrato_numero}\n\n\n'
+                    
+                    anexos = []
+                    for guias in guias_notas:
+                        anexos.append((guias.name, guias.read()))
 
                     mail_cliente = EmailMessage(
                         subject=subject,
                         body=text_cliente,
                         from_email='marcelo@gdxlog.com.br',
                         to=list_email_client,
+                        attachments=anexos,
                         headers={'Reply-To': 'faturamento@gdxlog.com.br'}
                     )
-                    for guias in guias_notas:
-                        mail_cliente.attach(guias.name, guias.read())
+                    if fornecedor_recebe_nf == True:
+                        
+                        fornecedor_query          = Fornecedor.objects.all().filter(id=fornecedor_get_id)[0]
+                        list_email_fornecedor_all = fornecedor_query.email_notafiscal_1, fornecedor_query.email_notafiscal_2, fornecedor_query.email_notafiscal_3, fornecedor_query.email_notafiscal_4, fornecedor_query.email_notafiscal_5
+                        list_email_fornecedor     = [x for x in list_email_fornecedor_all if len(x) > 5]
+                        inside_list               = ['marcelo@gdourado.com.br',]
+                        list_email_fornecedor.extend(inside_list)
+                        
+                        mail_fornecedor = EmailMessage(
+                        subject=subject,
+                        body=text_cliente,
+                        from_email='marcelo@gdxlog.com.br',
+                        to=list_email_fornecedor,
+                        attachments=anexos,
+                        headers={'Reply-To': 'faturamento@gdxlog.com.br'}
+                        )
                     mail_cliente.send()
+                    if fornecedor_recebe_nf == True:
+                        mail_fornecedor.send()
+                        messages.success(self.request, f'Documentos de {placa} - {motorista.title()} Enviado com successo para {fornecedor_nome}')
+                    else:
+                        messages.success(self.request, f'E-mail não enviado para {fornecedor_nome}, não cadastrado para receber NF.')
                     messages.success(self.request, f'Documentos de {placa} - {motorista.title()} Enviado com successo para {cliente_nome}')
                 else:
                     print('Não Enviado pelas configurações de conta!!')
