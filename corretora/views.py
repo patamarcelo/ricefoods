@@ -1091,16 +1091,7 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
     form_class = EnvianotafiscalForm
     model = Carga
     template_name = 'carga_notafiscal.html'
-    success_message = 'Nota Fiscal salva com sucesso!!'
     # success_url = reverse_lazy('cargas')
-    
-    def get_success_url(self):
-        carga_status = Carga.objects.filter(id=self.object.id)[0]
-        if carga_status.pedido.situacao == 'a':
-            return reverse_lazy('upd_cargas', kwargs={'pk': self.object.pk})
-        else:
-            return reverse_lazy('cargas')
-
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -1161,14 +1152,10 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
                 peso_produto = peso_produto_total if peso_produto == 0 and int(float(peso_produto_total)) > 0 else peso_produto
             
             return {'valor': valor_produto,'peso' : peso_produto, 'numero_nf': numero_nf, 'data_nf':data_nf_format}
-
-
-
-        def add_days_agenda(data_agenda):
-            return data_agenda + datetime.timedelta(days=1)
         
         self.object = self.get_object()
         print(self.object)
+        
         if 'nota_fiscal_xml' in self.request.FILES:
             nota_fiscal_xml = self.request.FILES['nota_fiscal_xml']
             try:
@@ -1199,12 +1186,21 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
                 carga_xml.data = dados_xml['data_nf']
                 carga_xml.situacao = 'Carregado'
                 carga_xml.save()
+                messages.success(self.request, f'Nota Fiscal salva com sucesso!!')
             except Exception as e:
-                messages.error(self.request, f'{e}')
-                print(f'Error on save xml: {e}')
+                messages.error(self.request, f'Erro ao salvar NF: {e}')
+                print('Nota nao salva por problema xml!!')
         return super(UpdateNotafiscalCargasView, self).post(request, *args, **kwargs)
 
     def form_valid(self, form, *args, **kwargs):
+        storage = messages.get_messages(self.request)
+        error_message = ["teste"]
+        if storage:
+            for x in storage:
+                error_message.insert(0, (str(x)[:17]))
+        storage.used = False
+        print(error_message)
+        
         def boas_vindas(user_name=""):
             hora_atual = datetime.datetime.now()
             hora_atual_print = hora_atual.strftime("%H:%M:%S")
@@ -1247,44 +1243,53 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
         obs_mail = f'Obs.: {obs}\n\n\n' if obs else " "
         subject  = f"{transpNome.title()} - Nota Fiscal: {placa} - {motorista.title()}"
         text     = f'{boas_vindas(transpContato.title())} \n\n\nSegue Nota Fiscal em anexo: \n\n\n{placa} - {motorista.title()}\n\n\n{valor_mot_mail}\n\n\n{obs_mail}'
-        email    = ['faturamento@gdxlog.com.br','cascacorretora.nf@gmail.com',transpMail]
-        
-        try:
-            if 'nota_fiscal_arquivo' in self.request.FILES and transp_recebe_email == True:
-                mail = EmailMessage(
-                    subject=subject,
-                    body=text,
-                    from_email='marcelo@gdxlog.com.br',
-                    to=email,
-                    headers={'Reply-To': 'faturamento@gdxlog.com.br'}
-                )
-                mail.attach(nota_fiscal_arquivo.name, nota_fiscal_arquivo.read(), nota_fiscal_arquivo.content_type)
-                mail.send()
-                messages.success(self.request, f'Nota Fiscal de {placa} - {motorista.title()} Enviado com successo para {transpNome.title()}')
-            else:
-                print('Salvo somente no DB')
-        except Exception as e:
-            print(e)
-        
-        text_cliente = f'{boas_vindas()} \n\n\nSegue Nota Fiscal e Guias em anexo: \n\n\nContrato Número: {contrato_numero}\n\n\n'
-        try:
-            if 'guias_notas' in self.request.FILES and cliente_recebe_email == True:
-                mail_cliente = EmailMessage(
-                    subject=subject,
-                    body=text_cliente,
-                    from_email='marcelo@gdxlog.com.br',
-                    to=list_email_client,
-                    headers={'Reply-To': 'faturamento@gdxlog.com.br'}
-                )
-                guias_notas = self.request.FILES.getlist('guias_notas')
-                for guias in guias_notas:
-                    mail_cliente.attach(guias.name, guias.read())
-                mail_cliente.send()
-                messages.success(self.request, f'Documentos de {placa} - {motorista.title()} Enviado com successo para {cliente_nome}')
-            else:
-                print('Não Enviado pelas configurações de conta!!')
-        except Exception as e:
-            print(e)
+        email    = ['marcelo@gdourado.com.br','cascacorretora.nf@gmail.com',transpMail]
+        # email    = [transpMail]
+    
+        if 'Erro ao salvar NF' not in error_message[0]:
+            try:
+                if 'nota_fiscal_arquivo' in self.request.FILES and transp_recebe_email == True:
+                    mail = EmailMessage(
+                        subject=subject,
+                        body=text,
+                        from_email='marcelo@gdxlog.com.br',
+                        to=email,
+                        headers={'Reply-To': 'faturamento@gdxlog.com.br'}
+                    )
+                    mail.attach(nota_fiscal_arquivo.name, nota_fiscal_arquivo.read(), nota_fiscal_arquivo.content_type)
+                    mail.send()
+                    messages.success(self.request, f'Nota Fiscal de {placa} - {motorista.title()} Enviado com successo para {transpNome.title()}')
+                else:
+                    print('Salvo somente no DB')
+            except Exception as e:
+                print(e)
+            
+            try:
+                if 'guias_notas' in self.request.FILES and cliente_recebe_email == True:
+                    guias_notas = self.request.FILES.getlist('guias_notas')
+                    if len(guias_notas) > 1:
+                        text_cliente = f'{boas_vindas()} \n\n\nSeguem documentos em anexo: \n\n\nContrato Número: {contrato_numero}\n\n\n'
+                    else:
+                        text_cliente = f'{boas_vindas()} \n\n\nSegue documento em anexo: \n\n\nContrato Número: {contrato_numero}\n\n\n'
+
+                    mail_cliente = EmailMessage(
+                        subject=subject,
+                        body=text_cliente,
+                        from_email='marcelo@gdxlog.com.br',
+                        to=list_email_client,
+                        headers={'Reply-To': 'faturamento@gdxlog.com.br'}
+                    )
+                    for guias in guias_notas:
+                        mail_cliente.attach(guias.name, guias.read())
+                    mail_cliente.send()
+                    messages.success(self.request, f'Documentos de {placa} - {motorista.title()} Enviado com successo para {cliente_nome}')
+                else:
+                    print('Não Enviado pelas configurações de conta!!')
+            except Exception as e:
+                print(e)
+        else:
+            messages.error(self.request, 'Erro ao salvar NF, e-mails não enviados!!')
+            print('erro ao salvar pela validacao')
         return super(UpdateNotafiscalCargasView, self).form_valid(form, *args, **kwargs)
     
 
@@ -1292,6 +1297,22 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
         messages.error(self.request, 'Erro ao enviar e-mail')
         return super(UpdateNotafiscalCargasView, self).form_invalid(form, *args, **kwargs)
 
+    def get_success_url(self):
+        storage = messages.get_messages(self.request)
+        error_message = ["teste"]
+        if storage:
+            for x in storage:
+                error_message.insert(0, (str(x)[:17]))
+        storage.used = False
+        print(error_message, 'url direct')
+        if 'Erro ao salvar NF' in error_message[0]:
+            return reverse_lazy('update_notafiscal', kwargs={'pk': self.object.pk})
+        else:
+            carga_status = Carga.objects.filter(id=self.object.id)[0]
+            if carga_status.pedido.situacao == 'a':
+                return reverse_lazy('upd_cargas', kwargs={'pk': self.object.pk})
+            else:
+                return reverse_lazy('cargas')
     
 
 class DeleteCargasView(LoginRequiredMixin,SuccessMessageMixin, DeleteView):

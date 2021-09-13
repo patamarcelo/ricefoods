@@ -81,9 +81,12 @@
                         <div class="flex-row justify-content-start mb-3" style="text-align: left;">
                                 {{ form.nota_fiscal_xml|as_crispy_field }}
                         </div>        
+                        {% if carga.pedido.cliente.recebe_email_notafiscal %}
                         <div class="flex-row justify-content-start mb-3" style="text-align: left;">
                                 {{ form.guias_notas|as_crispy_field }}
                         </div>        
+                        {% else %}
+                        {% endif %}
                 </div>
             </div>
             
@@ -112,6 +115,7 @@
 <script type="text/javascript" src="{% static 'js/notafiscalform.js' %}"></script>
 
 <script>
+{% if carga.pedido.cliente.recebe_email_notafiscal %}
 $(function () {
     var labelGuias = $("#div_id_guias_notas > label")
     var clienteNome = "{{ carga.pedido.cliente.nome }}"
@@ -124,6 +128,9 @@ $(function () {
     labelGuias.text(`Guias + NF: ${clienteNome}`)
     console.log("{{ carga.pedido.cliente.nome_fantasia }}")
 })
+{% else %}
+{% endif %}
+
 
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
