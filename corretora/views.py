@@ -1164,6 +1164,12 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
 
                 carga_xml_id = self.object.id
                 carga_xml_cliente_id = self.object.pedido.cliente.id
+                query_datas_sem_descarga = Datasemcarga.objects.filter(cliente=carga_xml_cliente_id)
+                lista_datas_sem_descarga_datetime = []
+                if len(query_datas_sem_descarga) > 0:
+                    lista_datas_sem_descarga = [x.data_semcarga for x in query_datas_sem_descarga]
+                    lista_datas_sem_descarga_datetime = [datetime.datetime(my_date.year, my_date.month, my_date.day) for my_date in lista_datas_sem_descarga]
+
                 carga_xml_placa = self.object.placa
                 carga_xml_cliente_veiculos_dia = self.object.pedido.cliente.veiculos_dia
                 carga_xml_cliente_descarrega_sabado = self.object.pedido.cliente.descarga_sabado
@@ -1173,10 +1179,12 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
                     data_agenda_total = Carga.objects.order_by('placa').filter(data_agenda=data_agenda, situacao='Carregado', pedido__cliente_id=carga_xml_cliente_id).distinct('placa').exclude(placa=carga_xml_placa).count()
                     weekday = data_agenda.weekday()
                     desc_sabado = 5 if carga_xml_cliente_descarrega_sabado == False else 6
-                    while data_agenda_total >= carga_xml_cliente_veiculos_dia or weekday == desc_sabado or weekday == 6:
+                    print(data_agenda)
+                    while data_agenda_total >= carga_xml_cliente_veiculos_dia or weekday == desc_sabado or weekday == 6 or data_agenda in lista_datas_sem_descarga_datetime:
                         data_agenda += datetime.timedelta(days=1)
                         data_agenda_total = Carga.objects.order_by('placa').filter(data_agenda=data_agenda, situacao='Carregado', pedido__cliente_id=carga_xml_cliente_id).distinct('placa').exclude(placa=carga_xml_placa).count()
                         print(data_agenda_total)
+                        print(data_agenda in lista_datas_sem_descarga_datetime)
                         weekday = data_agenda.weekday()
                     carga_xml.data_agenda = data_agenda
 
