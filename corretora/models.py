@@ -1340,7 +1340,7 @@ class PagamentoFaturaCargasComiFrete(Base):
     data_fatura_pagamento = models.DateField('Data Pagamento Fatura', null=True, blank=True, help_text="dd/mm/aaaa")
     valor_pago_fatura     = models.DecimalField('Valor Pago Fatura', max_digits=20, decimal_places=2,  null=True, blank=True)
     pagador               = models.CharField('Pagador', max_length=30,  null=True, blank=True)
-    conta_pagadora        = models.TextField('Conta Pagador', max_length=200, unique=True,  null=True, blank=True)
+    conta_pagadora        = models.TextField('Conta Pagador', max_length=200,  null=True, blank=True)
     obs                    = models.TextField('Observação', max_length=500, blank=True)
     history               = HistoricalRecords()
 
