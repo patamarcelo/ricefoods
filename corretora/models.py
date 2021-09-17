@@ -1143,6 +1143,26 @@ class Transportadora(Base):
     def __str__(self):
         return self.nome
 
+class EmailsTransportadora(Base):
+    
+    TIPO_CHOICES = (
+        ('notas', 'Notas Fiscais'),
+        ('comprovantes', 'Comprovantes')
+    )
+
+    email      = models.EmailField('E-mail', max_length=40 ,blank=True)
+    transp     = models.ForeignKey(Transportadora, on_delete=models.PROTECT)
+    tipo_email = models.CharField('Tipo', max_length=12, choices=TIPO_CHOICES)
+    obs        = models.TextField('Observação', max_length=2000, blank=True)
+    history    = HistoricalRecords()
+
+    class Meta:
+        ordering = ['transp']
+        verbose_name = 'Email Transportadora'
+        verbose_name_plural = 'Emails Transportadora'
+    
+    def __str__(self):
+        return f'{self.email} - {self.transp}'
 
 
 

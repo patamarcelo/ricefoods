@@ -379,6 +379,25 @@ class TransportadoraAdmin(admin.ModelAdmin):
     get_recebe_email_notafiscal.boolean = True
     get_recebe_email_notafiscal.short_description = 'Recebe NF?'
 
+class EmailsTransportadoraAdmin(SimpleHistoryAdmin):
+    list_display = ('email', 'transp','tipo_email', 'criados')
+    search_fields = ['email', 'transp','tipo_email',]
+    list_filter = ('tipo_email','transp',)
+    fieldsets = (
+        ('E-mail', {
+            'fields': ('email','transp','tipo_email',)
+        }),        
+        ('Observação', {
+            'fields': ('obs',)
+        }),    
+    )
+    ordering = ('transp','email',)
+    history_list_display = ['email', 'transp','tipo_email','modificado','criados',]
+
+
+admin.site.register(EmailsTransportadora, EmailsTransportadoraAdmin)
+
+
 # @admin.register(Carga)
 class CargaAdmin(SimpleHistoryAdmin):
     list_display = ('placa','motorista','situacao','pedido','get_pedido_aberto','get_data','buonny','tac','ordem','get_fornecedor','get_cidade_fornecedor','get_cliente','transp','veiculo','notafiscal','gera_comi_frete','tem_comprovante','comi_frete_ton','fatura_frete_terceiros','get_modificado',)
