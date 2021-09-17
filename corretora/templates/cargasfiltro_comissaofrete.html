@@ -687,6 +687,7 @@
                             {% if user.is_superuser%}
                             {% if not carga.fatura_frete_terceiros and carga.comi_frete_ton %}
                             <td
+                                class="valorportonhtmlpointer"
                                 updatemotoristaUser="{{carga.motorista|title}}" 
                                 updatePlacaUser="{{carga.placa}}"
                                 data-toggle="modal" data-target="#myModalClassificacao")"
@@ -697,6 +698,7 @@
                             <a style="color: whitesmoke !important;" target="_blank" class="valorportonhtml">R$ {{ carga.comi_frete_ton|floatformat:2 }}</a></td>
                             {% elif not carga.fatura_frete_terceiros %}
                             <td align=center 
+                                class="valorportonhtmlpointer"
                                 data-toggle="modal"
                                 data-target="#myModalClassificacao")"
                                 updatemotoristaUser="{{carga.motorista|title}}" 

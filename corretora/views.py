@@ -1044,6 +1044,7 @@ class UpdatecomprovdescargaCargasView(SuccessMessageMixin, LoginRequiredMixin, U
                 return f"Bom dia {user_name},\n"
         self.object         = self.get_object()
         motorista           = self.object.motorista
+        obs                 = self.object.obs
         placa               = f'{self.object.placa[:3]} {self.object.placa[-4:]}'
         notafiscal          = self.object.notafiscal
         nf_format           = re.sub(r'(?<!^)(?=(\d{3})+$)', r'.', str(notafiscal))
@@ -1055,12 +1056,12 @@ class UpdatecomprovdescargaCargasView(SuccessMessageMixin, LoginRequiredMixin, U
         transp_recebe_email = transp[0].recebe_email_comprovante
         if 'comprovante_descarga' in self.request.FILES:
             comprovante_descarga = self.request.FILES['comprovante_descarga']
-        data_descarga        = form.cleaned_data['data_descarga']
-        obs_descarga         = form.cleaned_data['obs_descarga']
-        subject = f"{transpNome.title()} - Comprovante: {placa} - {motorista.title()} - NF: {nf_format}"
-        text = f'{boas_vindas(transpContato.title())} \n\n\nSegue comprovante em anexo: \n\n\n{placa} - {motorista.title()} - NF: {nf_format}\n\n\n'
-        if obs_descarga:
-            text = f'{boas_vindas(transpContato.title())} \n\n\nSegue comprovante em anexo: \n\n\n{placa} - {motorista.title()} - NF: {nf_format}\n\n\nObs.:\t {obs_descarga}\n\n\n'
+            data_descarga        = form.cleaned_data['data_descarga']
+            obs_descarga         = form.cleaned_data['obs_descarga']
+            subject              = f"{transpNome.title()} - Comprovante: {placa} - {motorista.title()} - NF: {nf_format}"
+            obs_geral            = f"Obs.: {obs}\n\n\n" if len(obs) > 2 else ""
+            obs_descarga_form    = f"Obs.: {obs_descarga}\n\n\n" if len(obs_descarga) > 2 else ""
+            text                 = f'{boas_vindas(transpContato.title())} \n\n\nSegue comprovante em anexo: \n\n\n{placa} - {motorista.title()} - NF: {nf_format}\n\n\n{obs_geral}{obs_descarga_form}'
         email = ['marcelo@gdourado.com.br',transpMail]
         try:
             if 'comprovante_descarga' in self.request.FILES and transp_recebe_email == True:

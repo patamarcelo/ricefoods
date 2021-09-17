@@ -443,3 +443,7 @@ th:hover {
 .fa {
     font-size: 16px;
 }
+
+.valorportonhtmlpointer {
+    cursor: pointer;
+}
