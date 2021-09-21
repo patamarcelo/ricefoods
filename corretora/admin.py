@@ -343,6 +343,7 @@ admin.site.register(Pedido, PedidoAdmin)
 
 @admin.register(Transportadora)
 class TransportadoraAdmin(admin.ModelAdmin):
+    list_filter = ('recebe_email_comprovante', 'recebe_email_notafiscal',)
     list_display = ('nome','contato','email','telefone','cidade','estado','ativo','get_modificado','get_recebe_email_comprovante','get_recebe_email_notafiscal')
     fieldsets = (
         ('Geral', {
@@ -569,6 +570,7 @@ class PagamentoFaturaCargasComiFreteAdmin(SimpleHistoryAdmin):
         }),
     
     )
+    raw_id_fields = ('fatura',)
     list_filter = ('fatura','data_fatura_pagamento')
     search_fields = ['fatura']
     history_list_display = ['fatura','data_fatura_pagamento', 'valor_pago_fatura','pagador', 'conta_pagadora', 'obs', "changed_fields"]

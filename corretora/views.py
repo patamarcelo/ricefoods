@@ -1051,7 +1051,6 @@ class UpdatecomprovdescargaCargasView(SuccessMessageMixin, LoginRequiredMixin, U
         tranps_get_id       = self.object.transp.id
         transp              = Transportadora.objects.all().filter(id=tranps_get_id)
         transpNome          = transp[0].nome
-        transpMail          = transp[0].email
         transpContato       = transp[0].contato
         transp_recebe_email = transp[0].recebe_email_comprovante
         if 'comprovante_descarga' in self.request.FILES:
@@ -1062,9 +1061,15 @@ class UpdatecomprovdescargaCargasView(SuccessMessageMixin, LoginRequiredMixin, U
             obs_geral            = f"Obs.: {obs}\n\n\n" if len(obs) > 2 else ""
             obs_descarga_form    = f"Obs.: {obs_descarga}\n\n\n" if len(obs_descarga) > 2 else ""
             text                 = f'{boas_vindas(transpContato.title())} \n\n\nSegue comprovante em anexo: \n\n\n{placa} - {motorista.title()} - NF: {nf_format}\n\n\n{obs_geral}{obs_descarga_form}'
-        email = ['marcelo@gdourado.com.br',transpMail]
+
         try:
             if 'comprovante_descarga' in self.request.FILES and transp_recebe_email == True:
+                
+                email = ['marcelo@gdourado.com.br']
+                transpMail_query = EmailsTransportadora.objects.all().filter(transp__id=tranps_get_id, tipo_email="comprovantes")
+                transpMail       = [x.email for x in transpMail_query]
+                email.extend(transpMail)
+                
                 mail = EmailMessage(
                     subject=subject,
                     body=text,
@@ -1240,7 +1245,7 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
         tranps_get_id             = self.object.transp.id
         transp                    = Transportadora.objects.all().filter(id=tranps_get_id)
         transpNome                = transp[0].nome
-        transpMail                = transp[0].email_notafiscal
+        
         transpContato             = transp[0].contato
         transp_recebe_email       = transp[0].recebe_email_notafiscal
 
@@ -1255,12 +1260,17 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
         obs_mail = f'Obs.: {obs}\n\n\n' if obs else " "
         subject  = f"{transpNome.title()} - Nota Fiscal: {placa} - {motorista.title()}"
         text     = f'{boas_vindas(transpContato.title())} \n\n\nSegue Nota Fiscal em anexo: \n\n\n{placa} - {motorista.title()}\n\n\n{valor_mot_mail}\n\n\n{obs_mail}'
-        email    = ['marcelo@gdourado.com.br','cascacorretora.nf@gmail.com',transpMail]
-        # email    = [transpMail]
     
         if 'Erro ao salvar NF' not in error_message[0]:
             try:
                 if 'nota_fiscal_arquivo' in self.request.FILES and transp_recebe_email == True:
+
+                    # email            = ['marcelo@gdourado.com.br','marcelo@gdxlog.com.br']
+                    email            = ['marcelo@gdourado.com.br','cascacorretora.nf@gmail.com']
+                    transpMail_query = EmailsTransportadora.objects.all().filter(transp__id=tranps_get_id, tipo_email="notas")
+                    transpMail       = [x.email for x in transpMail_query]
+                    email.extend(transpMail)
+            
                     mail = EmailMessage(
                         subject=subject,
                         body=text,
