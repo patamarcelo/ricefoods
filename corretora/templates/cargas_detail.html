@@ -163,7 +163,7 @@
                     {% else %}
                     {% endif %}
                     <td class="border_bottom"><strong>{{ pedido.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
-                    <td class="border_bottom"><strong>{{ pedido.fornecedor|title|truncatechars:35 }}</strong></td>
+                    <td class="border_bottom"><strong>{{ pedido.fornecedor|title|truncatechars:50 }}</strong></td>
                     <td class="border_bottom"><strong>{{ pedido.fornecedor.cidade|truncatechars:25 }}</strong></td>
 
                     <td class="border_bottom"><strong>{{ pedido.cliente|upper }}</strong></td>
@@ -192,10 +192,10 @@
                     <td class="border_bottom" align=center><strong><strong>{{ pedido.carregado }} Kg</strong></strong>
                     </td>
                     {% endif %}
-                    {% if pedido.saldo == 0 %}
-                    <td class="border_bottom" align=center><strong> - </strong></td>
+                    {% if pedido.quantidade_pedido|sub:pedido.carregado < 0 %} {
+                    <td class="border_bottom text text-danger" align=center><strong> {{ pedido.quantidade_pedido|sub:pedido.carregado }} Kg </strong></td>
                     {% else %}
-                    <td class="border_bottom" align=center><strong>{{ pedido.saldo }} Kg</strong></td>
+                    <td class="border_bottom text text-primary" align=center><strong>{{ pedido.quantidade_pedido|sub:pedido.carregado }} Kg</strong></td>
                     {% endif %}
                 </tr>
 
@@ -700,7 +700,7 @@
                         <td>{{ forloop.parentloop.counter }}</b></td>
                         <td><b>{{ carga.pedido }}</b></td>
                         <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
-                        <td><b>{{ carga.pedido.fornecedor.nome|title|truncatechars:28 }}
+                        <td><b>{{ carga.pedido.fornecedor.nome|title }}
                             </b></td>
                         <td class="placa-format"><b>
                                 {{ carga.placa|upper|slice:":3"}}  {{ carga.placa|upper|slice:"3:"}}</b></td>
@@ -1087,7 +1087,7 @@
                         <td>{{ forloop.parentloop.counter }}</b></td>
                         <td><b>{{ carga.pedido }}</b></td>
                         <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
-                        <td><b>{{ carga.pedido.fornecedor.nome|title|truncatechars:38 }}
+                        <td><b>{{ carga.pedido.fornecedor.nome|title }}
                             </b></td>
                         
                         <td><b>{{ carga.pedido.fornecedor.cidade }}
@@ -1343,7 +1343,7 @@
                         <td>{{ forloop.parentloop.counter }}</b></td>
                         <td><b>{{ carga.pedido }}</b></td>
                         <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
-                        <td><b>{{ carga.pedido.fornecedor.nome|title|truncatechars:38 }}
+                        <td><b>{{ carga.pedido.fornecedor.nome|title }}
                             </b></td>
                         
                         <td><b>{{ carga.pedido.fornecedor.cidade }}

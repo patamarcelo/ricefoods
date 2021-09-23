@@ -536,7 +536,7 @@ class CargasTabelaTesteView(LoginRequiredMixin, ListView):
 class CargasTabelaPedidosView(LoginRequiredMixin, ListView):
     login_url = 'login'
     models = Pedido
-    ordering = ['situacao','cliente','-data','-id'] 
+    ordering = ['situacao','-data','-id'] 
     template_name = 'tabelas_pedidos.html'
     queryset = Pedido.objects.all()
     context_object_name = 'pedidos' 
