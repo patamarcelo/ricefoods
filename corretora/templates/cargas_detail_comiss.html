@@ -152,7 +152,7 @@
                     {% else %}
                     {% endif %}
                     <td class="border_bottom"><strong>{{ pedido.data|date:"SHORT_DATE_FORMAT" }}</strong></td>
-                    <td class="border_bottom"><strong>{{ pedido.fornecedor|title|truncatechars:35 }}</strong></td>
+                    <td class="border_bottom"><strong>{{ pedido.fornecedor|title|truncatechars:50 }}</strong></td>
 
 
                     <td class="border_bottom"><strong>{{ pedido.cliente|upper }}</strong></td>
@@ -264,7 +264,7 @@
                         <td class="border-left ">{{ forloop.parentloop.counter }}</td>
                         <td><b>{{ carga.pedido }}</b></td>
                         <td><b>{{ carga.data|date:"SHORT_DATE_FORMAT" }}</b></td>
-                        <td><b>{{ carga.pedido.fornecedor.nome|title|truncatechars:28 }}
+                        <td><b>{{ carga.pedido.fornecedor.nome|title }}
                             </b></td>
                         <td><b>
                                 {{ carga.placa|upper|slice:":3"}} {{ carga.placa|upper|slice:"3:"}}</b></td>

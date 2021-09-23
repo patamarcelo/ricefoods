@@ -344,7 +344,7 @@ class DetailCargasView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(DetailCargasView, self).get_context_data(**kwargs)
         context['pedidos'] = Pedido.objects.filter(pk=self.kwargs.get('pk'))
-        context['cargas'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk'))
+        context['cargas'] = Carga.objects.order_by('data','notafiscal').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk'))
         context['total'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk')).values('peso').aggregate(Sum('peso'))
         context['totalnf'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk')).values('valornf').aggregate(Sum('valornf')) 
                 
@@ -372,7 +372,7 @@ class ComissCargasView(LoginRequiredMixin, SuperuserRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(ComissCargasView, self).get_context_data(**kwargs)
         context['pedidos'] = Pedido.objects.filter(pk=self.kwargs.get('pk'))
-        context['cargas'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk'))
+        context['cargas'] = Carga.objects.order_by('data','notafiscal').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk'))
         context['totalpeso'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk')).values('peso').aggregate(Sum('peso'))
         context['totalnf'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pedido_id=self.kwargs.get('pk')).values('valornf').aggregate(Sum('valornf'))
         context['totalpago'] = Carga.objects.order_by('data').filter(situacao='Carregado').filter(pgcomissao=True).filter(pedido_id=self.kwargs.get('pk')).values('vpcomissaoc').aggregate(Sum('vpcomissaoc'))
