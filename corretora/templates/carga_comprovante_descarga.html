@@ -58,6 +58,13 @@
                         {% endif %}
                         
                     </div>
+                    {% if carga.obs %}
+                    <div class="flex-row justify-content-start mb-1">           
+                        Observação:         
+                        <h5 class="pb-0 mb-0"> <span class="badge badge-danger">{{carga.obs}}</span></h5>
+                        <smal style="font-size: 0.8em; color: grey;">Para enviar por e-mail para a Transportadora, inclua no campo observação abaixo.</smalc>
+                    </div>
+                    {% endif %}
                 </div>                                  
             </div>
 

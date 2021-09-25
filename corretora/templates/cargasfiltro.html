@@ -517,21 +517,20 @@
 
 
 
-                            {% if carga.obs and carga.tac %}
-                            <td style="background-color: #7a1b0c; opacity: 0.8;"><abbr class="text-warning"
-                                    title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
-                            </td>
-                            {% elif carga.obs %}
-                            <td><abbr class="text-warning"
-                                    title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
-                            </td>
-                            {% elif carga.tac %}
-                            <td style="background-color: #7a1b0c; opacity: 0.8">
-                                <em>{{ carga.motorista|title }}</em></abbr>
-                            </td>
-                            {% else %}
-                            <td>{{ carga.motorista|title }}</td>
-                            {% endif %}
+                        {% if carga.obs and carga.tac or carga.obs_email_nf and carga.tac %}
+                        <td style="background-color: #7a1b0c; opacity: 0.8;"><abbr class="text-warning"
+                                title="{{ carga.obs }} {% if carga.obs_email_nf %} Obs.Email: {{carga.obs_email_nf}}{% endif %}"><em>{{ carga.motorista|title }}</em></abbr>
+                        </td>
+                        {% elif carga.obs or carga.obs_email_nf %}
+                        <td><abbr class="text-warning"
+                                title="{{ carga.obs }} {% if carga.obs_email_nf %} Obs.Email: {{carga.obs_email_nf}}{% endif %}"><em>{{ carga.motorista|title }}</em></abbr>
+                        </td>
+                        {% elif carga.tac %}
+                        <td style="background-color: #7a1b0c; opacity: 0.8"><em>{{ carga.motorista|title }}</em></abbr>
+                        </td>
+                        {% else %}
+                        <td>{{ carga.motorista|title }}</td>
+                        {% endif %}
 
                             {% if carga.valor_mot == None %}
                             <td align=center>R$ &nbsp;&nbsp;&nbsp;&nbsp;- </td>

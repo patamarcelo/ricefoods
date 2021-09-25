@@ -402,13 +402,13 @@
 
 
 
-                        {% if carga.obs and carga.tac %}
+                        {% if carga.obs and carga.tac or carga.obs_email_nf and carga.tac %}
                         <td style="background-color: #7a1b0c; opacity: 0.8;"><abbr class="text-warning"
-                                title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
+                                title="{{ carga.obs }} {% if carga.obs_email_nf %} Obs.Email: {{carga.obs_email_nf}}{% endif %}"><em>{{ carga.motorista|title }}</em></abbr>
                         </td>
-                        {% elif carga.obs %}
+                        {% elif carga.obs or carga.obs_email_nf %}
                         <td><abbr class="text-warning"
-                                title="{{ carga.obs }}"><em>{{ carga.motorista|title }}</em></abbr>
+                                title="{{ carga.obs }} {% if carga.obs_email_nf %} Obs.Email: {{carga.obs_email_nf}}{% endif %}"><em>{{ carga.motorista|title }}</em></abbr>
                         </td>
                         {% elif carga.tac %}
                         <td style="background-color: #7a1b0c; opacity: 0.8"><em>{{ carga.motorista|title }}</em></abbr>
@@ -436,7 +436,6 @@
                         {% else %}
                         <td ><a class="text text-danger" target="_blank" href="{% url 'update_notafiscal' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i>                            </a></td>
                         {% endif %}
-
 
 
 

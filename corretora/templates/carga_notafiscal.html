@@ -58,6 +58,13 @@
                         {% endif %}
                         
                     </div>
+                    {% if carga.obs %}
+                    <div class="flex-row justify-content-start mb-1">           
+                        Observação:         
+                        <h5 class="pb-0 mb-0"> <span class="badge badge-danger">{{carga.obs}}</span></h5>
+                        <smal style="font-size: 0.8em; color: grey;">Para enviar por e-mail para a Transportadora, inclua no campo observação abaixo.</smalc>
+                    </div>
+                    {% endif %}
                 </div>                                  
             </div>
 
@@ -65,7 +72,7 @@
             <div class="d-flex justify-content-start form-body mb-2">
                 <div class="flex-column col-12 justify-content-start pl-0">             
                         <div class="flex-row justify-content-start mb-3" style="text-align: left;">
-                                {{ form.obs|as_crispy_field }}
+                                {{ form.obs_email_nf|as_crispy_field }}
                         </div>        
                         {% if carga.nota_fiscal_arquivo %}
                         <div class="d-flex flex-row justify-content-center align-content-center">

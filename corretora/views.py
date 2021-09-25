@@ -234,7 +234,7 @@ class PedidosView(LoginRequiredMixin, ListView):
     login_url = 'login'    
     models = Pedido
     paginate_by = 23
-    ordering = ['situacao', 'cliente','-data','-id']
+    ordering = ['situacao','-data','-id']
     template_name = 'pedido.html'
     queryset = Pedido.objects.all()
     context_object_name = 'pedidos'
@@ -1044,7 +1044,6 @@ class UpdatecomprovdescargaCargasView(SuccessMessageMixin, LoginRequiredMixin, U
                 return f"Bom dia {user_name},\n"
         self.object         = self.get_object()
         motorista           = self.object.motorista
-        obs                 = self.object.obs
         placa               = f'{self.object.placa[:3]} {self.object.placa[-4:]}'
         notafiscal          = self.object.notafiscal
         nf_format           = re.sub(r'(?<!^)(?=(\d{3})+$)', r'.', str(notafiscal))
@@ -1058,9 +1057,8 @@ class UpdatecomprovdescargaCargasView(SuccessMessageMixin, LoginRequiredMixin, U
             data_descarga        = form.cleaned_data['data_descarga']
             obs_descarga         = form.cleaned_data['obs_descarga']
             subject              = f"{transpNome.title()} - Comprovante: {placa} - {motorista.title()} - NF: {nf_format}"
-            obs_geral            = f"Obs.: {obs}\n\n\n" if len(obs) > 2 else ""
             obs_descarga_form    = f"Obs.: {obs_descarga}\n\n\n" if len(obs_descarga) > 2 else ""
-            text                 = f'{boas_vindas(transpContato.title())} \n\n\nSegue comprovante em anexo: \n\n\n{placa} - {motorista.title()} - NF: {nf_format}\n\n\n{obs_geral}{obs_descarga_form}'
+            text                 = f'{boas_vindas(transpContato.title())} \n\n\nSegue comprovante em anexo: \n\n\n{placa} - {motorista.title()} - NF: {nf_format}\n\n\n{obs_descarga_form}'
 
         try:
             if 'comprovante_descarga' in self.request.FILES and transp_recebe_email == True:
@@ -1256,7 +1254,7 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
         if 'nota_fiscal_arquivo' in self.request.FILES:
             nota_fiscal_arquivo = self.request.FILES['nota_fiscal_arquivo']
 
-        obs      = form.cleaned_data['obs']
+        obs      = form.cleaned_data['obs_email_nf']
         obs_mail = f'Obs.: {obs}\n\n\n' if obs else " "
         subject  = f"{transpNome.title()} - Nota Fiscal: {placa} - {motorista.title()}"
         text     = f'{boas_vindas(transpContato.title())} \n\n\nSegue Nota Fiscal em anexo: \n\n\n{placa} - {motorista.title()}\n\n\n{valor_mot_mail}\n\n\n{obs_mail}'

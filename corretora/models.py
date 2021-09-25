@@ -1446,6 +1446,7 @@ class Carga(Base):
     data_descarga        = models.DateField('Data Descarga', null=True, blank=True, default=None, help_text="dd/mm/aaaa")
     obs_descarga         = models.TextField('Observação Descarga', max_length=500, null=True, blank=True)
 
+    obs_email_nf        = models.TextField('Observação Nota Fiscal', max_length=500, null=True, blank=True)
     nota_fiscal_arquivo = models.FileField('Nota Fiscal', upload_to=get_file_path_notafiscal, null=True, blank=True)
     nota_fiscal_xml     = models.FileField('NF Xml', upload_to=get_file_path_notafiscal, null=True, blank=True)
 
