@@ -456,7 +456,7 @@ class CargasView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     
     models = Carga
     paginate_by = 40
-    ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
+    ordering = ['situacao','-data','-notafiscal','ordem','chegada','buonny','pedido__cliente'] 
     template_name = 'cargas.html'
     queryset = Carga.objects.all()
     context_object_name = 'cargas' 
@@ -517,7 +517,7 @@ class ResumoTabelasAjaxView(LoginRequiredMixin, TemplateView):
         context['pedidos'] = Pedido.objects.order_by('situacao','cliente','-data','-id')[:100]
         context['chart'] = Pedido.objects.order_by('data','id').all
         context['fornecedores'] = Fornecedor.objects.order_by('nome').all
-        context['cargas'] = Carga.objects.order_by('situacao','-data','ordem','chegada','buonny','pedido__cliente')[:100]
+        context['cargas'] = Carga.objects.order_by('situacao','-data','-notafiscal','ordem','chegada','buonny','pedido__cliente')[:100]
         context['clientes'] = Cliente.objects.order_by('-nome').all
 
         return context
@@ -528,7 +528,7 @@ class CargasTabelaTesteView(LoginRequiredMixin, ListView):
     
     models = Carga
     
-    ordering = ['situacao','-data','ordem','chegada','buonny','pedido__cliente'] 
+    ordering = ['situacao','-data','-notafiscal','ordem','chegada','buonny','pedido__cliente'] 
     template_name = 'tabelas_cargas.html'
     queryset = Carga.objects.all()
     context_object_name = 'cargas' 
