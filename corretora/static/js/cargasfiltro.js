@@ -43,6 +43,7 @@ function CleanAllFields() {
 		$("select").each(function () {
 			$(this).prop("selectedIndex", 0).val();
 		});
+		$("#id_motorista__icontains").focus();
 	});
 }
 

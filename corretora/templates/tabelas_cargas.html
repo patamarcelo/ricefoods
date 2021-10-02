@@ -5,8 +5,11 @@
 {% now "Y-m-d" as todays_date %}
 
 
- <!-- Font Awesome -->
- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
  <!-- Personal CSS  -->
     
 <link href="{% static 'css/advise.css' %}" rel="stylesheet">
@@ -111,12 +114,14 @@
                     <th scope="col">Peso</th>
 
                     <th scope="col">NF</th>
+                    <th scope="col">NF</th>
                     <th scope="col"><input type="checkbox" id='select-all' value="0"></th>
                     <th scope="col">ICMS</th>
                     <th scope="col">Fornecedor</th>
                     <th scope="col">Origem</th>
                     <th scope="col">Cliente</th>
                     <th scope="col" class="text text-center">Class.</th>
+                    <th scope="col" class="text text-center">Comp. D.</th>
                     <th scope="col" class="text text-center">Ação</th>
                 </tr>
             </thead>
@@ -238,6 +243,15 @@
                     <td>{{ carga.peso|intcomma }} Kg </td>
                     {% endif %}
 
+                    {% if carga.pedido.contrato == "901" or carga.pedido.contrato == "900" %}
+                    <td align=center>-</td>
+                    {% elif carga.nota_fiscal_arquivo %}
+                    <td align=center><a class="text text-success" target="_blank" href="{% url 'update_notafiscal' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i>                            </a></td>
+                    {% else %}
+                    <td align=center><a class="text text-danger" target="_blank" href="{% url 'update_notafiscal' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i>                            </a></td>
+                    {% endif %}
+
+
                     {% if carga.notafiscal == None %}
                     <td class="text-danger"><strong>Sem NF</strong></td>
                     {% elif carga.notafiscal|length <= 3 %}
@@ -339,6 +353,13 @@
                             {% endif %}
                             {% else %}
                         <td align="center"><b> - </b></td>
+                        {% endif %}
+
+
+                        {% if carga.comprovante_descarga %}
+                        <td align="center"><a class="text text-success" target="_blank" href="{% url 'update_comprovante_descarga' carga.pk  %}"><i class="fa fa-lg fa-paperclip" aria-hidden="true"></i>                            </a></td>
+                        {% else %}
+                        <td align="center"><a class="text text-danger" target="_blank" href="{% url 'update_comprovante_descarga' carga.pk  %}"><i class="fa fa-lg fa-paperclip" aria-hidden="true"></i>                            </a></td>
                         {% endif %}
 
 

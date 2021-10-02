@@ -431,7 +431,9 @@
                         <td>{{ carga.peso|intcomma }} Kg </td>
                         {% endif %}
 
-                        {% if carga.nota_fiscal_arquivo %}
+                        {% if carga.pedido.contrato == "901" or carga.pedido.contrato == "900" %}
+                        <td align=center>-</td>
+                        {% elif carga.nota_fiscal_arquivo %}
                         <td ><a class="text text-success" target="_blank" href="{% url 'update_notafiscal' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i>                            </a></td>
                         {% else %}
                         <td ><a class="text text-danger" target="_blank" href="{% url 'update_notafiscal' carga.pk  %}"><i class="fa fa-file-text-o" aria-hidden="true"></i>                            </a></td>
