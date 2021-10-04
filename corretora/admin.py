@@ -572,7 +572,7 @@ class PagamentoFaturaCargasComiFreteAdmin(SimpleHistoryAdmin):
     )
     raw_id_fields = ('fatura',)
     list_filter = ('fatura','data_fatura_pagamento')
-    search_fields = ['fatura']
+    search_fields = ['fatura__numero', 'data_fatura_pagamento','pagador','conta_pagadora', 'valor_pago_fatura']
     history_list_display = ['fatura','data_fatura_pagamento', 'valor_pago_fatura','pagador', 'conta_pagadora', 'obs', "changed_fields"]
 
 
