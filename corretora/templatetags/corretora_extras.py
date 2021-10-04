@@ -12,6 +12,8 @@ import dateutil.relativedelta
 import locale
 import time
 
+import re
+
 today = datetime.now()
 
 class CounterNode(template.Node):
@@ -163,4 +165,13 @@ def nome_mes_seteanterior(datemont):
     numeromes = datetime.now() - monthdelta    
     numeromes = numeromes.month
     return nomes.get(numeromes)
+
+@register.filter
+def nota_fiscal_formatada(notafiscal):  
+    if notafiscal:  
+        nf_format = re.sub(r'(?<!^)(?=(\d{3})+$)', r'.', str(notafiscal))
+        nf_format = 'NF ' + nf_format
+    else: 
+        nf_format = 'Sem NF'
+    return nf_format
 
