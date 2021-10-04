@@ -530,7 +530,7 @@ class FaturaCargasComiFreteAdmin(SimpleHistoryAdmin):
     
     )
     list_filter = ('empresa','transportadora')
-    search_fields = ['empresa','transportadora','data_fatura','data_fatura_vencimento']
+    search_fields = ['empresa__nome','transportadora__nome','data_fatura','data_fatura_vencimento']
     history_list_display = ['numero','empresa','data_fatura', 'data_fatura_vencimento', 'valor_total_fatura', 'transportadora', "changed_fields"]
 
 
