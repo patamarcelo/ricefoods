@@ -107,7 +107,8 @@ NOMES_DATAS = {
 BASE_CARTAOVP = (
     ('palmares', 'Palmares'),
     ('rio_grande', 'Granjas - RG'),
-    ('jaguarao', 'Jaguarão')
+    ('jaguarao', 'Jaguarão'),
+    ('cerati_uruguaiana', 'Ceratti')
 )
 
 def get_last_cartao_base():
