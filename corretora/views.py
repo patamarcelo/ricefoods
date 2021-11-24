@@ -13,7 +13,8 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.core import serializers
 
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
+import mimetypes
 import re
 
 from django.db.models import Q
@@ -1251,15 +1252,6 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
         valor_mot_text      = f'Valor Motorista: R$ {valor_motorista} por Tonelada'
         valor_mot_mail      = " " if not self.object.valor_mot or self.object.valor_mot == 0 else valor_mot_text
         
-        anexos_transp = []
-        if 'nota_fiscal_arquivo' in self.request.FILES:
-            nota_fiscal_arquivo = self.request.FILES['nota_fiscal_arquivo']
-            anexos_transp.append((nota_fiscal_arquivo.name, nota_fiscal_arquivo.read()))
-        
-        if 'nota_fiscal_xml' in self.request.FILES:
-            nota_fiscal_xml = self.request.FILES['nota_fiscal_xml']
-            anexos_transp.append((nota_fiscal_xml.name, nota_fiscal_xml.read()))
-        
 
         obs      = form.cleaned_data['obs_email_nf']
         obs_mail = f'Obs.: {obs}\n\n\n' if obs else " "
@@ -1276,16 +1268,21 @@ class UpdateNotafiscalCargasView(SuccessMessageMixin, LoginRequiredMixin, Update
                     transpMail       = [x.email for x in transpMail_query]
                     email.extend(transpMail)
 
-            
-                    mail = EmailMessage(
+                    
+                    mail = EmailMultiAlternatives(
                         subject=subject,
                         body=text,
                         from_email='marcelo@gdxlog.com.br',
                         to=email,
-                        attachments=anexos_transp,
                         headers={'Reply-To': 'faturamento@gdxlog.com.br'}
                     )
-                    # mail.attach(nota_fiscal_arquivo.name, nota_fiscal_arquivo.read(), nota_fiscal_arquivo.content_type)
+                    if 'nota_fiscal_arquivo' in self.request.FILES:
+                        nota_fiscal_arquivo = self.request.FILES['nota_fiscal_arquivo']
+                        mail.attach(nota_fiscal_arquivo.name, nota_fiscal_arquivo.read())
+                    
+                    if 'nota_fiscal_xml' in self.request.FILES:
+                        nota_fiscal_xml = self.request.FILES['nota_fiscal_xml']
+                        mail.attach(nota_fiscal_xml.name, nota_fiscal_xml.file.getvalue(), mimetypes.guess_type(nota_fiscal_xml.name)[0])
                     mail.send()
                     messages.success(self.request, f'Nota Fiscal de {placa} - {motorista.title()} Enviado com successo para {transpNome.title()}')
                 else:
