@@ -91,7 +91,7 @@ class Sobretopico(Base):
     )
     sobretopico = models.CharField(_('Tópico'), max_length=100)
     descricao = models.TextField(_('Descrição'), max_length=200)
-    icone = models.TextField(_('Icone'), max_length=12, choices=ICONE_CHOICES)
+    icone = models.TextField(_('Icone'), max_length=18, choices=ICONE_CHOICES)
     
     
     class Meta:

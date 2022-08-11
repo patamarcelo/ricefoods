@@ -124,7 +124,7 @@ def get_last_cartao_base():
 
 class CartaoVp(Base):
     cartao_numero    = models.CharField('Número do Cartão',max_length=16, help_text="Somente os 16 números", unique=True)
-    cartao_base      = models.CharField('Local Cartão', max_length=17, choices=BASE_CARTAOVP, default=get_last_cartao_base)
+    cartao_base      = models.CharField('Local Cartão', max_length=20, choices=BASE_CARTAOVP, default=get_last_cartao_base)
     cartao_utilizado = models.BooleanField('Cartão já Utilizado?', default=False, help_text="Informar se o cartão já foi utilizado")
     obs              = models.TextField('Observação', max_length=500, blank=True)
     history          = HistoricalRecords()

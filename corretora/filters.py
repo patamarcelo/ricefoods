@@ -52,6 +52,12 @@ class CargasFilter(django_filters.FilterSet):
         label="Fat. Terc. ?",  choices=CHOICES6, method="frete_com_fatura"
     )
     
+    CHOICES7 = ((51000, 'Rodotrem'),(39000, 'Bitrem'),(36900, 'Bicaçamba'), (36000, 'Vanderléia'), (33000, 'LS Trucada'),(25500, 'Toco'))
+    
+    tipo_veiculo_carregado = django_filters.ChoiceFilter(
+        label="Tipo Veículo",  choices=CHOICES7, method="tipo_veiculo_carregado_query"
+    )
+    
     
 
     transp = django_filters.ModelMultipleChoiceFilter(
@@ -189,6 +195,9 @@ class CargasFilter(django_filters.FilterSet):
     def frete_com_fatura(self, queryset, name, value):
         expression = ~Q(fatura_frete_terceiros=None) if value == "True" else Q(fatura_frete_terceiros=None)
         return queryset.filter(expression).filter(comi_frete_total__gt=0)
+    
+    def tipo_veiculo_carregado_query(self, queryset, name, value):
+        return queryset.filter(veiculo=value)
     
 
     def filtrando_comissao(self, queryset, name, value):

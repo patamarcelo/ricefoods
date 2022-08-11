@@ -209,6 +209,12 @@
                         placeholder="Valor NF">
                         {{ filter.form.valornf__lte|as_crispy_field }}
                     </div>
+                    
+                    <div class="col-2 form-group" data-toggle="tooltip" title="Tipo Veículo" data-placement="bottom"
+                        placeholder="Tipo Veículo">
+                        {{ filter.form.tipo_veiculo_carregado|as_crispy_field }}
+                    </div>
+                    
                     {% if user.is_superuser%}
                     <div class="col-2 form-group" data-toggle="tooltip" title="Com Comissao?" data-placement="bottom"
                         placeholder="Com Comissao?">

@@ -22,7 +22,7 @@ from django.db.models import Q
 
 
 from django.db.models import F, FloatField, Sum, Avg, Count
-from easy_pdf.views import PDFTemplateResponseMixin
+
 
 import datetime
 # Graficos

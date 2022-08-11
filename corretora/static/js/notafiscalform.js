@@ -34,6 +34,8 @@ $(document).ready(function () {
 			console.log(input);
 			if (input.length > 0) {
 				input.css("background-color", "green");
+				input.css("border-top-right-radius", "5px");
+				input.css("border-bottom-right-radius", "5px");
 			}
 		});
 	});
